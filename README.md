@@ -16,7 +16,7 @@ Instructions how to run the project (don't forget the DB Connection etc.)
 > Fill in this information
 - Groupmember 1 : {{GitHub Username}} - {{Lastname}} - {{Firstname}} 
 - Groupmember 2 : {{LeonPaelinck}} - {{Paelinck}} - {{Leon}}
-- Groupmember 3 : {{GitHub Username}} - {{Lastname}} - {{Firstname}}
+- Groupmember 3 : {{MohamedDilawar-hogent}} - {{Dilawar}} - {{Mohamed}}
 - Groupmember 4 : {{GitHub Username}} - {{Lastname}} - {{Firstname}}
 - Groupmember 5 : {{GitHub Username}} - {{Lastname}} - {{Firstname}}
 - Groupmember 6 : {{GitHub Username}} - {{Lastname}} - {{Firstname}}
