@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="Domain.Gebruiker">
-    <Position X="2" Y="0.75" Width="3" />
+    <Position X="4.25" Y="1" Width="3" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Veilingen" Type="Domain.Veiling" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4.25" Y="2.032" />
+        <Point X="2.188" Y="2.032" />
+        <Point X="2.188" Y="6.75" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAAAQAAACAAAAAAAAAAAAAAAAAAAAAAAYggAAAAAAA=</HashCode>
+      <HashCode>AABAAQAAACAAgBAAAAAAAAAAAAAAAAAAAYggAAAAAAA=</HashCode>
       <FileName>Gebruiker.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -14,6 +21,8 @@
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Kunstwerken" />
+      <Property Name="Veilingen" />
+      <Property Name="Boden" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Domain.Kunstwerk">
@@ -24,7 +33,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.Abonnement">
-    <Position X="7" Y="0.75" Width="2.75" />
+    <Position X="9.75" Y="1" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAwAAAAAAAAA=</HashCode>
       <FileName>Abonnement.cs</FileName>
@@ -34,10 +43,37 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Domain.AbonnementType">
-    <Position X="8.75" Y="3" Width="1.5" />
+    <Position X="10.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAAAAAAABAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
       <FileName>AbonnementType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Bestelling">
+    <Position X="7.5" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACQAAAAAAAAAAAAAAAgABAAACCAAAAAAAIAAAACAA=</HashCode>
+      <FileName>Bestelling.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="WinkelmandKunstwerken" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Domain.Veiling">
+    <Position X="1.25" Y="6.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAIAAAAACAAAAAAAgAAAAAAAAQ=</HashCode>
+      <FileName>Veiling.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Boden" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Domain.Bod">
+    <Position X="6" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bod.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

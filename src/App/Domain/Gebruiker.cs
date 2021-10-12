@@ -15,6 +15,10 @@ namespace Domain
         public GebruikerType Type { get; private set; }
         public ICollection<Kunstwerk> Kunstwerken { get; set; }
         public Abonnement HuidigAbonnement { get; private set; }
+        public Bestelling HuidigeBestelling  { get; set; }
+        public ICollection<Veiling> Veilingen { get; }
+        public ICollection<Bod> Boden { get; }
+
 
 
         public Gebruiker(string gebruikersnaam, DateTime geboortedatum, string email, GebruikerType type)
