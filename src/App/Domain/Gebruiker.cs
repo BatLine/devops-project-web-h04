@@ -14,6 +14,8 @@ namespace Domain
         public string Email { get; private set; }
         public GebruikerType Type { get; private set; }
         public ICollection<Kunstwerk> Kunstwerken { get; set; }
+        public Abonnement HuidigAbonnement { get; private set; }
+
 
         public Gebruiker(string gebruikersnaam, DateTime geboortedatum, string email, GebruikerType type)
         {
