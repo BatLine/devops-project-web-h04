@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Domain.Abonnement" Collapsed="true">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAEAAAAAAAAAAAACAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Abonnement.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AbonnementType" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Domain.Bestelling" Collapsed="true">
+    <Position X="6" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQAAAAAAAAAAAAAAAgABAAACCAAAAAAAIAAAACAA=</HashCode>
+      <FileName>Bestelling.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="WinkelmandKunstwerken" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Domain.Gebruiker" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QABAAQAAACAAABAAAAAAAAAAEAAAAAAAAQggAQAAQAA=</HashCode>
+      <FileName>Gebruiker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Abonnenment" />
+      <Property Name="Bestelling" />
+      <Property Name="Type" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Boden" />
+      <Property Name="Kunstwerken" />
+      <Property Name="Veilingen" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Domain.Kunstwerk" Collapsed="true">
+    <Position X="4" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAACABAAAAAAAIAAAAIAAgAEAAAA=</HashCode>
+      <FileName>Kunstwerk.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Veiling" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAACAAAAAAAgAAAAAABAQ=</HashCode>
+      <FileName>Veiling.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Kunstwerk" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="BodenOpVeiling" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="Domain.Bod" Collapsed="true">
+    <Position X="4" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAQAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Bod.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Veiling" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Domain.AbonnementType" Collapsed="true">
+    <Position X="8.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAABAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbonnementType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Domain.GebruikerType" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAgAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GebruikerType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
