@@ -21,5 +21,6 @@ namespace Domain
             BodenOpVeiling = new List<Bod>();
             Kunstwerk = kunstwerk;
         }
+
     }
 }

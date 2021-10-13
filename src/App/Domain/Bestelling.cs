@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Domain
 {
     public class Bestelling
@@ -17,10 +18,11 @@ namespace Domain
         public double TotalePrijs { get; set; }
         public ICollection<Kunstwerk> WinkelmandKunstwerken { get; set; } // deze niet in DB, winkelmand lokaal bijhouden
 
-        
         public Bestelling()
         {
             WinkelmandKunstwerken = new List<Kunstwerk>();
         }
     }
 }
+
+

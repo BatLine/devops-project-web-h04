@@ -17,5 +17,6 @@ namespace Domain
         {
             this.AbonnementType = abonnementType;
         }
+
     }
 }
