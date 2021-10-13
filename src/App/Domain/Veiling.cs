@@ -13,6 +13,7 @@ namespace Domain
         public double MinPrijs { get; set; }
          public ICollection<Bod> BodenOpVeiling { get; set; }
         public Kunstwerk Kunstwerk { get; set; }
+        public Gebruiker gewonnenGeb { get; set; }
         public Veiling(DateTime startDatum, DateTime eindDatum, double minPrijs, Kunstwerk kunstwerk)
         {
             StartDatum = startDatum;
@@ -20,6 +21,7 @@ namespace Domain
             MinPrijs = minPrijs;
             BodenOpVeiling = new List<Bod>();
             Kunstwerk = kunstwerk;
+            gewonnenGeb = new Gebruiker();
         }
 
     }

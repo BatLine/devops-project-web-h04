@@ -13,8 +13,9 @@ namespace Domain
         public ICollection<string> Fotos { get; private set; }
         public bool TeKoop { get; set; }
         public bool IsVeilbaar { get; set; }
-
-        public Kunstwerk(string naam, DateTime einddatum, double prijs, string beschrijving, ICollection<string> fotos, bool isVeilbaar)
+        public string Materiaal { get; private set; }
+        public string NaamKunstenaar { get; private set; }
+        public Kunstwerk(string naam, DateTime einddatum, double prijs, string beschrijving, ICollection<string> fotos, bool isVeilbaar, string materiaal, string naamKunstenaar)
         {
             Naam = naam;
             Einddatum = einddatum;
@@ -23,6 +24,8 @@ namespace Domain
             Fotos = fotos;
             TeKoop = true;
             IsVeilbaar = isVeilbaar;
+            Materiaal = materiaal;
+            NaamKunstenaar = naamKunstenaar;
         }
 
 

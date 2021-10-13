@@ -23,30 +23,21 @@
   <Class Name="Domain.Gebruiker">
     <Position X="5.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>QABAAQAAACAAABAAAAAAAAAAEAAAAAAAAQggAQAAQAA=</HashCode>
+      <HashCode>AAAAAQAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAQAA=</HashCode>
       <FileName>Gebruiker.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Bestelling" />
-      <Property Name="Abonnenment" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="Kunstwerken" />
-      <Property Name="Veilingen" />
-      <Property Name="Boden" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Domain.Kunstwerk">
     <Position X="9.25" Y="1" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAAAACABAAAAAAAIAAAAIAAgAEAAAA=</HashCode>
+      <HashCode>AACAAAIAAAAAAAAAAACABAAAAAAAMAAAAIAAgAEAAAA=</HashCode>
       <FileName>Kunstwerk.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.Veiling">
     <Position X="11" Y="5.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAACAAAAAAAgAAAAAABAQ=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAAAAAIAAAAACAAAAAAAgAAAAAABAQ=</HashCode>
       <FileName>Veiling.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
