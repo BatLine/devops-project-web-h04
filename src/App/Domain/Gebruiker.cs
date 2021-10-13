@@ -13,7 +13,7 @@ namespace Domain
         public DateTime Geboortedatum { get; private set; }
         public string Email { get; private set; }
         public GebruikerType Type { get; private set; }
-        public string KunstenaarDetails { get; private set; }
+        public string KunstenaarDetails { get; set; }
         public int GebruikerId { get; private set; }
         public bool StatusActiefKunstenaar { get; set; }
 
@@ -23,10 +23,9 @@ namespace Domain
         public Bestelling Bestelling { get; set; }
         public Abonnement Abonnenment { get;  set; }
 
-        //klant
         public Gebruiker(string gebruikersnaam, DateTime geboortedatum, string email, GebruikerType type)
         {
-            //Guard.Against.NullOrEmpty(gebruikersnaam, nameof(gebruikersnaam));0
+            //Guard.Against.NullOrEmpty(gebruikersnaam, nameof(gebruikersnaam));
             Gebruikersnaam = gebruikersnaam;
             Geboortedatum = geboortedatum;
             Email = email;

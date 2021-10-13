@@ -13,8 +13,10 @@ namespace Domain
         public int Id { get; private set; }
         public AbonnementType AbonnementType { get; set; }
 
-        public Abonnement(AbonnementType abonnementType)
+        public Abonnement(DateTime startDatum, DateTime eindDatum,AbonnementType abonnementType)
         {
+            StartDatum = startDatum;
+            EindDatum = eindDatum;
             this.AbonnementType = abonnementType;
         }
 
