@@ -16,6 +16,13 @@ namespace Domain
         {
 
         }
+
+        public AbonnementType(string naam, int verloop, double prijs)
+        {
+            Naam = naam;
+            Verlooptijd = verloop;
+            Prijs = prijs;
+        }
     }
 }
     

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain;
+using Microsoft.AspNetCore.Mvc;
+using Project3H04.Server.Data;
+using Project3H04.Server.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +15,80 @@ namespace Project3H04.Server.Controllers
     [ApiController]
     public class KunstwerkController : ControllerBase
     {
+
+        private readonly ApplicationDbcontext _context;
+
+        //private readonly IConfiguration _configuration;
+
+        /* public DepartmentController(IConfiguration config)
+         {
+             this._configuration = config;
+         }*/
+        public KunstwerkController(ApplicationDbcontext context)
+        {
+            _context = context;
+        }
+
         // GET: api/<KunstwerkController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Kunstwerk> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _context.Kunstwerken.ToList();
         }
 
         // GET api/<KunstwerkController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Kunstwerk> Get(string naam)
         {
-            return "value";
+            if(!string.IsNullOrEmpty(naam))
+            return _context.Kunstwerken.SingleOrDefault(x=>x.Naam.Equals(naam));
+
+            return NotFound();
         }
 
         // POST api/<KunstwerkController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Kunstwerk> Post(Kunstwerk_DTO kunst)
         {
+            Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
+
+            _context.Kunstwerken.Add(kunstwerkToCreate);
+            _context.SaveChanges();
+
+            return CreatedAtAction(nameof(Get), new { id = kunstwerkToCreate.Naam }, kunstwerkToCreate);
         }
 
         // PUT api/<KunstwerkController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(string naam)
         {
+           /* if (string.IsNullOrEmpty(naam))
+                return BadRequest();*/
+
+            Kunstwerk kunstwerk = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
+            if(kunstwerk==null)
+                return NotFound();
+
+
+            _context.Kunstwerken.Update(kunstwerk);
+            _context.SaveChanges();
+            return NoContent();
         }
 
         // DELETE api/<KunstwerkController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(string naam)
         {
+            /*if (string.IsNullOrEmpty(naam))
+                return BadRequest();*/
+            Kunstwerk kunst = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
+            if (kunst == null)
+            {
+                return NotFound();
+            }
+            _context.Kunstwerken.Remove(kunst);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
