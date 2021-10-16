@@ -12,11 +12,14 @@ namespace Domain
         public DateTime EindDatum { get; private set; }
         public int Id { get; private set; }
         public AbonnementType AbonnementType { get; set; }
+        public Abonnement()
+        {
 
-        public Abonnement(DateTime startDatum, DateTime eindDatum,AbonnementType abonnementType)
+        }
+        public Abonnement(DateTime startDatum,AbonnementType abonnementType)
         {
             StartDatum = startDatum;
-            EindDatum = eindDatum;
+            EindDatum = startDatum.AddMonths(abonnementType.Verlooptijd);
             this.AbonnementType = abonnementType;
         }
 

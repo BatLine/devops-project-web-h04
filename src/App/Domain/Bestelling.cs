@@ -22,6 +22,17 @@ namespace Domain
         {
             WinkelmandKunstwerken = new List<Kunstwerk>();
         }
+
+        public Bestelling(int id, DateTime datum, string straat, int postcode, string gemeente, DateTime leverDatum)
+        {
+            Id = id;
+            Datum = datum;
+            Straat = straat;
+            Postcode = postcode;
+            Gemeente = gemeente;
+            LeverDatum = leverDatum;
+            TotalePrijs = WinkelmandKunstwerken.Sum(x => x.Prijs);
+        }
     }
 }
 

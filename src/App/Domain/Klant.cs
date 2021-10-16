@@ -10,11 +10,11 @@ namespace Domain
     {
 
         public ICollection<Bod> Boden { get; set; }
-        public Bestelling Bestelling { get; set; }
+        public ICollection<Bestelling> Bestellingen { get; set; }
         public Klant(string gebruikersnaam, DateTime geboortedatum, string email):base(gebruikersnaam, geboortedatum, email)
         {
             Boden = new List<Bod>();
-            Bestelling = new Bestelling();
+            Bestellingen = new List<Bestelling>();
         }
 
     }

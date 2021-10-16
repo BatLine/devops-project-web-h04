@@ -8,7 +8,8 @@ namespace Domain
 {
     public class Bod
     {
-        public string GebruikersNaam { get; set; }
+        public int Id { get; private set; }
+        public string GebruikersNaam { get; private set; }
         public Veiling Veiling { get; set; }
         public double BodPrijs { get; set; }
 
@@ -17,6 +18,11 @@ namespace Domain
             GebruikersNaam = gebruikersnaam;
             Veiling = veiling;
             BodPrijs = bodPrijs;
+        }
+
+        public Bod()
+        {
+
         }
     }
 }

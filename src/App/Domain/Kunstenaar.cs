@@ -14,13 +14,20 @@ namespace Domain
         public ICollection<Kunstwerk> Kunstwerken { get; set; }
         public ICollection<Veiling> Veilingen { get; set; }
         public Abonnement Abonnenment { get; set; }
+        public int AbonnenmentId { get; private set; }
         public Kunstenaar(string gebruikersnaam, DateTime geboortedatum, string email, string details, Abonnement abonnement) : base(gebruikersnaam, geboortedatum, email)
         {
             this.Details = details;
             this.StatusActiefKunstenaar = false;
             this.Abonnenment = abonnement;
+            AbonnenmentId = Abonnenment.Id;
             Kunstwerken = new List<Kunstwerk>();
             Veilingen = new List<Veiling>();
+        }
+
+        public Kunstenaar()
+        {
+
         }
     }
 }
