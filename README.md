@@ -18,5 +18,5 @@ Instructions how to run the project (don't forget the DB Connection etc.)
 - Groupmember 2 : LeonPaelinck - Paelinck - Leon
 - Groupmember 3 : MohamedDilawar-hogent - Dilawar - Mohamed
 - Groupmember 4 : Maarten-DM - De Mol - Maarten
-- Groupmember 5 : {{GitHub Username}} - {{Lastname}} - {{Firstname}}
+- Groupmember 5 : arshadaysa - Arshad - Aysha
 - Groupmember 6 : {{GitHub Username}} - {{Lastname}} - {{Firstname}}
