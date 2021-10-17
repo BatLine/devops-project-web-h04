@@ -1,7 +1,22 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;700;900&display=swap');
+
+/*Colors*/
+:root {
+    --main-color-brown: rgba(191, 93, 74, 1);
+}
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Red Hat Display';
+}
+
+p {
+    font-weight: 400;
+}
+
+
+.btn-dark {
+    background-color: black;
 }
 
 a, .btn-link {
@@ -62,24 +77,23 @@ header.masthead {
 }
 
     header.masthead .masthead-subheading {
+        font-weight: 400;
         text-align: left;
         font-size: 1.5rem;
-        font-style: italic;
         line-height: 1.5rem;
         margin-bottom: 25px;
-        font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }
 
     header.masthead .masthead-heading {
+        font-weight: 900;
         text-align: left;
         font-size: 2rem;
         line-height: 3.25rem;
         margin-bottom: 2rem;
-        font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }
 
 .artistname {
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .nav-item {
