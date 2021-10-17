@@ -10,10 +10,14 @@ html, body {
     font-family: 'Red Hat Display';
 }
 
+p.black-style {
+    font-size: 1.25rem;
+    font-weight: 900;
+}
+
 p {
     font-weight: 400;
 }
-
 
 .btn-dark {
     background-color: black;
@@ -91,10 +95,6 @@ header.masthead {
         line-height: 3.25rem;
         margin-bottom: 2rem;
     }
-
-.artistname {
-    /*font-weight: bold;*/
-}
 
 .nav-item {
     padding-right: 3em;

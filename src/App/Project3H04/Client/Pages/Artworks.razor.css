@@ -1,0 +1,44 @@
+﻿
+.flex-container {
+    margin-left: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.column {
+    margin-right: 5em;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.img {
+    margin-top: 3em;
+    width: 100%;
+}
+
+.artwork-text {
+    width: auto;
+    height: 6em;
+}
+
+p.artistname {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin: 0;
+}
+
+p.artwork, p.price {
+    font-size: 1em;
+    font-weight: 300;
+    font-style: italic;
+    margin: 0;
+}
