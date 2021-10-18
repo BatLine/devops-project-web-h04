@@ -1,0 +1,47 @@
+﻿@page "/login"
+@inject NavigationManager NavigationManager
+
+
+<h1>Login</h1>
+
+<div class="card-body">
+    <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label>Username</label>
+            <InputText @bind-Value="model.Email" class="form-control" />
+            <ValidationMessage For="@(() => model.Email)" />
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <InputText @bind-Value="model.Password" type="password" class="form-control" />
+            <ValidationMessage For="@(() => model.Password)" />
+        </div>
+        <button disabled="@loading" class="btn btn-primary">
+            @if (loading)
+            {
+                <span class="spinner-border spinner-border-sm mr-1"></span>
+            }
+            Login
+        </button>
+        <NavLink href="/register" class="btn btn-link">Register</NavLink>
+    </EditForm>
+</div>
+
+
+@code {
+    private bool loading;
+    private LoginDTO model = new LoginDTO();
+
+    async void HandleValidSubmit()
+    {
+        loading = true;
+        NavigationManager.NavigateTo("/");
+    }
+
+    private class LoginDTO
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+}
