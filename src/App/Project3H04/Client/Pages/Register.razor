@@ -1,7 +1,24 @@
 ﻿@page "/register"
+@inject NavigationManager NavigationManager
 
 <h1>Register</h1>
 
-@code {
+<button type="submit" @onclick="HandleValidSubmit">Register</button>
+<NavLink href="login" class="btn btn-link">Cancel</NavLink>
 
+
+@code {
+    private string userName = "";
+    private string password = "";
+
+    private void HandleValidSubmit()
+    {
+        GoToHomePage().Wait();
+    }
+
+
+    async Task GoToHomePage()
+    {
+        NavigationManager.NavigateTo("/", true);
+    }
 }
