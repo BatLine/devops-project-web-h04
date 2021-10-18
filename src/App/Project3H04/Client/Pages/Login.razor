@@ -4,19 +4,46 @@
 
 <h1>Login</h1>
 
-<button type="submit" @onclick="HandleValidSubmit">Login</button>
+<h4 class="card-header">Login</h4>
+
+<div class="card-body">
+    <EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label>Username</label>
+            <InputText @bind-Value="model.Email" class="form-control" />
+            <ValidationMessage For="@(() => model.Email)" />
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <InputText @bind-Value="model.Password" type="password" class="form-control" />
+            <ValidationMessage For="@(() => model.Password)" />
+        </div>
+        <button disabled="@loading" class="btn btn-primary">
+            @if (loading)
+            {
+                <span class="spinner-border spinner-border-sm mr-1"></span>
+            }
+            Login
+        </button>
+        <NavLink href="/register" class="btn btn-link">Register</NavLink>
+    </EditForm>
+</div>
+
 
 @code {
-    private string userName = "";
-    private string password = "";
+    private bool loading;
+    private LoginDTO model = new LoginDTO();
 
-    private void HandleValidSubmit()
+    async void HandleValidSubmit()
     {
-        GoToHomePage().Wait();
+        loading = true;
+        NavigationManager.NavigateTo("/");
     }
 
-    async Task GoToHomePage()
+    private class LoginDTO
     {
-        NavigationManager.NavigateTo("/", true);
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }
