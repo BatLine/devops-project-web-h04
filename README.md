@@ -13,7 +13,6 @@
 Instructions how to run the project (don't forget the DB Connection etc.)
 
 ## Members
-> Fill in this information
 - Groupmember 1 : houssamBouazzaoui - Bouazzaoui - Houssam 
 - Groupmember 2 : LeonPaelinck - Paelinck - Leon
 - Groupmember 3 : MohamedDilawar-hogent - Dilawar - Mohamed
