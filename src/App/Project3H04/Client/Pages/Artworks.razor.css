@@ -1,6 +1,5 @@
 ﻿
 .flex-container {
-   
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,7 +19,6 @@
 }
 
 img {
-    margin-top: 3em;
     width: 100%;
 }
 
@@ -47,6 +45,8 @@ p.artwork, p.price {
 .filter-container {
     align-content: flex-start;
     width: 35%;
+    margin-right: 2em;
+    padding-right: 5em;
 }
 
 .transition, p, ul li i:before, ul li i:after {
@@ -144,10 +144,12 @@ ul {
         position: relative;
         padding: 0;
         margin: 0;
-        padding-bottom: 4px;
+        padding-bottom: 10px;
         padding-top: 18px;
         border-top: 1px dotted #dce7eb;
     }
+
+        /*/load animation!!!*/
 
         ul li:nth-of-type(1) {
             animation-delay: 0.5s;
@@ -159,6 +161,15 @@ ul {
 
         ul li:nth-of-type(3) {
             animation-delay: 1.0s;
+        }
+
+        ul li:nth-of-type(4) {
+            animation-delay: 1.25s;
+        }
+
+
+        ul li:nth-of-type(5) {
+            animation-delay: 1.50s;
         }
 
         ul li:last-of-type {
