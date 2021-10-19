@@ -34,6 +34,8 @@ namespace Project3H04.Server.Controllers
         [HttpGet]
         public IEnumerable<Kunstenaar> Get()
         {
+            //werkt niet meer ViewData["Statussen"] = GetStatusSelectList(status);
+
             return _kunstenaars;
         }
 

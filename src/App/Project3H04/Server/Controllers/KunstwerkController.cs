@@ -33,6 +33,8 @@ namespace Project3H04.Server.Controllers
         [HttpGet]
         public IEnumerable<Kunstwerk> Get()
         {
+            //werkt niet meer ViewData["Statussen"] = GetStatusSelectList(status);
+
             return _context.Kunstwerken.ToList();
         }
 
