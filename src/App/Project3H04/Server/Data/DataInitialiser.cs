@@ -16,7 +16,7 @@ namespace Project3H04.Server.Data
 
         public void InitializeData()
         {
-            _dbContext.Database.EnsureDeleted();
+            //_dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
                 //seeding the database, see DBContext               
