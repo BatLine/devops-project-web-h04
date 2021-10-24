@@ -25,7 +25,7 @@ namespace Project3H04.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetKunstwerken()
         {
-            return Ok(await _context.Kunstwerken.ToListAsync());
+            return Ok(await _context.Kunstwerken.Include(k => k.Fotos).ToListAsync());
         }
 
         // GET api/<KunstwerkController>/5
@@ -43,7 +43,7 @@ namespace Project3H04.Server.Controllers
 
 
         // POST api/<KunstwerkController>
-        [HttpPost]
+/*        [HttpPost]
         public ActionResult<Kunstwerk> Post(Kunstwerk_DTO kunst)
         {
             Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
@@ -56,7 +56,7 @@ namespace Project3H04.Server.Controllers
 
 
             return CreatedAtAction(nameof(Get), new { id = kunstwerkToCreate.Naam }, kunstwerkToCreate);
-        }
+        }*/
 
 
 

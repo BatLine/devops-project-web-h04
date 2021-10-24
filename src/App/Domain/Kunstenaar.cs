@@ -25,9 +25,14 @@ namespace Domain
             Veilingen = new List<Veiling>();
         }
 
+        public void AddKunstwerk(Kunstwerk kunst)
+        {
+            Kunstwerken.Add(kunst);
+        }
+
         public Kunstenaar()
         {
-
+            Kunstwerken = new List<Kunstwerk>();
         }
     }
 }

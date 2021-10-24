@@ -16,7 +16,7 @@ namespace Project3H04.Shared.Kunstwerken
 
             public string Beschrijving { get; set; }
 
-            public string Fotos { get; set; }
+            public List<Foto_DTO> Fotos { get; set; }
 
             public bool TeKoop { get; set; }
 
