@@ -1,90 +1,109 @@
 ﻿@page "/artworks"
+@inject IKunstwerkService KunstwerkService
 <body>
 
-    <div class="flex-container">
 
-        <p class="black-style" style="padding-left:25em">Artworks</p>
 
-        <div class="box justify-content-lg-center">
+        <div class="flex-container">
 
-            <div class="box">
-                <div class="filter-container">
-                    <ul>
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Artists</h2>
-                            <p>Here comes a checkbox</p>
-                        </li>
 
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Medium</h2>
-                            <p>Here comes a checkbox</p>
-                        </li>
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Ways to buy</h2>
-                            <p>Here comes a checkbox</p>
-                        </li>
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Price</h2>
-                            <p>Here comes a checkbox</p>
-                        </li>
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Size</h2>
-                            <p>Here comes a checkbox</p>
-                        </li>
-                    </ul>
-                </div>
 
-                <div class="column">
+            <p class="black-style" style="padding-left:25em;justify-content:left;">Artworks</p>
 
-                    <img src="/images/artist1.PNG" alt="" />
-                    <div class="artwork-text">
-                        <p class="artistname">Inara Nguyen</p>
-                        <p class="artwork">Dual Nature, 2020</p>
-                    </div>
-                    <img src="/images/artist2.PNG" alt="" />
-                    <div class="artwork-text">
-                        <p class="artistname">Issac Elis</p>
-                        <p class="artwork">Nature, 2020</p>
-                        <p class="price">€200</p>
+
+
+            <div class="box justify-content-lg-center">
+
+
+
+                <div class="box">
+                    <div class="filter-container">
+                        <ul>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Artists</h2>
+                                <p>Here comes a checkbox</p>
+                            </li>
+
+
+
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Medium</h2>
+                                <p>Here comes a checkbox</p>
+                            </li>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Ways to buy</h2>
+                                <p>Here comes a checkbox</p>
+                            </li>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Price</h2>
+                                <p>Here comes a checkbox</p>
+                            </li>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Size</h2>
+                                <p>Here comes a checkbox</p>
+                            </li>
+                        </ul>
                     </div>
 
-                    <img src="/images/artist3.PNG" alt="" />
-                    <div class="artwork-text">
-                        <p class="artistname">Cassia Herrall</p>
-                        <p class="artwork">New Nature, 1997</p>
-                    </div>
-                </div>
-                <div class="column">
-                    <img src="/images/artist4.PNG" alt="" />
-                    <div class="artwork-text">
-                        <p class="artistname">Cassia Herrall</p>
-                        <p class="artwork">New Nature, 1997</p>
-                    </div>
+                    <div class="column">
 
-                    <img src="/images/artist1.PNG" alt="" />
+                        @if (kunstwerken != null)
+                        {
+                            @foreach (var kunst in kunstwerken)
+                            {
 
-                    <div class="artwork-text">
-                        <p class="artistname">Inara Nguyen</p>
-                    </div>
+                                <div class="column">
+                                    <div>
+                                        <img src="/images/@kunst.Fotos.First().Pad" alt="" />
+                                        <div class="artwork-text">
+                                            <p>@kunst.NaamKunstenaar</p>
+                                            <p>@kunst.Naam</p>
+                                            <p>@kunst.Prijs</p>
+                                            <p>@kunst.Beschrijving</p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <img src="/images/artist2.PNG" alt="" />
 
-                    <div class="artwork-text">
-                        <p class="artistname">Issac Elis</p>
+
+                            }
+
+                        }
+                        else
+                        {
+                            <p>Loading ...</p>
+                        }
                     </div>
 
                 </div>
             </div>
+            <select id="materiaal" name="materiaal"
+            class="form-control" onchange="FilterOpMateriaal">
+            foreach(var mat in materialen )
+            {
+            <option value="mat">mat</option>
+            }
+            </select>
         </div>
-    </div>
-</body>
+    </body>
+
+@code {  
+
+    private List<Kunstwerk_DTO> kunstwerken;
+    protected override async Task OnInitializedAsync()
+    {
+        kunstwerken = await KunstwerkService.GetKunstwerken();
+    }
+
+}
+

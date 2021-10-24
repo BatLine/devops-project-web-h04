@@ -10,13 +10,13 @@ namespace Domain
         public DateTime Einddatum { get; private set; }
         public double Prijs { get; private set; }
         public string Beschrijving { get; private set; }
-        public byte[] Fotos { get; private set; }
+        public List<Foto> Fotos { get; private set; }
         public bool TeKoop { get; set; }
         public bool IsVeilbaar { get; set; }
         public string Materiaal { get; private set; }
         public string NaamKunstenaar { get; private set; }
 
-        public Kunstwerk(string naam, DateTime einddatum, double prijs, string beschrijving, byte[] fotos, bool isVeilbaar, string materiaal, string naamKunstenaar)
+        public Kunstwerk(string naam, DateTime einddatum, double prijs, string beschrijving, List<Foto> fotos, bool isVeilbaar, string materiaal, string naamKunstenaar)
         {
             Naam = naam;
             Einddatum = einddatum;
@@ -33,6 +33,5 @@ namespace Domain
         {
 
         }
-
     }
 }

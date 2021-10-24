@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Project3H04.Shared.Kunstwerken;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Project3H04.Client.Services;
 
 namespace Project3H04.Client
 {
@@ -15,8 +15,8 @@ namespace Project3H04.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddScoped<IKunstwerkService, FakeKunstwerkService>();
 
+            builder.Services.AddScoped<IKunstwerkService, KunstwerkService>();
             await builder.Build().RunAsync();
         }
     }
