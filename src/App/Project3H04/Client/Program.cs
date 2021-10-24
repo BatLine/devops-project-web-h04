@@ -15,6 +15,7 @@ namespace Project3H04.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
             builder.Services.AddScoped<IKunstwerkService, KunstwerkService>();
             await builder.Build().RunAsync();
         }
