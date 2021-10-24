@@ -1,6 +1,6 @@
 ﻿@page "/artworks/{id:int}"
 @using Project3H04.Shared.Kunstwerken
-@inject IFakeKunstwerkService Service
+@inject IKunstwerkService Service
 <h3>Details</h3>
 @if(_kunstwerk == null)
        {
@@ -11,7 +11,7 @@ else
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-6">
-            <img src="/images/@_kunstwerk.Fotos.First()" />
+            <img src="/images/@_kunstwerk.Fotos.First().Pad" />
         </div>
 
         
@@ -22,7 +22,7 @@ else
                 <h1 style="text-align: center">@_kunstwerk.Naam</h1>
                 <p><span style="font-weight:bold">Kunstenaar</span> : @_kunstwerk.NaamKunstenaar</p>
                 <p class="subtitle" style="text-align:left; font-weight:bold">about</p>
-                <p style="border: 1px solid black; width:100%; height:auto">@_kunstwerk.Details</p>
+                <p style="border: 1px solid black; width:100%; height:auto">@_kunstwerk.Beschrijving</p>
                 <p><span style="font-weight:bold">Materiaal</span> : @_kunstwerk.Materiaal</p>
                 <p style="font-size:3rem; ">$@_kunstwerk.Prijs</p>
                 @if (_kunstwerk.Fotos.Count > 1)
@@ -31,9 +31,9 @@ else
                         <p style="text-align:left; font-weight:bold">photos</p>
 
 
-                        @foreach (string foto in _kunstwerk.Fotos.Skip(1))
+                        @foreach (Foto_DTO foto in _kunstwerk.Fotos.Skip(1))
                         {
-                            <img src="/images/@foto" width="250" height="250" style="padding-right:20px;" />
+                            <img src="/images/@foto.Pad" width="250" height="250" style="padding-right:20px;" />
                         }
                     </div>
                 }

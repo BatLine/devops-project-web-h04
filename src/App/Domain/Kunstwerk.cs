@@ -6,6 +6,7 @@ namespace Domain
 {
     public class Kunstwerk
     {
+        public int Id { get; set; }
         public string Naam { get; private set; }
         public DateTime Einddatum { get; private set; }
         public double Prijs { get; private set; }

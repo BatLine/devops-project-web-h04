@@ -30,14 +30,13 @@ namespace Project3H04.Server.Controllers
 
         // GET api/<KunstwerkController>/5
         [HttpGet("{id}")]
-        public ActionResult<Kunstwerk> Get(string naam)
+        public ActionResult<Kunstwerk> Get(int id)
         {
-            if (!string.IsNullOrEmpty(naam))
-                return _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
+            Kunstwerk k = _context.Kunstwerken.Include(k => k.Fotos).SingleOrDefault(x => x.Id == id);
+            if(k == null)
+                return NotFound();
 
-
-
-            return NotFound();
+            return k;
         }
 
 

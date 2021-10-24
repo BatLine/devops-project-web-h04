@@ -13,8 +13,8 @@ namespace Project3H04.Shared.Kunstwerken
         {
             var lijstKunstwerken = new List<KunstwerkDTO.Detail>()
             {
-               new KunstwerkDTO.Detail(1, "kunstwerk 1", 200, new List<string>{"artist1.PNG"},"Hout", "kunstenaar 1","bla bla"),
-               new KunstwerkDTO.Detail(2, "kunstwerk 2", 300, new List<string>{"artist2.PNG","artist3.PNG"},"Hout", "kunstenaar 1", "bla bla")
+               new KunstwerkDTO.Detail(1, "kunstwerk 1", 200, new List<Foto_DTO>{ new Foto_DTO { Pad="artist1.PNG" } },"Hout", "kunstenaar 1","bla bla"),
+               new KunstwerkDTO.Detail(2, "kunstwerk 2", 300, new List<Foto_DTO>{ new Foto_DTO { Pad = "artist12.PNG" }, new Foto_DTO { Pad = "artist12.PNG" }},"Hout", "kunstenaar 1", "bla bla")
             };
             _kunstwerken.AddRange(lijstKunstwerken);
         }
