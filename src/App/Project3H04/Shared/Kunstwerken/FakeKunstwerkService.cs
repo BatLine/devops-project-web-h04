@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project3H04.Shared.Kunstwerken
 {
-    public class FakeKunstwerkService : IKunstwerkService
+    public class FakeKunstwerkService : IFakeKunstwerkService
     {
         private static List<KunstwerkDTO.Detail> _kunstwerken = new();
         static FakeKunstwerkService()
