@@ -8,6 +8,7 @@ namespace Project3H04.Client.Services
     public interface IKunstwerkService
     {
         List<Kunstwerk_DTO> Kunstwerken { get; set; }
-        Task<List<Kunstwerk_DTO>> GetKunstwerken(); 
+        Task<List<Kunstwerk_DTO>> GetKunstwerken();
+        Task<KunstwerkDTO.Detail> GetDetailAsync(int id);
     }
 }

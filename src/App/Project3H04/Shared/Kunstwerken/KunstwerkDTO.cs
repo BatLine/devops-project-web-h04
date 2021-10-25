@@ -12,9 +12,9 @@ namespace Project3H04.Shared.Kunstwerken
 
             public decimal Prijs { get; set; }
 
-            public List<string> Fotos { get; set; }
+            public List<Foto_DTO> Fotos { get; set; }
 
-            public Index(int id, string naam, decimal prijs, List<string> fotos)
+            public Index(int id, string naam, decimal prijs, List<Foto_DTO> fotos)
             {
                 Id = id;
                 Naam = naam;
@@ -28,13 +28,13 @@ namespace Project3H04.Shared.Kunstwerken
             public string Materiaal { get; set; }
 
             public string NaamKunstenaar { get; set; }
-            public string Details { get; set; }
+            public string Beschrijving { get; set; }
 
-            public Detail(int id, string naam, decimal prijs, List<string> fotos, string materiaal, string naamKunstenaar, string details) : base(id,naam,prijs,fotos)
+            public Detail(int id, string naam, decimal prijs, List<Foto_DTO> fotos, string materiaal, string naamKunstenaar, string beschrijving) : base(id,naam,prijs,fotos)
             {
                 Materiaal = materiaal;
                 NaamKunstenaar = naamKunstenaar;
-                Details = details;
+                Beschrijving = beschrijving;
             }
         }
         

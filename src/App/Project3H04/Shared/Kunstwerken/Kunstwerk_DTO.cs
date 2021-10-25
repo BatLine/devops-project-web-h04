@@ -8,7 +8,8 @@ namespace Project3H04.Shared.Kunstwerken
 {
     public class Kunstwerk_DTO
     {
-            public string Naam { get; set; }
+        public int Id { get; set; }
+        public string Naam { get; set; }
 
             public DateTime Einddatum { get; set; }
 

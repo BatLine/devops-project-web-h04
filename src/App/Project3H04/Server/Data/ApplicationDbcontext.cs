@@ -47,7 +47,8 @@ namespace Project3H04.Server.Data
             //Kunstwerk
 
             builder.Entity<Kunstwerk>()
-                   .ToTable("Kunstwerk").HasKey(x => x.Naam);
+                   .ToTable("Kunstwerk").HasKey(x => x.Id);
+            builder.Entity<Kunstwerk>().Property(x => x.Naam).HasMaxLength(500).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.Beschrijving).HasMaxLength(500).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.Einddatum).IsRequired();
             //builder.Entity<Kunstwerk>().Property(x => x.Fotos);

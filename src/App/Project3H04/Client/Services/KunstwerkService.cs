@@ -17,6 +17,12 @@ namespace Project3H04.Client.Services
         }
         public List<Kunstwerk_DTO> Kunstwerken { get; set; } = new List<Kunstwerk_DTO>();
 
+        public async Task<KunstwerkDTO.Detail> GetDetailAsync(int id)
+        {
+            KunstwerkDTO.Detail kunst = await _httpClient.GetFromJsonAsync<KunstwerkDTO.Detail>($"api/Kunstwerk/{id}");
+            return kunst;
+        }
+
         public async Task<List<Kunstwerk_DTO>> GetKunstwerken()
         {
             Kunstwerken = await _httpClient.GetFromJsonAsync<List<Kunstwerk_DTO>>("api/Kunstwerk");

@@ -62,17 +62,21 @@
                             @foreach (var kunst in kunstwerken)
                             {
 
-                                <div class="column">
-                                    <div>
-                                        <img src="/images/@kunst.Fotos.First().Pad" alt="" />
-                                        <div class="artwork-text">
-                                            <p>@kunst.NaamKunstenaar</p>
-                                            <p>@kunst.Naam</p>
-                                            <p>@kunst.Prijs</p>
-                                            <p>@kunst.Beschrijving</p>
-                                        </div>
+                        <div class="column">
+                            <a href="artworks/@kunst.Id" style="text-decoration:none">
+                                <div>
+
+                                    <img src="/images/@kunst.Fotos.First().Pad" alt="" />
+                                    <div class="artwork-text">
+                                        <p>@kunst.NaamKunstenaar</p>
+                                        <p>@kunst.Naam</p>
+                                        <p>@kunst.Prijs</p>
+                                        <p>@kunst.Beschrijving</p>
                                     </div>
+
                                 </div>
+                            </a>
+                        </div>
 
 
 

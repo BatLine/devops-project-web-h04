@@ -15,7 +15,7 @@
     margin-right: 5em;
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 50%;
 }
 
 img {
@@ -40,16 +40,23 @@ p.artwork, p.price {
     margin: 0;
 }
 
+/*Checkbox CSS*/
+.checkbox input[type="checkbox"] {
+    opacity: 1;
+}
+
+
 /*Filter CSS */
 
 .filter-container {
     align-content: flex-start;
-    width: 35%;
+    width: 30%;
     margin-right: 2em;
     padding-right: 5em;
 }
 
-.transition, p, ul li i:before, ul li i:after {
+
+.transition, p, .checkbox, ul li i:before, ul li i:after {
     transition: all 0.25s ease-in-out;
 }
 
@@ -79,11 +86,6 @@ body {
     min-height: 0;
     display: inline-block;
     position: relative;
-    left: 50%;
-    margin: 90px 0;
-    transform: translate(-50%, 0);
-    box-shadow: 0 10px 0 0 #ff6873 inset;
-    max-width: 450px;
     padding: 10px;
 }
 
@@ -98,19 +100,8 @@ body {
     }
 }
 
-h1, h2 {
-    color: black;
-}
-
-h1 {
-    text-transform: uppercase;
-    font-size: 36px;
-    line-height: 42px;
-    letter-spacing: 3px;
-    font-weight: 100;
-}
-
 h2 {
+    color: black;
     font-size: 1em;
     line-height: 34px;
     font-weight: 300;
@@ -121,7 +112,7 @@ h2 {
     cursor: pointer;
 }
 
-p {
+p, .checkbox {
     color: black;
     font-size: 1em;
     position: relative;
@@ -199,7 +190,7 @@ ul {
                 transform: translate(2px, 0) rotate(-45deg);
             }
 
-        ul li input[type=checkbox] {
+        ul li input[type=checkbox]:not(.checkbox input[type=checkbox]) {
             position: absolute;
             cursor: pointer;
             width: 100%;
@@ -208,20 +199,20 @@ ul {
             opacity: 0;
         }
 
-            ul li input[type=checkbox]:checked ~ p {
-                margin-top: 0;
-                max-height: 0;
-                opacity: 0;
-                transform: translate(0, 50%);
-            }
+        ul li input[type=checkbox]:checked ~ .checkbox, ul li input[type=checkbox]:checked ~ p {
+            margin-top: 0;
+            max-height: 0;
+            opacity: 0;
+            transform: translate(0, 50%);
+        }
 
-            ul li input[type=checkbox]:checked ~ i:before {
-                transform: translate(2px, 0) rotate(45deg);
-            }
+        ul li input[type=checkbox]:checked ~ i:before {
+            transform: translate(2px, 0) rotate(45deg);
+        }
 
-            ul li input[type=checkbox]:checked ~ i:after {
-                transform: translate(-2px, 0) rotate(-45deg);
-            }
+        ul li input[type=checkbox]:checked ~ i:after {
+            transform: translate(-2px, 0) rotate(-45deg);
+        }
 
 @keyframes flipdown {
     0% {
