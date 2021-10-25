@@ -1,0 +1,133 @@
+﻿@page "/artists"
+@inject IKunstenaarService KunstenaarService
+<body>
+
+
+
+    <div class="flex-container">
+
+
+
+        <p class="black-style" style="padding-left:25em;justify-content:left;">Artworks</p>
+
+
+
+        <div class="box justify-content-lg-center">
+
+
+
+            <div class="box">
+                <div class="filter-container">
+                    <ul>
+                        <li>
+                            <input type="checkbox" checked>
+                            <i></i>
+                            <h2>Artists</h2>
+                            <p>Here comes a checkbox</p>
+                        </li>
+
+
+
+                        <li>
+                            <input type="checkbox" checked>
+                            <i></i>
+                            <h2>Medium</h2>
+                            <p>Here comes a checkbox</p>
+                        </li>
+                        <li>
+                            <input type="checkbox" checked>
+                            <i></i>
+                            <h2>Ways to buy</h2>
+                            <p>Here comes a checkbox</p>
+                        </li>
+                        <li>
+                            <input type="checkbox" checked>
+                            <i></i>
+                            <h2>Price</h2>
+                            <p>Here comes a checkbox</p>
+                        </li>
+                        <li>
+                            <input type="checkbox" checked>
+                            <i></i>
+                            <h2>Size</h2>
+                            <p>Here comes a checkbox</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="column">
+
+                    @if (kunstenaars != null)
+                    {
+                        @foreach (var kunst in kunstenaars)
+                        {
+
+                            <div class="column">
+                                <div>
+                                    <img src="/images/artist2.PNG" alt="" />
+                                    <div class="artwork-text">
+                                        <p>@kunst.Gebruikersnaam</p>
+                                        <p>@kunst.Email</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        }
+
+                    }
+                    else
+                    {
+                        <p>Loading ...</p>
+                    }
+                </div>
+
+            </div>
+        </div>
+        <select id="materiaal" name="materiaal"
+                class="form-control" onchange="FilterOpMateriaal">
+            foreach(var mat in materialen )
+            {
+            <option value="mat">mat</option>
+            }
+        </select>
+    </div>
+
+    @if (kunstenaars != null)
+    {
+        @foreach (var kunst in kunstenaars)
+        {
+
+            <div class="column">
+                <div>
+                    <img src="/images/artist2.PNG" alt="" />
+                    <div class="artwork-text">
+                        <p>@kunst.Gebruikersnaam</p>
+                        <p>@kunst.Email</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        }
+
+    }
+    else
+    {
+        <p>Loading ...</p>
+    }
+
+</body>
+
+@code {  
+
+    private List<Kunstenaar_DTO> kunstenaars;
+    protected override async Task OnInitializedAsync()
+    {
+        kunstenaars = await KunstenaarService.GetKunstenaars();
+    }
+
+}
+
