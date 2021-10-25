@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; //deze voor de async toevoegen, de andere is kek
 using Project3H04.Server.Data;
-using Project3H04.Server.DTO;
 using System;
 using System.Collections.Generic;
 

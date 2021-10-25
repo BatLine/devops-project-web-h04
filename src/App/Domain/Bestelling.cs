@@ -15,7 +15,7 @@ namespace Domain
         public int Postcode { get; set; }
         public string Gemeente { get; set; }
         public DateTime LeverDatum { get; set; }
-        public double TotalePrijs { get; set; }
+        public decimal TotalePrijs { get; set; }
         public ICollection<Kunstwerk> WinkelmandKunstwerken { get; set; } // deze niet in DB, winkelmand lokaal bijhouden
 
         public Bestelling()

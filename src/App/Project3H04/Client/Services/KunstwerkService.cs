@@ -15,18 +15,18 @@ namespace Project3H04.Client.Services
         {
             _httpClient = httpClient;
         }
-        public List<Kunstwerk_DTO> Kunstwerken { get; set; } = new List<Kunstwerk_DTO>();
+        public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; } = new List<Kunstwerk_DTO.Detail>();
 
-        public async Task<KunstwerkDTO.Detail> GetDetailAsync(int id)
+        public async Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id)
         {
-            KunstwerkDTO.Detail kunst = await _httpClient.GetFromJsonAsync<KunstwerkDTO.Detail>($"api/Kunstwerk/{id}");
+            Kunstwerk_DTO.Detail kunst = await _httpClient.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/Kunstwerk/{id}");
             return kunst;
         }
 
-        public async Task<List<Kunstwerk_DTO>> GetKunstwerken()
+        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken()
         {
-            Kunstwerken = await _httpClient.GetFromJsonAsync<List<Kunstwerk_DTO>>("api/Kunstwerk");
-            return Kunstwerken;
+            Kunstwerken = await _httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Detail>>("api/Kunstwerk");
+            return Kunstwerken.Select(x=> new Kunstwerk_DTO.Index(x.Id, x.Naam, x.Prijs, x.Fotos, x.NaamKunstenaar)).ToList();
         }
     }
 }
