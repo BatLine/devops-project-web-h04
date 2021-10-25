@@ -1,0 +1,253 @@
+﻿
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.box {
+    display: flex;
+    flex-direction: row;
+}
+
+.column {
+    margin-right: 5em;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+img {
+    width: 100%;
+}
+
+.artwork-text {
+    width: auto;
+    height: 6em;
+}
+
+p.artistname {
+    font-size: 1.2em;
+    font-weight: 500;
+    margin: 0;
+}
+
+p.artwork, p.price {
+    font-size: 1em;
+    font-weight: 300;
+    font-style: italic;
+    margin: 0;
+}
+
+/*Filter CSS */
+
+.filter-container {
+    align-content: flex-start;
+    width: 35%;
+    margin-right: 2em;
+    padding-right: 5em;
+}
+
+.transition, p, ul li i:before, ul li i:after {
+    transition: all 0.25s ease-in-out;
+}
+
+.flipIn, h1, ul li {
+    animation: flipdown 0.5s ease both;
+}
+
+.no-select, h2 {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    perspective: 900;
+    overflow-y: scroll;
+    color: black;
+}
+
+body {
+    min-height: 0;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    margin: 90px 0;
+    transform: translate(-50%, 0);
+    box-shadow: 0 10px 0 0 #ff6873 inset;
+    max-width: 450px;
+    padding: 10px;
+}
+
+@media (max-width: 550px) {
+    body {
+        box-sizing: border-box;
+        transform: translate(0, 0);
+        max-width: 100%;
+        min-height: 100%;
+        margin: 0;
+        left: 0;
+    }
+}
+
+h1, h2 {
+    color: black;
+}
+
+h1 {
+    text-transform: uppercase;
+    font-size: 36px;
+    line-height: 42px;
+    letter-spacing: 3px;
+    font-weight: 100;
+}
+
+h2 {
+    font-size: 1em;
+    line-height: 34px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    display: block;
+    background-color: #fefffa;
+    margin: 0;
+    cursor: pointer;
+}
+
+p {
+    color: black;
+    font-size: 1em;
+    position: relative;
+    overflow: hidden;
+    max-height: 800px;
+    opacity: 1;
+    transform: translate(0, 0);
+    margin-top: 14px;
+    z-index: 2;
+}
+
+ul {
+    list-style: none;
+    perspective: 900;
+    padding: 0;
+    margin: 0;
+}
+
+    ul li {
+        position: relative;
+        padding: 0;
+        margin: 0;
+        padding-bottom: 10px;
+        padding-top: 18px;
+        border-top: 1px dotted #dce7eb;
+    }
+
+        /*/load animation!!!*/
+
+        ul li:nth-of-type(1) {
+            animation-delay: 0.5s;
+        }
+
+        ul li:nth-of-type(2) {
+            animation-delay: 0.75s;
+        }
+
+        ul li:nth-of-type(3) {
+            animation-delay: 1.0s;
+        }
+
+        ul li:nth-of-type(4) {
+            animation-delay: 1.25s;
+        }
+
+
+        ul li:nth-of-type(5) {
+            animation-delay: 1.50s;
+        }
+
+        ul li:last-of-type {
+            padding-bottom: 0;
+        }
+
+        ul li i {
+            position: absolute;
+            transform: translate(-6px, 0);
+            margin-top: 16px;
+            right: 0;
+        }
+
+            ul li i:before, ul li i:after {
+                content: "";
+                position: absolute;
+                background-color: black;
+                width: 3px;
+                height: 9px;
+            }
+
+            ul li i:before {
+                transform: translate(-2px, 0) rotate(45deg);
+            }
+
+            ul li i:after {
+                transform: translate(2px, 0) rotate(-45deg);
+            }
+
+        ul li input[type=checkbox] {
+            position: absolute;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0;
+        }
+
+            ul li input[type=checkbox]:checked ~ p {
+                margin-top: 0;
+                max-height: 0;
+                opacity: 0;
+                transform: translate(0, 50%);
+            }
+
+            ul li input[type=checkbox]:checked ~ i:before {
+                transform: translate(2px, 0) rotate(45deg);
+            }
+
+            ul li input[type=checkbox]:checked ~ i:after {
+                transform: translate(-2px, 0) rotate(-45deg);
+            }
+
+@keyframes flipdown {
+    0% {
+        opacity: 0;
+        transform-origin: top center;
+        transform: rotateX(-90deg);
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    80% {
+        transform: rotateX(8deg);
+    }
+
+    83% {
+        transform: rotateX(6deg);
+    }
+
+    92% {
+        transform: rotateX(-3deg);
+    }
+
+    100% {
+        transform-origin: top center;
+        transform: rotateX(0deg);
+    }
+}
