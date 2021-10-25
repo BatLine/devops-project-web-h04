@@ -112,9 +112,6 @@
                                                 <p class="artwork">@kunst.Naam</p>
                                                 <p class="price">€@kunst.Prijs</p>
 
-
-
-                                                <!--<p>@kunst.Beschrijving</p> -->
                                             </div>
 
                                         </div>
@@ -143,7 +140,7 @@
 @code {
 
 
-    private List<Kunstwerk_DTO> kunstwerken;
+    private List<Kunstwerk_DTO.Index> kunstwerken;
     protected override async Task OnInitializedAsync()
     {
         kunstwerken = await KunstwerkService.GetKunstwerken();
