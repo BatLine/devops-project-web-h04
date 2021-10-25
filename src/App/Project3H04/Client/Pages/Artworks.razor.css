@@ -15,7 +15,7 @@
     margin-right: 5em;
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 50%;
 }
 
 img {
@@ -50,7 +50,7 @@ p.artwork, p.price {
 
 .filter-container {
     align-content: flex-start;
-    width: 35%;
+    width: 30%;
     margin-right: 2em;
     padding-right: 5em;
 }
@@ -86,11 +86,6 @@ body {
     min-height: 0;
     display: inline-block;
     position: relative;
-    left: 50%;
-    margin: 90px 0;
-    transform: translate(-50%, 0);
-    box-shadow: 0 10px 0 0 #ff6873 inset;
-    max-width: 450px;
     padding: 10px;
 }
 

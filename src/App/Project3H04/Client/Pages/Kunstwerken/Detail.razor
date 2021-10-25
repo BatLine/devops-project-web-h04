@@ -2,21 +2,21 @@
 @using Project3H04.Shared.Kunstwerken
 @inject IKunstwerkService Service
 <h3>Details</h3>
-@if(_kunstwerk == null)
-       {
-            <LoadingSpinner/>
-       }
+@if (_kunstwerk == null)
+{
+    <LoadingSpinner />
+}
 else
-      {
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-6">
-            <img src="/images/@_kunstwerk.Fotos.First().Pad" />
-        </div>
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <img src="/images/@_kunstwerk.Fotos.First().Pad" style="width: 100%; height:auto" />
+            </div>
 
-        
 
-        
+
+
             <div class="col-lg-6">
 
                 <h1 style="text-align: center">@_kunstwerk.Naam</h1>
@@ -40,15 +40,15 @@ else
 
 
 
-            
+
+            </div>
         </div>
     </div>
-</div>
-            
-        
-            
-            
-      }
+
+
+
+
+}
 
 @code {
     [Parameter] public int Id { get; set; }
