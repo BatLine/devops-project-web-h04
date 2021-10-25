@@ -13,7 +13,7 @@ namespace Project3H04.Shared.Kunstenaars
        
         public string Details { get; set; }
         public bool StatusActiefKunstenaar { get; set; }
-        public ICollection<Kunstwerk_DTO> Kunstwerken { get; set; }
+        public ICollection<Kunstwerk_DTO.Detail> Kunstwerken { get; set; }
         public ICollection<Veiling_DTO> Veilingen { get; set; }
         public Abonnement_DTO Abonnenment { get; set; }
 

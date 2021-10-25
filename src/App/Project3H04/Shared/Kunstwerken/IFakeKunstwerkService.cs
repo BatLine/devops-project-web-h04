@@ -5,7 +5,7 @@ namespace Project3H04.Shared.Kunstwerken
 {
     public interface IFakeKunstwerkService
     {
-        Task<IEnumerable<KunstwerkDTO.Index>> GetIndexAsync();
-        Task<KunstwerkDTO.Detail> GetDetailAsync(int id);
+        Task<IEnumerable<Kunstwerk_DTO.Index>> GetIndexAsync();
+        Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id);
     }
 }

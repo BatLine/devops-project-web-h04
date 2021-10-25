@@ -1,31 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project3H04.Shared.Kunstwerken
 {
-    public class Kunstwerk_DTO
+    public static class Kunstwerk_DTO
     {
-        public int Id { get; set; }
-        public string Naam { get; set; }
+        public class Index
+        {
+            public int Id { get; set; }
+            public string Naam { get; set; }
 
-            public DateTime Einddatum { get; set; }
-
-            public double Prijs { get; set; }
-
-            public string Beschrijving { get; set; }
+            public decimal Prijs { get; set; }
+            public string NaamKunstenaar { get; set; }
 
             public List<Foto_DTO> Fotos { get; set; }
 
-            public bool TeKoop { get; set; }
+            public Index(int id, string naam, decimal prijs, List<Foto_DTO> fotos, string naamKunstenaar)
+            {
+                Id = id;
+                Naam = naam;
+                Prijs = prijs;
+                Fotos = fotos;
+                NaamKunstenaar = naamKunstenaar;
+            }
 
-            public bool IsVeilbaar { get; set; }
-
+        }
+        public class Detail : Index
+        {
             public string Materiaal { get; set; }
 
-            public string NaamKunstenaar { get; set; }
+            public string Beschrijving { get; set; }
+
+            public Detail(int id, string naam, decimal prijs,List<Foto_DTO> fotos, string materiaal, string naamKunstenaar, string beschrijving) : base(id,naam,prijs,fotos,naamKunstenaar )
+            {
+                Materiaal = materiaal;
+                Beschrijving = beschrijving;
+            }
+        }
         
+
     }
 }

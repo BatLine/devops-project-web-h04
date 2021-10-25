@@ -15,6 +15,6 @@ namespace Project3H04.Shared.DTO
         public string Gemeente { get; set; }
         public DateTime LeverDatum { get; set; }
         public double TotalePrijs { get; set; }
-        public ICollection<Kunstwerk_DTO> WinkelmandKunstwerken { get; set; }
+        public ICollection<Kunstwerk_DTO.Detail> WinkelmandKunstwerken { get; set; }
     }
 }
