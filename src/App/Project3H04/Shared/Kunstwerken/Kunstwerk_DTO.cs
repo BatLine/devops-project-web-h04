@@ -24,6 +24,11 @@ namespace Project3H04.Shared.Kunstwerken
                 NaamKunstenaar = naamKunstenaar;
             }
 
+            public Index()
+            {
+                Fotos = new();
+            }
+
         }
         public class Detail : Index
         {
@@ -35,6 +40,11 @@ namespace Project3H04.Shared.Kunstwerken
             {
                 Materiaal = materiaal;
                 Beschrijving = beschrijving;
+            }
+
+            public Detail() : base()
+            {
+
             }
         }
         

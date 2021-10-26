@@ -1,0 +1,82 @@
+﻿@inject Project3H04.Client.Services.IKunstwerkService KunstwerkService
+
+@if (Model != null)
+{
+    <div class="main">
+        <EditForm Model="@Model" OnValidSubmit="@Submit">
+            <div class="form-group">
+                <label for="@Model.Naam">Name</label>
+                <InputText @bind-Value="@Model.Naam" class="form-control" />
+                <ValidationMessage For="@(() => Model.Naam)" />
+            </div>
+            <div class="form-group">
+                <label for="@Model.Prijs">Price</label>
+                <InputNumber @bind-Value="@Model.Prijs" class="form-control" />
+                <ValidationMessage For="@(() => Model.Prijs)" />
+            </div>
+            <!--Fotos-->
+            <div class="form-group">
+                <label asp-for="@_foto">Pictures</label>
+                <InputFile OnChange="@OnInputFileChange" multiple />
+            </div>
+            <div class="form-group">
+                <label for="@Model.Materiaal">Material</label>
+                <InputText @bind-Value="@Model.Materiaal" class="form-control" />
+                <ValidationMessage For="@(() => Model.Materiaal)" />
+            </div>
+            <div class="form-group">
+                <label for="@Model.Beschrijving">Description</label>
+                <InputTextArea @bind-Value="@Model.Beschrijving" class="form-control" />
+                <ValidationMessage For="@(() => Model.Beschrijving)" />
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Confirm
+            </button>
+
+                <DataAnnotationsValidator />
+        </EditForm>
+    </div>
+}
+
+
+
+@code{
+    //parameter zodat we het ook als Edit formulier kunnen gebruiken (nog werk aan)
+    [Parameter] public Kunstwerk_DTO.Detail Model { get; set; }
+
+    private string _foto;
+
+    protected override void OnInitialized()
+    {
+        if (Model == null) //in dit geval werkt het als een Create formulier
+        {
+            Model = new();
+        }
+    }
+
+    public async Task Submit()
+    {
+
+        Console.WriteLine(Model.Naam);
+        Console.WriteLine(Model.Prijs);
+        Console.WriteLine(Model.Materiaal);
+        Console.WriteLine(Model.Beschrijving);
+        foreach(var foto in Model.Fotos)
+        {
+            Console.WriteLine(foto.Pad);
+
+        }
+
+        //KunstwerkService.AddKunstwerk(Model);
+    }
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+
+        foreach (var file in e.GetMultipleFiles(2))
+        {
+            Model.Fotos.Add(new Foto_DTO() { Pad = file.Name });
+        }
+    }
+
+}
