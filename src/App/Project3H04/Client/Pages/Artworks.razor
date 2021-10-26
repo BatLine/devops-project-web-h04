@@ -13,131 +13,156 @@
         <p class="black-style" style="padding-left:25em;justify-content:left;">Artworks</p>
 
 
-
-        <div class="box justify-content-lg-center">
-
-
-
-            <div class="box">
-                <div class="filter-container">
-                    <ul>
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Artists</h2>
+        <div class="box">
+            <div class="filter-container">
+                <ul>
+                    <li>
+                        <input type="checkbox" checked>
+                        <i></i>
+                        <h2>Artists</h2>
 
 
-                        </li>
+                    </li>
 
 
 
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Medium</h2>
-                            <p>
-                            </p>
-                        </li>
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Ways to buy</h2>
-                            <div class="checkbox">
+                    <li>
+                        <input type="checkbox" checked>
+                        <i></i>
+                        <h2>Medium</h2>
+                        <div class="checkbox">
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Bid
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Buy now
-                                    </label>
-                                </div>
-
+                            <div class="form-check">
+                                <!-- Has to be triggered by JQuery-->
+                                <input class="form-check-input" type="checkbox" value="metaal" name="material-checkbox" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Metaal
+                                </label>
                             </div>
-                        </li>
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Price</h2>
-                            <p>Here comes a checkbox</p>
-                        </li>
-                        <li>
-                            <input type="checkbox" checked>
-                            <i></i>
-                            <h2>Size</h2>
-                            <div class="checkbox">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size-checkbox" value="small" id="small">
-                                    <label class="form-check-label" for="small">
-                                        Small (under 50cm)
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size-checkbox" value="medium" id="medium">
-                                    <label class="form-check-label" for="medium">
-                                        Medium (50 - 100cm)
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size-checkbox" value="large" id="large">
-                                    <label class="form-check-label" for="large">
-                                        Large (over 100cm)
-                                    </label>
-                                </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="hout" name="material-checkbox" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Hout
+                                </label>
                             </div>
-                        </li>
-                    </ul>
-                </div>
 
-                <div class="column">
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" checked>
+                        <i></i>
+                        <h2>Ways to buy</h2>
+                        <div class="checkbox">
 
-                    @if (kunstwerken != null)
+                            <div class="form-check">
+                                <!-- Has to be triggered by JQuery-->
+                                <input class="form-check-input" type="checkbox" value="bid" name="pay-checkbox" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Bid
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="buy" name="pay-checkbox" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Buy now
+                                </label>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" checked>
+                        <i></i>
+                        <h2>Price</h2>
+                        <div class="checkbox">
+
+                            <div class="form-check">
+                                <!-- Has to be triggered by JQuery-->
+                                <input class="form-check-input" type="checkbox" value="200.00" name="price-checkbox" id="200.00">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    200.00
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="300.00" name="price-checkbox" id="300.00">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    300.00
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" checked>
+                        <i></i>
+                        <h2>Size</h2>
+                        <div class="checkbox">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="size-checkbox" value="small" id="small">
+                                <label class="form-check-label" for="small">
+                                    Small (under 50cm)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="size-checkbox" value="medium" id="medium">
+                                <label class="form-check-label" for="medium">
+                                    Medium (50 - 100cm)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="size-checkbox" value="large" id="large">
+                                <label class="form-check-label" for="large">
+                                    Large (over 100cm)
+                                </label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="column">
+
+                @if (kunstwerken != null)
+                {
+                    @foreach (var kunst in kunstwerken)
                     {
-                        @foreach (var kunst in kunstwerken)
-                        {
 
-                            <div class="column">
-                                <!-- data  catagory for jquery filtering-->
-                                <div class="artwork" data-category="@kunst.NaamKunstenaar @kunst.Prijs Bid">
-                                    <a href="artworks/@kunst.Id" style="text-decoration:none">
-                                        <div>
+                        <div class="column">
+                            <!-- data  catagory for jquery filtering-->
+                            <div class="artworks" data-category="@kunst.NaamKunstenaar @kunst.Prijs hout bid medium">
+                                <a href="artworks/@kunst.Id" style="text-decoration:none">
+                                    <div>
 
-                                            <img src="/images/@kunst.Fotos.First().Pad" alt="" />
-                                            <div class="artwork-text">
-                                                <p class="artistname">@kunst.NaamKunstenaar</p>
-                                                <p class="artwork">@kunst.Naam</p>
-                                                <p class="price">€@kunst.Prijs</p>
-
-                                            </div>
+                                        <img src="/images/@kunst.Fotos.First().Pad" alt="" />
+                                        <div class="artwork-text">
+                                            <p class="artistname">@kunst.NaamKunstenaar</p>
+                                            <p class="artwork">@kunst.Naam</p>
+                                            <p class="price">€@kunst.Prijs</p>
 
                                         </div>
-                                    </a>
-                                </div>
+
+                                    </div>
+                                </a>
                             </div>
+                        </div>
 
 
-
-                        }
 
                     }
-                    else
-                    {
-                        <LoadingSpinner/>
-                    }
-                </div>
 
+                }
+                else
+                {
+                    <LoadingSpinner />
+                }
             </div>
-        </div>
 
+        </div>
     </div>
 
 </body>
 
 @code {
+
 
 
     private List<Kunstwerk_DTO.Index> kunstwerken;
@@ -146,6 +171,13 @@
         kunstwerken = await KunstwerkService.GetKunstwerken();
     }
 
+    //called after a component has finished rendering
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // invoke script loader
+        Console.WriteLine("Loading jQuery");
+        await JSRuntime.InvokeVoidAsync("initializeFilters");
+    }
 
 
 }

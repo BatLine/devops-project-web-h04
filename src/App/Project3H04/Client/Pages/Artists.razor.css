@@ -1,4 +1,5 @@
 ﻿
+
 .flex-container {
     display: flex;
     flex-direction: column;
@@ -46,7 +47,6 @@ p.artwork, p.price {
     align-content: flex-start;
     width: 35%;
     margin-right: 2em;
-    padding-right: 5em;
 }
 
 .transition, p, ul li i:before, ul li i:after {
