@@ -16,8 +16,14 @@
             </div>
             <!--Fotos-->
             <div class="form-group">
-                <label asp-for="@_foto">Pictures</label>
+                <label asp-for="@_foto">Pictures (max. @_maxAantalFotos)</label>
                 <InputFile OnChange="@OnInputFileChange" multiple />
+                <div>
+                    @foreach (var foto in Model.Fotos)
+                    {
+                        <p><img src="@foto.Pad" alt="@foto.Pad" /></p>
+                    }
+                </div>
             </div>
             <div class="form-group">
                 <label for="@Model.Materiaal">Material</label>
@@ -45,6 +51,7 @@
     [Parameter] public Kunstwerk_DTO.Detail Model { get; set; }
 
     private string _foto;
+    private int _maxAantalFotos = 2;
 
     protected override void OnInitialized()
     {
@@ -73,9 +80,13 @@
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
 
-        foreach (var file in e.GetMultipleFiles(2))
+        foreach (var file in e.GetMultipleFiles(_maxAantalFotos))
         {
             Model.Fotos.Add(new Foto_DTO() { Pad = file.Name });
+        }
+        while(Model.Fotos.Count > _maxAantalFotos)
+        {
+            Model.Fotos.RemoveAt(0);
         }
     }
 
