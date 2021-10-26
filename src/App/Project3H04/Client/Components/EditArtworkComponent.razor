@@ -21,7 +21,10 @@
                 <div>
                     @foreach (var foto in Model.Fotos)
                     {
-                        <p><img src="@foto.Pad" alt="@foto.Pad" /></p>
+                    <div class="form-control-file">
+                        <img src="@foto.Pad" alt="@foto.Pad" />
+                        <button class="btn btn-danger">Verwijder</button>
+                    </div>
                     }
                 </div>
             </div>
