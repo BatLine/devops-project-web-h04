@@ -79,11 +79,6 @@ body {
     min-height: 0;
     display: inline-block;
     position: relative;
-    left: 50%;
-    margin: 90px 0;
-    transform: translate(-50%, 0);
-    box-shadow: 0 10px 0 0 #ff6873 inset;
-    max-width: 450px;
     padding: 10px;
 }
 
