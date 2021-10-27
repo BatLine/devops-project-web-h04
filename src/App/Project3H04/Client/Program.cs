@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Project3H04.Client.Services;
+using Project3H04.Shared.Kunstwerken;
 
 namespace Project3H04.Client
 {
@@ -16,8 +16,8 @@ namespace Project3H04.Client
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddScoped<IKunstwerkService, KunstwerkService>();
-            builder.Services.AddScoped<IKunstenaarService, KunstenaarService>();
+            //builder.Services.AddScoped<IKunstwerkService, KunstwerkService>();
+            //builder.Services.AddScoped<IKunstenaarService, KunstenaarService>();
 
             await builder.Build().RunAsync();
         }

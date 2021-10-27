@@ -1,6 +1,5 @@
 ﻿@page "/artworks/{id:int}"
-@using Project3H04.Shared.Kunstwerken
-@inject IKunstwerkService Service
+@inject HttpClient httpClient
 <h3>Details</h3>
 @if (_kunstwerk == null)
 {
@@ -20,7 +19,7 @@ else
             <div class="col-lg-6">
 
                 <h1 style="text-align: center">@_kunstwerk.Naam</h1>
-                <p><span style="font-weight:bold">Kunstenaar</span> : @_kunstwerk.NaamKunstenaar</p>
+                <p><span style="font-weight:bold">Kunstenaar</span> : @_kunstwerk.Kunstenaar.Gebruikersnaam</p>
                 <p class="subtitle" style="text-align:left; font-weight:bold">about</p>
                 <p style="border: 1px solid black; width:100%; height:auto">@_kunstwerk.Beschrijving</p>
                 <p><span style="font-weight:bold">Materiaal</span> : @_kunstwerk.Materiaal</p>
@@ -56,6 +55,6 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        _kunstwerk = await Service.GetDetailAsync(Id);
+        _kunstwerk = await httpClient.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/Kunstwerk/{Id}");
     }
 }
