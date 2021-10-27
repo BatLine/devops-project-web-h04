@@ -33,6 +33,7 @@
                 <InputSelect @bind-Value="@Model.Materiaal" class="form-control">
                     @if (_materialen != null)
                         {
+                        <option value=""></option>
                         @foreach (var mat in _materialen)
                             {
                             <option value="@mat">@mat</option>
