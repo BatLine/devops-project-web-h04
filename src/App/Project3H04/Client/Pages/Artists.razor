@@ -1,5 +1,5 @@
 ﻿@page "/artists"
-@inject IKunstenaarService KunstenaarService
+@inject HttpClient httpClient
 <body>
 
 
@@ -48,7 +48,7 @@
     private string artistSearch;
     protected override async Task OnInitializedAsync()
     {
-        kunstenaars = await KunstenaarService.GetKunstenaars();
+        kunstenaars = await httpClient.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar");
         kunstenaarsCopy = kunstenaars;
     }
 

@@ -14,6 +14,9 @@
 
         <div class="box">
             <div class="filter-container">
+                <div class="col-lg-12 mb-4">
+                    <input type="search" placeholder="search on name..." value="@searchterm" @oninput="SearchArt" />
+                </div>
                 <ul>
                     <li>
                         <input type="checkbox" checked>
@@ -117,7 +120,7 @@
                     </li>
                 </ul>
             </div>
-
+           
             <div class="column">
 
                 @if (kunstwerken != null)
@@ -148,14 +151,12 @@
 
 
 
-                        }
                     }
-                </div>
-
-
+                }
             </div>
-                <input placeholder="Search..." type="text" value="@searchterm" @onchange="filterOpTerm" />
+
         </div>
+           </div> 
     
 
 </body>
@@ -164,22 +165,30 @@
 
     private string searchterm;
     private List<Kunstwerk_DTO.Index> kunstwerken;
+    private List<Kunstwerk_DTO.Index> kunstCopy;
     protected override async Task OnInitializedAsync()
     {
         //kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?term={searchterm}");
         kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>("api/Kunstwerk");
+        kunstCopy = kunstwerken;
     }
 
-    public void filterOpTerm(ChangeEventArgs args)
+    //public void filterOpTerm(ChangeEventArgs args)
+    //{
+    //    searchterm = args.Value.ToString();
+    //    //kunstwerken.Where(x => x.Naam.Contains(searchterm, StringComparison.OrdinalIgnoreCase));
+    //    //StateHasChanged();
+    //    //searchterm var is ook nie nodig, gwn zo, args is de changed/selected item
+    //    //dit hieronder best in de service doen
+    //    //products.Where(x => x.Name.Equals(searchterm)).ToList();
+    //    //products.Where(x => x.Name.Contains(searchterm, StringComparison.OrdinalIgnoreCase)).ToList();
+
+    //}
+
+    private void SearchArt(ChangeEventArgs args)
     {
         searchterm = args.Value.ToString();
-        //kunstwerken.Where(x => x.Naam.Contains(searchterm, StringComparison.OrdinalIgnoreCase));
-        //StateHasChanged();
-        //searchterm var is ook nie nodig, gwn zo, args is de changed/selected item
-        //dit hieronder best in de service doen
-        //products.Where(x => x.Name.Equals(searchterm)).ToList();
-        //products.Where(x => x.Name.Contains(searchterm, StringComparison.OrdinalIgnoreCase)).ToList();
-
+        kunstwerken = kunstCopy.Where(x => x.Naam.Contains(searchterm)).ToList();
     }
 
     }
