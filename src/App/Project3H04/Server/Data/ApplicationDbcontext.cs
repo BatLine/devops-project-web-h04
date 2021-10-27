@@ -9,6 +9,8 @@ namespace Project3H04.Server.Data
 {
     public class ApplicationDbcontext : DbContext
     {
+        //Bij relatie moet foreign keys meestal niet meegeven, nrml pqkt hij altijd de primary key
+        
         public ApplicationDbcontext(DbContextOptions<ApplicationDbcontext> options)
             : base(options)
         {
@@ -55,7 +57,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Kunstwerk>().Property(x => x.IsVeilbaar).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.Materiaal).IsRequired().HasMaxLength(100);
             builder.Entity<Kunstwerk>().Property(x => x.Naam).IsRequired().HasMaxLength(100);
-            builder.Entity<Kunstwerk>().Property(x => x.NaamKunstenaar).IsRequired().HasMaxLength(100);
+            //builder.Entity<Kunstwerk>().Property(x => x.NaamKunstenaar).IsRequired().HasMaxLength(100);
             builder.Entity<Kunstwerk>().Property(x => x.Prijs).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.TeKoop).IsRequired();
             builder.Entity<Kunstwerk>().HasMany(x => x.Fotos).WithOne().IsRequired();
@@ -76,7 +78,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Bod>()
                  .ToTable("Bod").HasKey(x => x.Id);
             builder.Entity<Bod>().Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Entity<Bod>().Property(x => x.GebruikersNaam).IsRequired().HasMaxLength(100);
+            //builder.Entity<Bod>().Property(x => x.).IsRequired().HasMaxLength(100);
             builder.Entity<Bod>().Property(x => x.BodPrijs).IsRequired();
 
 

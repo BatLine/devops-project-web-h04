@@ -9,13 +9,13 @@ namespace Domain
     public class Bod
     {
         public int Id { get; private set; }
-        public string GebruikersNaam { get; private set; }
+        public Klant Klant{ get; private set; }
         public Veiling Veiling { get; set; }
         public double BodPrijs { get; set; }
 
-        public Bod(string gebruikersnaam, Veiling veiling, double bodPrijs)
+        public Bod(Klant klant, Veiling veiling, double bodPrijs)
         {
-            GebruikersNaam = gebruikersnaam;
+            Klant = klant;
             Veiling = veiling;
             BodPrijs = bodPrijs;
         }

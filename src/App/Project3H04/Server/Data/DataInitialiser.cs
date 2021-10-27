@@ -29,9 +29,10 @@ namespace Project3H04.Server.Data
                 Kunstenaar b = new Kunstenaar("kunstenaar2", DateTime.Now, "naame@gmail.com", "details", a2);
                 Kunstenaar c = new Kunstenaar("babafafoey", DateTime.Now, "naamee@gmail.com", "details", a3);
 
-                Kunstwerk kunst = new Kunstwerk("kunstwerk1", DateTime.Now, 200, "bla bla bla", new List<Foto> { new() { Pad = "artist1.PNG" } }, false, "metaal", "kunstenaar");
-                Kunstwerk kunst2 = new Kunstwerk("kunstwerk2", DateTime.Now, 300, "bla bla bla", new List<Foto> { new() { Pad = "artist2.PNG" } }, false, "hout", "kunstenaar2");
-                Kunstwerk kunst3 = new Kunstwerk("tha bababoey", DateTime.Now, 1500, "bla bla bla", new List<Foto> { new() { Pad = "artist3.PNG" } }, false, "hout", "babafafoey");
+                Kunstwerk kunst = new Kunstwerk("kunstwerk1", DateTime.Now, 200, "bla bla bla", new List<Foto> { new() { Pad = "artist1.PNG" } }, false, "hout",k);
+                Kunstwerk kunst2 = new Kunstwerk("kunstwerk2", DateTime.Now, 300, "bla bla bla", new List<Foto> { new() { Pad = "artist2.PNG" } }, false, "hout", b);
+                Kunstwerk kunst3 = new Kunstwerk("tha bababoey", DateTime.Now, 1500, "bla bla bla", new List<Foto> { new() { Pad = "artist3.PNG" } }, false, "hout", c);
+                
                 k.AddKunstwerk(kunst);
                 b.AddKunstwerk(kunst2);
                 c.AddKunstwerk(kunst3);
