@@ -16,7 +16,7 @@
             </div>
             <!--Fotos-->
             <div class="form-group">
-                <label asp-for="@_foto">Pictures</label>
+                <label>Pictures</label>
                 <InputFile OnChange="@OnInputFileChange" multiple />
                 <div>
                     @foreach (var foto in Model.Fotos)
@@ -30,7 +30,16 @@
             </div>
             <div class="form-group">
                 <label for="@Model.Materiaal">Material</label>
-                <InputText @bind-Value="@Model.Materiaal" class="form-control" />
+                <InputSelect @bind-Value="@Model.Materiaal" class="form-control">
+                    @if (_materialen != null)
+                        {
+                        @foreach (var mat in _materialen)
+                            {
+                            <option value="@mat">@mat</option>
+                            }
+                        }
+                </InputSelect>
+                
                 <ValidationMessage For="@(() => Model.Materiaal)" />
             </div>
             <div class="form-group">
@@ -53,7 +62,14 @@
     //parameter zodat we het ook als Edit formulier kunnen gebruiken (nog werk aan)
     [Parameter] public Kunstwerk_DTO.Detail Model { get; set; }
 
-    private string _foto;
+    private List<string> _materialen = new List<string>
+    {
+        "Wood",
+        "Metal",
+        "Plastic",
+        "Paper",
+        "Other"
+    };
 
     protected override void OnInitialized()
     {
