@@ -7,6 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Project3H04.Server.Data;
+using Project3H04.Server.Services;
+using Project3H04.Shared;
+using Project3H04.Shared.Kunstenaars;
+using Project3H04.Shared.Kunstwerken;
 using System.Linq;
 
 namespace Project3H04.Server
@@ -28,6 +32,8 @@ namespace Project3H04.Server
             options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
             services.AddControllersWithViews();
             services.AddScoped<DataInitialiser>();
+            services.AddScoped<IKunstwerkService,KunstwerkService>();
+            services.AddScoped<IKunstenaarService, KunstenaarService>();
             services.AddRazorPages();
         }
 
