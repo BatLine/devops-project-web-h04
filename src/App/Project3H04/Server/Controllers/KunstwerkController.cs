@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project3H04.Server.Data;
+using Project3H04.Shared;
+using Project3H04.Shared.Kunstwerken;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,29 +15,29 @@ namespace Project3H04.Server.Controllers
     [ApiController]
     public class KunstwerkController : ControllerBase
     {
-        private readonly ApplicationDbcontext _context;
+        private readonly IKunstwerkService kunstwerkService;
 
-        public KunstwerkController(ApplicationDbcontext context)
+        public KunstwerkController(IKunstwerkService kunstwerkService)
         {
-            _context = context;
+            this.kunstwerkService = kunstwerkService;
         }
 
         //GET: api/<KunstwerkController>
         [HttpGet]
-        public async Task<IActionResult> GetKunstwerken()
+        public  Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(/*string term*/)
         {
-            return Ok(await _context.Kunstwerken.Include(k => k.Fotos).ToListAsync());
+            return kunstwerkService.GetKunstwerken(/*term*/);
         }
 
         // GET api/<KunstwerkController>/5
         [HttpGet("{id}")]
-        public ActionResult<Kunstwerk> Get(int id)
+        public Task<Kunstwerk_DTO.Detail> Get(int id)
         {
-            Kunstwerk k = _context.Kunstwerken.Include(k => k.Fotos).SingleOrDefault(x => x.Id == id);
-            if(k == null)
-                return NotFound();
+            return kunstwerkService.GetDetailAsync(id);
+            //if(k == null)
+            //    return NotFound();
 
-            return k;
+            //return k;
         }
 
 
@@ -59,42 +61,42 @@ namespace Project3H04.Server.Controllers
 
 
         // PUT api/<KunstwerkController>/5
-        [HttpPut("{id}")]
-        public IActionResult Put(string naam)
-        {
-            /* if (string.IsNullOrEmpty(naam))
-            return BadRequest();*/
+        //[HttpPut("{id}")]
+        //public IActionResult Put(string naam)
+        //{
+        //    /* if (string.IsNullOrEmpty(naam))
+        //    return BadRequest();*/
 
 
 
-            Kunstwerk kunstwerk = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
-            if (kunstwerk == null)
-                return NotFound();
+        //    Kunstwerk kunstwerk = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
+        //    if (kunstwerk == null)
+        //        return NotFound();
 
 
 
 
-            _context.Kunstwerken.Update(kunstwerk);
-            _context.SaveChanges();
-            return NoContent();
-        }
+        //    _context.Kunstwerken.Update(kunstwerk);
+        //    _context.SaveChanges();
+        //    return NoContent();
+        //}
 
 
 
-        // DELETE api/<KunstwerkController>/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(string naam)
-        {
-            /*if (string.IsNullOrEmpty(naam))
-            return BadRequest();*/
-            Kunstwerk kunst = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
-            if (kunst == null)
-            {
-                return NotFound();
-            }
-            _context.Kunstwerken.Remove(kunst);
-            _context.SaveChanges();
-            return NoContent();
-        }
+        //// DELETE api/<KunstwerkController>/5
+        //[HttpDelete("{id}")]
+        //public IActionResult Delete(string naam)
+        //{
+        //    /*if (string.IsNullOrEmpty(naam))
+        //    return BadRequest();*/
+        //    Kunstwerk kunst = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
+        //    if (kunst == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    _context.Kunstwerken.Remove(kunst);
+        //    _context.SaveChanges();
+        //    return NoContent();
+        //}
     }
 }
