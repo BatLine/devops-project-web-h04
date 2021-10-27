@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; //deze voor de async toevoegen, de andere is kek
 using Project3H04.Server.Data;
+using Project3H04.Shared.Kunstenaars;
 using System;
 using System.Collections.Generic;
 
@@ -16,33 +17,30 @@ namespace Project3H04.Server.Controllers
     [ApiController]
     public class KunstenaarController : ControllerBase
     {
-        private readonly ApplicationDbcontext _context;
-        //private readonly DbSet<Kunstenaar> _kunstenaars;
+        private readonly IKunstenaarService kunstenaarService;
 
-        public KunstenaarController(ApplicationDbcontext context)
+        public KunstenaarController(IKunstenaarService KunstenaarService)
         {
-            _context = context;
-            //_kunstenaars = (DbSet<Kunstenaar>)_context.Gebruikers.Where(x => x is Kunstenaar); 
-            //deze werkt nog niet => cast gaat niet, dus gwn in de method de filter doen
-
+            this.kunstenaarService = KunstenaarService;
         }
 
-        //GET: api/<KunstwerkController>
+        //GET: api/<KunstenaarController>
         [HttpGet]
-        public async Task<IActionResult> GetKunstenaars()
+        public Task<List<Kunstenaar_DTO>> GetKunstenaars(/*string term*/)
         {
-            //return Ok(await _context.Gebruikers.ToListAsync());
-            return Ok(await _context.Gebruikers.Where(x => x is Kunstenaar).ToListAsync());
-            //return Ok(await _kunstenaars.ToListAsync());
+            return kunstenaarService.GetKunstenaars(/*term*/);
         }
 
-        // GET api/<KunstwerkController>/5
-        //[HttpGet("{id}")]
-        //public ActionResult<Gebruiker> Get(int id)
-        //{
-        //    if (id != null)
-        //        return _kunstenaars.SingleOrDefault(x => x.GebruikerId==id);
+        // GET api/<KunstenaarController>/5
+        [HttpGet("{id}")]
+        public Task<Kunstenaar_DTO> Get(int id)
+        {
+            return kunstenaarService.GetDetailAsync(id);
+            //if(k == null)
+            //    return NotFound();
 
+            //return k;
+        }
 
 
         //    return NotFound();

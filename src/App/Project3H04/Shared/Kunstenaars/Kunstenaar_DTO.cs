@@ -17,5 +17,6 @@ namespace Project3H04.Shared.Kunstenaars
         public ICollection<Veiling_DTO> Veilingen { get; set; }
         public Abonnement_DTO Abonnenment { get; set; }
 
+
     }
 }

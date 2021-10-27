@@ -42,7 +42,7 @@ namespace Project3H04.Server.Services
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
-        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(/*string searchterm*/)
+         public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(/*string searchterm*/)
         {
             //.Where(x=>x.Naam.Contains(searchterm))
             return await dbContext.Kunstwerken
