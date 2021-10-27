@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http;
+﻿
 
 namespace Project3H04.Shared.Kunstwerken
 {
@@ -8,6 +7,6 @@ namespace Project3H04.Shared.Kunstwerken
         public string Pad { get; set; }
 
         //[AllowedExtensions(new string[] { ".jpg", ".jpeg", ".pjpeg", ".gif", ".x-png", ".png" })]
-        public IBrowserFile Bestand { get; set; }
+        //public IBrowserFile Bestand { get; set; }
     }
 }

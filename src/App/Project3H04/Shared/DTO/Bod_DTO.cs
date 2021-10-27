@@ -8,7 +8,7 @@ namespace Project3H04.Shared.DTO
 {
     public class Bod_DTO
     {
-        public string GebruikersNaam { get; set; }
+        public Klant_DTO Klant{ get; set; }
         public Veiling_DTO Veiling { get; set; }
         public double BodPrijs { get; set; }
     }

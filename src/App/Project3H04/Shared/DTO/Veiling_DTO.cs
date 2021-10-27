@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project3H04.Shared.Kunstwerken;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace Project3H04.Shared.DTO
         public double MinPrijs { get; set; }
         public ICollection<Bod_DTO> BodenOpVeiling { get; set; }
         public Gebruiker_DTO gewonnenGeb { get; set; }
-        public string KunstwerkNaam { get; set; }
+        public Kunstwerk_DTO.Detail Kunstwerk { get; set; }
     }
 }
