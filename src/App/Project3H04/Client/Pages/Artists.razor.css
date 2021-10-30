@@ -76,10 +76,7 @@ html {
 }
 
 body {
-    min-height: 0;
-    display: inline-block;
-    position: relative;
-    padding: 10px;
+
 }
 
 @media (max-width: 550px) {

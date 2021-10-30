@@ -35,16 +35,22 @@ namespace Project3H04.Server.Services
 
         }
 
-        public async Task<List<Kunstenaar_DTO>> GetKunstenaars(string term)
+        public async Task<List<Kunstenaar_DTO>> GetKunstenaars(string term, int take, bool recentArtists)
         {
             //.Where(x=>x.Naam.Contains(searchterm))
-            return await dbContext.Gebruikers.Where(x => x is Kunstenaar)
+            List<Kunstenaar_DTO> kunstenaars = 
+            await dbContext.Gebruikers.Where(x => x is Kunstenaar)
             .Select(x => new Kunstenaar_DTO
             {
                 Gebruikersnaam = x.Gebruikersnaam,
-                GebruikerId = x.GebruikerId
-            }).Where(k => k.Gebruikersnaam.Contains(term))
+                GebruikerId = x.GebruikerId,
+                DatumCreatie = x.DatumCreatie
+            }).Where(k => k.Gebruikersnaam.Contains(term)).Take(take) 
             .ToListAsync();
+            if(recentArtists)
+            return kunstenaars.OrderByDescending(x => x.DatumCreatie).ToList();
+
+            return kunstenaars;
 
 
             // return items;

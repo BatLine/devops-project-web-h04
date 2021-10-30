@@ -13,6 +13,7 @@ namespace Domain
         public DateTime Geboortedatum { get; private set; }
         public string Email { get; private set; }
         public int GebruikerId { get; private set; }
+        public DateTime DatumCreatie { get;  set; }
 
         public Gebruiker(string gebruikersnaam, DateTime geboortedatum, string email)
         {
@@ -20,6 +21,7 @@ namespace Domain
             Gebruikersnaam = gebruikersnaam;
             Geboortedatum = geboortedatum;
             Email = email;
+            DatumCreatie = DateTime.UtcNow;
         }
         public Gebruiker()
         {

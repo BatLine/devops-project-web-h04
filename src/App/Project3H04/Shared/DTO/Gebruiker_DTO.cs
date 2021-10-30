@@ -12,5 +12,7 @@ namespace Project3H04.Shared.DTO
         public string Gebruikersnaam { get; set; }
         public DateTime GeboorteDatum { get; set; }
         public string Email { get; set; }
+
+        public DateTime DatumCreatie { get; set; }
     }
 }

@@ -26,9 +26,9 @@ namespace Project3H04.Server.Controllers
 
         //GET: api/<KunstenaarController>
         [HttpGet]
-        public Task<List<Kunstenaar_DTO>> GetKunstenaars(string term = "")
+        public Task<List<Kunstenaar_DTO>> GetKunstenaars(string term = "", int take = 25, bool recentArtists = false)
         {
-            return kunstenaarService.GetKunstenaars(term);
+            return kunstenaarService.GetKunstenaars(term,take,recentArtists);
         }
 
         // GET api/<KunstenaarController>/5

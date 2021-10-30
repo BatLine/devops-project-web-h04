@@ -28,8 +28,8 @@ namespace Project3H04.Server.Data
                 Abonnement a4 = new Abonnement(DateTime.Now, at);
                 Abonnement a5 = new Abonnement(DateTime.Now, at);
                 Abonnement a6 = new Abonnement(DateTime.Now, at);
-                Kunstenaar k = new Kunstenaar("kunstenaar", DateTime.Now, "naam@gmail.com", "details", a);
-                Kunstenaar b = new Kunstenaar("kunstenaar2", DateTime.Now, "naame@gmail.com", "details", a2);
+                Kunstenaar k = new Kunstenaar("kunstenaar", DateTime.Now, "naam@gmail.com", "details", a) { DatumCreatie = DateTime.Today.AddDays(2) };
+                Kunstenaar b = new Kunstenaar("kunstenaar2", DateTime.Now, "naame@gmail.com", "details", a2) { DatumCreatie = DateTime.Today.AddDays(3) };
                 Kunstenaar c = new Kunstenaar("babafafoey", DateTime.Now, "naamee@gmail.com", "details", a3);
                 Kunstenaar d = new Kunstenaar("kunstenaar3", DateTime.Now, "naameee@gmail.com", "details", a4);
                 Kunstenaar e = new Kunstenaar("kunstenaar4", DateTime.Now, "naameeee@gmail.com", "details", a5);

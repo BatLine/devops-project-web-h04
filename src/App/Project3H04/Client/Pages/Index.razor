@@ -1,5 +1,5 @@
 ﻿@page "/"
-
+@inject HttpClient httpClient
 <header class="masthead">
     <div class="container">
         <div class="masthead-heading">showcase, connect and inspire!</div>
@@ -16,30 +16,17 @@
             </div>
         </div>
         <div class="row">
+            @if(kunstenaars != null) { 
+            @foreach(var kunstenaar in kunstenaars)
+            {
             <div class="col-lg-3 col-6">
                 <div>
-                    <img src="/images/artist1.PNG" alt="" style="width: 100%; height:auto" >
-                    <p class="artistname">Inara Nguyen</p>
+                    <img src="/images/artist1.PNG" alt="" style="width: 100%; height:auto">
+                    <p class="artistname">@kunstenaar.Gebruikersnaam</p>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
-                <div>
-                    <img src="images/artist2.PNG" alt="" style="width: 100%; height:auto" >
-                    <p class="artistname">Issac Ellis</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div>
-                    <img src="images/artist3.PNG" alt="" style="width: 100%; height:auto" >
-                    <p class="artistname">Cassia Harrell</p>
-                </div>
-            </div>
-            <div class="col-lg-3 col-6">
-                <div>
-                    <img src="images/artist4.PNG" alt="" style="width: 100%; height:auto" >
-                    <p class="artistname">John Harrell</p>
-                </div>
-            </div>
+            }
+            }
         </div>
         <div class="row">
             <a class="btn btn-light btn-xl" href="artists" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">browse all artists</a>
@@ -51,3 +38,14 @@
         <br>
     </footer>
 </body>
+
+@code{
+    private List<Kunstenaar_DTO> kunstenaars;
+
+    protected override async Task OnInitializedAsync()
+    {
+        kunstenaars = await httpClient.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar?take=4&recentArtists=true");
+        //kunstenaarsCopy = kunstenaars;
+    }
+
+}
