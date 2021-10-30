@@ -9,7 +9,7 @@ namespace Project3H04.Server.Data
 {
     public class ApplicationDbcontext : DbContext
     {
-        //Bij relatie moet foreign keys meestal niet meegeven, nrml pqkt hij altijd de primary key
+        //Bij relatie moet foreign keys meestal niet meegeven, nrml pakt hij altijd de primary key
         
         public ApplicationDbcontext(DbContextOptions<ApplicationDbcontext> options)
             : base(options)
@@ -35,6 +35,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Gebruiker>().Property(x => x.Email).HasMaxLength(100);
             builder.Entity<Gebruiker>().Property(x => x.Geboortedatum).IsRequired();
             builder.Entity<Gebruiker>().Property(x => x.Gebruikersnaam).HasMaxLength(50).IsRequired();
+            builder.Entity<Gebruiker>().Property(x => x.FotoPad);
 
             builder.Entity<Klant>().HasMany(x => x.Boden).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Klant>().HasMany(x => x.Bestellingen).WithOne().OnDelete(DeleteBehavior.Cascade);
