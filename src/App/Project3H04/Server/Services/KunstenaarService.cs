@@ -35,7 +35,7 @@ namespace Project3H04.Server.Services
 
         }
 
-        public async Task<List<Kunstenaar_DTO>> GetKunstenaars(/*string searchterm*/)
+        public async Task<List<Kunstenaar_DTO>> GetKunstenaars(string term)
         {
             //.Where(x=>x.Naam.Contains(searchterm))
             return await dbContext.Gebruikers.Where(x => x is Kunstenaar)
@@ -43,7 +43,8 @@ namespace Project3H04.Server.Services
             {
                 Gebruikersnaam = x.Gebruikersnaam,
                 GebruikerId = x.GebruikerId
-            }).ToListAsync();
+            }).Where(k => k.Gebruikersnaam.Contains(term))
+            .ToListAsync();
 
 
             // return items;

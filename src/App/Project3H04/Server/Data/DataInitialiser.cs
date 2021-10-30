@@ -25,9 +25,15 @@ namespace Project3H04.Server.Data
                 Abonnement a = new Abonnement(DateTime.Now, at);
                 Abonnement a2 = new Abonnement(DateTime.Now, at);
                 Abonnement a3 = new Abonnement(DateTime.Now, at);
+                Abonnement a4 = new Abonnement(DateTime.Now, at);
+                Abonnement a5 = new Abonnement(DateTime.Now, at);
+                Abonnement a6 = new Abonnement(DateTime.Now, at);
                 Kunstenaar k = new Kunstenaar("kunstenaar", DateTime.Now, "naam@gmail.com", "details", a);
                 Kunstenaar b = new Kunstenaar("kunstenaar2", DateTime.Now, "naame@gmail.com", "details", a2);
                 Kunstenaar c = new Kunstenaar("babafafoey", DateTime.Now, "naamee@gmail.com", "details", a3);
+                Kunstenaar d = new Kunstenaar("kunstenaar3", DateTime.Now, "naameee@gmail.com", "details", a4);
+                Kunstenaar e = new Kunstenaar("kunstenaar4", DateTime.Now, "naameeee@gmail.com", "details", a5);
+                Kunstenaar f = new Kunstenaar("kunstenaar5", DateTime.Now, "naameeeee@gmail.com", "details", a6);
 
                 Kunstwerk kunst = new Kunstwerk("kunstwerk1", DateTime.Now, 200, "bla bla bla", new List<Foto> { new() { Pad = "artist1.PNG" } }, false, "hout",k);
                 Kunstwerk kunst2 = new Kunstwerk("kunstwerk2", DateTime.Now, 300, "bla bla bla", new List<Foto> { new() { Pad = "artist2.PNG" } }, false, "hout", b);
@@ -39,6 +45,7 @@ namespace Project3H04.Server.Data
                 _dbContext.Gebruikers.Add(k);
                 _dbContext.Gebruikers.Add(b);
                 _dbContext.Gebruikers.Add(c);
+                _dbContext.Gebruikers.AddRange(new List<Kunstenaar>(){d,e,f});
                 k.AddKunstwerk(kunst);
                 _dbContext.SaveChanges();
             }
