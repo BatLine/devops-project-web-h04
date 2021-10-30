@@ -14,14 +14,16 @@ namespace Domain
         public string Email { get; private set; }
         public int GebruikerId { get; private set; }
         public DateTime DatumCreatie { get;  set; }
+        public string FotoPad { get; set; }
+        public Gebruiker(string gebruikersnaam, DateTime geboortedatum, string email, string fotoPad)
 
-        public Gebruiker(string gebruikersnaam, DateTime geboortedatum, string email)
         {
             //Guard.Against.NullOrEmpty(gebruikersnaam, nameof(gebruikersnaam));
             Gebruikersnaam = gebruikersnaam;
             Geboortedatum = geboortedatum;
             Email = email;
             DatumCreatie = DateTime.UtcNow;
+            this.FotoPad = fotoPad;
         }
         public Gebruiker()
         {

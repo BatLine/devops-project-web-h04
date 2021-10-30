@@ -15,7 +15,7 @@ namespace Domain
         public ICollection<Veiling> Veilingen { get; set; }
         public Abonnement Abonnenment { get; set; }
         public int AbonnenmentId { get; private set; }
-        public Kunstenaar(string gebruikersnaam, DateTime geboortedatum, string email, string details, Abonnement abonnement) : base(gebruikersnaam, geboortedatum, email)
+        public Kunstenaar(string gebruikersnaam, DateTime geboortedatum, string email, string details, Abonnement abonnement, string fotoPad) : base(gebruikersnaam, geboortedatum, email,fotoPad)
         {
             this.Details = details;
             this.StatusActiefKunstenaar = false;

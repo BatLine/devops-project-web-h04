@@ -8,7 +8,7 @@ namespace Domain
 {
     public class Admin:Gebruiker
     {
-        public Admin(string gebruikersnaam, DateTime geboortedatum, string email):base(gebruikersnaam, geboortedatum, email)
+        public Admin(string gebruikersnaam, DateTime geboortedatum, string email,string fotoPad):base(gebruikersnaam, geboortedatum, email, fotoPad)
         {
 
         }
