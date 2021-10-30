@@ -1,0 +1,61 @@
+﻿@page "/artists/{id:int}"
+@inject HttpClient httpClient
+<h3>Details</h3>
+@if (kunst == null)
+{
+    // <LoadingSpinner />
+    <p>Loading...</p>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <img src="/images/@kunst.Fotopad" alt="" style="width:300px; height:auto " />
+
+                <p style="text-align: center"><span style="font-weight:bold">Name : </span>@kunst.Gebruikersnaam</p>
+                <p style="text-align: center"><span style="font-weight:bold">Story : </span>@kunst.Details</p>
+                <!-- <p style="text-align: center">@kunst.StatusActiefKunstenaar</p>--->
+                <p style="text-align: center"><span style="font-weight:bold">Email :</span>@kunst.Email</p>
+            </div>
+   
+
+                <!--fotos in kunstenaarservice includen, dit nog fixen !!!-->
+                @foreach (Kunstwerk_DTO.Index k in kunst.Kunstwerken)
+                {
+
+                    <img src="/images/@k.Fotos.FirstOrDefault().Pad" width="250" height="250" style="padding-right:20px;" />
+
+                    <p style="border: 1px solid black; width:100%; height:auto">@k.Naam</p>
+                    <p style="border: 1px solid black; width:100%; height:auto">@k.Prijs</p>
+                    Console.WriteLine(k.Naam);
+                }
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private Kunstenaar_DTO kunst;
+    //private List<Kunstwerk_DTO.Index> kunstwerken;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{Id}");
+        Console.WriteLine(kunst.Fotopad);
+        //WAAROM IS KUNSTWERKEN LEEG? toch gelinked in db, kunstenaar kent zijn kunstwerken toch??
+        Console.WriteLine(kunst.Kunstwerken.Count());
+
+        //-----
+        //kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>("api/Kunstwerk");
+        //kunstwerken.Where(x=>x.KunstenaarGebruikerId == kunst.GebruikerId)
+    }
+}

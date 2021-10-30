@@ -17,15 +17,19 @@
                 @foreach (var kunst in kunstenaars)
                 {
 
-                    <div class="col-lg-4 col-md-6">
-                        <div>
-                            <img src="/images/artist2.PNG" alt="" />
-                            <div class="artwork-text">
-                                <p>@kunst.Gebruikersnaam</p>
-                                <p>@kunst.Email</p>
-                            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <a href="artists/@kunst.GebruikerId" style="text-decoration:none">
+                    <div>
+                        <img src="/images/@kunst.Fotopad" alt="" style="width:300px; height:auto " />
+                        <div class="artwork-text">
+                            <p>@kunst.Gebruikersnaam</p>
+                            <p>@kunst.Email</p>
+
                         </div>
                     </div>
+                    </a>
+            </div>
 
 
 
