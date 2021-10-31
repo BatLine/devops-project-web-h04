@@ -24,25 +24,26 @@ namespace Project3H04.Server.Services
         }
         public async Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id)
         {
-            
-            return await dbContext.Kunstwerken.Include(k => k.Fotos).Select(x=> new Kunstwerk_DTO.Detail {
-                 Id = x.Id,
-                 Naam = x.Naam,
-                 Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }),
-                 Kunstenaar = new Kunstenaar_DTO
-                 {
-                     Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
-                     GebruikerId = x.Kunstenaar.GebruikerId,
-                 },
-                 Prijs = x.Prijs, 
-                 Beschrijving = x.Beschrijving, 
-                 Materiaal= x.Materiaal
-             }).SingleOrDefaultAsync(x => x.Id== id);
+
+            return await dbContext.Kunstwerken.Include(k => k.Fotos).Select(x => new Kunstwerk_DTO.Detail
+            {
+                Id = x.Id,
+                Naam = x.Naam,
+                Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }),
+                Kunstenaar = new Kunstenaar_DTO
+                {
+                    Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
+                    GebruikerId = x.Kunstenaar.GebruikerId,
+                },
+                Prijs = x.Prijs,
+                Beschrijving = x.Beschrijving,
+                Materiaal = x.Materiaal
+            }).SingleOrDefaultAsync(x => x.Id == id);
 
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
-         public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(string term, int take)
+        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(string term, int take)
         {
             //.Where(x=>x.Naam.Contains(searchterm))
             return await dbContext.Kunstwerken
@@ -51,18 +52,19 @@ namespace Project3H04.Server.Services
                 Id = x.Id,
                 Naam = x.Naam,
                 Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }),
+                Materiaal = x.Materiaal,
                 Kunstenaar = new Kunstenaar_DTO
                 {
                     Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
-                    GebruikerId = x.Kunstenaar.GebruikerId, 
+                    GebruikerId = x.Kunstenaar.GebruikerId,
                 },
                 Prijs = x.Prijs
-            }).Where(x=>x.Naam.Contains(term)).Take(take).ToListAsync();
+            }).Where(x => x.Naam.Contains(term)).Take(take).ToListAsync();
 
 
             // return items;
         }
 
-        
+
     }
 }

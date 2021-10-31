@@ -45,12 +45,10 @@ p.artwork, p.price {
     opacity: 1;
 }
 
-
 /*Filter CSS */
 
 .filter-container {
     align-content: flex-start;
-    width: 30%;
     margin-right: 2em;
     padding-right: 5em;
 }
