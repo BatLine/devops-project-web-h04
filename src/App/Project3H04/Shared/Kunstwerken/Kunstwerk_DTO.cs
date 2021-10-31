@@ -22,6 +22,20 @@ namespace Project3H04.Shared.Kunstwerken
             public string Beschrijving { get; set; }
 
         }
+        public class Edit
+        {
+            public Edit()
+            {
+              
+            }
+            public string Naam { get; set; }
+            public decimal Prijs { get; set; }
+            public List<Foto_DTO> Fotos { get; set; }
+            public string Materiaal { get; set; }
+            public string Beschrijving { get; set; }
+            public bool TeKoop { get; set; }
+            public bool IsVeilbaar { get; set; }
+        }
         
 
     }
