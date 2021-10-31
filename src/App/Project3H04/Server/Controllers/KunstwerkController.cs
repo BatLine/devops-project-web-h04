@@ -24,9 +24,9 @@ namespace Project3H04.Server.Controllers
 
         //GET: api/<KunstwerkController>
         [HttpGet]
-        public  Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(/*string term*/)
+        public  Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(string term = "", int take = 25)
         {
-            return kunstwerkService.GetKunstwerken(/*term*/);
+            return kunstwerkService.GetKunstwerken(term,take);
         }
 
         // GET api/<KunstwerkController>/5

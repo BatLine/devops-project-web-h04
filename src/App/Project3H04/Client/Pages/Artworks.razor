@@ -172,22 +172,13 @@
         kunstCopy = kunstwerken;
     }
 
-    //public void filterOpTerm(ChangeEventArgs args)
-    //{
-    //    searchterm = args.Value.ToString();
-    //    //kunstwerken.Where(x => x.Naam.Contains(searchterm, StringComparison.OrdinalIgnoreCase));
-    //    //StateHasChanged();
-    //    //searchterm var is ook nie nodig, gwn zo, args is de changed/selected item
-    //    //dit hieronder best in de service doen
-    //    //products.Where(x => x.Name.Equals(searchterm)).ToList();
-    //    //products.Where(x => x.Name.Contains(searchterm, StringComparison.OrdinalIgnoreCase)).ToList();
-
-    //}
-
-    private void SearchArt(ChangeEventArgs args)
+    private async Task SearchArt(ChangeEventArgs args)
     {
         searchterm = args.Value.ToString();
-        kunstwerken = kunstCopy.Where(x => x.Naam.Contains(searchterm)).ToList();
+        if (string.IsNullOrEmpty(searchterm))
+            kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>("api/Kunstwerk");
+        else
+            kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?term={searchterm}");
     }
 
     }
