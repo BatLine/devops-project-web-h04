@@ -7,6 +7,20 @@
                 <label for="@Model.Naam">Name</label>
                 <InputText @bind-Value="@Model.Naam" class="form-control" />
             </div>
+            <!--Fotos-->
+            <div class="form-group">
+                <label>Pictures</label>
+                <InputFile OnChange="@OnInputFileChange" multiple />
+                <div>
+                    @foreach (var foto in _fotos)
+                    {
+                        <div class="form-control-file">
+                            <img src="@foto" alt="@foto" />
+                            <button class="btn btn-danger" @onclick="() => RemoveImage(foto)">Verwijder</button>
+                        </div>
+                    }
+                </div>
+            </div>
             <div class="form-group">
                 <label for="@Model.TeKoop">For Sale</label>
                 <InputCheckbox @bind-Value="@Model.TeKoop" class="form-control" />
@@ -18,20 +32,6 @@
                     <InputNumber @bind-Value="@Model.Prijs" class="form-control" />
                 </div>
             }
-            <!--Fotos-->
-            <div class="form-group">
-                <label>Pictures</label>
-                <InputFile OnChange="@OnInputFileChange" multiple />
-                <div>
-                    @foreach (var foto in Model.Fotos)
-                    {
-                        <div class="form-control-file">
-                            <img src="@foto.Pad" alt="@foto.Pad" />
-                            <button class="btn btn-danger" @onclick="() => RemoveImage(foto)">Verwijder</button>
-                        </div>
-                    }
-                </div>
-            </div>
             <div class="form-group">
                 <label for="@Model.Materiaal">Material</label>
                 <InputSelect @bind-Value="@Model.Materiaal" class="form-control">
@@ -57,7 +57,10 @@
             <DataAnnotationsValidator />
         </EditForm>
     </div>
-} 
+} else
+{
+    <LoadingSpinner/>
+}
 
 
 
@@ -65,9 +68,9 @@
     //parameter zodat we het ook als Edit formulier kunnen gebruiken (nog werk aan)
     [Parameter] public Kunstwerk_DTO.Edit Model { get; set; }
 
-    private IList<string> _fotos;
+    private IList<string> _fotos = new List<string>();
 
-    private List<string> _materialen = new List<string>
+    private IList<string> _materialen = new List<string>
     {
         "Wood",
         "Metal",
@@ -86,8 +89,16 @@
 
     public async Task Submit()
     {
-
+        Model.Fotos = new();
+        foreach(var foto in _fotos)
+        {
+            Model.Fotos.Add(new Foto_DTO
+            {
+                Pad = foto
+            });
+        }
         Console.WriteLine(Model.Naam);
+        Console.WriteLine(Model.TeKoop);
         Console.WriteLine(Model.Prijs);
         Console.WriteLine(Model.Materiaal);
         Console.WriteLine(Model.Beschrijving);
@@ -105,13 +116,13 @@
 
         foreach (var file in e.GetMultipleFiles())
         {
-            Model.Fotos.Add(new Foto_DTO() { Pad = file.Name });
+            _fotos.Add(file.Name);
         }
     }
 
-    private void RemoveImage(Foto_DTO foto)
+    private void RemoveImage(string foto)
     {
-        Model.Fotos.Remove(foto);
+        _fotos.Remove(foto);
     }
 
 }
