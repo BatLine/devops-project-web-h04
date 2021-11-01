@@ -27,7 +27,7 @@ namespace Project3H04.Shared.Kunstwerken
         {
             public Create()
             {
-              
+                Fotos = new();
             }
             public string Naam { get; set; }
             public decimal Prijs { get; set; }
@@ -40,7 +40,7 @@ namespace Project3H04.Shared.Kunstwerken
 
         public class Edit : Create
         {
-            public Edit()
+            public Edit() : base()
             {
 
             }

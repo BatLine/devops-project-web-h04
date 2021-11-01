@@ -15,7 +15,14 @@
                 <label>Pictures: </label>
                 <InputFile OnChange="@OnInputFileChange" multiple />
                 <div>
-                    @foreach (var foto in _loadedFotos)
+                    @foreach (var fotoDTO in Model.Fotos) //foto's die reeds op server staan
+                    {
+                        <div class="form-control-file">
+                            <img src="/images/@fotoDTO.Pad" alt="@fotoDTO.Pad" />
+                            <button class="btn btn-danger" @onclick="() => Model.Fotos.Remove(fotoDTO)">Verwijder</button>
+                        </div>
+                    }
+                    @foreach (var foto in _loadedFotos) //foto's die tijdelijk worden opgeslagen (nog niet op server geüploaded)
                     {
                         <div class="form-control-file">
                             <img src="/images/@foto" alt="@foto" />
@@ -80,13 +87,13 @@ else
 
 
 @code{
-    //parameter zodat we het ook als Edit formulier kunnen gebruiken (nog werk aan)
+    //parameter zodat we het ook als Edit formulier kunnen gebruiken
     [Parameter] public Kunstwerk_DTO.Create Model { get; set; }
 
     private IList<string> _loadedFotos = new List<string>();
 
-    private IList<string> _materialen = new List<string>
-{
+    private IList<string> _materialen = new List<string> //voorlopig nog hardgecodeerd
+    {
         "Wood",
         "Metal",
         "Plastic",
@@ -100,31 +107,33 @@ else
         {
             Model = new();
         }
-        else
+        else //Edit DTO werd geïnjecteerd
         {
             foreach (var foto in Model.Fotos)
             {
-                _loadedFotos.Add(foto.Pad);
+                _loadedFotos.Add(foto.Pad); //foto's lokaal renderen
             }
         }
     }
 
     public async Task Submit()
     {
-        Model.Fotos = new();
         if (!Model.TeKoop)
         {
-            Model.IsVeilbaar = false;
-            Model.Prijs = 0;
+            Model.IsVeilbaar = false; //als het niet te koop is is het ook niet per opbod te koop
+            Model.Prijs = 0; //prijs zou nutteloos zijn als het niet te koop is
         }
         foreach (var foto in _loadedFotos)
         {
+            //uploaden naar server eerst?
             Model.Fotos.Add(new Foto_DTO
             {
                 Pad = foto
             });
         }
-        Console.WriteLine(Model.Naam);
+
+        #region Debug (mag weg opzich)
+        Console.WriteLine("Naam: " + Model.Naam);
         Console.WriteLine("Te koop? " + Model.TeKoop);
         Console.WriteLine("Veilbaar? " + Model.IsVeilbaar);
 
@@ -133,17 +142,21 @@ else
         Console.WriteLine(Model.Beschrijving);
         foreach (var foto in Model.Fotos)
         {
-            Console.WriteLine(foto.Pad);
-
+            Console.WriteLine("Foto: " + foto.Pad);
         }
+        #endregion
 
         if (Model is Kunstwerk_DTO.Edit)
         {
             //API call "PUT"
         }
-        else //Model is Kunstwerk_DTO.Create
+        else if(Model is Kunstwerk_DTO.Create)
         {
             //API call "POST"
+        }
+        else
+        {
+            //Error
         }
     }
 
