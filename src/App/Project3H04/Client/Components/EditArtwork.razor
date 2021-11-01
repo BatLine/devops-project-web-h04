@@ -29,11 +29,13 @@
             </div>
             @if (Model.TeKoop)
             {
-        <div class="form-group">
-            @if (Model.IsVeilbaar){ <label for="@Model.Prijs"> StartingPrice</label> } 
-            else { <label for="@Model.Prijs"> Price </label> }
-                <InputNumber @bind-Value="@Model.Prijs" class="form-control" />
-            </div>
+                <div class="form-group">
+                    @if (Model.IsVeilbaar)
+                    {<label for="@Model.Prijs"> StartingPrice</label> }
+                    else
+                    { <label for="@Model.Prijs"> Price </label>}
+                    <InputNumber @bind-Value="@Model.Prijs" class="form-control" />
+                </div>
                 <div class="form-group">
                     <label for="@Model.IsVeilbaar">Sell by Auction?</label>
                     <InputCheckbox @bind-Value="@Model.IsVeilbaar" class="form-control" />
@@ -60,6 +62,8 @@
             <button type="submit" class="btn btn-primary">
                 Confirm
             </button>
+            <a class="btn btn-secondary" href="/">Cancel</a>
+
 
             <DataAnnotationsValidator />
         </EditForm>
@@ -73,7 +77,7 @@
 
 @code{
     //parameter zodat we het ook als Edit formulier kunnen gebruiken (nog werk aan)
-    [Parameter] public Kunstwerk_DTO.Edit Model { get; set; }
+    [Parameter] public Kunstwerk_DTO.Create Model { get; set; }
 
     private IList<string> _fotos = new List<string>();
 

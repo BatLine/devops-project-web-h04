@@ -22,9 +22,9 @@ namespace Project3H04.Shared.Kunstwerken
             public string Beschrijving { get; set; }
 
         }
-        public class Edit
+        public class Create
         {
-            public Edit()
+            public Create()
             {
               
             }
@@ -35,6 +35,25 @@ namespace Project3H04.Shared.Kunstwerken
             public string Beschrijving { get; set; }
             public bool TeKoop { get; set; }
             public bool IsVeilbaar { get; set; }
+        }
+
+        public class Edit : Create
+        {
+            public Edit()
+            {
+
+            }
+            public Edit(Detail kunstwerk)
+            {
+                Id = kunstwerk.Id;
+                Naam = kunstwerk.Naam;
+                Prijs = kunstwerk.Prijs;
+                Fotos = kunstwerk.Fotos;
+                Materiaal = kunstwerk.Materiaal;
+                Beschrijving = kunstwerk.Beschrijving;
+            }
+
+            public int Id { get; set; }
         }
         
 
