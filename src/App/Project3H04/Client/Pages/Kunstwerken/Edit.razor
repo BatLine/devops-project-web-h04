@@ -2,7 +2,12 @@
 @inject HttpClient httpClient
 <h3>Edit Artwork</h3>
 
-<EditArtwork Model="@_kunstwerk"/>
+@if(_kunstwerk != null) {
+    <EditArtwork Model="@_kunstwerk" />
+} else
+{
+    <LoadingSpinner/>
+}
 
 @code {
     [Parameter] public int Id { get; set; }

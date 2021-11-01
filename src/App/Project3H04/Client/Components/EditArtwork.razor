@@ -58,7 +58,6 @@
                 <InputSelect @bind-Value="@Model.Materiaal" class="form-control">
                     @if (_materialen != null)
                         {
-                        <option value=""></option>
                         @foreach (var mat in _materialen)
                             {
                             <option value="@mat">@mat</option>
@@ -115,6 +114,12 @@ else
             {
                 _loadedFotos.Add(foto.Pad); //foto's lokaal renderen
             }
+
+            if (!_materialen.Contains(Model.Materiaal))
+            {
+                _materialen.Add(Model.Materiaal);
+            }
+
         }
     }
 
