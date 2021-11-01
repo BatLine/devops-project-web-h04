@@ -1,4 +1,5 @@
-﻿using Project3H04.Shared.Kunstenaars;
+﻿using FluentValidation;
+using Project3H04.Shared.Kunstenaars;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -55,7 +56,16 @@ namespace Project3H04.Shared.Kunstwerken
 
             public int Id { get; set; }
         }
-        
+
+        public class Validator : AbstractValidator<Create>
+        {
+            public Validator()
+            {
+                RuleFor(artwork => artwork.Naam).NotEmpty();
+                RuleFor(artwork => artwork.Prijs).GreaterThanOrEqualTo(0);
+                RuleFor(artwork => artwork.Materiaal).NotEmpty();
+            }
+        }
 
     }
 }
