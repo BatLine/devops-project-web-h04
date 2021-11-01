@@ -1,3 +1,4 @@
+@inject HttpClient httpClient
 
 @if (Model != null)
 {
@@ -11,34 +12,36 @@
             </div>
             <!--Fotos-->
             <div class="form-group">
-                <label>Pictures</label>
+                <label>Pictures: </label>
                 <InputFile OnChange="@OnInputFileChange" multiple />
                 <div>
-                    @foreach (var foto in _fotos)
+                    @foreach (var foto in _loadedFotos)
                     {
                         <div class="form-control-file">
-                            <img src="@foto" alt="@foto" />
+                            <img src="/images/@foto" alt="@foto" />
                             <button class="btn btn-danger" @onclick="() => RemoveImage(foto)">Verwijder</button>
                         </div>
                     }
                 </div>
             </div>
             <div class="form-group">
-                <label for="@Model.TeKoop">For Sale</label>
-                <InputCheckbox @bind-Value="@Model.TeKoop" class="form-control" />
+                <label>
+                    For Sale
+                    <InputCheckbox @bind-Value="@Model.TeKoop" />
+                </label>
             </div>
             @if (Model.TeKoop)
             {
                 <div class="form-group">
                     @if (Model.IsVeilbaar)
-                    {<label for="@Model.Prijs"> StartingPrice</label> }
+                    {<label for="@Model.Prijs">StartingPrice </label> }
                     else
-                    { <label for="@Model.Prijs"> Price </label>}
+                    { <label for="@Model.Prijs">Price </label>}
                     <InputNumber @bind-Value="@Model.Prijs" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label for="@Model.IsVeilbaar">Sell by Auction?</label>
-                    <InputCheckbox @bind-Value="@Model.IsVeilbaar" class="form-control" />
+                    <InputCheckbox @bind-Value="@Model.IsVeilbaar" />
                 </div>
             }
             <div class="form-group">
@@ -68,9 +71,10 @@
             <DataAnnotationsValidator />
         </EditForm>
     </div>
-} else
+}
+else
 {
-    <LoadingSpinner/>
+    <LoadingSpinner />
 }
 
 
@@ -79,10 +83,10 @@
     //parameter zodat we het ook als Edit formulier kunnen gebruiken (nog werk aan)
     [Parameter] public Kunstwerk_DTO.Create Model { get; set; }
 
-    private IList<string> _fotos = new List<string>();
+    private IList<string> _loadedFotos = new List<string>();
 
     private IList<string> _materialen = new List<string>
-    {
+{
         "Wood",
         "Metal",
         "Plastic",
@@ -95,11 +99,12 @@
         if (Model == null) //in dit geval werkt het als een Create formulier
         {
             Model = new();
-        } else
+        }
+        else
         {
-            foreach(var foto in Model.Fotos)
+            foreach (var foto in Model.Fotos)
             {
-                _fotos.Add(foto.Pad);
+                _loadedFotos.Add(foto.Pad);
             }
         }
     }
@@ -107,12 +112,12 @@
     public async Task Submit()
     {
         Model.Fotos = new();
-        if(!Model.TeKoop)
+        if (!Model.TeKoop)
         {
             Model.IsVeilbaar = false;
             Model.Prijs = 0;
         }
-        foreach(var foto in _fotos)
+        foreach (var foto in _loadedFotos)
         {
             Model.Fotos.Add(new Foto_DTO
             {
@@ -126,16 +131,17 @@
         Console.WriteLine("Prijs: " + Model.Prijs);
         Console.WriteLine(Model.Materiaal);
         Console.WriteLine(Model.Beschrijving);
-        foreach(var foto in Model.Fotos)
+        foreach (var foto in Model.Fotos)
         {
             Console.WriteLine(foto.Pad);
 
         }
 
-        if(Model is Kunstwerk_DTO.Edit)
+        if (Model is Kunstwerk_DTO.Edit)
         {
             //API call "PUT"
-        } else //Model is Kunstwerk_DTO.Create
+        }
+        else //Model is Kunstwerk_DTO.Create
         {
             //API call "POST"
         }
@@ -146,13 +152,13 @@
 
         foreach (var file in e.GetMultipleFiles())
         {
-            _fotos.Add(file.Name);
+            _loadedFotos.Add(file.Name);
         }
     }
 
     private void RemoveImage(string foto)
     {
-        _fotos.Remove(foto);
+        _loadedFotos.Remove(foto);
     }
 
 }
