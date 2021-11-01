@@ -18,14 +18,14 @@
                     @foreach (var fotoDTO in Model.Fotos) //foto's die reeds op server staan
                     {
                         <div class="form-control-file">
-                            <img src="/images/@fotoDTO.Pad" alt="@fotoDTO.Pad" />
+                            <img src="/images/@fotoDTO.Pad" alt="@fotoDTO.Pad" width="250" height="250" style="padding-right:20px;" />
                             <button class="btn btn-danger" @onclick="() => Model.Fotos.Remove(fotoDTO)">Verwijder</button>
                         </div>
                     }
                     @foreach (var foto in _loadedFotos) //foto's die tijdelijk worden opgeslagen (nog niet op server geüploaded)
                     {
                         <div class="form-control-file">
-                            <img src="/images/@foto" alt="@foto" />
+                            <img src="/images/@foto" alt="@foto" width="250" height="250" style="padding-right:20px;" />
                             <button class="btn btn-danger" @onclick="() => RemoveImage(foto)">Verwijder</button>
                         </div>
                     }

@@ -25,6 +25,9 @@ else
                 <p style="border: 1px solid black; width:100%; height:auto">@_kunstwerk.Beschrijving</p>
                 <p><span style="font-weight:bold">Materiaal</span> : @_kunstwerk.Materiaal</p>
                 <p style="font-size:3rem; ">$@_kunstwerk.Prijs</p>
+                <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
+                <a class="btn btn-secondary" href="artworks/edit/@Id">Edit</a>
+
                 @if (_kunstwerk.Fotos.Count > 1)
                 {
                     <div>
