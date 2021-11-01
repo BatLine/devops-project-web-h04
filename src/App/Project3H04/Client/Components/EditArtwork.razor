@@ -95,6 +95,12 @@
         if (Model == null) //in dit geval werkt het als een Create formulier
         {
             Model = new();
+        } else
+        {
+            foreach(var foto in Model.Fotos)
+            {
+                _fotos.Add(foto.Pad);
+            }
         }
     }
 
@@ -126,7 +132,13 @@
 
         }
 
-        //Submit API call here
+        if(Model is Kunstwerk_DTO.Edit)
+        {
+            //API call "PUT"
+        } else //Model is Kunstwerk_DTO.Create
+        {
+            //API call "POST"
+        }
     }
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
