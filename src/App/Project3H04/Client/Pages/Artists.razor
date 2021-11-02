@@ -3,12 +3,12 @@
 <body>
 
 
-    
+
     <div class="container">
         <p class="black-style">Artists</p>
         <div class="row">
             <div class="col-lg-12 mb-4">
-                <input type="search" placeholder="search artist..." value="@artistSearch" @oninput="SearchArtist" />
+                <input type="search" placeholder="search artist..." value="@artistSearch" @onchange="SearchArtist" />
             </div>
         </div>
         <div class="row">
@@ -18,18 +18,18 @@
                 {
 
 
-            <div class="col-lg-4 col-md-6">
-                <a href="artists/@kunst.GebruikerId" style="text-decoration:none">
-                    <div>
-                        <img src="/images/@kunst.Fotopad" alt="" style="width:300px; height:auto " />
-                        <div class="artwork-text">
-                            <p>@kunst.Gebruikersnaam</p>
-                            <p>@kunst.Email</p>
+                    <div class="col-lg-4 col-md-6">
+                        <a href="artists/@kunst.GebruikerId" style="text-decoration:none">
+                            <div>
+                                <img src="/images/@kunst.Fotopad" alt="" style="width:300px; height:auto " />
+                                <div class="artwork-text">
+                                    <p>@kunst.Gebruikersnaam</p>
+                                    <p>@kunst.Email</p>
 
-                        </div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                    </a>
-            </div>
 
 
 
@@ -46,7 +46,7 @@
 
 </body>
 
-@code {  
+@code {
 
     private List<Kunstenaar_DTO> kunstenaars;
     //private List<Kunstenaar_DTO> kunstenaarsCopy;
@@ -60,10 +60,10 @@
     private async Task SearchArtist(ChangeEventArgs args)
     {
         artistSearch = args.Value.ToString();
-        if(string.IsNullOrEmpty(artistSearch))
+        if (string.IsNullOrEmpty(artistSearch))
             kunstenaars = await httpClient.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar");
         else
-        kunstenaars = await httpClient.GetFromJsonAsync<List<Kunstenaar_DTO>>($"api/Kunstenaar?term={artistSearch}");
+            kunstenaars = await httpClient.GetFromJsonAsync<List<Kunstenaar_DTO>>($"api/Kunstenaar?term={artistSearch}");
     }
 
 }

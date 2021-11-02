@@ -1,25 +1,17 @@
-﻿
-.flex-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-}
+﻿@media (max-width: 720px) {
+    /* Niet wegdoen */
+    body {
+        box-sizing: border-box;
+        transform: translate(0, 0);
+        max-width: 100%;
+        min-height: 100%;
+        margin: 0;
+        left: 0;
+    }
 
-.box {
-    display: flex;
-    flex-direction: row;
-}
-
-.column {
-    margin-right: 5em;
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-}
-
-img {
-    width: 100%;
+    .filter-container {
+        display: none;
+    }
 }
 
 .artwork-text {
@@ -45,13 +37,16 @@ p.artwork, p.price {
     opacity: 1;
 }
 
-/*Filter CSS */
-
-.filter-container {
-    align-content: flex-start;
-    margin-right: 2em;
-    padding-right: 5em;
+/*All input field of type search*/
+input[type="search"], input[type="search"]:focus {
+    opacity: 1;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    outline: none;
+    width: 40%;
 }
+
+/*Filter CSS */
 
 
 .transition, p, .checkbox, ul li i:before, ul li i:after {
@@ -87,16 +82,7 @@ body {
     padding: 10px;
 }
 
-@media (max-width: 550px) {
-    body {
-        box-sizing: border-box;
-        transform: translate(0, 0);
-        max-width: 100%;
-        min-height: 100%;
-        margin: 0;
-        left: 0;
-    }
-}
+
 
 h2 {
     color: black;
@@ -158,6 +144,10 @@ ul {
 
 
         ul li:nth-of-type(5) {
+            animation-delay: 1.50s;
+        }
+
+        ul li:nth-of-type(6) {
             animation-delay: 1.50s;
         }
 

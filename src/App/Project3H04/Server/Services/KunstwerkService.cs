@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
 using Project3H04.Server.Data;
 using Project3H04.Shared;
 using Project3H04.Shared.DTO;
@@ -43,26 +44,29 @@ namespace Project3H04.Server.Services
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
-        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(string term, int take)
+        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery(Name = "termArtwork")] string termArtwork, [FromQuery(Name = "termArtist")] string termArtist, int take, [FromQuery(Name = "filters")] List<string> filters)
         {
-            //.Where(x=>x.Naam.Contains(searchterm))
-            return await dbContext.Kunstwerken
-            .Select(x => new Kunstwerk_DTO.Index
-            {
-                Id = x.Id,
-                Naam = x.Naam,
-                Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }),
-                Materiaal = x.Materiaal,
-                Kunstenaar = new Kunstenaar_DTO
-                {
-                    Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
-                    GebruikerId = x.Kunstenaar.GebruikerId,
-                },
-                Prijs = x.Prijs
-            }).Where(x => x.Naam.Contains(term)).Take(take).ToListAsync();
+            // check: typ KUNST => extra metaal
+            //check : searchTerm in lokale variable, wordt deze bijgehouden??
+            List<Kunstwerk_DTO.Index> kunstwerken =
+            await dbContext.Kunstwerken.Where(x => filters.Count == 0 || filters.Contains(x.Materiaal))
+           .Select(x => new Kunstwerk_DTO.Index
+           {
+               Id = x.Id,
+               Naam = x.Naam,
+               Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }),
+               Materiaal = x.Materiaal,
+               Kunstenaar = new Kunstenaar_DTO
+               {
+                   Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
+                   GebruikerId = x.Kunstenaar.GebruikerId,
+               },
+               Prijs = x.Prijs
+           }).Where(x => String.IsNullOrEmpty(termArtwork) || x.Naam.Contains(termArtwork))
+           .Where(x => String.IsNullOrEmpty(termArtist) || x.Kunstenaar.Gebruikersnaam.Contains(termArtist))
+           .Take(take).ToListAsync();
 
-
-            // return items;
+            return kunstwerken;
         }
 
 
