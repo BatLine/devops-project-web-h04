@@ -24,9 +24,9 @@ namespace Project3H04.Server.Controllers
 
         //GET: api/<KunstwerkController>
         [HttpGet]
-        public  Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(string term = "", int take = 25)
+        public Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery(Name = "termArtwork")] string termArtwork = "", [FromQuery(Name = "termArtist")] string termArtist = "", int take = 25, [FromQuery(Name = "filters")] List<string> filters = null)
         {
-            return kunstwerkService.GetKunstwerken(term,take);
+            return kunstwerkService.GetKunstwerken(termArtwork, termArtist, take, filters);
         }
 
         // GET api/<KunstwerkController>/5
@@ -43,20 +43,20 @@ namespace Project3H04.Server.Controllers
 
 
         // POST api/<KunstwerkController>
-/*        [HttpPost]
-        public ActionResult<Kunstwerk> Post(Kunstwerk_DTO kunst)
-        {
-            Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
+        /*        [HttpPost]
+                public ActionResult<Kunstwerk> Post(Kunstwerk_DTO kunst)
+                {
+                    Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
 
 
 
-            _context.Kunstwerken.Add(kunstwerkToCreate);
-            _context.SaveChanges();
+                    _context.Kunstwerken.Add(kunstwerkToCreate);
+                    _context.SaveChanges();
 
 
 
-            return CreatedAtAction(nameof(Get), new { id = kunstwerkToCreate.Naam }, kunstwerkToCreate);
-        }*/
+                    return CreatedAtAction(nameof(Get), new { id = kunstwerkToCreate.Naam }, kunstwerkToCreate);
+                }*/
 
 
 

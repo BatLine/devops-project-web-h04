@@ -13,16 +13,17 @@ namespace Project3H04.Shared.Kunstwerken
             public int Id { get; set; }
             public string Naam { get; set; }
             public decimal Prijs { get; set; }
+            public string Materiaal { get; set; }
             public Kunstenaar_DTO Kunstenaar { get; set; }
             public List<Foto_DTO> Fotos { get; set; }
 
         }
         public class Detail : Index
         {
-            public string Materiaal { get; set; }
             public string Beschrijving { get; set; }
 
         }
+
         public class Create
         {
             public Create()
@@ -66,6 +67,7 @@ namespace Project3H04.Shared.Kunstwerken
                 RuleFor(artwork => artwork.Materiaal).NotEmpty();
             }
         }
+
 
     }
 }
