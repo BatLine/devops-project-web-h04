@@ -35,7 +35,7 @@ namespace Project3H04.Server.Data
                 Kunstenaar e = new Kunstenaar("John Lake", DateTime.Now, "johnlake@gmail.com", "details", a5, "artist3.PNG");
                 Kunstenaar f = new Kunstenaar("Esme-Rose Mende", DateTime.Now, "mende.er@gmail.com", "details", a6, "artist2.PNG");
 
-                Kunstwerk kunst = new Kunstwerk("Dust of Surprise", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "artist1.PNG" } }, false, "metaal", k);
+                Kunstwerk kunst = new Kunstwerk("Dust of Surprise", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "artist1.PNG" }, new() { Pad = "artist4.PNG" } }, false, "metaal", k);
                 Kunstwerk kunst2 = new Kunstwerk("Thrill of Harmony", DateTime.Now, 300, "Thoughtful colorplay made by the genius Issac Ellis", new List<Foto> { new() { Pad = "artist2.PNG" } }, false, "hout", b);
                 Kunstwerk kunst3 = new Kunstwerk("Stunning Psychology", DateTime.Now, 1500, "Delicate work, that touches the senses", new List<Foto> { new() { Pad = "artist3.PNG" } }, false, "hout", c);
 
