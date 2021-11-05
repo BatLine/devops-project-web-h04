@@ -53,9 +53,12 @@ namespace Project3H04.Shared.Kunstwerken
                 Fotos = kunstwerk.Fotos;
                 Materiaal = kunstwerk.Materiaal;
                 Beschrijving = kunstwerk.Beschrijving;
+                KunstenaarId = kunstwerk.Kunstenaar.GebruikerId;
             }
 
             public int Id { get; set; }
+            public int KunstenaarId { get; set; }
+
         }
 
         public class Validator : AbstractValidator<Create>

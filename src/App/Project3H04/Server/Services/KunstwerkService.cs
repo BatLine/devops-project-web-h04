@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
 using Project3H04.Server.Data;
 using Project3H04.Shared;
@@ -69,6 +70,18 @@ namespace Project3H04.Server.Services
             return kunstwerken;
         }
 
+        public async Task<int> CreateAsync(Kunstwerk_DTO.Create kunstwerk, int gebruikerId)
+        {
+            List<Foto> fotos = kunstwerk.Fotos.Select(fotoDTO => new Foto { Pad = fotoDTO.Pad }).ToList();
+            Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
+
+            Kunstwerk kunstwerkToCreate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
+
+            await dbContext.Kunstwerken.AddAsync(kunstwerkToCreate);
+            await dbContext.SaveChangesAsync();
+
+            return kunstwerkToCreate.Id;
+        }
 
     }
 }

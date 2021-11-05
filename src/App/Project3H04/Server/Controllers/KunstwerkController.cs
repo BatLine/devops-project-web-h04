@@ -50,9 +50,9 @@ namespace Project3H04.Server.Controllers
             //_context.Kunstwerken.Add(kunstwerkToCreate);
             //_context.SaveChanges();
 
-            await Task.Delay(5);
-            int id = 1;
-            return id;
+            int gebruikerId = GetAangemeldeGebruikerId();
+            int kunstwerkId = await kunstwerkService.CreateAsync(kunst, gebruikerId);
+            return kunstwerkId;
         }
 
 
@@ -95,5 +95,11 @@ namespace Project3H04.Server.Controllers
         //    _context.SaveChanges();
         //    return NoContent();
         //}
+
+        private int GetAangemeldeGebruikerId()
+        {
+            //fakedata: 
+            return 1;
+        }
     }
 }
