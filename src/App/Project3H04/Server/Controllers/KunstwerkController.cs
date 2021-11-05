@@ -44,7 +44,7 @@ namespace Project3H04.Server.Controllers
 
         // POST api/<KunstwerkController>
         [HttpPost]
-        public async Task<ActionResult<int>> Post(Kunstwerk_DTO.Create kunst)
+        public async Task<int> Create(Kunstwerk_DTO.Create kunst)
         {
             //Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
             //_context.Kunstwerken.Add(kunstwerkToCreate);
@@ -52,7 +52,7 @@ namespace Project3H04.Server.Controllers
 
             await Task.Delay(5);
             int id = 0;
-            return CreatedAtAction(nameof(Get), id);
+            return id;
         }
 
 

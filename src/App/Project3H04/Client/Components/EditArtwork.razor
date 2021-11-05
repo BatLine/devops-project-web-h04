@@ -49,13 +49,6 @@
             <div class="form-group">
                 <label for="@Model.Materiaal">Material</label>
                 <InputText @bind-Value="@Model.Materiaal" class="form-control">
-                    @if (_materialen != null)
-                        {
-                        @foreach (var mat in _materialen)
-                            {
-                            <option value="@mat">@mat</option>
-                            }
-                        }
                 </InputText>
 
             </div>
@@ -68,8 +61,6 @@
             </button>
             <a class="btn btn-secondary" href="/">Cancel</a>
 
-
-            <DataAnnotationsValidator />
         </EditForm>
     </div>
 }
@@ -86,14 +77,14 @@ else
 
     private IList<string> _loadedFotos = new List<string>();
 
-    private IList<string> _materialen = new List<string> //voorlopig nog hardgecodeerd
+    /*private IList<string> _materialen = new List<string> //voorlopig nog hardgecodeerd
     {
         "Wood",
         "Metal",
         "Plastic",
         "Paper",
         "Other"
-    };
+    };*/
 
     protected override void OnInitialized()
     {
@@ -106,11 +97,6 @@ else
             foreach (var foto in Model.Fotos)
             {
                 _loadedFotos.Add(foto.Pad); //foto's lokaal renderen
-            }
-
-            if (!_materialen.Contains(Model.Materiaal))
-            {
-                _materialen.Add(Model.Materiaal);
             }
 
         }
@@ -154,6 +140,7 @@ else
         else if(Model is Kunstwerk_DTO.Create)
         {
             //API call "POST"
+            var response = httpClient.PostAsJsonAsync<Kunstwerk_DTO.Create>($"api/kunstwerk", Model);
         }
         else
         {
