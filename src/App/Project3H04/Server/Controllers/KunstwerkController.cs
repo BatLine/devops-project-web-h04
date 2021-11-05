@@ -43,20 +43,17 @@ namespace Project3H04.Server.Controllers
 
 
         // POST api/<KunstwerkController>
-        /*        [HttpPost]
-                public ActionResult<Kunstwerk> Post(Kunstwerk_DTO kunst)
-                {
-                    Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
+        [HttpPost]
+        public async Task<ActionResult<int>> Post(Kunstwerk_DTO.Create kunst)
+        {
+            //Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
+            //_context.Kunstwerken.Add(kunstwerkToCreate);
+            //_context.SaveChanges();
 
-
-
-                    _context.Kunstwerken.Add(kunstwerkToCreate);
-                    _context.SaveChanges();
-
-
-
-                    return CreatedAtAction(nameof(Get), new { id = kunstwerkToCreate.Naam }, kunstwerkToCreate);
-                }*/
+            await Task.Delay(5);
+            int id = 0;
+            return CreatedAtAction(nameof(Get), id);
+        }
 
 
 
