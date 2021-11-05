@@ -1,4 +1,6 @@
 @inject HttpClient httpClient
+@inject NavigationManager NavManager
+
 
 @if (Model != null)
 {
@@ -41,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <label>
-                        Sell by auction? 
+                        Sell by auction?
                         <InputCheckbox @bind-Value="@Model.IsVeilbaar" />
                     </label>
                 </div>
@@ -137,10 +139,13 @@ else
         {
             //API call "PUT"
         }
-        else if(Model is Kunstwerk_DTO.Create)
+        else if (Model is Kunstwerk_DTO.Create)
         {
             //API call "POST"
-            var response = httpClient.PostAsJsonAsync<Kunstwerk_DTO.Create>($"api/kunstwerk", Model);
+            var response = await httpClient.PostAsJsonAsync<Kunstwerk_DTO.Create>($"api/kunstwerk", Model);
+            response.EnsureSuccessStatusCode();
+            int artworkId = await response.Content.ReadFromJsonAsync<int>();
+            NavManager.NavigateTo($"artworks/detail/{artworkId}");
         }
         else
         {

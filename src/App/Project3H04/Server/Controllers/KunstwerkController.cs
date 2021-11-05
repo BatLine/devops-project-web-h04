@@ -51,7 +51,7 @@ namespace Project3H04.Server.Controllers
             //_context.SaveChanges();
 
             await Task.Delay(5);
-            int id = 0;
+            int id = 1;
             return id;
         }
 
