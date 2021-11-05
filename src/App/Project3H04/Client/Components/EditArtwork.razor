@@ -15,14 +15,7 @@
                 <label>Pictures: </label>
                 <InputFile OnChange="@OnInputFileChange" multiple />
                 <div>
-                    @foreach (var fotoDTO in Model.Fotos) //foto's die reeds op server staan
-                    {
-                        <div class="form-control-file">
-                            <img src="/images/@fotoDTO.Pad" alt="@fotoDTO.Pad" width="250" height="250" style="padding-right:20px;" />
-                            <button class="btn btn-danger" @onclick="() => Model.Fotos.Remove(fotoDTO)">Verwijder</button>
-                        </div>
-                    }
-                    @foreach (var foto in _loadedFotos) //foto's die tijdelijk worden opgeslagen (nog niet op server geüploaded)
+                    @foreach (var foto in _loadedFotos)
                     {
                         <div class="form-control-file">
                             <img src="/images/@foto" alt="@foto" width="250" height="250" style="padding-right:20px;" />
@@ -55,7 +48,7 @@
             }
             <div class="form-group">
                 <label for="@Model.Materiaal">Material</label>
-                <InputSelect @bind-Value="@Model.Materiaal" class="form-control">
+                <InputText @bind-Value="@Model.Materiaal" class="form-control">
                     @if (_materialen != null)
                         {
                         @foreach (var mat in _materialen)
@@ -63,7 +56,7 @@
                             <option value="@mat">@mat</option>
                             }
                         }
-                </InputSelect>
+                </InputText>
 
             </div>
             <div class="form-group">
@@ -132,6 +125,7 @@ else
         }
         foreach (var foto in _loadedFotos)
         {
+            Model.Fotos = new List<Foto_DTO>();
             //uploaden naar server eerst?
             Model.Fotos.Add(new Foto_DTO
             {
@@ -147,9 +141,9 @@ else
         Console.WriteLine("Prijs: " + Model.Prijs);
         Console.WriteLine(Model.Materiaal);
         Console.WriteLine(Model.Beschrijving);
-        foreach (var foto in Model.Fotos)
+        foreach (var foto in _loadedFotos)
         {
-            Console.WriteLine("Foto: " + foto.Pad);
+            Console.WriteLine("Foto: " + foto);
         }
         #endregion
 
