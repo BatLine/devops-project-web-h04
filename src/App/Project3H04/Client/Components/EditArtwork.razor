@@ -17,10 +17,10 @@
                 <label>Pictures: </label>
                 <InputFile OnChange="@OnInputFileChange" multiple />
                 <div>
-                    @foreach (var foto in _loadedFotos)
+                    @foreach (var foto in Model.Fotos)
                     {
                         <div class="form-control-file">
-                            <img src="/images/@foto" alt="@foto" width="250" height="250" style="padding-right:20px;" />
+                            <img src="/images/@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-right:20px;" />
                             <button class="btn btn-danger" @onclick="() => RemoveImage(foto)">Verwijder</button>
                         </div>
                     }
@@ -77,8 +77,6 @@ else
     //parameter zodat we het ook als Edit formulier kunnen gebruiken
     [Parameter] public Kunstwerk_DTO.Create Model { get; set; }
 
-    private IList<string> _loadedFotos = new List<string>();
-
     /*private IList<string> _materialen = new List<string> //voorlopig nog hardgecodeerd
     {
         "Wood",
@@ -94,14 +92,6 @@ else
         {
             Model = new();
         }
-        else //Edit DTO werd geïnjecteerd
-        {
-            foreach (var foto in Model.Fotos)
-            {
-                _loadedFotos.Add(foto.Pad); //foto's lokaal renderen
-            }
-
-        }
     }
 
     public async Task Submit()
@@ -111,13 +101,13 @@ else
             Model.IsVeilbaar = false; //als het niet te koop is is het ook niet per opbod te koop
             Model.Prijs = 0; //prijs zou nutteloos zijn als het niet te koop is
         }
-        foreach (var foto in _loadedFotos)
+        foreach (var foto in Model.Fotos)
         {
             Model.Fotos = new List<Foto_DTO>();
             //uploaden naar server eerst?
             Model.Fotos.Add(new Foto_DTO
             {
-                Pad = foto
+                Pad = foto.Pad
             });
         }
 
@@ -129,9 +119,9 @@ else
         Console.WriteLine("Prijs: " + Model.Prijs);
         Console.WriteLine(Model.Materiaal);
         Console.WriteLine(Model.Beschrijving);
-        foreach (var foto in _loadedFotos)
+        foreach (var foto in Model.Fotos)
         {
-            Console.WriteLine("Foto: " + foto);
+            Console.WriteLine("Foto: " + foto.Pad);
         }
         #endregion
 
@@ -158,13 +148,13 @@ else
 
         foreach (var file in e.GetMultipleFiles())
         {
-            _loadedFotos.Add(file.Name);
+            Model.Fotos.Add(new() { Pad = file.Name });
         }
     }
 
-    private void RemoveImage(string foto)
+    private void RemoveImage(Foto_DTO foto)
     {
-        _loadedFotos.Remove(foto);
+        Model.Fotos.Remove(foto);
     }
 
 }

@@ -65,9 +65,10 @@ namespace Project3H04.Shared.Kunstwerken
         {
             public Validator()
             {
-                RuleFor(artwork => artwork.Naam).NotEmpty();
-                RuleFor(artwork => artwork.Prijs).GreaterThanOrEqualTo(0);
-                RuleFor(artwork => artwork.Materiaal).NotEmpty();
+                RuleFor(artwork => artwork.Naam).NotEmpty().OverridePropertyName("Name");
+                RuleFor(artwork => artwork.Prijs).GreaterThanOrEqualTo(0).OverridePropertyName("Price");
+                RuleFor(artwork => artwork.Materiaal).NotEmpty().OverridePropertyName("Material");
+                RuleFor(artwork => artwork.Fotos).NotEmpty().OverridePropertyName("Images");
             }
         }
 
