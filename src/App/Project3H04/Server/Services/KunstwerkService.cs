@@ -31,7 +31,7 @@ namespace Project3H04.Server.Services
             {
                 Id = x.Id,
                 Naam = x.Naam,
-                Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }),
+                Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Pad = x.Pad }),
                 Kunstenaar = new Kunstenaar_DTO
                 {
                     Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
@@ -92,7 +92,7 @@ namespace Project3H04.Server.Services
                 throw new ArgumentException();
             }
 
-            List<Foto> fotos = kunstwerk.Fotos.Select(fotoDTO => new Foto { Pad = fotoDTO.Pad }).ToList();
+            List<Foto> fotos = kunstwerk.Fotos.Select(fotoDTO => new Foto { Id = fotoDTO.Id, Pad = fotoDTO.Pad }).ToList();
             Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
 
             Kunstwerk kunstwerkToUpdate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
