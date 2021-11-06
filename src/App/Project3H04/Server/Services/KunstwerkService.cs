@@ -85,5 +85,20 @@ namespace Project3H04.Server.Services
             return kunstwerkToCreate.Id;
         }
 
+        public async Task UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)
+        {
+            if(kunstwerk.KunstenaarId != gebruikerId)
+            {
+                throw new ArgumentException();
+            }
+
+            List<Foto> fotos = kunstwerk.Fotos.Select(fotoDTO => new Foto { Pad = fotoDTO.Pad }).ToList();
+            Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
+
+            Kunstwerk kunstwerkToUpdate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
+
+            dbContext.Kunstwerken.Update(kunstwerkToUpdate);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

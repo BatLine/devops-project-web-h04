@@ -11,6 +11,7 @@ namespace Project3H04.Shared.Kunstwerken
         Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(string termArtwork, string termArtist, decimal termMinimumPrice, decimal termMaximumPrice, int take, List<String> filters);
         Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id);
         Task<int> CreateAsync(Kunstwerk_DTO.Create kunstwerk, int gebruikerId);
+        Task UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId);
 
     }
 }
