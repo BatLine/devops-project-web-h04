@@ -3,62 +3,17 @@
 
 @if (_kunstwerk == null)
 {
-   // <LoadingSpinner />
-   <p>Loading...</p>
+    <LoadingSpinner />
 }
 else
 {
-    <div class="container" style="margin-left:0px;padding-top:10px">
-        <div class="row">
-            <div class="col-md-6">
-                <img src="/images/@_kunstwerk.Fotos.First().Pad" style="width: 100%; height:auto" />
-            </div>
-
-
-
-
-            <div class="col-md-6 kunstwerkdetailcontainer">
-
-                <h1 style="text-align: center; font-family:sans-serif">@_kunstwerk.Naam</h1>
-                <p><span style="font-weight:bold">Artist</span> : @_kunstwerk.Kunstenaar.Gebruikersnaam</p>
-                <p class="subtitle" style="text-align:left; font-weight:bold">about</p>
-                <p style="border: 1px thin grey; width:100%; height:auto">@_kunstwerk.Beschrijving</p>
-                <p><span style="font-weight:bold">Material</span> : @_kunstwerk.Materiaal</p>
-                <p style="font-size:2rem; color:dimgray">€@_kunstwerk.Prijs</p>
-                <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
-                <a class="btn btn-secondary" href="artworks/edit/@Id">Edit</a>
-
-
-
-
-
-
-            </div>
-        </div>
-        <div class="row" style="padding-top:20px; padding-bottom:10px">
-            @if (_kunstwerk.Fotos.Count > 1)
-            {
-                <div>
-                    <p style="text-align:left; font-weight:bold;padding-left:10px">photos</p>
-
-
-                    @foreach (Foto_DTO foto in _kunstwerk.Fotos.Skip(1))
-                    {
-                        <img src="/images/@foto.Pad" width="250" height="250" style="padding-left:10px;" />
-                    }
-                </div>
-            }
-        </div>
-    </div>
-
-
-
-
+    <DetailArtwork Kunstwerk="@_kunstwerk" />
 }
 
+
 @code {
-    [Parameter] public int Id { get; set; }
-    private Kunstwerk_DTO.Detail _kunstwerk;
+[Parameter] public int Id { get; set; }
+private Kunstwerk_DTO.Detail _kunstwerk;
 
     protected override async Task OnParametersSetAsync()
     {
