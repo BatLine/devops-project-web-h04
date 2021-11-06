@@ -145,7 +145,7 @@ else
             var response = await httpClient.PostAsJsonAsync<Kunstwerk_DTO.Create>($"api/kunstwerk", Model);
             response.EnsureSuccessStatusCode();
             int artworkId = await response.Content.ReadFromJsonAsync<int>();
-            NavManager.NavigateTo($"artworks/detail/{artworkId}");
+            NavManager.NavigateTo($"artworks/{artworkId}");
         }
         else
         {

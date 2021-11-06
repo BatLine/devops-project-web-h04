@@ -61,7 +61,7 @@ namespace Project3H04.Server.Data
             //builder.Entity<Kunstwerk>().Property(x => x.NaamKunstenaar).IsRequired().HasMaxLength(100);
             builder.Entity<Kunstwerk>().Property(x => x.Prijs).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.TeKoop).IsRequired();
-            builder.Entity<Kunstwerk>().HasMany(x => x.Fotos).WithOne();//.IsRequired();
+            builder.Entity<Kunstwerk>().HasMany(x => x.Fotos).WithOne().IsRequired();
             builder.Entity<Kunstwerk>().HasOne(x => x.Kunstenaar).WithMany(k => k.Kunstwerken).IsRequired();
 
             //Veiling
