@@ -66,8 +66,14 @@ namespace Project3H04.Server.Controllers
             /*Kunstwerk kunstwerk = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
             if (kunstwerk == null)
                 return NotFound();*/
-
+            
             int gebruikerId = GetAangemeldeGebruikerId();
+
+            if(gebruikerId != kunst.KunstenaarId)
+            {
+                return BadRequest();
+            }
+
             await kunstwerkService.UpdateAsync(kunst, gebruikerId);
             return NoContent();
         }
