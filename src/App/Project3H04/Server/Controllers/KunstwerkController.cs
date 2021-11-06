@@ -43,20 +43,17 @@ namespace Project3H04.Server.Controllers
 
 
         // POST api/<KunstwerkController>
-        /*        [HttpPost]
-                public ActionResult<Kunstwerk> Post(Kunstwerk_DTO kunst)
-                {
-                    Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
+        [HttpPost]
+        public async Task<int> Create(Kunstwerk_DTO.Create kunst)
+        {
+            //Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
+            //_context.Kunstwerken.Add(kunstwerkToCreate);
+            //_context.SaveChanges();
 
-
-
-                    _context.Kunstwerken.Add(kunstwerkToCreate);
-                    _context.SaveChanges();
-
-
-
-                    return CreatedAtAction(nameof(Get), new { id = kunstwerkToCreate.Naam }, kunstwerkToCreate);
-                }*/
+            int gebruikerId = GetAangemeldeGebruikerId();
+            int kunstwerkId = await kunstwerkService.CreateAsync(kunst, gebruikerId);
+            return kunstwerkId;
+        }
 
 
 
@@ -98,5 +95,11 @@ namespace Project3H04.Server.Controllers
         //    _context.SaveChanges();
         //    return NoContent();
         //}
+
+        private int GetAangemeldeGebruikerId()
+        {
+            //fakedata: 
+            return 1;
+        }
     }
 }

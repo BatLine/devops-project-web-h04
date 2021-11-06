@@ -1,0 +1,51 @@
+﻿@if (Kunstwerk != null)
+{
+    <div class="container" style="margin-left:0px;padding-top:10px">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="/images/@Kunstwerk.Fotos.First().Pad" style="width: 100%; height:auto" />
+            </div>
+
+
+
+
+            <div class="col-md-6 kunstwerkdetailcontainer">
+
+                <h1 style="text-align: center; font-family:sans-serif">@Kunstwerk.Naam</h1>
+                <p><span style="font-weight:bold">Artist</span> : @Kunstwerk.Kunstenaar.Gebruikersnaam</p>
+                <p class="subtitle" style="text-align:left; font-weight:bold">about</p>
+                <p style="border: 1px thin grey; width:100%; height:auto">@Kunstwerk.Beschrijving</p>
+                <p><span style="font-weight:bold">Material</span> : @Kunstwerk.Materiaal</p>
+                <p style="font-size:2rem; color:dimgray">€@Kunstwerk.Prijs</p>
+                <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
+                <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
+
+
+
+
+
+
+            </div>
+        </div>
+        <div class="row" style="padding-top:20px; padding-bottom:10px">
+            @if (Kunstwerk.Fotos.Count > 1)
+            {
+                <div>
+                    <p style="text-align:left; font-weight:bold;padding-left:10px">photos</p>
+
+
+                    @foreach (Foto_DTO foto in Kunstwerk.Fotos.Skip(1))
+                    {
+                        <img src="/images/@foto.Pad" width="250" height="250" style="padding-left:10px;" />
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+}
+
+@code {
+    [Parameter] public Kunstwerk_DTO.Detail Kunstwerk { get; set; }
+
+}

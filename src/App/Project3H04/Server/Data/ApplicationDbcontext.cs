@@ -43,7 +43,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Kunstenaar>().HasOne(x => x.Abonnenment).WithOne().HasForeignKey<Kunstenaar>(x => x.AbonnenmentId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Kunstenaar>().HasMany(x => x.Kunstwerken).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Kunstenaar>().HasMany(x => x.Veilingen).WithOne().OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<Kunstenaar>().Property(x => x.Details).HasMaxLength(500).IsRequired();
+            builder.Entity<Kunstenaar>().Property(x => x.Details).HasMaxLength(1000).IsRequired();
             builder.Entity<Kunstenaar>().Property(x => x.StatusActiefKunstenaar).IsRequired();
             
 
@@ -62,6 +62,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Kunstwerk>().Property(x => x.Prijs).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.TeKoop).IsRequired();
             builder.Entity<Kunstwerk>().HasMany(x => x.Fotos).WithOne().IsRequired();
+            builder.Entity<Kunstwerk>().HasOne(x => x.Kunstenaar).WithMany(k => k.Kunstwerken).IsRequired();
 
             //Veiling
             builder.Entity<Veiling>()
@@ -113,7 +114,10 @@ namespace Project3H04.Server.Data
             builder.Entity<AbonnementType>().Property(x => x.Verlooptijd).IsRequired();
             //Foto
             builder.Entity<Foto>()
-                                .ToTable("Foto").HasKey(f => f.Pad);
+                                .ToTable("Foto").HasKey(f => f.Id);
+            builder.Entity<Bestelling>().Property(x => x.Id).ValueGeneratedOnAdd();
+
+
 
 
 
