@@ -56,10 +56,10 @@ namespace Project3H04.Server.Controllers
 
         // PUT api/<KunstwerkController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Kunstwerk_DTO.Edit kunst)
+        public async Task<IActionResult> Put(int id, Kunstwerk_DTO.Edit kunst)
         {
-            /* if (string.IsNullOrEmpty(naam))
-            return BadRequest();*/
+            if (id != kunst.Id)
+                return BadRequest();
 
 
 

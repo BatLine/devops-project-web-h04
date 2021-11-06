@@ -128,13 +128,18 @@ else
         if (Model is Kunstwerk_DTO.Edit)
         {
             //API call "PUT"
+            Kunstwerk_DTO.Edit model = (Kunstwerk_DTO.Edit) Model;
+            var response = await httpClient.PutAsJsonAsync<Kunstwerk_DTO.Edit>($"api/kunstwerk/{model.Id}", model);
+            response.EnsureSuccessStatusCode();
+            NavManager.NavigateTo($"artworks/{model.Id}"); //hier kennnen we het Id al
+
         }
         else if (Model is Kunstwerk_DTO.Create)
         {
             //API call "POST"
             var response = await httpClient.PostAsJsonAsync<Kunstwerk_DTO.Create>($"api/kunstwerk", Model);
             response.EnsureSuccessStatusCode();
-            int artworkId = await response.Content.ReadFromJsonAsync<int>();
+            int artworkId = await response.Content.ReadFromJsonAsync<int>(); //hier geeft de server het Id mee
             NavManager.NavigateTo($"artworks/{artworkId}");
         }
         else
