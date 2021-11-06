@@ -8,6 +8,7 @@ namespace Domain
 {
     public class Foto
     {
+        public int Id { get; set; }
         public string Pad{ get; set; }
     }
 }
