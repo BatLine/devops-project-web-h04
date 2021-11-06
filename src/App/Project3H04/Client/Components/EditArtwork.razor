@@ -91,6 +91,9 @@ else
         if (Model == null) //in dit geval werkt het als een Create formulier
         {
             Model = new();
+        } else if(Model.Prijs != 0)
+        {
+            Model.TeKoop = true; //anders gaat prijs verloren
         }
     }
 
