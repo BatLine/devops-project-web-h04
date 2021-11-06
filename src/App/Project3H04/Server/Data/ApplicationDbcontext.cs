@@ -43,7 +43,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Kunstenaar>().HasOne(x => x.Abonnenment).WithOne().HasForeignKey<Kunstenaar>(x => x.AbonnenmentId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Kunstenaar>().HasMany(x => x.Kunstwerken).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Kunstenaar>().HasMany(x => x.Veilingen).WithOne().OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<Kunstenaar>().Property(x => x.Details).HasMaxLength(500).IsRequired();
+            builder.Entity<Kunstenaar>().Property(x => x.Details).HasMaxLength(1000).IsRequired();
             builder.Entity<Kunstenaar>().Property(x => x.StatusActiefKunstenaar).IsRequired();
             
 

@@ -37,7 +37,7 @@ namespace Project3H04.Server.Services
 
             //kunstwerk.fotos nog includen !!!
 
-            var x = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(x => x.GebruikerId == id);
+            var x = (Kunstenaar)dbContext.Gebruikers.OfType<Kunstenaar>().Include(k => k.Kunstwerken).ThenInclude(x => x.Fotos).SingleOrDefault(x => x.GebruikerId == id);
             //include van fotos ...
             Kunstenaar_DTO k = await Task.Run(() => new Kunstenaar_DTO
             {
@@ -50,7 +50,7 @@ namespace Project3H04.Server.Services
                 {
                     Id = x.Id,
                     Naam = x.Naam,
-                    Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }),
+                    Fotos = x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }).ToList(), //(List<Foto_DTO>)
                     Prijs = x.Prijs
                 }).ToList(),
                 Fotopad=x.FotoPad
@@ -64,7 +64,7 @@ namespace Project3H04.Server.Services
         {
             //.Where(x=>x.Naam.Contains(searchterm))
             List<Kunstenaar_DTO> kunstenaars = 
-            await dbContext.Gebruikers.Where(x => x is Kunstenaar)
+            await dbContext.Gebruikers.Where(x => x is Kunstenaar)  // .OfType<Kunstenaar>()
             .Select(x => new Kunstenaar_DTO
             {
                 Gebruikersnaam = x.Gebruikersnaam,
