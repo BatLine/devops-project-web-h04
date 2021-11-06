@@ -46,9 +46,6 @@ namespace Project3H04.Server.Controllers
         [HttpPost]
         public async Task<int> Create(Kunstwerk_DTO.Create kunst)
         {
-            //Kunstwerk kunstwerkToCreate = new Kunstwerk(kunst.Naam, kunst.Einddatum, kunst.Prijs, kunst.Beschrijving, kunst.Fotos, kunst.IsVeilbaar, kunst.Materiaal, kunst.NaamKunstenaar); ;
-            //_context.Kunstwerken.Add(kunstwerkToCreate);
-            //_context.SaveChanges();
 
             int gebruikerId = GetAangemeldeGebruikerId();
             int kunstwerkId = await kunstwerkService.CreateAsync(kunst, gebruikerId);
@@ -58,25 +55,22 @@ namespace Project3H04.Server.Controllers
 
 
         // PUT api/<KunstwerkController>/5
-        //[HttpPut("{id}")]
-        //public IActionResult Put(string naam)
-        //{
-        //    /* if (string.IsNullOrEmpty(naam))
-        //    return BadRequest();*/
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Kunstwerk_DTO.Edit kunst)
+        {
+            /* if (string.IsNullOrEmpty(naam))
+            return BadRequest();*/
 
 
 
-        //    Kunstwerk kunstwerk = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
-        //    if (kunstwerk == null)
-        //        return NotFound();
+            /*Kunstwerk kunstwerk = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
+            if (kunstwerk == null)
+                return NotFound();*/
 
-
-
-
-        //    _context.Kunstwerken.Update(kunstwerk);
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
+            int gebruikerId = GetAangemeldeGebruikerId();
+            await kunstwerkService.UpdateAsync(kunst, gebruikerId);
+            return NoContent();
+        }
 
 
 
