@@ -89,7 +89,7 @@ namespace Project3H04.Server.Services
         {
             if(kunstwerk.KunstenaarId != gebruikerId)
             {
-                //throw new ArgumentException();
+                throw new ArgumentException();
             }
 
             List<Foto> fotos = kunstwerk.Fotos.Select(fotoDTO => new Foto { Pad = fotoDTO.Pad }).ToList();

@@ -54,6 +54,10 @@ namespace Project3H04.Shared.Kunstwerken
                 Materiaal = kunstwerk.Materiaal;
                 Beschrijving = kunstwerk.Beschrijving;
                 KunstenaarId = kunstwerk.Kunstenaar.GebruikerId;
+                if (Prijs != 0)
+                {
+                    TeKoop = true; //anders gaat prijs verloren
+                }
             }
 
             public int Id { get; set; }
