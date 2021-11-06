@@ -20,16 +20,16 @@ namespace Domain
 
         public Kunstwerk(string naam, DateTime einddatum, decimal prijs, string beschrijving, List<Foto> fotos, bool isVeilbaar, string materiaal, Kunstenaar kunstenaar)
         {
-            Naam = naam;
-            Einddatum = einddatum;
-            Prijs = prijs;
-            Beschrijving = beschrijving;
+            Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
+            Einddatum = Guard.Against.Null(einddatum, nameof(einddatum));
+            Prijs = Guard.Against.Null(prijs, nameof(prijs));
+            Beschrijving = Guard.Against.NullOrWhiteSpace(beschrijving, nameof(beschrijving));
             Fotos = fotos;
             TeKoop = true;
             IsVeilbaar = isVeilbaar;
-            Materiaal = materiaal;
+            Materiaal = Guard.Against.NullOrEmpty(materiaal,nameof(materiaal));
             //Kunstenaar = Guard.Against.Null ;
-            Kunstenaar=kunstenaar;
+            Kunstenaar= Guard.Against.Null(kunstenaar, nameof(kunstenaar));
         }
 
         public Kunstwerk()

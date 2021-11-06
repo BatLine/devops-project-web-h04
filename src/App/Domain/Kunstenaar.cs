@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,9 @@ namespace Domain
         public int AbonnenmentId { get; private set; }
         public Kunstenaar(string gebruikersnaam, DateTime geboortedatum, string email, string details, Abonnement abonnement, string fotoPad) : base(gebruikersnaam, geboortedatum, email,fotoPad)
         {
-            this.Details = details;
+            this.Details = Guard.Against.NullOrWhiteSpace(details, nameof(details));
             this.StatusActiefKunstenaar = false;
-            this.Abonnenment = abonnement;
+            this.Abonnenment = Guard.Against.Null(abonnement, nameof(abonnement));
             AbonnenmentId = Abonnenment.Id;
             Kunstwerken = new List<Kunstwerk>();
             Veilingen = new List<Veiling>();

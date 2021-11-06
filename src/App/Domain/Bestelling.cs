@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,14 +24,14 @@ namespace Domain
             WinkelmandKunstwerken = new List<Kunstwerk>();
         }
 
-        public Bestelling(int id, DateTime datum, string straat, int postcode, string gemeente, DateTime leverDatum)
+        public Bestelling(DateTime datum, string straat, int postcode, string gemeente, DateTime leverDatum)
         {
-            Id = id;
-            Datum = datum;
-            Straat = straat;
-            Postcode = postcode;
-            Gemeente = gemeente;
-            LeverDatum = leverDatum;
+            //Id = id;
+            Datum = Guard.Against.Null(datum, nameof(datum));
+            Straat = Guard.Against.NullOrWhiteSpace(straat, nameof(straat));
+            Postcode = Guard.Against.Null(postcode, nameof(postcode));
+            Gemeente = Guard.Against.NullOrEmpty(gemeente, nameof(gemeente));
+            LeverDatum = Guard.Against.Null(leverDatum, nameof(leverDatum));
             TotalePrijs = WinkelmandKunstwerken.Sum(x => x.Prijs);
         }
     }

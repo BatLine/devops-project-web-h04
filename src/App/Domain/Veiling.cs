@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,12 +19,12 @@ namespace Domain
         public string KunstwerkNaam{ get; private set; }
         public Veiling(DateTime startDatum, DateTime eindDatum, double minPrijs, string kunstwerknaam)
         {
-            StartDatum = startDatum;
-            EindDatum = eindDatum;
-            MinPrijs = minPrijs;
+            StartDatum = Guard.Against.Null(startDatum, nameof(startDatum));
+            EindDatum = Guard.Against.Null(eindDatum, nameof(eindDatum));
+            MinPrijs = Guard.Against.Null(minPrijs, nameof(MinPrijs));
             BodenOpVeiling = new List<Bod>();
             //Kunstwerk = kunstwerk;
-            KunstwerkNaam = kunstwerknaam;
+            KunstwerkNaam = Guard.Against.NullOrEmpty(kunstwerknaam, nameof(kunstwerknaam));
             gewonnenGeb = new Gebruiker();
         }
         public Veiling()

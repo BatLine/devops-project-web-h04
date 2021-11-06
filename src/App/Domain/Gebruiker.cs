@@ -19,11 +19,11 @@ namespace Domain
 
         {
             //Guard.Against.NullOrEmpty(gebruikersnaam, nameof(gebruikersnaam));
-            Gebruikersnaam = gebruikersnaam;
-            Geboortedatum = geboortedatum;
-            Email = email;
+            Gebruikersnaam = Guard.Against.NullOrWhiteSpace(gebruikersnaam, nameof(gebruikersnaam));
+            Geboortedatum = Guard.Against.Null(geboortedatum, nameof(geboortedatum));
+            Email = Guard.Against.NullOrWhiteSpace(email, nameof(email));
             DatumCreatie = DateTime.UtcNow;
-            this.FotoPad = fotoPad;
+            this.FotoPad = Guard.Against.NullOrEmpty(fotoPad, nameof(fotoPad));
         }
         public Gebruiker()
         {

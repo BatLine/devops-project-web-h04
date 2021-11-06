@@ -2,11 +2,13 @@
 @inject HttpClient httpClient
 <h3>Edit Artwork</h3>
 
-@if(_kunstwerk != null) {
-    <EditArtwork Model="@_kunstwerk" />
-} else
+@if (_kunstwerk != null)
 {
-    <LoadingSpinner/>
+    <EditArtwork Model="@_kunstwerk" />
+}
+else
+{
+    <!--<LoadingSpinner/>-->
 }
 
 @code {

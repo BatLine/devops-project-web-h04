@@ -57,7 +57,8 @@ namespace Project3H04.Shared.Kunstwerken
 
             public int Id { get; set; }
         }
-
+        //bij aanmaken van kunstwerk dan validatie met validator
+        //=>bij andere DTO's wnr nodig/moet aanmaken/create heeft, dan ook validatie doen !!!
         public class Validator : AbstractValidator<Create>
         {
             public Validator()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,9 @@ namespace Domain
 
         public AbonnementType(string naam, int verloop, double prijs)
         {
-            Naam = naam;
-            Verlooptijd = verloop;
-            Prijs = prijs;
+            Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
+            Verlooptijd = Guard.Against.Null(verloop, nameof(verloop));
+            Prijs = Guard.Against.Null(prijs, nameof(prijs));
         }
     }
 }

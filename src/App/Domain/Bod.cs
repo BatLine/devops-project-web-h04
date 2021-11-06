@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,9 @@ namespace Domain
 
         public Bod(Klant klant, Veiling veiling, double bodPrijs)
         {
-            Klant = klant;
-            Veiling = veiling;
-            BodPrijs = bodPrijs;
+            Klant = Guard.Against.Null(klant, nameof(klant));
+            Veiling = Guard.Against.Null(veiling, nameof(veiling));
+            BodPrijs = Guard.Against.Null(bodPrijs, nameof(bodPrijs));
         }
 
         public Bod()

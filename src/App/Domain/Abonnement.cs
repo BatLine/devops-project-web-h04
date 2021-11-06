@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ardalis.GuardClauses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,9 @@ namespace Domain
         }
         public Abonnement(DateTime startDatum,AbonnementType abonnementType)
         {
-            StartDatum = startDatum;
+            StartDatum = Guard.Against.Null(startDatum, nameof(startDatum));
             EindDatum = startDatum.AddMonths(abonnementType.Verlooptijd);
-            this.AbonnementType = abonnementType;
+            this.AbonnementType = Guard.Against.Null(abonnementType, nameof(abonnementType));
         }
 
     }
