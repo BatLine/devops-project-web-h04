@@ -91,10 +91,7 @@ else
         if (Model == null) //in dit geval werkt het als een Create formulier
         {
             Model = new();
-        } else if(Model.Prijs != 0)
-        {
-            Model.TeKoop = true; //anders gaat prijs verloren
-        }
+        } 
     }
 
     public async Task Submit()
@@ -103,15 +100,6 @@ else
         {
             Model.IsVeilbaar = false; //als het niet te koop is is het ook niet per opbod te koop
             Model.Prijs = 0; //prijs zou nutteloos zijn als het niet te koop is
-        }
-        foreach (var foto in Model.Fotos)
-        {
-            Model.Fotos = new List<Foto_DTO>();
-            //uploaden naar server eerst?
-            Model.Fotos.Add(new Foto_DTO
-            {
-                Pad = foto.Pad
-            });
         }
 
         #region Debug (mag weg opzich)
