@@ -24,9 +24,9 @@ namespace Project3H04.Server.Controllers
 
         //GET: api/<KunstwerkController>
         [HttpGet]
-        public Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery(Name = "termArtwork")] string termArtwork = "", [FromQuery(Name = "termArtist")] string termArtist = "", int take = 25, [FromQuery(Name = "filters")] List<string> filters = null)
+        public Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery(Name = "termArtwork")] string termArtwork = "", [FromQuery(Name = "termArtist")] string termArtist = "", [FromQuery(Name = "termMinimumPrice")] decimal termMinimumPrice = default(decimal), [FromQuery(Name = "termMaximumPrice")] decimal termMaximumPrice = default(decimal), int take = 25, [FromQuery(Name = "filters")] List<string> filters = null)
         {
-            return kunstwerkService.GetKunstwerken(termArtwork, termArtist, take, filters);
+            return kunstwerkService.GetKunstwerken(termArtwork, termArtist, termMinimumPrice, termMaximumPrice, take, filters);
         }
 
         // GET api/<KunstwerkController>/5

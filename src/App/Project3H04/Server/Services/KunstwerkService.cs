@@ -45,7 +45,7 @@ namespace Project3H04.Server.Services
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
-        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery(Name = "termArtwork")] string termArtwork, [FromQuery(Name = "termArtist")] string termArtist, int take, [FromQuery(Name = "filters")] List<string> filters)
+        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery(Name = "termArtwork")] string termArtwork, [FromQuery(Name = "termArtist")] string termArtist, [FromQuery(Name = "termMinimumPrice")] decimal termMinimumPrice, [FromQuery(Name = "termMaximumPrice")] decimal termMaximumPrice, int take, [FromQuery(Name = "filters")] List<string> filters)
         {
             // check: typ KUNST => extra metaal
             //check : searchTerm in lokale variable, wordt deze bijgehouden??
@@ -65,6 +65,8 @@ namespace Project3H04.Server.Services
                Prijs = x.Prijs
            }).Where(x => String.IsNullOrEmpty(termArtwork) || x.Naam.Contains(termArtwork))
            .Where(x => String.IsNullOrEmpty(termArtist) || x.Kunstenaar.Gebruikersnaam.Contains(termArtist))
+           .Where(x => termMinimumPrice.Equals(default(decimal)) || x.Prijs >= termMinimumPrice)
+           .Where(x => termMaximumPrice.Equals(default(decimal)) || x.Prijs <= termMaximumPrice)
            .Take(take).ToListAsync();
 
             return kunstwerken;

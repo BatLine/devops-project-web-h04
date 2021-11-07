@@ -70,8 +70,8 @@
                             <i></i>
                             <h2>Price</h2>
                             <div class="checkbox">
-                                <input type="search" placeholder="low" /> to
-                                <input type="search" placeholder="high" />
+                                <input type="search" placeholder="low" value="@searchtermartist" @onchange="_ => SearchArt(_,searchtermPriceLow:true)" />  to
+                                <input type="search" placeholder="high" value="@searchtermartist" @onchange="_ => SearchArt(_,searchtermPriceHigh:true)" />
                             </div>
                         </li>
                         <li>
@@ -132,11 +132,12 @@
 </body>
 
 @code {
-    public IEnumerable<string> artMediums;
-    private List<String> selectedItems = new();
-
     private string searchtermartwork = "";
     private string searchtermartist = "";
+    private decimal searchtermpricelow = default(decimal);
+    private decimal searchtermpricehigh = default(decimal);
+    public IEnumerable<string> artMediums;
+    private List<String> selectedItems = new();
     private List<Kunstwerk_DTO.Index> kunstwerken;
     private List<Kunstwerk_DTO.Index> kunstCopy;
 
@@ -149,7 +150,7 @@
         artMediums = kunstCopy.Select(x => x.Materiaal).Distinct();
     }
 
-    private async Task SearchArt(ChangeEventArgs args, bool searchtermArtist = false, bool searchtermArtwork = false, string filterValue = "x")
+    private async Task SearchArt(ChangeEventArgs args, bool searchtermArtist = false, bool searchtermArtwork = false, bool searchtermPriceLow = false, bool searchtermPriceHigh = false, string filterValue = "x")
     {
         if (filterValue != "x")
         {
@@ -167,13 +168,19 @@
         {
             searchtermartist = args.Value.ToString();
         }
+        //Decimal.TryParse: First parameter is interpreted, second parameter is returned with the result Decimal is true
+        if (searchtermPriceLow && Decimal.TryParse(args.Value.ToString(), out searchtermpricelow)) ;
+
+        //Decimal.TryParse: First parameter is interpreted, second parameter is returned with the result Decimal is true
+        if (searchtermPriceHigh && Decimal.TryParse(args.Value.ToString(), out searchtermpricehigh)) ;
+
         string queryStringFilter = "";
         foreach (string s in selectedItems)
         {
             queryStringFilter += "filters=" + s + "&";
         }
 
-        kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?termArtwork={searchtermartwork}&termArtist={searchtermartist}&{queryStringFilter}");
+        kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?termArtwork={searchtermartwork}&termArtist={searchtermartist}&termMinimumPrice={searchtermpricelow}&termMaximumPrice={searchtermpricehigh}&{queryStringFilter}");
 
 
     }
