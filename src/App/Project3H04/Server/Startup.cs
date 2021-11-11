@@ -1,3 +1,6 @@
+//using FluentValidation.AspNetCore;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,12 +31,29 @@ namespace Project3H04.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //validatie
+            services.AddControllers().AddFluentValidation(fv => {
+                fv.RegisterValidatorsFromAssemblyContaining<Kunstwerk_DTO.Validator>();
+                fv.ImplicitlyValidateChildProperties = true;
+            });
+            //AUTH
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = Configuration["Auth0:Authority"];
+                options.Audience = Configuration["Auth0:ApiIdentifier"];
+            });
             services.AddDbContext<ApplicationDbcontext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
             services.AddControllersWithViews();
             services.AddScoped<DataInitialiser>();
             services.AddScoped<IKunstwerkService,KunstwerkService>();
             services.AddScoped<IKunstenaarService, KunstenaarService>();
+            services.AddScoped<IOrderService, OrderService>();
+            //services.AddSingleton<IOrderService, OrderService>();
             services.AddRazorPages();
         }
 
@@ -57,7 +77,8 @@ namespace Project3H04.Server
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();  //AUTH
+            app.UseAuthorization();   //AUTH
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

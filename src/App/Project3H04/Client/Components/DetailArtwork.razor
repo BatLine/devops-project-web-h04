@@ -1,4 +1,5 @@
-﻿@if (Kunstwerk != null)
+﻿@inject CartState cartState
+@if (Kunstwerk != null)
 {
     <div class="container" style="margin-left:0px;padding-top:10px">
         <div class="row">
@@ -17,13 +18,13 @@
                 <p style="border: 1px thin grey; width:100%; height:auto">@Kunstwerk.Beschrijving</p>
                 <p><span style="font-weight:bold">Material</span> : @Kunstwerk.Materiaal</p>
                 <p style="font-size:2rem; color:dimgray">€@Kunstwerk.Prijs</p>
-                <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
-                <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
-
-
-
-
-
+                <!--Enkel als AUTH dit zien-->
+                <AuthorizeView>
+                    <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
+                    <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
+                    <!--Order-->
+                    <button class="btn btn-secondary" @onclick="AddToCart" disabled="@Check()"  >Order</button>
+                </AuthorizeView>
 
             </div>
         </div>
@@ -47,5 +48,19 @@
 
 @code {
     [Parameter] public Kunstwerk_DTO.Detail Kunstwerk { get; set; }
+
+    //public bool InCart = false;
+
+    public bool Check()
+    {
+        //checken op ID, anders ga niet !!!
+        return cartState.CheckCartItem(Kunstwerk.Id);
+    }
+
+    private void AddToCart()
+    {
+        cartState.AddKunstwerk(Kunstwerk);
+    }
+
 
 }
