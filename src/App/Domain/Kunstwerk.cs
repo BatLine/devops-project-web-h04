@@ -32,5 +32,6 @@ namespace Domain {
         public Kunstwerk() {
 
         }
+
     }
 }
