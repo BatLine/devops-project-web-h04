@@ -16,8 +16,8 @@ namespace Domain
         public bool TeKoop { get; set; }
         public bool IsVeilbaar { get; set; }
         public string Materiaal { get; private set; }
-        public Kunstenaar Kunstenaar { get; private set; }
-
+        public Kunstenaar Kunstenaar { get; private set; }        
+       // public bool InCart { get; set; }
         public Kunstwerk(string naam, DateTime einddatum, decimal prijs, string beschrijving, List<Foto> fotos, bool isVeilbaar, string materiaal, Kunstenaar kunstenaar)
         {
             Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
@@ -36,5 +36,6 @@ namespace Domain
         {
 
         }
+
     }
 }
