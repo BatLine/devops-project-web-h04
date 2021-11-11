@@ -1,5 +1,8 @@
 ﻿@page "/artworks"
-@inject HttpClient httpClient
+<!--AUTH-->
+@attribute [AllowAnonymous]
+<!--=> Deze http PublicClient gebruiken voor Anonymous-->
+@inject PublicClient httpClient
 
 <body>
     <div class="container">
@@ -144,7 +147,7 @@
     protected override async Task OnInitializedAsync()
     {
         //kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?term={searchterm}");
-        kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk");
+        kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk");
         kunstCopy = kunstwerken;
         //vul artMediums met alle mogelijke mediums van kunstwerken
         artMediums = kunstCopy.Select(x => x.Materiaal).Distinct();
@@ -180,7 +183,7 @@
             queryStringFilter += "filters=" + s + "&";
         }
 
-        kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?termArtwork={searchtermartwork}&termArtist={searchtermartist}&termMinimumPrice={searchtermpricelow}&termMaximumPrice={searchtermpricehigh}&{queryStringFilter}");
+        kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?termArtwork={searchtermartwork}&termArtist={searchtermartist}&termMinimumPrice={searchtermpricelow}&termMaximumPrice={searchtermpricehigh}&{queryStringFilter}");
 
 
     }

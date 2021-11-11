@@ -1,5 +1,8 @@
 ﻿@page "/artworks/edit/{id:int}"
+<!--AUTH-->
+@attribute [Authorize] 
 @inject HttpClient httpClient
+
 <h3>Edit Artwork</h3>
 
 @if (_kunstwerk != null)
@@ -17,7 +20,15 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
+        //try //AUTH
+        //{
         Kunstwerk_DTO.Detail kunstwerkDetail = await httpClient.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/Kunstwerk/{Id}");
         _kunstwerk = new Kunstwerk_DTO.Edit(kunstwerkDetail);
+        //}
+        //catch (AccessTokenNotAvailableException exception)
+        //{
+        //    exception.Redirect();
+        //}
+
     }
 }

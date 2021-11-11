@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; //deze voor de async toevoegen, de andere is kek
 using Project3H04.Server.Data;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Project3H04.Server.Controllers
 {
+    [AllowAnonymous] //AUTH
     [Route("api/[controller]")]
     [ApiController]
     public class KunstenaarController : ControllerBase

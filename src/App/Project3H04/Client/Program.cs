@@ -4,6 +4,9 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Project3H04.Shared.Kunstwerken;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Project3H04.Client.Shared;
 
 namespace Project3H04.Client
 {
@@ -14,11 +17,29 @@ namespace Project3H04.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            //AUTH
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                builder.Configuration.Bind("Auth0", options.ProviderOptions);
+                options.ProviderOptions.ResponseType = "code";
+            });
+            //AUTH client
+            builder.Services.AddHttpClient("ServerAPI",
+            client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
-            //builder.Services.AddScoped<IKunstwerkService, KunstwerkService>();
-            //builder.Services.AddScoped<IKunstenaarService, KunstenaarService>();
+            //UnAUTH client voor paginas anonymous te zetten
+            //builder.Services.AddHttpClient("BlazorApp.PublicServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+            builder.Services.AddHttpClient<PublicClient>(client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 
+
+
+            //builder.Services.AddScoped<OrdersServ>();
+            builder.Services.AddSingleton<CartState>();
+
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+              .CreateClient("ServerAPI"));
             await builder.Build().RunAsync();
         }
     }

@@ -1,5 +1,8 @@
 ﻿@page "/"
-@inject HttpClient httpClient
+<!--AUTH-->
+@attribute [AllowAnonymous]
+<!--=> Deze http PublicClient gebruiken voor Anonymous-->
+@inject PublicClient httpClient 
 <header class="masthead">
     <div class="container">
         <div class="masthead-heading">showcase, connect and inspire!</div>
@@ -16,18 +19,19 @@
             </div>
         </div>
         <div class="row">
-            @if(kunstenaars != null) { 
-            @foreach(var kunstenaar in kunstenaars)
+            @if (kunstenaars != null)
             {
-            <div class="col-lg-3 col-6">
-                <a href="artists/@kunstenaar.GebruikerId" style="text-decoration:none">
-                    <div>
-                        <img src="/images/@kunstenaar.Fotopad" alt="" style="width: 100%; height:auto">
-                        <p class="artistname">@kunstenaar.Gebruikersnaam</p>
+                @foreach (var kunstenaar in kunstenaars)
+                {
+                    <div class="col-lg-3 col-6">
+                        <a href="artists/@kunstenaar.GebruikerId" style="text-decoration:none">
+                            <div>
+                                <img src="/images/@kunstenaar.Fotopad" alt="" style="width: 100%; height:auto">
+                                <p class="artistname">@kunstenaar.Gebruikersnaam</p>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-            }
+                }
             }
         </div>
         <div class="row">
@@ -46,7 +50,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        kunstenaars = await httpClient.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar?take=4&recentArtists=true");
+        kunstenaars = await httpClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar?take=4&recentArtists=true");
         //kunstenaarsCopy = kunstenaars;
     }
 
