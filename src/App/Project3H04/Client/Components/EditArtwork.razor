@@ -6,7 +6,7 @@
 {
     <div class="main">
         <EditForm Model="@Model" OnValidSubmit="@Submit">
-            <FluentValidationValidator />
+            <!--<FluentValidationValidator />-->
             <ValidationSummary />
             <div class="form-group">
                 <label for="@Model.Naam">Name</label>
@@ -75,7 +75,7 @@
 }
 else
 {
-    <LoadingSpinner />
+    <!--<LoadingSpinner />-->
 }
 
 

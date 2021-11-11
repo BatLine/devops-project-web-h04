@@ -1,5 +1,7 @@
 ﻿@page "/artists/{id:int}"
-@inject HttpClient httpClient
+<!--AUTH-->
+@attribute [AllowAnonymous]
+@inject PublicClient httpClient
 
 
 @if (kunst == null)
@@ -21,10 +23,10 @@ else
 
                 </text>
             </div>
-            <div class="col-md-8" >
+            <div class="col-md-8">
                 <div class="row">
-                    <div class="container testimonial-group " style="padding-left:20px; padding-top:20px" >
-                        <div class="row text-center" >
+                    <div class="container testimonial-group " style="padding-left:20px; padding-top:20px">
+                        <div class="row text-center">
                             @foreach (Kunstwerk_DTO.Index k in kunst.Kunstwerken)
                             {
                                 <a href="artworks/@k.Id" style="text-decoration:none">
@@ -37,9 +39,9 @@ else
                                 </a>
                             }
                         </div>
-                        </div>
-
                     </div>
+
+                </div>
 
             </div>
         </div>
@@ -66,7 +68,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{Id}");
+        kunst = await httpClient.Client.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{Id}");
         //Console.WriteLine(kunst.Fotopad);
         // Console.WriteLine(kunst.Kunstwerken.Count());
 

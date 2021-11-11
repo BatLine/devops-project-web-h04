@@ -1,22 +1,24 @@
 ﻿@page "/artworks/{id:int}"
-@inject HttpClient httpClient
+<!--AUTH-->
+@attribute [AllowAnonymous]
+@inject PublicClient httpClient
 
 @if (_kunstwerk == null)
 {
-    <LoadingSpinner />
+    <!--<LoadingSpinner />-->
 }
 else
 {
-    <DetailArtwork Kunstwerk="@_kunstwerk" />
+<DetailArtwork Kunstwerk="@_kunstwerk" />
 }
 
 
 @code {
-[Parameter] public int Id { get; set; }
+    [Parameter] public int Id { get; set; }
 private Kunstwerk_DTO.Detail _kunstwerk;
 
-    protected override async Task OnParametersSetAsync()
-    {
-        _kunstwerk = await httpClient.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/Kunstwerk/{Id}");
-    }
+protected override async Task OnParametersSetAsync()
+{
+    _kunstwerk = await httpClient.Client.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/Kunstwerk/{Id}");
+}
 }

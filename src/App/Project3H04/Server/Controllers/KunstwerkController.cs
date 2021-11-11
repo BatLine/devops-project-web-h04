@@ -8,9 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;  //AUTH
 
 namespace Project3H04.Server.Controllers
 {
+    [AllowAnonymous] //AUTH
     [Route("api/[controller]")]
     [ApiController]
     public class KunstwerkController : ControllerBase
@@ -44,6 +46,7 @@ namespace Project3H04.Server.Controllers
 
         // POST api/<KunstwerkController>
         [HttpPost]
+        [Authorize] //AUTH
         public async Task<int> Create(Kunstwerk_DTO.Create kunst)
         {
 
