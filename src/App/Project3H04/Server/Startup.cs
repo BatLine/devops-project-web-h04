@@ -47,7 +47,7 @@ namespace Project3H04.Server
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
             services.AddDbContext<ApplicationDbcontext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
+            options.UseSqlServer(Configuration.GetConnectionString("AzureDBContext"))); // verander naar DBContext voor localdb
             services.AddControllersWithViews();
             services.AddScoped<DataInitialiser>();
             services.AddScoped<IKunstwerkService,KunstwerkService>();
@@ -86,7 +86,8 @@ namespace Project3H04.Server
                 endpoints.MapFallbackToFile("index.html");
             });
 
-            dataInitialiser.InitializeData();
+            //enkel aanzetten wanneer je op local db werkt
+           // dataInitialiser.InitializeData();
         }
     }
 }
