@@ -31,6 +31,13 @@ namespace Project3H04.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                builder.WithOrigins("https://localhost:5001")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader());
+            });
             //validatie
             services.AddControllers().AddFluentValidation(fv => {
                 fv.RegisterValidatorsFromAssemblyContaining<Kunstwerk_DTO.Validator>();
@@ -47,7 +54,7 @@ namespace Project3H04.Server
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
             services.AddDbContext<ApplicationDbcontext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AzureDBContext"))); // verander naar DBContext voor localdb
+            options.UseSqlServer(Configuration.GetConnectionString("DBContext"))); // verander naar DBContext voor localdb
             services.AddControllersWithViews();
             services.AddScoped<DataInitialiser>();
             services.AddScoped<IKunstwerkService,KunstwerkService>();
@@ -77,6 +84,7 @@ namespace Project3H04.Server
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
             app.UseAuthentication();  //AUTH
             app.UseAuthorization();   //AUTH
             app.UseEndpoints(endpoints =>
@@ -87,7 +95,7 @@ namespace Project3H04.Server
             });
 
             //enkel aanzetten wanneer je op local db werkt
-           // dataInitialiser.InitializeData();
+            dataInitialiser.InitializeData();
         }
     }
 }

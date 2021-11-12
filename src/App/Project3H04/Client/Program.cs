@@ -32,8 +32,7 @@ namespace Project3H04.Client
             //UnAUTH client voor paginas anonymous te zetten
             //builder.Services.AddHttpClient("BlazorApp.PublicServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
             builder.Services.AddHttpClient<PublicClient>(client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
-
-
+           
 
             //builder.Services.AddScoped<OrdersServ>();
             builder.Services.AddSingleton<CartState>();

@@ -90,7 +90,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Bestelling>().Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Entity<Bestelling>().Property(x => x.Datum).IsRequired();
             builder.Entity<Bestelling>().Property(x => x.Gemeente).IsRequired().HasMaxLength(100);
-            builder.Entity<Bestelling>().Property(x => x.LeverDatum).IsRequired();
+           // builder.Entity<Bestelling>().Property(x => x.LeverDatum).IsRequired();
             builder.Entity<Bestelling>().Property(x => x.Postcode).IsRequired();
             builder.Entity<Bestelling>().Property(x => x.Straat).IsRequired().HasMaxLength(200);
             builder.Entity<Bestelling>().Property(x => x.TotalePrijs).IsRequired();
