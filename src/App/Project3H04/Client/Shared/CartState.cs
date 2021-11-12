@@ -9,8 +9,9 @@ namespace Project3H04.Client.Shared
     public class CartState
     {
         public List<Kunstwerk_DTO.Detail> Cart { get; set; } = new List<Kunstwerk_DTO.Detail>();
+        public decimal TotalePrijs => Cart.Sum(c => c.Prijs);
 
-        public List<Kunstwerk_DTO.Detail> GetCart()
+    public List<Kunstwerk_DTO.Detail> GetCart()
         {
             return Cart.Distinct().OrderBy(x => x.Naam).ToList();
         }
@@ -36,6 +37,11 @@ namespace Project3H04.Client.Shared
             //=>zoeken op id, want op hans object vind hij niet/GA NIET !!!
             return Cart.SingleOrDefault(x => x.Id == id) != null ? true : false;
         }
+
+/*        public decimal TotalPrice()
+        {
+            
+        }*/
 
     }
 }

@@ -7,40 +7,45 @@
 <body>
     <div class="container">
 
-        <p class="black-style">Cart</p>
+        <p class="black-style" style="padding-left:25em;justify-content:left;">Cart</p>
 
+        <div class="row">
+            <div class="col">
+                <div class="row">
 
+                    @if (kunstwerken.Count == 0)
+                    {
+                        <h5>No artworks in cart at the moment.</h5>
+                    }
+                    else
+                    {
+                        @foreach (var kunst in kunstwerken)
+                        {
+                            <div class="col-md-12 col-lg-6">
+                                <a href="artworks/@kunst.Id" style="text-decoration:none">
 
-        @if (kunstwerken.Count == 0)
-        {
-            <h5>No artworks in cart at the moment.</h5>
-        }
-        else
-        {
-            @foreach (var kunst in kunstwerken)
-            {
-                <div class="row mb-4">
-                    <div class="col">
-                        <a href="artworks/@kunst.Id" style="text-decoration:none"> </a>
-                        <img src="/images/@kunst.Fotos.First().Pad" alt="" style="width:100%" />
-                    </div>
-                    <div class="col-md-7 col-lg-10">
-                        <div class="artwork-text">
-                            <p class="artwork">@kunst.Naam</p>
-                            <p class="price">€@kunst.Prijs</p>
-                            <p>Aantal: @kunstwerken.Count(x => x.Id == kunst.Id)</p>
-                        </div>
-                        <a class="btn btn-secondary" @onclick="_ =>RemoveFromCart(kunst)">Remove</a>
-                    </div>
+                                    <img src="/images/@kunst.Fotos.First().Pad" alt="" style="width:100%" />
+                                    <div class="artwork-text">
+                                        <p class="artwork">@kunst.Naam</p>
+                                        <p class="price">€@kunst.Prijs</p>
+                                        <p>Aantal: @kunstwerken.Count(x=>x.Id==kunst.Id)</p>
+                                    </div>
+
+                                </a>
+                                <a class="btn btn-secondary" @onclick="_ =>RemoveFromCart(kunst)">Remove</a>
+                            </div>
+
+                        }
+                    
+                        <button class="btn btn-outline-primary" type="submit" >Confirm Order</button>
+                        <a href="/checkout">checkout</a>
+                    }
+
                 </div>
-            }
-            <div class="row justify-content-end">
-                <button class="btn btn-outline-primary" type="submit">Confirm Order</button>
             </div>
-        }
-
-
+        </div>
     </div>
+
 </body>
 
 <!--=>>>Elk kunstwerk maar 1 x koopbaar !!!-->

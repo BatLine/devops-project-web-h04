@@ -27,17 +27,25 @@ else
                 <div class="row">
                     <div class="container testimonial-group " style="padding-left:20px; padding-top:20px">
                         <div class="row text-center">
-                            @foreach (Kunstwerk_DTO.Index k in kunst.Kunstwerken)
+                            @if (kunst.Kunstwerken.Count != 0)
                             {
-                                <a href="artworks/@k.Id" style="text-decoration:none">
-                                    <div class="col-4">
-                                        <img src="/images/@k.Fotos.FirstOrDefault().Pad" width="250" height="250" />
+                                @foreach (Kunstwerk_DTO.Index k in kunst.Kunstwerken)
+                                {
+                                    <a href="artworks/@k.Id" style="text-decoration:none">
+                                        <div class="col-4">
+                                            <img src="/images/@k.Fotos.FirstOrDefault().Pad" width="250" height="250" />
 
-                                        <p style=" width:100%; height: auto">@k.Naam</p>
-                                        <p style=" width:100%; height:auto">€@k.Prijs</p>
-                                    </div>
-                                </a>
+                                            <p style=" width:100%; height: auto">@k.Naam</p>
+                                            <p style=" width:100%; height:auto">€@k.Prijs</p>
+                                        </div>
+                                    </a>
+                                }
                             }
+                else
+                {
+                    <p>No artworks found</p>
+                }
+
                         </div>
                     </div>
 
