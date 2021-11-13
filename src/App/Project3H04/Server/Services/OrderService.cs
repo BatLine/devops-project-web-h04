@@ -1,4 +1,7 @@
 ﻿using Domain;
+using Mollie.Api.Client;
+using Mollie.Api.Client.Abstract;
+using Mollie.Api.Models.Payment.Response;
 using Project3H04.Server.Data;
 using Project3H04.Shared.DTO;
 using Project3H04.Shared.Kunstwerken;
@@ -35,11 +38,20 @@ namespace Project3H04.Server.Services
             CartKunstwerken.Remove(kunstwerk);
         }
 
-        public Task PostOrderAsync(Bestelling_DTO.Create bestelling)
+        public async Task PostOrderAsync(Bestelling_DTO.Create bestelling)
         {
+            Bestelling b = new Bestelling(DateTime.UtcNow, bestelling.Straat, bestelling.Postcode, bestelling.Gemeente,bestelling.PaymentId,bestelling.TotalePrijs);
+            Klant k = DbContext.Gebruikers.OfType<Klant>().FirstOrDefault(k => k.GebruikerId == 1);
+            k.Bestellingen.Add(b);
+           await DbContext.Bestellingen.AddAsync(b);
+           await DbContext.SaveChangesAsync();
+        }
 
-            throw new NotImplementedException();
-            //Bestelling b = new Bestelling(DateTime.UtcNow, bestelling.Straat, bestelling.Postcode);
+        public async Task RemoveBestelling(string id)
+        {
+            Bestelling b = DbContext.Bestellingen.FirstOrDefault(b => b.PaymentId == id);
+            DbContext.Bestellingen.Remove(b);
+            await DbContext.SaveChangesAsync();
         }
     }
 }

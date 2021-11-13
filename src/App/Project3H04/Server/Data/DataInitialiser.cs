@@ -20,7 +20,12 @@ namespace Project3H04.Server.Data
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
+
+
                 //seeding the database, see DBContext
+
+                Klant klant = new Klant("klant1",DateTime.UtcNow,"klant@gmail.com", "artist3.PNG");
+
                 AbonnementType at = new AbonnementType("default", 3, 200);
                 Abonnement a = new Abonnement(DateTime.Now, at);
                 Abonnement a2 = new Abonnement(DateTime.Now, at);
@@ -51,6 +56,7 @@ namespace Project3H04.Server.Data
                 //k.Kunstwerken.Add(kunst);
                 b.AddKunstwerk(kunst2);
                 c.AddKunstwerk(kunst3);
+                _dbContext.Gebruikers.Add(klant);
                 _dbContext.Gebruikers.Add(k);
                 _dbContext.Gebruikers.Add(b);
                 _dbContext.Gebruikers.Add(c);

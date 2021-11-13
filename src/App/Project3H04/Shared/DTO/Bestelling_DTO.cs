@@ -27,6 +27,7 @@ namespace Project3H04.Shared.DTO
             public string Gemeente { get; set; }
             public decimal TotalePrijs { get; set; }
             public ICollection<Kunstwerk_DTO.Detail> WinkelmandKunstwerken { get; set; }
+            public string PaymentId { get; set; }
 
             public class Validator : AbstractValidator<Create>
             {

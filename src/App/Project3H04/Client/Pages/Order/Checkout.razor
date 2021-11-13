@@ -44,12 +44,15 @@
     async Task Submit()
     {
         Bestelling.TotalePrijs = Cartstate.TotalePrijs;
+        Bestelling.WinkelmandKunstwerken = Cartstate.Cart;
         Console.WriteLine(Bestelling.TotalePrijs);
-        var response = await httpClient.PostAsJsonAsync<Bestelling_DTO.Create>($"api/order", Bestelling);
+        var response = await httpClient.PostAsJsonAsync<Bestelling_DTO.Create>($"api/order/Mollie", Bestelling);
         PaymentResponse paymentresponse = await response.Content.ReadFromJsonAsync<PaymentResponse>();
-        string molliestring = paymentresponse.Links.Checkout.ToString().Substring(12); //prutsen met sting voor juiste formaat
+        string molliestring = paymentresponse.Links.Checkout.ToString().Substring(12); //prutsen met string voor juiste formaat
         Console.WriteLine(molliestring);
+        Bestelling.PaymentId = paymentresponse.Id;
+        Console.WriteLine(paymentresponse.Id);
         NavManager.NavigateTo(molliestring);
-
+        await httpClient.PostAsJsonAsync<Bestelling_DTO.Create>($"api/order/persistOrder", Bestelling);
     }
 }
