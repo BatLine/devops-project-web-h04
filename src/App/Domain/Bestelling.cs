@@ -25,7 +25,7 @@ namespace Domain
             WinkelmandKunstwerken = new List<Kunstwerk>();
         }
 
-        public Bestelling(DateTime datum, string straat, int postcode, string gemeente/*, DateTime leverDatum*/,string paymentId, decimal totalePrijs)
+        public Bestelling(DateTime datum, string straat, int postcode, string gemeente/*, DateTime leverDatum*/,string paymentId, decimal totalePrijs , List<Kunstwerk> kunstwerken)
         {
             //Id = id;
             Datum = Guard.Against.Null(datum, nameof(datum));
@@ -36,6 +36,7 @@ namespace Domain
            // TotalePrijs = WinkelmandKunstwerken.Sum(x => x.Prijs);
             PaymentId = paymentId;
             TotalePrijs = totalePrijs;
+            WinkelmandKunstwerken = kunstwerken;
         }
     }
 }

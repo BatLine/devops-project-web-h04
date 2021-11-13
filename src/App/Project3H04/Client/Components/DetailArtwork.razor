@@ -23,7 +23,10 @@
                     <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
                     <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
                     <!--Order-->
+                    @if (Kunstwerk.TeKoop)
+                    {
                     <button class="btn btn-secondary" @onclick="AddToCart" disabled="@Check()"  >Order</button>
+                    }
                 </AuthorizeView>
 
             </div>

@@ -21,6 +21,7 @@ namespace Project3H04.Shared.Kunstwerken
         public class Detail : Index
         {
             public string Beschrijving { get; set; }
+            public bool TeKoop { get; set; }
 
         }
 

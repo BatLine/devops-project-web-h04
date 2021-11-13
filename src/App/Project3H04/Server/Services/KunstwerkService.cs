@@ -39,7 +39,9 @@ namespace Project3H04.Server.Services
                 },
                 Prijs = x.Prijs,
                 Beschrijving = x.Beschrijving,
-                Materiaal = x.Materiaal
+                Materiaal = x.Materiaal,
+                TeKoop = x.TeKoop
+                
             }).SingleOrDefaultAsync(x => x.Id == id);
 
         }
