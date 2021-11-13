@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 using Mollie.Api.Client;
 using Mollie.Api.Client.Abstract;
 using Mollie.Api.Models.Payment.Response;
@@ -38,18 +39,35 @@ namespace Project3H04.Server.Services
             CartKunstwerken.Remove(kunstwerk);
         }
 
+        
         public async Task PostOrderAsync(Bestelling_DTO.Create bestelling)
         {
-            Bestelling b = new Bestelling(DateTime.UtcNow, bestelling.Straat, bestelling.Postcode, bestelling.Gemeente,bestelling.PaymentId,bestelling.TotalePrijs);
+
+            IEnumerable<int> kunstwerkids = bestelling.WinkelmandKunstwerken.Select(k => k.Id); 
+            List<Kunstwerk> kunstwerken =  DbContext.Kunstwerken.Where(k => kunstwerkids.Contains(k.Id)).ToList();
+            foreach(var item in kunstwerken)
+            {
+                item.TeKoop = false;             //alle kunstwerken in de bestelling krijgen te koop = false
+            }
+            Bestelling b = new Bestelling(DateTime.UtcNow, bestelling.Straat, bestelling.Postcode, bestelling.Gemeente,bestelling.PaymentId,bestelling.TotalePrijs, kunstwerken);
             Klant k = DbContext.Gebruikers.OfType<Klant>().FirstOrDefault(k => k.GebruikerId == 1);
             k.Bestellingen.Add(b);
-           await DbContext.Bestellingen.AddAsync(b);
-           await DbContext.SaveChangesAsync();
+
+            DbContext.Kunstwerken.UpdateRange(kunstwerken);
+            await DbContext.Bestellingen.AddAsync(b);
+            await DbContext.SaveChangesAsync();
         }
 
+        //als een bestelling geanulleerd wordt, wordt deze verwijderd
         public async Task RemoveBestelling(string id)
         {
-            Bestelling b = DbContext.Bestellingen.FirstOrDefault(b => b.PaymentId == id);
+            Bestelling b = DbContext.Bestellingen.Include(k => k.WinkelmandKunstwerken).FirstOrDefault(b => b.PaymentId == id);
+            if (b == null) return;
+            foreach(var item in b.WinkelmandKunstwerken)
+            {
+                item.TeKoop = true;                  //bestelling wordt geannuleerd, kunstwerk kan weer gekocht worden
+            }
+            DbContext.UpdateRange(b.WinkelmandKunstwerken);
             DbContext.Bestellingen.Remove(b);
             await DbContext.SaveChangesAsync();
         }
