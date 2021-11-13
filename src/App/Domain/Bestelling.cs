@@ -17,6 +17,7 @@ namespace Domain
         public string Gemeente { get; set; }
       //  public DateTime LeverDatum { get; set; }
         public decimal TotalePrijs { get; set; }
+        public string PaymentId { get; set; }
         public ICollection<Kunstwerk> WinkelmandKunstwerken { get; set; } // deze niet in DB, winkelmand lokaal bijhouden
 
         public Bestelling()
@@ -24,7 +25,7 @@ namespace Domain
             WinkelmandKunstwerken = new List<Kunstwerk>();
         }
 
-        public Bestelling(DateTime datum, string straat, int postcode, string gemeente/*, DateTime leverDatum*/)
+        public Bestelling(DateTime datum, string straat, int postcode, string gemeente/*, DateTime leverDatum*/,string paymentId, decimal totalePrijs)
         {
             //Id = id;
             Datum = Guard.Against.Null(datum, nameof(datum));
@@ -32,7 +33,9 @@ namespace Domain
             Postcode = Guard.Against.Null(postcode, nameof(postcode));
             Gemeente = Guard.Against.NullOrEmpty(gemeente, nameof(gemeente));
             //LeverDatum = Guard.Against.Null(leverDatum, nameof(leverDatum));
-            TotalePrijs = WinkelmandKunstwerken.Sum(x => x.Prijs);
+           // TotalePrijs = WinkelmandKunstwerken.Sum(x => x.Prijs);
+            PaymentId = paymentId;
+            TotalePrijs = totalePrijs;
         }
     }
 }

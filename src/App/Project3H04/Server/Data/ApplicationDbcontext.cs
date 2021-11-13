@@ -94,6 +94,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Bestelling>().Property(x => x.Postcode).IsRequired();
             builder.Entity<Bestelling>().Property(x => x.Straat).IsRequired().HasMaxLength(200);
             builder.Entity<Bestelling>().Property(x => x.TotalePrijs).IsRequired();
+            builder.Entity<Bestelling>().Property(x => x.PaymentId).IsRequired();
 
             //builder.Entity<Bestelling>().HasMany(x => x.WinkelmandKunstwerken).WithOne().IsRequired().OnDelete(DeleteBehavior.Cascade);
 

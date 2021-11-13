@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Project3H04.Server.Data;
 using Project3H04.Server.Services;
 using Project3H04.Shared;
+using Project3H04.Shared.Klant;
 using Project3H04.Shared.Kunstenaars;
 using Project3H04.Shared.Kunstwerken;
 using System.Linq;
@@ -60,6 +61,7 @@ namespace Project3H04.Server
             services.AddScoped<IKunstwerkService,KunstwerkService>();
             services.AddScoped<IKunstenaarService, KunstenaarService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IKlantService, KlantService>();
             //services.AddSingleton<IOrderService, OrderService>();
             services.AddRazorPages();
         }
