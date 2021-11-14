@@ -27,12 +27,16 @@
         <InputText id="straat" @bind-Value="Bestelling.Straat" class="form-control" />
     </div>
     <div class="form-group">
-        <label for="postcode">Postcode</label>
-        <InputNumber id="postcode" @bind-Value="Bestelling.Postcode" class="form-control" />
+        <label for="postcode">PostalCode</label>
+        <InputText id="postcode" @bind-Value="Bestelling.Postcode" class="form-control" />
     </div>
     <div class="form-group">
         <label for="gemeente">City</label>
         <InputText id="gemeente" @bind-Value="Bestelling.Gemeente" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="gemeente">Country</label>
+        <InputText id="gemeente" @bind-Value="Bestelling.Land" class="form-control" />
     </div>
 
     <button type="submit">Checkout</button>

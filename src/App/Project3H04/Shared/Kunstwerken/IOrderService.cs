@@ -17,5 +17,6 @@ namespace Project3H04.Shared.Kunstwerken
 
         public Task PostOrderAsync(Bestelling_DTO.Create bestelling);
         public Task RemoveBestelling(string id);
+        //public Task CreateBestelling();
     }
 }
