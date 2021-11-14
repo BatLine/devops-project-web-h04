@@ -34,8 +34,8 @@ namespace Project3H04.Server.Controllers
             PaymentRequest paymentRequest = new PaymentRequest()
             {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
-                Description = "Test payment of the example project",
-                WebhookUrl= "https://1da6-2a02-a03f-eaee-3d00-15af-2cd4-87d-3fd7.ngrok.io/api/order/orderstatus?",    // uses ngrok      
+                Description = $"HoopGallery test payment",
+                WebhookUrl= "https://3a0c-2a02-a03f-eaee-3d00-15af-2cd4-87d-3fd7.ngrok.io/api/order/orderstatus?",    // uses ngrok      
                 RedirectUrl = "https://localhost:5001",
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,

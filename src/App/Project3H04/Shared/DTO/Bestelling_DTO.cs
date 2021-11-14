@@ -40,7 +40,7 @@ namespace Project3H04.Shared.DTO
                     {
                         if ((!(int.TryParse(x, out int value)) || value < 0))
                         {
-                            context.AddFailure($"{x} is not a valid number or less than 0");
+                            context.AddFailure($"{x} is geen geldige postcode");
                         }
                     }); 
                     RuleFor(b => b.Gemeente).NotEmpty();
