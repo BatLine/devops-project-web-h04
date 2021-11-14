@@ -14,39 +14,71 @@
 <EditForm Model="@Bestelling" OnValidSubmit="@Submit">
     <FluentValidationValidator />
     <ValidationSummary />
-    <h3>items in cart</h3>
-    @foreach (var item in Cartstate.Cart)
+    @if (Cartstate.Cart.Count == 0)
     {
-        <div>
-            <i class="bi bi-arrow-right-circle"></i> <p>Arwork : @(item.Naam), Price : @item.Prijs</p>
-        </div>
+        <h3>your cart is empty...</h3>
     }
-    <p>Total Price = @Cartstate.TotalePrijs</p>
-    <div class="form-group">
-        <label for="straat">Street</label>
-        <InputText id="straat" @bind-Value="Bestelling.Straat" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="postcode">PostalCode</label>
-        <InputText id="postcode" @bind-Value="Bestelling.Postcode" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="gemeente">City</label>
-        <InputText id="gemeente" @bind-Value="Bestelling.Gemeente" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="gemeente">Country</label>
-        <InputText id="gemeente" @bind-Value="Bestelling.Land" class="form-control" />
-    </div>
+    else
+    {
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="straat">Street</label>
+                        <InputText id="straat" @bind-Value="Bestelling.Straat" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="postcode">Postal code</label>
+                        <InputText id="postcode" @bind-Value="Bestelling.Postcode" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="gemeente">City</label>
+                        <InputText id="gemeente" @bind-Value="Bestelling.Gemeente" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="gemeente">Country</label>
+                        <InputText id="gemeente" @bind-Value="Bestelling.Land" class="form-control" />
+                    </div>
+                    <button class="btn btn-outline-primary mb-1" type="submit" disabled="@isDisabled">Checkout</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            @Cartstate.Cart.Count Items in cart
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                @foreach (var item in Cartstate.Cart)
+                                {
+                                <li class="list-group-item">
+                                     @(item.Naam)  €@item.Prijs
+                                </li>
+                                }
 
-    <button type="submit">Checkout</button>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <hr />
+                            <h5 class="card-title">Total price</h5>
+                            <p class="card-text">€@Cartstate.TotalePrijs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
 </EditForm>
 
 @code {
     private Bestelling_DTO.Create Bestelling = new() { };
+    private bool isDisabled = false;
 
     async Task Submit()
     {
+        isDisabled = true;
         Bestelling.TotalePrijs = Cartstate.TotalePrijs;
         Bestelling.WinkelmandKunstwerken = Cartstate.Cart;
         Console.WriteLine(Bestelling.TotalePrijs);
