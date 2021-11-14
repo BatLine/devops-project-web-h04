@@ -35,7 +35,7 @@ namespace Project3H04.Server.Controllers
             {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
                 Description = "Test payment of the example project",
-                WebhookUrl= "https://daea-2a02-a03f-eaee-3d00-3cbf-817a-6ee9-a82a.ngrok.io/api/order/orderstatus?",    // uses ngrok      
+                WebhookUrl= "https://1da6-2a02-a03f-eaee-3d00-15af-2cd4-87d-3fd7.ngrok.io/api/order/orderstatus?",    // uses ngrok      
                 RedirectUrl = "https://localhost:5001",
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,
@@ -72,9 +72,9 @@ namespace Project3H04.Server.Controllers
             Console.WriteLine(response.Status);
             if(response.Status == "paid")
             {
-
+               // await OrderService.CreateBestelling();
             }
-            if(response.Status == "canceled")
+            if(response.Status != "paid")
             {
                 await OrderService.RemoveBestelling(id);
             }

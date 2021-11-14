@@ -23,7 +23,8 @@ namespace Project3H04.Shared.DTO
         {
            // public DateTime Datum { get; set; }
             public string Straat { get; set; }
-            public int Postcode { get; set; }
+            public string Postcode{ get; set; }
+            public string Land { get; set; }
             public string Gemeente { get; set; }
             public decimal TotalePrijs { get; set; }
             public ICollection<Kunstwerk_DTO.Detail> WinkelmandKunstwerken { get; set; }
@@ -35,8 +36,16 @@ namespace Project3H04.Shared.DTO
                 public Validator()
                 {
                     RuleFor(b => b.Straat).NotEmpty();
-                    RuleFor(b => b.Postcode).NotEmpty();
+                    RuleFor(b => b.Postcode).NotEmpty().Length(4).Custom((x, context) =>
+                    {
+                        if ((!(int.TryParse(x, out int value)) || value < 0))
+                        {
+                            context.AddFailure($"{x} is not a valid number or less than 0");
+                        }
+                    }); 
                     RuleFor(b => b.Gemeente).NotEmpty();
+                    RuleFor(b => b.Land).NotEmpty();
+
                   //  RuleFor(b => b.TotalePrijs).GreaterThan(0);
                    // RuleFor(b => b.WinkelmandKunstwerken).NotEmpty();
                 }
