@@ -11,10 +11,18 @@
 }
 else
 {
-    <div style="padding-bottom:10px">
-        <img src="/images/@kunst.Fotopad" class="rounded-circle" alt="" style="width:100px; height:auto " />
-        <p style="display:inline-block">@kunst.Gebruikersnaam</p>
-    </div>
+    
+<div class="container" style="margin:0">
+    <div class="row">
+        <div class="col-md-1 col-5">
+            <div style="padding-bottom:10px">
+                <div class="rounded-circle image">
+                    <img src="/images/@kunst.Fotopad" alt="" />
+                </div>
+                <p style="display:inline-block">@kunst.Gebruikersnaam</p>
+            </div>
+        </div></div>
+</div>
     <div class="container" style="margin-left: 0px">
         <div class="row">
             <div class="col-md-4">
@@ -33,7 +41,7 @@ else
                                 {
                                     <a href="artworks/@k.Id" style="text-decoration:none">
                                         <div class="col-4">
-                                            <img src="/images/@k.Fotos.FirstOrDefault().Pad" width="250" height="250" />
+                                            <img src="/images/@k.Fotos.FirstOrDefault().Pad" width="250" />
 
                                             <p style=" width:100%; height: auto">@k.Naam</p>
                                             <p style=" width:100%; height:auto">€@k.Prijs</p>
@@ -41,10 +49,10 @@ else
                                     </a>
                                 }
                             }
-                else
-                {
-                    <p>No artworks found</p>
-                }
+                            else
+                            {
+                                <p>No artworks found</p>
+                            }
 
                         </div>
                     </div>
@@ -67,11 +75,11 @@ else
 
 
 
-}
+    }
 
-@code {
-    [Parameter] public int Id { get; set; }
-    private Kunstenaar_DTO kunst;
+    @code {
+        [Parameter] public int Id { get; set; }
+private Kunstenaar_DTO kunst;
     //private List<Kunstwerk_DTO.Index> kunstwerken;
 
     protected override async Task OnParametersSetAsync()
@@ -84,4 +92,4 @@ else
         //kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>("api/Kunstwerk");
         //kunstwerken.Where(x=>x.KunstenaarGebruikerId == kunst.GebruikerId)
     }
-}
+    }
