@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Project3H04.Server.Data;
 using Project3H04.Server.Services;
 using Project3H04.Shared;
+using Project3H04.Shared.Klant;
 using Project3H04.Shared.Kunstenaars;
 using Project3H04.Shared.Kunstwerken;
 using System.Linq;
@@ -31,6 +32,13 @@ namespace Project3H04.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                builder.WithOrigins("https://localhost:5001")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader());
+            });
             //validatie
             services.AddControllers().AddFluentValidation(fv => {
                 fv.RegisterValidatorsFromAssemblyContaining<Kunstwerk_DTO.Validator>();
@@ -53,6 +61,7 @@ namespace Project3H04.Server
             services.AddScoped<IKunstwerkService,KunstwerkService>();
             services.AddScoped<IKunstenaarService, KunstenaarService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IKlantService, KlantService>();
             //services.AddSingleton<IOrderService, OrderService>();
             services.AddRazorPages();
         }
@@ -77,6 +86,7 @@ namespace Project3H04.Server
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
             app.UseAuthentication();  //AUTH
             app.UseAuthorization();   //AUTH
             app.UseEndpoints(endpoints =>
