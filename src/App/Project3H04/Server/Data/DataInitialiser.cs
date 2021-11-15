@@ -17,9 +17,9 @@ namespace Project3H04.Server.Data
 
         public void InitializeData()
         {
-            _dbContext.Database.EnsureDeleted();
-            if (_dbContext.Database.EnsureCreated())
-            {
+            //_dbContext.Database.EnsureDeleted();
+           // if (_dbContext.Database.EnsureCreated())
+            //{
 
 
                 //seeding the database, see DBContext
@@ -76,7 +76,7 @@ namespace Project3H04.Server.Data
                 _dbContext.Gebruikers.AddRange(new List<Kunstenaar>() { d, e});
                 k.AddKunstwerk(kunst);
                 _dbContext.SaveChanges();
-            }
+          //  }
         }
     }
 }
