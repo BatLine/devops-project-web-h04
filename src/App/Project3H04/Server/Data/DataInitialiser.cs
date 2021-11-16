@@ -17,9 +17,9 @@ namespace Project3H04.Server.Data
 
         public void InitializeData()
         {
-            //_dbContext.Database.EnsureDeleted();
+          //  _dbContext.Database.EnsureDeleted();
            // if (_dbContext.Database.EnsureCreated())
-            //{
+           // {
 
 
                 //seeding the database, see DBContext
@@ -56,8 +56,8 @@ namespace Project3H04.Server.Data
                 Kunstwerk kunst9 = new Kunstwerk("Flowers", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "artist3.PNG" }}, false, "metaal", k);
 
                 
-                k.AddKunstwerk(kunst6);
-                k.AddKunstwerk(kunst7);
+               // k.AddKunstwerk(kunst6);
+               // k.AddKunstwerk(kunst7);
                 k.AddKunstwerk(kunst8);
                 k.AddKunstwerk(kunst9);
                 b.AddKunstwerk(kunst);
@@ -76,7 +76,7 @@ namespace Project3H04.Server.Data
                 _dbContext.Gebruikers.AddRange(new List<Kunstenaar>() { d, e});
                 k.AddKunstwerk(kunst);
                 _dbContext.SaveChanges();
-          //  }
+         //   }
         }
     }
 }
