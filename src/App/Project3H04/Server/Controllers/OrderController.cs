@@ -35,8 +35,8 @@ namespace Project3H04.Server.Controllers
             {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
                 Description = $"HoopGallery test payment",
-                WebhookUrl= "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus?",    // uses ngrok      
-                RedirectUrl = "https://localhost:5001/ordersuccessful",
+                WebhookUrl= "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus",    // uses ngrok      
+                RedirectUrl = "https://hooopgallery-acceptatie.azurewebsites.net/ordersuccessful",
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,
                    PaymentMethod.CreditCard,
