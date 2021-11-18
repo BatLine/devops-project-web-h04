@@ -16,14 +16,14 @@
             <!--Fotos-->
             <div class="form-group">
                 <label>Pictures: </label>
-                <InputFile OnChange="@OnInputFileChange" multiple />
+                <InputFile OnChange="@OnInputFileChange" multiple accept="image/*"/>
                 <div>
                     @foreach (var foto in Model.Fotos)
                     {
                         <div class="form-control-file">
                             <img src="/images/@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-right:20px;" />
 
-                            <button type="button" class="btn btn-danger" @onclick="() => RemoveImage(foto)">Verwijder</button>
+                            <button type="button" class="btn btn-danger" @onclick="() => RemoveImage(foto)">Delete</button>
                         </div>
                     }
                 </div>
