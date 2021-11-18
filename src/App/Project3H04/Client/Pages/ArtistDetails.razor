@@ -32,11 +32,14 @@ else
                 </text>
             </div>
             <div class="col-md-8">
+                <h5>browse artworks</h5>
                 <div class="row">
+                    
                     <div class="container testimonial-group " style="padding-left:20px; padding-top:20px">
-                        <div class="row text-center">
+                        <div class="row">
                             @if (kunst.Kunstwerken.Count != 0)
                             {
+                                
                                 @foreach (Kunstwerk_DTO.Index k in kunst.Kunstwerken)
                                 {
                                     <a href="artworks/@k.Id" style="text-decoration:none">

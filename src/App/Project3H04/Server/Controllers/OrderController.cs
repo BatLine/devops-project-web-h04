@@ -27,22 +27,37 @@ namespace Project3H04.Server.Controllers
             OrderService = orderservice;
             KlantService = klantservice;
         }
+
+        [HttpGet("{Id}"), ActionName("exists")]
+        public bool CheckIfBestellingExists(int id)
+        {
+            return OrderService.Bestellingexists(id);
+        }
+
+        // creates payment and order
+
         [HttpPost,ActionName("Mollie")]
         public async Task<IActionResult> CreateOrder(Bestelling_DTO.Create bestelling)
         {
+            int i = await OrderService.PostOrderAsync(bestelling);
+            //int id = await OrderService.PostOrderAsync(bestelling);
             IPaymentClient paymentClient = new PaymentClient("test_5hj5GaUDpQDyrhVK4yqRfhV4PnERfn");
             PaymentRequest paymentRequest = new PaymentRequest()
             {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
                 Description = $"HoopGallery test payment",
-                WebhookUrl= "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus",    // uses ngrok      
-                RedirectUrl = "https://hooopgallery-acceptatie.azurewebsites.net/ordersuccessful",
+                WebhookUrl= "https://ae51-193-191-158-1.ngrok.io/api/order/orderstatus",    // uses ngrok      
+                RedirectUrl = $"https://localhost:5001/ordersuccessful/{i}",
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,
                    PaymentMethod.CreditCard,
                    PaymentMethod.DirectDebit }
             };
+           //int id =  OrderService.PostOrderAsync(bestelling);
             PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
+            string paymentId = paymentResponse.Id;
+            await OrderService.PutOrderAsync(paymentId, i);
+            Console.WriteLine(paymentRequest.RedirectUrl);
            // await OrderService.PostOrderAsync(bestelling);
             // paymentResponse.Links.Checkout;
             return Ok(paymentResponse);
@@ -51,14 +66,16 @@ namespace Project3H04.Server.Controllers
 
         }
 
+        // This method doesn't get used anymore, Create Order creates the payment and bestelling
+
         // [HttpGet("{id}")]
-        [HttpPost, ActionName("persistOrder")]
-        public async Task PostOrder(Bestelling_DTO.Create bestelling)
+/*        [HttpPost, ActionName("persistOrder")]  
+        public async Task<int> PostOrder(Bestelling_DTO.Create bestelling)
         {
             // Klant_DTO k = KlantService.GetKlantById(1).Result;
-            await OrderService.PostOrderAsync(bestelling);
+            return await OrderService.PostOrderAsync(bestelling);
             //await Task.Delay(500);
-        }
+        }*/
 
         //[HttpPost, ActionName("orderstatus")]
         [HttpPost, ActionName("orderstatus")]

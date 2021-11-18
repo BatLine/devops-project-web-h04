@@ -1,12 +1,13 @@
 @inject HttpClient httpClient
 @inject NavigationManager NavManager
+@using Blazored.FluentValidation
 
 
 @if (Model != null)
 {
     <div class="main">
         <EditForm Model="@Model" OnValidSubmit="@Submit">
-            <!--<FluentValidationValidator />-->
+            <FluentValidationValidator />
             <ValidationSummary />
             <div class="form-group">
                 <label for="@Model.Naam">Name</label>
