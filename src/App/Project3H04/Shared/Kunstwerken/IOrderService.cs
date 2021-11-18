@@ -15,8 +15,12 @@ namespace Project3H04.Shared.Kunstwerken
         public void AddKunstwerk(Kunstwerk_DTO.Detail kunstwerk);
         public void RemoveKunstwerk(Kunstwerk_DTO.Detail kunstwerk);
 
-        public Task PostOrderAsync(Bestelling_DTO.Create bestelling);
+        public Task<int> PostOrderAsync(Bestelling_DTO.Create bestelling);
         public Task RemoveBestelling(string id);
+        //string getBestelling(string bestellingId);
+        
+        bool Bestellingexists(int id);
+        public Task PutOrderAsync(string id, int bestellingId);
         //public Task CreateBestelling();
     }
 }

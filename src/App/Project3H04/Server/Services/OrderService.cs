@@ -43,7 +43,7 @@ namespace Project3H04.Server.Services
         }
 
         
-        public async Task PostOrderAsync(Bestelling_DTO.Create bestelling) //besteling persisteren in db (dit gebeurt al voordat de betaling wordt uitgevoerd)
+        public async Task<int> PostOrderAsync(Bestelling_DTO.Create bestelling) //besteling persisteren in db (dit gebeurt al voordat de betaling wordt uitgevoerd)
         {
             //Transaction = await DbContext.Database.BeginTransactionAsync();
             //  DbContext.Database.UseTransaction(Transaction.GetDbTransaction());
@@ -62,6 +62,7 @@ namespace Project3H04.Server.Services
                 DbContext.Kunstwerken.UpdateRange(kunstwerken);
                 await DbContext.Bestellingen.AddAsync(b);
                 await DbContext.SaveChangesAsync();
+            return b.Id;
             
         }
 
@@ -84,11 +85,32 @@ namespace Project3H04.Server.Services
             await DbContext.SaveChangesAsync();
         }
 
-/*        public async Task CreateBestelling()
+        public bool Bestellingexists(int id)
         {
-            //  DbContext.Database.UseTransaction(Transaction.GetDbTransaction());
-            if(Transaction != null)
-            await Transaction.CommitAsync();
-        }*/
+            Bestelling b = DbContext.Bestellingen.FirstOrDefault(b => b.Id == id);
+            if (b != null)
+                return true;
+            return false;
+        }
+
+        public async Task PutOrderAsync(string id, int bestellingId)
+        {
+            Bestelling b = DbContext.Bestellingen.FirstOrDefault(b => b.Id == bestellingId);
+            b.PaymentId = id;
+            DbContext.Update(b);
+            await DbContext.SaveChangesAsync();
+        }
+
+        /*        public string getBestelling(string bestellingId)
+                {
+                    return  DbContext.Bestellingen.Select(b => b.PaymentId).FirstOrDefault(i => i== bestellingId);
+                }*/
+
+        /*        public async Task CreateBestelling()
+                {
+                    //  DbContext.Database.UseTransaction(Transaction.GetDbTransaction());
+                    if(Transaction != null)
+                    await Transaction.CommitAsync();
+                }*/
     }
 }

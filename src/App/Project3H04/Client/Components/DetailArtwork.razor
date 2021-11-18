@@ -16,7 +16,7 @@
                 <p><span style="font-weight:bold">Artist</span> : @Kunstwerk.Kunstenaar.Gebruikersnaam</p>
                 <p class="subtitle" style="text-align:left; font-weight:bold">about</p>
                 <p style="border: 1px thin grey; width:100%; height:auto">@Kunstwerk.Beschrijving</p>
-                <p><span style="font-weight:bold">Material</span> : @Kunstwerk.Materiaal</p>
+                <p><span style="font-weight:bold">Medium</span> : @Kunstwerk.Materiaal</p>
                 <p style="font-size:2rem; color:dimgray">€@Kunstwerk.Prijs</p>
                 <!--Enkel als AUTH dit zien-->
                 <AuthorizeView>
@@ -25,7 +25,7 @@
                     <!--Order-->
                     @if (Kunstwerk.TeKoop)
                     {
-                    <button class="btn btn-secondary" @onclick="AddToCart" disabled="@Check()"  >Order</button>
+                    <button class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()"  >Order</button>
                     }
                 </AuthorizeView>
 

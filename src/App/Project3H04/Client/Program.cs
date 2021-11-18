@@ -36,7 +36,6 @@ namespace Project3H04.Client
 
             //builder.Services.AddScoped<OrdersServ>();
             builder.Services.AddSingleton<CartState>();
-
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
               .CreateClient("ServerAPI"));
             await builder.Build().RunAsync();

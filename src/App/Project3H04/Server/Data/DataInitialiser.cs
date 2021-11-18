@@ -17,9 +17,9 @@ namespace Project3H04.Server.Data
 
         public void InitializeData()
         {
-          //  _dbContext.Database.EnsureDeleted();
-           // if (_dbContext.Database.EnsureCreated())
-           // {
+            _dbContext.Database.EnsureDeleted();
+            if (_dbContext.Database.EnsureCreated())
+            {
 
 
                 //seeding the database, see DBContext
@@ -43,17 +43,17 @@ namespace Project3H04.Server.Data
                 Kunstenaar e = new Kunstenaar("KAWS", DateTime.Now, "kaws@gmail.com", "KAWS, born Brian Donnelly, straddles the worlds of art and design with a prolific body of work that ranges from paintings, murals, and large-scale sculptures to merchandise, furniture, and toys. Much of it centers on Companion, a depressed Mickey Mouse–like character with X’s for eyes. KAWS got his start as a street artist in the late ’90s. His practice has earned him major shows at the Brooklyn Museum, the National Gallery of Victoria in Melbourne, and the Yuz Museum in Shanghai, among other institutions. Evoking the sensibilities of Pop artists such as Andy Warhol and Claes Oldenburg, KAWS embraces frequent brand collaborations and addresses the intersection of art and commerce with a playful sense of humor. His work has fetched eight figures on the secondary market.", a5, "A4.jfif");
                 //Kunstenaar f = new Kunstenaar("Esme-Rose Mende", DateTime.Now, "mende.er@gmail.com", "details", a6, "artist2.PNG");
 
-                Kunstwerk kunst = new Kunstwerk("Flowers", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A1AT1.png" }}, false, "metaal", b);
-                Kunstwerk kunst2 = new Kunstwerk("Thrill of Harmony", DateTime.Now, 300, "Thoughtful colorplay made by the genius Issac Ellis", new List<Foto> { new() { Pad = "A1AT2.png" } }, false, "hout", b);
-                Kunstwerk kunst3 = new Kunstwerk("Stunning Psychology", DateTime.Now, 1500, "Delicate work, that touches the senses", new List<Foto> { new() { Pad = "A2AT1.png" } }, false, "hout", c);
+                Kunstwerk kunst = new Kunstwerk("Flowers", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A1AT1.png" }}, false, "painting", b);
+                Kunstwerk kunst2 = new Kunstwerk("Thrill of Harmony", DateTime.Now, 300, "Thoughtful colorplay made by the genius Issac Ellis", new List<Foto> { new() { Pad = "A1AT2.png" } }, false, "painting", b);
+                Kunstwerk kunst3 = new Kunstwerk("Stunning Psychology", DateTime.Now, 1500, "Delicate work, that touches the senses", new List<Foto> { new() { Pad = "A2AT1.png" } }, false, "painting", c);
 
-                Kunstwerk kunst4 = new Kunstwerk("Curtain of Desire", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A3AT1.png" } }, false, "metaal", d);
-                Kunstwerk kunst5 = new Kunstwerk("Reality of Crime", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A3AT2.png" }  }, false, "metaal", d);
+                Kunstwerk kunst4 = new Kunstwerk("Curtain of Desire", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A3AT1.png" } }, false, "sculpture", d);
+                Kunstwerk kunst5 = new Kunstwerk("Reality of Crime", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A3AT2.png" }  }, false, "sculpture", d);
 
-                Kunstwerk kunst6 = new Kunstwerk("Gone", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A4AT1.png"} }, false, "metaal", e);
-                Kunstwerk kunst7 = new Kunstwerk("Supermodel", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A4AT2.png" }}, false, "metaal", e);
-                Kunstwerk kunst8 = new Kunstwerk("We've found comfort here", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "InaraA2.png" }}, false, "metaal", k);
-                Kunstwerk kunst9 = new Kunstwerk("Flowers", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "artist3.PNG" }}, false, "metaal", k);
+                Kunstwerk kunst6 = new Kunstwerk("Gone", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A4AT1.png"} }, false, "drawing", e);
+                Kunstwerk kunst7 = new Kunstwerk("Supermodel", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A4AT2.png" }}, false, "drawing", e);
+                Kunstwerk kunst8 = new Kunstwerk("We've found comfort here", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "InaraA2.png" }}, false, "painting", k);
+                Kunstwerk kunst9 = new Kunstwerk("Flowers", DateTime.Now, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "artist3.PNG" }}, false, "painting", k);
 
                 
                // k.AddKunstwerk(kunst6);
@@ -76,7 +76,7 @@ namespace Project3H04.Server.Data
                 _dbContext.Gebruikers.AddRange(new List<Kunstenaar>() { d, e});
                 k.AddKunstwerk(kunst);
                 _dbContext.SaveChanges();
-         //   }
+            }
         }
     }
 }

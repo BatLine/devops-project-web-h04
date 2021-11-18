@@ -95,7 +95,7 @@ namespace Project3H04.Server.Data
             // builder.Entity<Bestelling>().Property(x => x.Straat).IsRequired().HasMaxLength(200);
             //builder.Entity<Bestelling>().HasOne(x => x.Adres).WithOne().OnDelete(DeleteBehavior.Cascade).IsRequired();
             builder.Entity<Bestelling>().Property(x => x.TotalePrijs).IsRequired();
-            builder.Entity<Bestelling>().Property(x => x.PaymentId).IsRequired();
+           // builder.Entity<Bestelling>().Property(x => x.PaymentId).IsRequired();
             builder.Entity<Bestelling>().OwnsOne(x => x.Adres).Property(a => a.Gemeente).IsRequired().HasMaxLength(100);
             builder.Entity<Bestelling>().OwnsOne(x => x.Adres).Property(a => a.Postcode).IsRequired();
             builder.Entity<Bestelling>().OwnsOne(x => x.Adres).Property(a => a.Straat).IsRequired().HasMaxLength(200);
