@@ -16,14 +16,17 @@
             <!--Fotos-->
             <div class="form-group">
                 <label>Pictures: </label>
-                <InputFile OnChange="@OnInputFileChange" multiple />
+                <InputFile OnChange="@OnInputFileChange" multiple accept="image/*"/>
                 <div>
                     @foreach (var foto in Model.Fotos)
                     {
                         <div class="form-control-file">
                             <img src="/images/@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-right:20px;" />
 
-                            <button type="button" class="btn btn-danger" @onclick="() => RemoveImage(foto)">Verwijder</button>
+                            <button type="button" class="btn btn-danger" @onclick="() => RemoveImage(foto)">
+                                <i class="far fa-trash-alt"></i>
+                                <span>Delete</span>
+                            </button>
                         </div>
                     }
                 </div>
@@ -67,9 +70,12 @@
                 <InputTextArea @bind-Value="@Model.Beschrijving" class="form-control" />
             </div>
             <button type="submit" class="btn btn-primary">
-                Confirm
+                <span>Confirm</span>
             </button>
-            <a class="btn btn-secondary" href="/">Cancel</a>
+            <a class="btn btn-secondary" href="/">
+                <i class="fas fa-chevron-left"></i>
+                <span>Cancel</span>
+            </a>
 
         </EditForm>
     </div>
