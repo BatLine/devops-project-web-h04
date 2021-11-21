@@ -7,6 +7,7 @@ using Project3H04.Shared.Kunstwerken;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Project3H04.Client.Shared;
+using Append.Blazor.Sidepanel;
 
 namespace Project3H04.Client
 {
@@ -36,6 +37,10 @@ namespace Project3H04.Client
 
             //builder.Services.AddScoped<OrdersServ>();
             builder.Services.AddSingleton<CartState>();
+
+            //sidepanel by THE Vertonghen
+            builder.Services.AddSidepanel();
+
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
               .CreateClient("ServerAPI"));
             await builder.Build().RunAsync();

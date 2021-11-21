@@ -1,0 +1,76 @@
+﻿@page "/account"
+<!--AUTH-->
+@attribute [Authorize]
+@inject HttpClient httpClient
+
+
+
+<!--eerst de algemene attributen als geb tonen en dan bv voor bestellingen of kunstwerken te tonen, de klant of kunstenaar obj gebruiken !!!-->
+<!--algemene dingen tonen met bestellingen en als kunstenaar(AuthorizeView) dan vanonder of een tab om als kunstenaar uw kunstwerken te zien en te editen-->
+
+
+    <div class="container" style="margin:0">
+        <div class="row">
+            <div class="col-md-1 col-5">
+                <div style="padding-bottom:10px">
+                    <div class="rounded-circle image">
+                        <img src="/images/@geb.Fotopad" alt="" />
+                    </div>
+                    <p style="display:inline-block">@geb.Gebruikersnaam</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-left: 0px">
+        <div class="row">
+            <div class="col-md-4">
+                <text>
+                    @geb.GeboorteDatum
+                </text>
+            </div>
+            <div class="col-md-4">
+                <text>
+                    @geb.Email
+                </text>
+            </div>
+        </div>
+        <!--hier de extra-->
+    </div>
+
+
+    @code {
+        [CascadingParameter]
+        private Task<AuthenticationState> authenticationStateTask { get; set; }
+        private Gebruiker_DTO geb = new Gebruiker_DTO();
+        private Klant_DTO klant = new Klant_DTO();
+        private Kunstenaar_DTO kunst = new Kunstenaar_DTO();
+
+        protected override async Task OnParametersSetAsync()
+        {
+            //de user ophalen uit auth en kijken welke soort user het is
+            //voor algemene attributen de geb gebruiken
+
+            var user = (await authenticationStateTask).User;
+            Console.WriteLine(user.Identity.Name);
+            Console.WriteLine(user.IsInRole("Kunstenaar")); //WAAROM IS DIT FALSE? =>DIE USER IS KUNSTENAAR LMPAO
+            if (user.IsInRole("Kunstenaar"))
+            {
+                kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{user.Identity.Name}");
+                geb = kunst;
+            }
+            else
+            {
+                //kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{user.Identity.Name}");
+                //geb = kunst;
+                klant = await httpClient.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
+                geb = klant;
+                Console.WriteLine(klant.Email);
+
+                //Console.WriteLine(kunst.Email);
+                //Console.WriteLine(geb.Email);
+
+            }
+        }
+    }
+
+
