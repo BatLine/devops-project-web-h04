@@ -1,0 +1,109 @@
+﻿@page "/register"
+<!--inject HttpClient Http -->
+@inject PublicClient httpClient
+@inject NavigationManager NavigationManager
+@inject SignOutSessionStateManager SignOutManager
+@inject IConfiguration Configuration
+@inject IJSRuntime JsRuntime
+@inject ISidepanelService sidepanel
+
+@using Microsoft.Extensions.Configuration
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Newtonsoft.Json
+@using System.ComponentModel.DataAnnotations;
+
+<h3>Sign up</h3>
+<EditForm Model="@klant" OnValidSubmit="CompleteRegistration">
+    <DataAnnotationsValidator />
+    <FluentValidationValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="name">Email:</label>
+        <InputText type="email" id="email" aria-describedby="nameHelp" class="form-control" @bind-Value="@klant.Email" placeholder="Your Email"></InputText>
+        <p class="alert-danger">
+            @_resultMessage
+        </p>
+    </div>
+
+    <div class="form-group">
+        <label for="name">Username:</label>
+        <InputText id="gebruikersnaam" aria-describedby="nameHelp" class="form-control" @bind-Value="@klant.Gebruikersnaam" placeholder="Your username"></InputText>
+    </div>
+    <div class="form-group">
+        <label for="name">Birthdate:</label>
+        <InputDate id="geboortedatum" aria-describedby="nameHelp" class="form-control" @bind-Value="@klant.GeboorteDatum"></InputDate>
+    </div>
+    <div class="form-group">
+        <label for="name">Password:</label>
+        <InputText type="password" id="password" aria-describedby="nameHelp" class="form-control" @bind-Value="@password" placeholder="Your Password"></InputText>
+    </div>
+    <button type="submit" id="BtnSave" class="btn btn-primary">Complete registration</button>
+    <button type="reset" id="BtnCancel" class="btn btn-secondary" @onclick="@(() => OnCancel())">Cancel ...</button>
+</EditForm>
+
+
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    //[Required(ErrorMessage = "Please enter registration code.")]
+    private Klant_DTO klant = new Klant_DTO();
+
+    [Required(ErrorMessage = "Please enter password")] //deze validatie triggert niet, ookal dataAnnotation in de form gezet
+    [MinLength(5, ErrorMessage = "Password length must be atleast 5 characters")]
+    private string password = string.Empty;
+
+    string _resultMessage;
+    //string _userId;
+
+    private async Task CompleteRegistration()
+    {
+        //register link naar deze pagina nog zetten
+        //de user ophalen uit auth
+        //  var user = (await authenticationStateTask).User;
+
+        Console.WriteLine(klant.Email);
+
+        var res = await httpClient.Client.PostAsJsonAsync<Klant_DTO>("api/Klant", klant);
+        var k = await res.Content.ReadAsStringAsync();
+        Console.WriteLine(k);
+        if (k == "fail")
+        {
+            _resultMessage = "Email already being used!";
+            //await JsRuntime.InvokeAsync<object>("alert", "Email already being used!");
+        }
+        else
+        {
+
+            var url = $"{Configuration["Auth0:Authority"]}/dbconnections/signup";
+            var c = new HttpClient();
+            var request = new
+            {
+                client_id = Configuration["Auth0:ClientId"],
+                email = klant.Email,
+                password = password,
+                connection = "Username-Password-Authentication"
+            };
+
+            var response = await c.PostAsJsonAsync<object>(url, request);
+            var s = await response.Content.ReadAsStringAsync();
+
+
+            Console.WriteLine(s);
+
+            NavigationManager.NavigateTo("/");
+            //sidepanel.Close();
+            // await JsRuntime.InvokeAsync<object>("alert", "User signed up!");
+        }
+    }
+
+
+    protected void OnCancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
+
+
+
