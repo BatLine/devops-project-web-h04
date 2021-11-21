@@ -23,19 +23,26 @@ namespace Domain
             Geboortedatum = Guard.Against.Null(geboortedatum, nameof(geboortedatum));
             Email = Guard.Against.NullOrWhiteSpace(email, nameof(email));
             DatumCreatie = DateTime.UtcNow;
-            this.FotoPad = Guard.Against.NullOrEmpty(fotoPad, nameof(fotoPad));
+            this.FotoPad = fotoPad;
+            //this.FotoPad = Guard.Against.NullOrEmpty(fotoPad, nameof(fotoPad));
         }
         public Gebruiker()
         {
 
         }
 
-      /* public void EditGebruiker(Gebruiker gebruiker)
-        {
-            this.Naam = gebruiker.Naam;
-            this.Geboortedatum = gebruiker.
-            
-        } */
+        /* public void EditGebruiker(Gebruiker gebruiker)
+          {
+              this.Naam = gebruiker.Naam;
+              this.Geboortedatum = gebruiker.
 
+          } */
+        public void Edit(string gebruikersnaam, DateTime geboortedatum, string email, string fotoPad)
+        {
+            this.Gebruikersnaam = gebruikersnaam;
+            this.Geboortedatum = geboortedatum;
+            this.Email = email;
+            this.FotoPad = fotoPad;
+        }
     }
 }

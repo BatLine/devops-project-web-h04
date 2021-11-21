@@ -13,7 +13,7 @@ namespace Project3H04.Shared.DTO
         public class Index {  
         public DateTime Datum { get; set; }
         public string Straat { get; set; }
-        public int Postcode { get; set; }
+        public string Postcode { get; set; }
         public string Gemeente { get; set; }
         public DateTime LeverDatum { get; set; }
         public decimal TotalePrijs { get; set; }
