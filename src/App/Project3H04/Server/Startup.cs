@@ -55,7 +55,7 @@ namespace Project3H04.Server
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
             services.AddDbContext<ApplicationDbcontext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AzureDBContext"))); // verander naar DBContext voor localdb
+            options.UseSqlServer(Configuration.GetConnectionString("DBContext"))); // verander naar DBContext voor localdb
             services.AddControllersWithViews();
             services.AddScoped<DataInitialiser>();
             services.AddScoped<IKunstwerkService,KunstwerkService>();

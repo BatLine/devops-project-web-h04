@@ -60,6 +60,31 @@ namespace Project3H04.Server.Services
             return k; 
         }
 
+        public async Task<Kunstenaar_DTO> GetKunstenaarByEmail(string email)
+        {
+            var x = (Kunstenaar)dbContext.Gebruikers.OfType<Kunstenaar>().Include(k => k.Kunstwerken).ThenInclude(x => x.Fotos).SingleOrDefault(x => x.Email == email);
+            //include van fotos ...
+            Kunstenaar_DTO k = await Task.Run(() => new Kunstenaar_DTO
+            {
+                Gebruikersnaam = x.Gebruikersnaam,
+                GebruikerId = x.GebruikerId,
+                Details = x.Details,
+                Email = x.Email,
+                //deze nog goe omzette
+                Kunstwerken = x.Kunstwerken.Select(x => new Kunstwerk_DTO.Index
+                {
+                    Id = x.Id,
+                    Naam = x.Naam,
+                    Fotos = x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }).ToList(), //(List<Foto_DTO>)
+                    Prijs = x.Prijs
+                }).ToList(),
+                Fotopad = x.FotoPad
+                //,Veilingen = (ICollection<Shared.DTO.Veiling_DTO>)x.Veilingen //omzetten naar dto
+            });
+
+            return k;
+        }
+
         public async Task<List<Kunstenaar_DTO>> GetKunstenaars(string term, int take, bool recentArtists)
         {
             //.Where(x=>x.Naam.Contains(searchterm))

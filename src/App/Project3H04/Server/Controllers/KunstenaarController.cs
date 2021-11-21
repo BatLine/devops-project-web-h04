@@ -33,7 +33,7 @@ namespace Project3H04.Server.Controllers
             return kunstenaarService.GetKunstenaars(term,take,recentArtists);
         }
 
-        // GET api/<KunstenaarController>/5
+        //GET api/<KunstenaarController>/5
         [HttpGet("{id}")]
         public Task<Kunstenaar_DTO> Get(int id)
         {
@@ -44,7 +44,15 @@ namespace Project3H04.Server.Controllers
             //return k;
         }
 
+        [Route("byEmail/{email}")]
+        public Task<Kunstenaar_DTO> Get(string email)
+        {
+            return kunstenaarService.GetKunstenaarByEmail(email);
+            //if(k == null)
+            //    return NotFound();
 
+            //return k;
+        }
         //    return NotFound();
         //}
 
