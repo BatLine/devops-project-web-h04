@@ -71,7 +71,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Veiling>().Property(x => x.StartDatum).IsRequired();
             builder.Entity<Veiling>().Property(x => x.EindDatum).IsRequired();
             builder.Entity<Veiling>().Property(x => x.MinPrijs).IsRequired();
-            builder.Entity<Veiling>().Property(x => x.KunstwerkNaam).IsRequired().HasMaxLength(100);
+            builder.Entity<Veiling>().HasOne(x => x.Kunstwerk).WithOne().HasForeignKey<Veiling>(x => x.KunstwerkId).IsRequired().OnDelete(DeleteBehavior.ClientCascade);
 
             //builder.Entity<Veiling>().HasOne(x => x.Kunstwerk).WithOne().HasForeignKey<Veiling>(x => x.KunstwerkNaam).IsRequired().OnDelete(DeleteBehavior.Cascade).HasForeignKey("Id");
             builder.Entity<Veiling>().HasMany(x => x.BodenOpVeiling).WithOne().OnDelete(DeleteBehavior.NoAction);

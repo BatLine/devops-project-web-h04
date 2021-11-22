@@ -11,18 +11,16 @@ namespace Domain
     {
         public int Id { get; private set; }
         public Klant Klant{ get; private set; }
-        public Veiling Veiling { get; set; }
-        public double BodPrijs { get; set; }
+        public decimal BodPrijs { get; set; }
+        public DateTime Datum { get; set; }
 
-        public Bod(Klant klant, Veiling veiling, double bodPrijs)
-        {
+        public Bod(Klant klant, decimal bodPrijs, DateTime datum) {
             Klant = Guard.Against.Null(klant, nameof(klant));
-            Veiling = Guard.Against.Null(veiling, nameof(veiling));
             BodPrijs = Guard.Against.Null(bodPrijs, nameof(bodPrijs));
+            Datum = Guard.Against.Null(datum, nameof(datum));
         }
 
-        public Bod()
-        {
+        public Bod() {
 
         }
     }
