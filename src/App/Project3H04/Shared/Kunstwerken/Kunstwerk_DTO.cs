@@ -3,6 +3,7 @@ using Project3H04.Shared.Kunstenaars;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Project3H04.Shared.Kunstwerken
 {
@@ -15,14 +16,19 @@ namespace Project3H04.Shared.Kunstwerken
             public decimal Prijs { get; set; }
             public string Materiaal { get; set; }
             public Kunstenaar_DTO Kunstenaar { get; set; }
-            public List<Foto_DTO> Fotos { get; set; }
+            public Foto_DTO HoofdFoto { get; set; }
 
         }
         public class Detail : Index
         {
+            public List<Foto_DTO> Fotos { get; set; }
             public string Beschrijving { get; set; }
             public bool TeKoop { get; set; }
 
+            public Detail()
+            {
+                HoofdFoto = Fotos?.FirstOrDefault();
+            }
         }
 
         public class Create

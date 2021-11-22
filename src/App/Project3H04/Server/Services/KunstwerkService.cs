@@ -53,11 +53,11 @@ namespace Project3H04.Server.Services
             //check : searchTerm in lokale variable, wordt deze bijgehouden??
             List<Kunstwerk_DTO.Index> kunstwerken =
             await dbContext.Kunstwerken.Where(x => filters.Count == 0 || filters.Contains(x.Materiaal))
-           .Select(x => new Kunstwerk_DTO.Index
+           .Select(x => new Kunstwerk_DTO.Index ()
            {
                Id = x.Id,
                Naam = x.Naam,
-               Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Pad = x.Pad }),
+               HoofdFoto = new() { Pad = x.Fotos.FirstOrDefault().Pad }, //enkel eerste foto is nodig voor index
                Materiaal = x.Materiaal,
                Kunstenaar = new Kunstenaar_DTO
                {

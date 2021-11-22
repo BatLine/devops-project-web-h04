@@ -9,5 +9,15 @@ namespace Project3H04.Shared.Kunstwerken
 
         //[AllowedExtensions(new string[] { ".jpg", ".jpeg", ".pjpeg", ".gif", ".x-png", ".png" })]
         //public IBrowserFile Bestand { get; set; }
+
+        public Foto_DTO(string locatie)
+        {
+            Pad = locatie;
+        }
+
+        public Foto_DTO()
+        {
+
+        }
     }
 }
