@@ -2,75 +2,81 @@
 <!--AUTH-->
 @attribute [Authorize]
 @inject HttpClient httpClient
-
-
-
-<!--eerst de algemene attributen als geb tonen en dan bv voor bestellingen of kunstwerken te tonen, de klant of kunstenaar obj gebruiken !!!-->
-<!--algemene dingen tonen met bestellingen en als kunstenaar(AuthorizeView) dan vanonder of een tab om als kunstenaar uw kunstwerken te zien en te editen-->
-
-
-    <div class="container" style="margin:0">
-        <div class="row">
-            <div class="col-md-1 col-5">
-                <div style="padding-bottom:10px">
-                    <div class="rounded-circle image">
-                        <img src="/images/@geb.Fotopad" alt="" />
+<div class="container-fluid m-0 vh-100">
+    <div class="row vh-100">
+        <div class="col-3 p-0">
+            <nav id="sidebar">
+                <div class="row justify-content-center">
+                    <div class="col-6 p-4">
+                        <div class="rounded-circle image">
+                            <img src="/images/A1.png" alt="" />
+                        </div>
                     </div>
-                    <p style="display:inline-block">@geb.Gebruikersnaam</p>
                 </div>
-            </div>
+                <ul class="list-unstyled mb-5">
+
+                    <li>
+                        <a href="#">profile</a>
+                    </li>
+                    <li>
+                        <a href="#">subscription</a>
+                    </li>
+                    <li>
+                        <a href="#">artworks</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+        <div class="col-9 p-3">
+            <!-- Page Content  -->
+            <!--eerst de algemene attributen als geb tonen en dan bv voor bestellingen of kunstwerken te tonen, de klant of kunstenaar obj gebruiken !!!-->
+            <!--algemene dingen tonen met bestellingen en als kunstenaar(AuthorizeView) dan vanonder of een tab om als kunstenaar uw kunstwerken te zien en te editen-->
+
+
+            <p> Username: @geb.Gebruikersnaam</p>
+            <p> Day of birth: @geb.GeboorteDatum</p>
+            <p> Email: @geb.Email</p>
+            <!--hier de extra-->
         </div>
     </div>
-    <div class="container" style="margin-left: 0px">
-        <div class="row">
-            <div class="col-md-4">
-                <text>
-                    @geb.GeboorteDatum
-                </text>
-            </div>
-            <div class="col-md-4">
-                <text>
-                    @geb.Email
-                </text>
-            </div>
-        </div>
-        <!--hier de extra-->
-    </div>
+
+</div>
 
 
-    @code {
-        [CascadingParameter]
-        private Task<AuthenticationState> authenticationStateTask { get; set; }
-        private Gebruiker_DTO geb = new Gebruiker_DTO();
-        private Klant_DTO klant = new Klant_DTO();
-        private Kunstenaar_DTO kunst = new Kunstenaar_DTO();
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private Gebruiker_DTO geb = new Gebruiker_DTO();
+    private Klant_DTO klant = new Klant_DTO();
+    private Kunstenaar_DTO kunst = new Kunstenaar_DTO();
 
-        protected override async Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync()
+    {
+        //de user ophalen uit auth en kijken welke soort user het is
+        //voor algemene attributen de geb gebruiken
+
+        var user = (await authenticationStateTask).User;
+        Console.WriteLine(user.Identity.Name);
+        Console.WriteLine(user.IsInRole("Kunstenaar")); //WAAROM IS DIT FALSE? =>DIE USER IS KUNSTENAAR LMPAO
+        if (user.IsInRole("Kunstenaar"))
         {
-            //de user ophalen uit auth en kijken welke soort user het is
-            //voor algemene attributen de geb gebruiken
+            kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{user.Identity.Name}");
+            geb = kunst;
+        }
+        else
+        {
+            //kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{user.Identity.Name}");
+            //geb = kunst;
+            klant = await httpClient.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
+            geb = klant;
+            Console.WriteLine(klant.Email);
 
-            var user = (await authenticationStateTask).User;
-            Console.WriteLine(user.Identity.Name);
-            Console.WriteLine(user.IsInRole("Kunstenaar")); //WAAROM IS DIT FALSE? =>DIE USER IS KUNSTENAAR LMPAO
-            if (user.IsInRole("Kunstenaar"))
-            {
-                kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{user.Identity.Name}");
-                geb = kunst;
-            }
-            else
-            {
-                //kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{user.Identity.Name}");
-                //geb = kunst;
-                klant = await httpClient.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
-                geb = klant;
-                Console.WriteLine(klant.Email);
+            //Console.WriteLine(kunst.Email);
+            //Console.WriteLine(geb.Email);
 
-                //Console.WriteLine(kunst.Email);
-                //Console.WriteLine(geb.Email);
-
-            }
         }
     }
+}
 
 
