@@ -5,31 +5,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
-{
-    public class Veiling
-    {
+namespace Domain {
+    public class Veiling {
         public int Id { get; private set; }
         public DateTime StartDatum { get; set; }
         public DateTime EindDatum { get; set; }
-        public double MinPrijs { get; set; }
+        public decimal MinPrijs { get; set; }
         public ICollection<Bod> BodenOpVeiling { get; set; }
-        //public Kunstwerk Kunstwerk { get; set; }
-        public Gebruiker gewonnenGeb { get; set; }
-        public string KunstwerkNaam{ get; private set; }
-        public Veiling(DateTime startDatum, DateTime eindDatum, double minPrijs, string kunstwerknaam)
-        {
+        public Kunstwerk Kunstwerk { get; private set; }
+        public int KunstwerkId { get; private set; }
+        public Bod HoogsteBod => BodenOpVeiling.OrderByDescending(b => b.BodPrijs).FirstOrDefault();
+
+
+        public Veiling(DateTime startDatum, DateTime eindDatum, decimal minPrijs, Kunstwerk kunstwerk) : this() {
             StartDatum = Guard.Against.Null(startDatum, nameof(startDatum));
             EindDatum = Guard.Against.Null(eindDatum, nameof(eindDatum));
             MinPrijs = Guard.Against.Null(minPrijs, nameof(MinPrijs));
-            BodenOpVeiling = new List<Bod>();
-            //Kunstwerk = kunstwerk;
-            KunstwerkNaam = Guard.Against.NullOrEmpty(kunstwerknaam, nameof(kunstwerknaam));
-            gewonnenGeb = new Gebruiker();
+            Kunstwerk = Guard.Against.Null(kunstwerk, nameof(kunstwerk));
+            KunstwerkId = kunstwerk.Id;
+            Kunstwerk.IsVeilbaar = true;
         }
-        public Veiling()
-        {
 
+        public void VoegBodToe(Klant klant, decimal prijs, DateTime datum) {
+            Bod bod = new Bod(klant, prijs, datum);
+
+            if ((BodenOpVeiling.Count > 0) && (prijs <= HoogsteBod.BodPrijs))
+                throw new ArgumentException("De prijs van het bod ligt onder de prijs van het hoogste bod.");
+            if ((prijs <= MinPrijs) || (datum > EindDatum))
+                throw new ArgumentException("De prijs of datum van het bod is onjuist.");
+
+            BodenOpVeiling.Add(bod);
+        }
+
+        public Veiling() {
+            BodenOpVeiling = new List<Bod>();
         }
     }
 }
