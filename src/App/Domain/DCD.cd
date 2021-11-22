@@ -13,7 +13,7 @@
   <Class Name="Domain.Bestelling">
     <Position X="12.75" Y="2.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAACQAAAAAAAAAAAAAAAgABAAACCAAAAAAAIAAAACAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAABAAAgCABAAAAAIAAAAAAA=</HashCode>
       <FileName>Bestelling.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -23,21 +23,21 @@
   <Class Name="Domain.Gebruiker">
     <Position X="5.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAQAA=</HashCode>
+      <HashCode>AAAAAQAAACAAAAAAAAAAAAAAAAAAAEACAAgAAAAIQAA=</HashCode>
       <FileName>Gebruiker.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.Kunstwerk">
     <Position X="9.25" Y="1" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AACAAAIAAAAAAAAAAACABAAAAAAAMAAAAIAAgAEAAAA=</HashCode>
+      <HashCode>AACCAAIAAAQAAAAAAACABAAAAAAAIAAAAIAAgAEAAAA=</HashCode>
       <FileName>Kunstwerk.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Domain.Veiling">
     <Position X="11" Y="5.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAIAAAAACAAAAAAAgAAAAAABAQ=</HashCode>
+      <HashCode>AAACAAAAAAAASAAAAAAIAAAAACAAAAAAAgAAAAAABAQ=</HashCode>
       <FileName>Veiling.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -50,11 +50,11 @@
   <Class Name="Domain.Bod">
     <Position X="7.25" Y="5.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAAAAAQAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAgAAAAAAQAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Bod.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Veiling" />
+      <Property Name="Datum" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Domain.AbonnementType">
