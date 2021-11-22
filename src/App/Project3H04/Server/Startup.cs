@@ -17,12 +17,11 @@ using Project3H04.Shared.Kunstenaars;
 using Project3H04.Shared.Kunstwerken;
 using System.Linq;
 
-namespace Project3H04.Server
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
+namespace Project3H04.Server {
+    public class Startup {
+        private const bool UseLocalDb = true;
+
+        public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
 
@@ -30,10 +29,8 @@ namespace Project3H04.Server
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddCors(options =>
-            {
+        public void ConfigureServices(IServiceCollection services) {
+            services.AddCors(options => {
                 options.AddDefaultPolicy(builder =>
                 builder.WithOrigins("https://localhost:5001")
                        .AllowAnyMethod()
@@ -45,17 +42,25 @@ namespace Project3H04.Server
                 fv.ImplicitlyValidateChildProperties = true;
             });
             //AUTH
-            services.AddAuthentication(options =>
-            {
+            services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
+            }).AddJwtBearer(options => {
                 options.Authority = Configuration["Auth0:Authority"];
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
-            services.AddDbContext<ApplicationDbcontext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DBContext"))); // verander naar DBContext voor localdb
+
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            if (UseLocalDb) { // Bovenaan klasse de bool veranderen
+                #pragma warning disable IDE0079 // Remove unnecessary suppression
+                #pragma warning disable CS0162 // Unreachable code detected
+                services.AddDbContext<ApplicationDbcontext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
+            } else {
+                #pragma warning disable IDE0079
+                #pragma warning disable CS0162 // Unreachable code detected
+                services.AddDbContext<ApplicationDbcontext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDBContext")));
+            }
+             
             services.AddControllersWithViews();
             services.AddScoped<DataInitialiser>();
             services.AddScoped<IKunstwerkService,KunstwerkService>();
@@ -67,15 +72,11 @@ namespace Project3H04.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataInitialiser dataInitialiser)
-        {
-            if (env.IsDevelopment())
-            {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataInitialiser dataInitialiser) {
+            if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
-            }
-            else
-            {
+            } else {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
@@ -89,15 +90,15 @@ namespace Project3H04.Server
             app.UseCors();
             app.UseAuthentication();  //AUTH
             app.UseAuthorization();   //AUTH
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseEndpoints(endpoints => {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
 
-            //enkel aanzetten wanneer je op local db werkt
-            //dataInitialiser.InitializeData();
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            if (UseLocalDb)
+                dataInitialiser.InitializeData(); //enkel aanzetten wanneer je op local db werkt
         }
     }
 }
