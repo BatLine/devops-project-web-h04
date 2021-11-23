@@ -97,8 +97,9 @@ namespace Project3H04.Server.Services
             List<Foto> fotos = kunstwerk.Fotos.Select(fotoDTO => new Foto { Id = fotoDTO.Id, Pad = fotoDTO.Pad }).ToList(); //id wordt meegegeven als de foto al in de databank zit
             Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
 
-            Kunstwerk kunstwerkToUpdate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
-            kunstwerkToUpdate.Id = kunstwerk.Id;
+            Kunstwerk kunstwerkToUpdate = dbContext.Kunstwerken.FirstOrDefault(x => x.Id == kunstwerk.Id);
+            kunstwerkToUpdate.Edit(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, kunstwerk.IsVeilbaar, kunstwerk.Materiaal);
+            //fotos uploaden en verwijderen
 
             dbContext.Kunstwerken.Update(kunstwerkToUpdate);
             await dbContext.SaveChangesAsync();

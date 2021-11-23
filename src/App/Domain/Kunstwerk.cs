@@ -33,5 +33,13 @@ namespace Domain {
 
         }
 
+        public void Edit(string naam, DateTime einddatum, decimal prijs, string beschrijving, bool isVeilbaar, string materiaal)
+        {
+            Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
+            Einddatum = Guard.Against.Null(einddatum, nameof(einddatum));
+            Prijs = Guard.Against.Null(prijs, nameof(prijs));
+            Beschrijving = Guard.Against.NullOrWhiteSpace(beschrijving, nameof(beschrijving));
+            Materiaal = Guard.Against.NullOrEmpty(materiaal, nameof(materiaal));
+        }
     }
 }
