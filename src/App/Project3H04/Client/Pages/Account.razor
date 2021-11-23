@@ -58,10 +58,10 @@
 
         var user = (await authenticationStateTask).User;
         Console.WriteLine(user.Identity.Name);
-        Console.WriteLine(user.IsInRole("Kunstenaar")); //WAAROM IS DIT FALSE? =>DIE USER IS KUNSTENAAR LMPAO
+        Console.WriteLine(user.IsInRole("Kunstenaar")); //wrm IS DIT FALSE?
         if (user.IsInRole("Kunstenaar"))
         {
-            kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{user.Identity.Name}");
+            kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/byEmail/{user.Identity.Name}");
             geb = kunst;
         }
         else

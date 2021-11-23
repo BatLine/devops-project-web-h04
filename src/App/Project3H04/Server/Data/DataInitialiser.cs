@@ -17,6 +17,7 @@ namespace Project3H04.Server.Data {
             if (!_dbContext.Database.EnsureCreated()) return;
             //seeding the database, see DBContext
             Klant klant1 = new Klant("gillesdp", Convert.ToDateTime("28/12/2001"), "gilles.depessemier@gmail.com", "artist3.PNG");
+            Klant klantTest = new Klant("test", Convert.ToDateTime("28/12/2001"), "test@gmail.com", "artist3.PNG");
 
             AbonnementType at = new AbonnementType("default", 3, 200);
             Abonnement abonnement1 = new Abonnement(DateTime.UtcNow, at);
@@ -59,6 +60,7 @@ namespace Project3H04.Server.Data {
             kunstenaar5.AddKunstwerk(kunstwerk7);
 
             _dbContext.Gebruikers.Add(klant1);
+            _dbContext.Gebruikers.Add(klantTest);
             _dbContext.Gebruikers.Add(kunstenaar1);
             _dbContext.Gebruikers.Add(kunstenaar2);
             _dbContext.Gebruikers.Add(kunstenaar3);
