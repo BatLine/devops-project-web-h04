@@ -122,6 +122,7 @@ namespace Project3H04.Server.Data
             //Foto
             builder.Entity<Foto>()
                                 .ToTable("Foto").HasKey(f => f.Id);
+            //Bestelling
             builder.Entity<Bestelling>().Property(x => x.Id).ValueGeneratedOnAdd();
 
 
@@ -167,6 +168,7 @@ namespace Project3H04.Server.Data
         public DbSet<Bod> Boden { get; set; }
         public DbSet<Abonnement> Abonnementen { get; set; }
         public DbSet<AbonnementType> AbonnementTypes { get; set; }
+        public DbSet<Foto> Fotos { get; set; }
 
     }
 }

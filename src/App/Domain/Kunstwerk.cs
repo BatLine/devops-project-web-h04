@@ -10,7 +10,7 @@ namespace Domain {
         public DateTime Einddatum { get; private set; }
         public decimal Prijs { get; private set; }
         public string Beschrijving { get; private set; }
-        public List<Foto> Fotos { get; private set; }
+        public List<Foto> Fotos { get; set; }
         public bool TeKoop { get; set; }
         public bool IsVeilbaar { get; set; }
         public string Materiaal { get; private set; }

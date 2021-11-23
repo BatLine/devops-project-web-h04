@@ -10,5 +10,11 @@ namespace Domain
     {
         public int Id { get; set; }
         public string Pad{ get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Foto foto &&
+                   Id == foto.Id;
+        }
     }
 }
