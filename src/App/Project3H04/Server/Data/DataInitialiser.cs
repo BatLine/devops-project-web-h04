@@ -35,15 +35,15 @@ namespace Project3H04.Server.Data {
             Kunstenaar kunstenaar5 = new Kunstenaar("KAWS", DateTime.UtcNow, "kaws@gmail.com", "KAWS, born Brian Donnelly, straddles the worlds of art and design with a prolific body of work that ranges from paintings, murals, and large-scale sculptures to merchandise, furniture, and toys. Much of it centers on Companion, a depressed Mickey Mouse–like character with X’s for eyes. KAWS got his start as a street artist in the late ’90s. His practice has earned him major shows at the Brooklyn Museum, the National Gallery of Victoria in Melbourne, and the Yuz Museum in Shanghai, among other institutions. Evoking the sensibilities of Pop artists such as Andy Warhol and Claes Oldenburg, KAWS embraces frequent brand collaborations and addresses the intersection of art and commerce with a playful sense of humor. His work has fetched eight figures on the secondary market.", abonnement5, "A4.jfif");
             //Kunstenaar kunstenaar6 = new Kunstenaar("Esme-Rose Mende", DateTime.UtcNow, "mende.er@gmail.com", "details", a6, "artist2.PNG");
 
-            Kunstwerk kunstwerk1 = new Kunstwerk("Inspiring Flowers", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A1AT1.png" } }, false, "painting", kunstenaar2);
-            Kunstwerk kunstwerk2 = new Kunstwerk("Thrill of Harmony", DateTime.UtcNow, 300, "Thoughtful colorplay made by the genius Issac Ellis", new List<Foto> { new() { Pad = "A1AT2.png" } }, false, "painting", kunstenaar2);
-            Kunstwerk kunstwerk3 = new Kunstwerk("Stunning Psychology", DateTime.UtcNow, 1500, "Delicate work, that touches the senses", new List<Foto> { new() { Pad = "A2AT1.png" } }, false, "painting", kunstenaar3);
-            Kunstwerk kunstwerk4 = new Kunstwerk("Curtain of Desire", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A3AT1.png" } }, false, "sculpture", kunstenaar4);
-            Kunstwerk kunstwerk5 = new Kunstwerk("Reality of Crime", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A3AT2.png" }  }, false, "sculpture", kunstenaar4);
-            Kunstwerk kunstwerk6 = new Kunstwerk("Gone", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A4AT1.png"} }, false, "drawing", kunstenaar5);
-            Kunstwerk kunstwerk7 = new Kunstwerk("Supermodel", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "A4AT2.png" }}, false, "drawing", kunstenaar5);
-            Kunstwerk kunstwerk8 = new Kunstwerk("We've found comfort here", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "InaraA2.png" }, new() { Pad = "inaraA2Bis.png" } }, false, "painting", kunstenaar1);
-            Kunstwerk kunstwerk9 = new Kunstwerk("Flowers", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Pad = "artist3.PNG" }}, false, "painting", kunstenaar1);
+            Kunstwerk kunstwerk1 = new Kunstwerk("Inspiring Flowers", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A1AT1.png" } }, false, "painting", kunstenaar2);
+            Kunstwerk kunstwerk2 = new Kunstwerk("Thrill of Harmony", DateTime.UtcNow, 300, "Thoughtful colorplay made by the genius Issac Ellis", new List<Foto> { new() { Naam = "A1AT2.png" } }, false, "painting", kunstenaar2);
+            Kunstwerk kunstwerk3 = new Kunstwerk("Stunning Psychology", DateTime.UtcNow, 1500, "Delicate work, that touches the senses", new List<Foto> { new() { Naam = "A2AT1.png" } }, false, "painting", kunstenaar3);
+            Kunstwerk kunstwerk4 = new Kunstwerk("Curtain of Desire", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A3AT1.png" } }, false, "sculpture", kunstenaar4);
+            Kunstwerk kunstwerk5 = new Kunstwerk("Reality of Crime", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A3AT2.png" }  }, false, "sculpture", kunstenaar4);
+            Kunstwerk kunstwerk6 = new Kunstwerk("Gone", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A4AT1.png"} }, false, "drawing", kunstenaar5);
+            Kunstwerk kunstwerk7 = new Kunstwerk("Supermodel", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A4AT2.png" }}, false, "drawing", kunstenaar5);
+            Kunstwerk kunstwerk8 = new Kunstwerk("We've found comfort here", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "InaraA2.png" }, new() { Naam = "inaraA2Bis.png" } }, false, "painting", kunstenaar1);
+            Kunstwerk kunstwerk9 = new Kunstwerk("Flowers", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "artist3.PNG" }}, false, "painting", kunstenaar1);
 
                 
             // kunstenaar1.AddKunstwerk(kunstwerk6);
