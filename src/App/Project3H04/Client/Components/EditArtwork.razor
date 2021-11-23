@@ -21,7 +21,7 @@
                     @foreach (var foto in Model.Fotos)
                     {
                         <div class="form-control-file">
-                            <img src="/images/@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-right:20px;" />
+                            <img src="@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-right:20px;" />
 
                             <button type="button" class="btn btn-danger" @onclick="() => RemoveImage(foto)">
                                 <i class="far fa-trash-alt"></i>

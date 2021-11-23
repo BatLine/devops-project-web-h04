@@ -76,7 +76,7 @@ namespace Project3H04.Server.Services
 
         public async Task<int> CreateAsync(Kunstwerk_DTO.Create kunstwerk, int gebruikerId)
         {
-            List<Foto> fotos = kunstwerk.Fotos.Select(fotoDTO => new Foto { Naam = fotoDTO.Pad }).ToList();
+            List<Foto> fotos = kunstwerk.Fotos.Select(fotoDTO => new Foto() { Naam = fotoDTO.Pad }).ToList();
             Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
 
             Kunstwerk kunstwerkToCreate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
@@ -95,7 +95,7 @@ namespace Project3H04.Server.Services
                 throw new ArgumentException();
             }
 
-            List<Foto> updatedFotoLijst = kunstwerk.Fotos.Select(fotoDTO => new Foto { Id = fotoDTO.Id, Naam = fotoDTO.Pad }).ToList(); //id wordt meegegeven als de foto al in de databank zit
+            List<Foto> updatedFotoLijst = kunstwerk.Fotos.Select(fotoDTO => new Foto() { Id = fotoDTO.Id, Naam = fotoDTO.Pad }).ToList(); //id wordt meegegeven als de foto al in de databank zit
             Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
 
             Kunstwerk kunstwerkToUpdate = dbContext.Kunstwerken.Include(k => k.Fotos).FirstOrDefault(x => x.Id == kunstwerk.Id);
@@ -103,8 +103,10 @@ namespace Project3H04.Server.Services
 
             //nodige fotos verwijderen
             List<Foto> teVerwijderen = kunstwerkToUpdate.Fotos.Where(x => !updatedFotoLijst.Contains(x)).ToList(); //alle fotos in de databank die niet in de updatedFotlijst staan moeten verwijderd worden
-            dbContext.Fotos.RemoveRange(teVerwijderen);
-
+            if(teVerwijderen.Count() > 0)
+            {
+                dbContext.Fotos.RemoveRange(teVerwijderen);
+            }
 
             //final foto update
             kunstwerkToUpdate.Fotos = updatedFotoLijst;

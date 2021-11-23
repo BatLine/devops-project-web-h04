@@ -102,7 +102,7 @@ namespace Project3H04.Server.Controllers
         private int GetAangemeldeGebruikerId()
         {
             //fakedata: 
-            return 2;
+            return 3;
         }
     }
 }

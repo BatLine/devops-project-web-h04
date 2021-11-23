@@ -4,7 +4,7 @@
     <div class="container" style="margin-left:0px;padding-top:10px">
         <div class="row">
             <div class="col-md-6">
-                <img src="/images/@Kunstwerk.Fotos.First().Pad" style="width: 100%; height:auto" />
+                <img src="@Kunstwerk.Fotos.First().Pad" alt="@Kunstwerk.Fotos.First().Pad" style="width: 100%; height:auto" />
             </div>
 
 
@@ -40,7 +40,7 @@
 
                     @foreach (Foto_DTO foto in Kunstwerk.Fotos.Skip(1))
                     {
-                        <img src="/images/@foto.Pad" width="250" height="250" style="padding-left:10px;" />
+                        <img src="@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-left:10px;" />
                     }
                 </div>
             }

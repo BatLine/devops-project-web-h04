@@ -42,7 +42,7 @@ namespace Project3H04.Server.Data {
             Kunstwerk kunstwerk5 = new Kunstwerk("Reality of Crime", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A3AT2.png" }  }, false, "sculpture", kunstenaar4);
             Kunstwerk kunstwerk6 = new Kunstwerk("Gone", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A4AT1.png"} }, false, "drawing", kunstenaar5);
             Kunstwerk kunstwerk7 = new Kunstwerk("Supermodel", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A4AT2.png" }}, false, "drawing", kunstenaar5);
-            Kunstwerk kunstwerk8 = new Kunstwerk("We've found comfort here", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "InaraA2.png" }, new() { Naam = "inaraA2Bis.png" } }, false, "painting", kunstenaar1);
+            Kunstwerk kunstwerk8 = new Kunstwerk("We've found comfort here", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "inaraA2.png" }, new() { Naam = "inaraA2Bis.png" } }, false, "painting", kunstenaar1);
             Kunstwerk kunstwerk9 = new Kunstwerk("Flowers", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "artist3.PNG" }}, false, "painting", kunstenaar1);
 
                 
