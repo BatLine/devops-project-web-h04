@@ -19,7 +19,6 @@ namespace Project3H04.Server.Services
 
         public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; }
 
-
         public KunstwerkService(ApplicationDbcontext dbContext)
         {
             this.dbContext = dbContext;
@@ -41,19 +40,18 @@ namespace Project3H04.Server.Services
                 Beschrijving = x.Beschrijving,
                 Materiaal = x.Materiaal,
                 TeKoop = x.TeKoop
-                
+
             }).SingleOrDefaultAsync(x => x.Id == id);
 
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
-        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery(Name = "termArtwork")] string termArtwork, [FromQuery(Name = "termArtist")] string termArtist, [FromQuery(Name = "termMinimumPrice")] decimal termMinimumPrice, [FromQuery(Name = "termMaximumPrice")] decimal termMaximumPrice, int take, [FromQuery(Name = "filters")] List<string> filters)
+        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(Kunstwerk_DTO.Filter request)
         {
-            // check: typ KUNST => extra metaal
-            //check : searchTerm in lokale variable, wordt deze bijgehouden??
+
             List<Kunstwerk_DTO.Index> kunstwerken =
-            await dbContext.Kunstwerken.Where(x => filters.Count == 0 || filters.Contains(x.Materiaal))
-           .Select(x => new Kunstwerk_DTO.Index ()
+            await dbContext.Kunstwerken.Where(x => request.Materiaal == null || request.Materiaal.Contains(x.Materiaal))
+           .Select(x => new Kunstwerk_DTO.Index()
            {
                Id = x.Id,
                Naam = x.Naam,
@@ -65,11 +63,11 @@ namespace Project3H04.Server.Services
                    GebruikerId = x.Kunstenaar.GebruikerId,
                },
                Prijs = x.Prijs
-           }).Where(x => String.IsNullOrEmpty(termArtwork) || x.Naam.Contains(termArtwork))
-           .Where(x => String.IsNullOrEmpty(termArtist) || x.Kunstenaar.Gebruikersnaam.Contains(termArtist))
-           .Where(x => termMinimumPrice.Equals(default(decimal)) || x.Prijs >= termMinimumPrice)
-           .Where(x => termMaximumPrice.Equals(default(decimal)) || x.Prijs <= termMaximumPrice)
-           .Take(take).ToListAsync();
+           }).Where(x => String.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))
+           .Where(x => String.IsNullOrEmpty(request.Kunstenaar) || x.Kunstenaar.Gebruikersnaam.Contains(request.Kunstenaar))
+           .Where(x => request.MinimumPrijs.Equals(default(decimal)) || x.Prijs >= request.MinimumPrijs)
+           .Where(x => request.MaximumPrijs.Equals(default(decimal)) || x.Prijs <= request.MaximumPrijs)
+           .Take(15).ToListAsync();
 
             return kunstwerken;
         }
@@ -90,7 +88,7 @@ namespace Project3H04.Server.Services
         public async Task UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)
         {
             await Task.Delay(10);
-            if(kunstwerk.KunstenaarId != gebruikerId)
+            if (kunstwerk.KunstenaarId != gebruikerId)
             {
                 throw new ArgumentException();
             }
@@ -103,7 +101,7 @@ namespace Project3H04.Server.Services
 
             //nodige fotos verwijderen
             List<Foto> teVerwijderen = kunstwerkToUpdate.Fotos.Where(x => !updatedFotoLijst.Contains(x)).ToList(); //alle fotos in de databank die niet in de updatedFotlijst staan moeten verwijderd worden
-            if(teVerwijderen.Count() > 0)
+            if (teVerwijderen.Count() > 0)
             {
                 dbContext.Fotos.RemoveRange(teVerwijderen);
             }

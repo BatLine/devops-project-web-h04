@@ -26,9 +26,9 @@ namespace Project3H04.Server.Controllers
 
         //GET: api/<KunstwerkController>
         [HttpGet]
-        public Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery(Name = "termArtwork")] string termArtwork = "", [FromQuery(Name = "termArtist")] string termArtist = "", [FromQuery(Name = "termMinimumPrice")] decimal termMinimumPrice = default(decimal), [FromQuery(Name = "termMaximumPrice")] decimal termMaximumPrice = default(decimal), int take = 25, [FromQuery(Name = "filters")] List<string> filters = null)
+        public Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery] Kunstwerk_DTO.Filter request)
         {
-            return kunstwerkService.GetKunstwerken(termArtwork, termArtist, termMinimumPrice, termMaximumPrice, take, filters);
+            return kunstwerkService.GetKunstwerken(request);
         }
 
         // GET api/<KunstwerkController>/5
@@ -69,10 +69,10 @@ namespace Project3H04.Server.Controllers
             /*Kunstwerk kunstwerk = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
             if (kunstwerk == null)
                 return NotFound();*/
-            
+
             int gebruikerId = GetAangemeldeGebruikerId();
 
-            if(gebruikerId != kunst.KunstenaarId)
+            if (gebruikerId != kunst.KunstenaarId)
             {
                 return BadRequest();
             }

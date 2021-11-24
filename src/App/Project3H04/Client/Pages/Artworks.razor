@@ -16,7 +16,7 @@
                             <i></i>
                             <h2>Artists</h2>
                             <div class="checkbox">
-                                <input type="search" style="width:100%" placeholder="Artist Name" value="@searchtermartist" @onchange="_ => SearchArt(_,searchtermArtist:true)" />
+                                <input @bind="filter.ArtistSearchterm" type="search" style="width:100%" placeholder="Artist Name" />
                             </div>
                         </li>
                         <li>
@@ -24,7 +24,7 @@
                             <i></i>
                             <h2>Artworks</h2>
                             <div class="checkbox">
-                                <input type="search" style="width:100%" placeholder="Artwork Name" value="@searchtermartwork" @onchange="_ => SearchArt(_,searchtermArtwork:true)" />
+                                <input @bind="filter.ArtworkSearchterm" type="search" style="width:100%" placeholder="Artwork Name" />
                             </div>
                         </li>
                         <li>
@@ -38,7 +38,7 @@
                                     {
                                         <div class="form-check">
 
-                                            <input class="form-check-input" type="checkbox" value="@medium" name="material-checkbox" id="@medium" @onchange="_ => SearchArt(_,filterValue:medium)">
+                                            <input class="form-check-input" type="checkbox" value="@medium" name="material-checkbox" @onchange="_ => BindCheckboxes(_,filterMedium:medium)">
                                             <label class="form-check-label">
                                                 @medium
                                             </label>
@@ -73,8 +73,8 @@
                             <i></i>
                             <h2>Price</h2>
                             <div class="checkbox">
-                                <input type="search" placeholder="low" value="@searchtermartist" @onchange="_ => SearchArt(_,searchtermPriceLow:true)" />  to
-                                <input type="search" placeholder="high" value="@searchtermartist" @onchange="_ => SearchArt(_,searchtermPriceHigh:true)" />
+                                <input @bind="filter.MinimumPrice" type="search" placeholder="low" />  to
+                                <input @bind="filter.MaximumPrice" type="search" placeholder="high" />
                             </div>
                         </li>
                         <li>
@@ -82,24 +82,19 @@
                             <i></i>
                             <h2>Size</h2>
                             <div class="checkbox">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size-checkbox" value="small" id="small">
-                                    <label class="form-check-label" for="small">
-                                        Small (under 50cm)
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size-checkbox" value="medium" id="medium">
-                                    <label class="form-check-label" for="medium">
-                                        Medium (50 - 100cm)
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="size-checkbox" value="large" id="large">
-                                    <label class="form-check-label" for="large">
-                                        Large (over 100cm)
-                                    </label>
-                                </div>
+                                @if (kunstwerken != null)
+                                {
+                                    @foreach (var size in artSizes)
+                                    {
+                                        <div class="form-check">
+
+                                            <input class="form-check-input" type="checkbox" value="@size" name="size-checkbox" @onchange="_ => BindCheckboxes(_,filterSize:size)">
+                                            <label class="form-check-label">
+                                                @size
+                                            </label>
+                                        </div>
+                                    }
+                                }
                             </div>
                         </li>
                     </ul>
@@ -124,7 +119,6 @@
 
                                 </a>
                             </div>
-
                         }
                     }
                 </div>
@@ -135,57 +129,77 @@
 </body>
 
 @code {
-    private string searchtermartwork = "";
-    private string searchtermartist = "";
-    private decimal searchtermpricelow = default(decimal);
-    private decimal searchtermpricehigh = default(decimal);
     public IEnumerable<string> artMediums;
-    private List<String> selectedItems = new();
+    public IEnumerable<string> artSizes;
+
     private List<Kunstwerk_DTO.Index> kunstwerken;
     private List<Kunstwerk_DTO.Index> kunstCopy;
 
+    private List<String> selectedMediums = new();
+    private List<String> selectedSizes = new();
+
+    private ArtworkFilter filter = new();
+
     protected override async Task OnInitializedAsync()
     {
-        //kunstwerken = await httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?term={searchterm}");
+
         kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk");
         kunstCopy = kunstwerken;
         //vul artMediums met alle mogelijke mediums van kunstwerken
         artMediums = kunstCopy.Select(x => x.Materiaal).Distinct();
+        //vul artSizes met alle mogelijke groottes van kunstwerken
+        //small(minder dan 50cm),medium(50cm-100cm),large(groter dan 100cm)
+        //artSizes = kunstCopy.Select(x=>x.Grootte).Distinct();
+        //subscribe
+        filter.OnArtworkFilterChanged += FilterArtworksAsync;
     }
 
-    private async Task SearchArt(ChangeEventArgs args, bool searchtermArtist = false, bool searchtermArtwork = false, bool searchtermPriceLow = false, bool searchtermPriceHigh = false, string filterValue = "x")
+    public void Dispose()
+    { // If we don't do this, we'll have memory leaks.
+        filter.OnArtworkFilterChanged -= FilterArtworksAsync;
+    }
+
+    private async Task BindCheckboxes(ChangeEventArgs args, string filterMedium = "", string filterSize = "")
     {
-        if (filterValue != "x")
+        //selectedMediums
+        if (filterMedium != "")
         {
-            if (!selectedItems.Contains(filterValue))
-                selectedItems.Add(filterValue);
-            else selectedItems.Remove(filterValue);
-
+            if (!selectedMediums.Contains(filterMedium))
+                selectedMediums.Add(filterMedium);
+            else selectedMediums.Remove(filterMedium);
         }
 
-        if (searchtermArtwork)
-        {
-            searchtermartwork = args.Value.ToString();
-        }
-        if (searchtermArtist)
-        {
-            searchtermartist = args.Value.ToString();
-        }
-        //Decimal.TryParse: First parameter is interpreted, second parameter is returned with the result Decimal is true
-        if (searchtermPriceLow && Decimal.TryParse(args.Value.ToString(), out searchtermpricelow)) ;
+        filter.Mediums = selectedMediums;
 
-        //Decimal.TryParse: First parameter is interpreted, second parameter is returned with the result Decimal is true
-        if (searchtermPriceHigh && Decimal.TryParse(args.Value.ToString(), out searchtermpricehigh)) ;
-
-        string queryStringFilter = "";
-        foreach (string s in selectedItems)
+        /*
+        //selectedSizes
+        if (filterSize != "")
         {
-            queryStringFilter += "filters=" + s + "&";
+            if (!selectedSizes.Contains(filterSize))
+                selectedSizes.Add(filterSize);
+            else selectedSizes.Remove(filterSize);
         }
 
-        kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?termArtwork={searchtermartwork}&termArtist={searchtermartist}&termMinimumPrice={searchtermpricelow}&termMaximumPrice={searchtermpricehigh}&{queryStringFilter}");
+        filter.Sizes = selectedSizes;
+        */
 
+    }
 
+    private async void FilterArtworksAsync()
+    {
+        Kunstwerk_DTO.Filter request = new()
+        {
+            Naam = filter.ArtworkSearchterm,
+            MinimumPrijs = filter.MinimumPrice,
+            MaximumPrijs = filter.MaximumPrice,
+            Materiaal = filter.Mediums,
+            Kunstenaar = filter.ArtistSearchterm
+
+        };
+        var queryParameters = request.GetQueryString();
+        kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?{queryParameters}");
+        StateHasChanged(); // Since it's not a UI-event.
     }
 
 }
+

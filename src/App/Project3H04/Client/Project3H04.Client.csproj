@@ -33,5 +33,9 @@
 
   <ItemGroup>
     <None Remove="jQuery" />
+    <None Remove="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

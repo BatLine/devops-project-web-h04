@@ -30,6 +30,14 @@ namespace Project3H04.Shared.Kunstwerken
                 HoofdFoto = Fotos?.FirstOrDefault();
             }
         }
+        public class Filter
+        {
+            public string Naam { get; set; }
+            public decimal MinimumPrijs { get; set; }
+            public decimal MaximumPrijs { get; set; }
+            public List<string> Materiaal { get; set; }
+            public string Kunstenaar { get; set; }
+        }
 
         public class Create
         {
