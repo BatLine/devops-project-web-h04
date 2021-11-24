@@ -99,6 +99,13 @@ namespace Project3H04.Server.Controllers
         //    return NoContent();
         //}
 
+        //GET: api/<KunstwerkController>/materiaal/5
+        [HttpGet("materiaal/{amount}")]
+        public Task<List<string>> GetMediums(int amount)
+        {
+            return kunstwerkService.GetMediums(amount);
+        }
+
         private int GetAangemeldeGebruikerId()
         {
             //fakedata: 

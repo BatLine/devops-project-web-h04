@@ -115,5 +115,16 @@ namespace Project3H04.Server.Services
             dbContext.Kunstwerken.Update(kunstwerkToUpdate);
             dbContext.SaveChanges();
         }
+
+        public async Task<List<string>> GetMediums(int amount) //aantal meestvoorkomende mediums ophalen
+        {
+            var kunstwerken = await dbContext.Kunstwerken
+                .ToListAsync();
+            return kunstwerken.OrderByDescending(g => g.Materiaal.Count())
+                .Select(g => g.Materiaal)
+                .Distinct()
+                .Take(amount)
+                .ToList();
+        }
     }
 }

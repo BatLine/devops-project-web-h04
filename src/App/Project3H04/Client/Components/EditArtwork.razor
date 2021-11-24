@@ -54,7 +54,7 @@
                 </div>
             }
         <div class="form-group">
-            <label for="materiaalInput">Material</label>
+            <label for="materiaalInput">Medium</label>
             <input id="materiaalInput" @bind-value="@Model.Materiaal" list="materiaalId" class="form-control" />
             <datalist id="materiaalId">
                 @foreach (var materiaal in _materialen)
@@ -91,21 +91,20 @@ else
     //parameter zodat we het ook als Edit formulier kunnen gebruiken
     [Parameter] public Kunstwerk_DTO.Create Model { get; set; }
 
-    private IList<string> _materialen = new List<string> //voorlopig nog hardgecodeerd, zou API call moeten zijn naar meest voorkomende materialen
-    {
-        "Wood",
-        "Metal",
-        "Plastic",
-        "Paper",
-        "Other"
-    };
+    private IList<string> _materialen = new List<string>();
 
     protected override void OnInitialized()
     {
         if (Model == null) //in dit geval werkt het als een Create formulier
         {
             Model = new();
-        } 
+        }
+    }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        _materialen = await httpClient.GetFromJsonAsync<List<string>>($"api/kunstwerk/materiaal/{5}");
+        await base.OnParametersSetAsync();
     }
 
     public async Task Submit()
