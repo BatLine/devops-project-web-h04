@@ -50,7 +50,7 @@ namespace Project3H04.Server.Services
                 {
                     Id = x.Id,
                     Naam = x.Naam,
-                    HoofdFoto = new() { Pad = x.Fotos.FirstOrDefault().Pad }, //enkel eerste foto is nodig voor index
+                    HoofdFoto = new(x.Fotos.FirstOrDefault().Naam, x.Fotos.FirstOrDefault().Locatie), //enkel eerste foto is nodig voor index
                     Prijs = x.Prijs
                 }).ToList(),
                 Fotopad = x.FotoPad
@@ -75,7 +75,7 @@ namespace Project3H04.Server.Services
                 {
                     Id = x.Id,
                     Naam = x.Naam,
-                    HoofdFoto = new() { Pad = x.Fotos.FirstOrDefault().Pad }, //enkel eerste foto is nodig voor index
+                    HoofdFoto = new(x.Fotos.FirstOrDefault().Naam, x.Fotos.FirstOrDefault().Locatie), //enkel eerste foto is nodig voor index
                     Prijs = x.Prijs
                 }).ToList(),
                 Fotopad = x.FotoPad

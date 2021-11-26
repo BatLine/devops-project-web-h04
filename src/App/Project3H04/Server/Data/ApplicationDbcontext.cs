@@ -122,6 +122,7 @@ namespace Project3H04.Server.Data
             //Foto
             builder.Entity<Foto>()
                                 .ToTable("Foto").HasKey(f => f.Id);
+            
             //Bestelling
             builder.Entity<Bestelling>().Property(x => x.Id).ValueGeneratedOnAdd();
 

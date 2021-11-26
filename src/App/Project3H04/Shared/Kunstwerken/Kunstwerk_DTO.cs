@@ -44,10 +44,13 @@ namespace Project3H04.Shared.Kunstwerken
             public Create()
             {
                 Fotos = new();
+                NieuweFotos = new();
             }
             public string Naam { get; set; }
             public decimal Prijs { get; set; }
             public List<Foto_DTO> Fotos { get; set; }
+            public List<Foto_DTO> NieuweFotos { get; set; }
+
             public string Materiaal { get; set; }
             public string Beschrijving { get; set; }
             public bool TeKoop { get; set; }
@@ -69,10 +72,7 @@ namespace Project3H04.Shared.Kunstwerken
                 Materiaal = kunstwerk.Materiaal;
                 Beschrijving = kunstwerk.Beschrijving;
                 KunstenaarId = kunstwerk.Kunstenaar.GebruikerId;
-                if (Prijs != 0)
-                {
-                    TeKoop = true; //anders gaat prijs verloren
-                }
+                TeKoop = kunstwerk.TeKoop;
             }
 
             public int Id { get; set; }

@@ -29,6 +29,16 @@
                             </button>
                         </div>
                     }
+                    @foreach (var foto in Model.NieuweFotos)
+                    {
+                        <div class="form-control-file">
+                            <img src="@foto.Pad" alt="@foto.Naam" width="250" height="250" style="padding-right:20px;" />
+
+                            <button type="button" class="btn btn-secondary" @onclick="() => RemoveImage(foto)">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="form-group">
@@ -152,18 +162,25 @@ else
         }
     }
 
-    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    private void OnInputFileChange(InputFileChangeEventArgs e)
     {
 
         foreach (var file in e.GetMultipleFiles())
         {
-            Model.Fotos.Add(new() { Pad = file.Name });
+            Model.NieuweFotos.Add(new() { Naam = file.Name });
         }
     }
 
     private void RemoveImage(Foto_DTO foto)
     {
-        Model.Fotos.Remove(foto);
+        if(Model.Fotos.Contains(foto))
+        {
+            Model.Fotos.Remove(foto);
+        }
+        else if(Model.NieuweFotos.Contains(foto))
+        {
+            Model.NieuweFotos.Remove(foto);
+        }
     }
 
 }
