@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
 using Project3H04.Server.Data;
 using Project3H04.Shared;
 using Project3H04.Shared.DTO;
+using Project3H04.Shared.Fotos;
 using Project3H04.Shared.Kunstenaars;
 using Project3H04.Shared.Kunstwerken;
 using System;
@@ -16,12 +17,14 @@ namespace Project3H04.Server.Services
     public class KunstwerkService : IKunstwerkService
     {
         private readonly ApplicationDbcontext dbContext;
+        private readonly IStorageService storageService;
 
         public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; }
 
-        public KunstwerkService(ApplicationDbcontext dbContext)
+        public KunstwerkService(ApplicationDbcontext dbContext, IStorageService storageService)
         {
             this.dbContext = dbContext;
+            this.storageService = storageService;
         }
         public async Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id)
         {
@@ -72,17 +75,30 @@ namespace Project3H04.Server.Services
             return kunstwerken;
         }
 
-        public async Task<int> CreateAsync(Kunstwerk_DTO.Create kunstwerk, int gebruikerId)
+        public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk, int gebruikerId)
         {
-            List<Foto> fotos = kunstwerk.Fotos.Select(fotoDTO => new Foto() { Naam = fotoDTO.Pad }).ToList();
+            //eerst nieuwe foto's regelen
+            var imageFilename = Guid.NewGuid().ToString() + kunstwerk.NieuweFotos.First().Naam;
+            var imagePath = $"{storageService.StorageBaseUri}{imageFilename}";
+            var uploadUri = storageService.CreateUploadUri(imageFilename);
+            kunstwerk.NieuweFotos.First().Locatie = imagePath; //opslaan in db
+            kunstwerk.NieuweFotos.First().Naam = imageFilename;
+
+            List<Foto> fotos = kunstwerk.NieuweFotos.Select(fotoDTO => new Foto() { Naam = fotoDTO.Pad }).ToList();
+            
+            
             Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
 
             Kunstwerk kunstwerkToCreate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
 
+
             await dbContext.Kunstwerken.AddAsync(kunstwerkToCreate);
             await dbContext.SaveChangesAsync();
 
-            return kunstwerkToCreate.Id;
+            return new() {
+                KunstwerkId = kunstwerkToCreate.Id, 
+                UploadUri =  uploadUri
+             };
         }
 
         public async Task UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)

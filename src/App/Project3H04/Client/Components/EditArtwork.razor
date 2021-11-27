@@ -1,5 +1,6 @@
 @inject HttpClient httpClient
 @inject NavigationManager NavManager
+@inject Services.StorageService StorageService
 @using Blazored.FluentValidation
 
 
@@ -16,20 +17,9 @@
             <!--Fotos-->
             <div class="form-group">
                 <label>Pictures: </label>
-                <InputFile OnChange="@OnInputFileChange" multiple accept="image/*"/>
+                <InputFile OnChange="@OnInputFileChange" multiple accept="image/*" />
                 <div>
                     @foreach (var foto in Model.Fotos)
-                    {
-                        <div class="form-control-file">
-                            <img src="@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-right:20px;" />
-
-                            <button type="button" class="btn btn-danger" @onclick="() => RemoveImage(foto)">
-                                <i class="far fa-trash-alt"></i>
-                                <span>Delete</span>
-                            </button>
-                        </div>
-                    }
-                    @foreach (var foto in Model.NieuweFotos)
                     {
                         <div class="form-control-file">
                             <img src="@foto.Pad" alt="@foto.Naam" width="250" height="250" style="padding-right:20px;" />
@@ -63,18 +53,18 @@
                     </label>
                 </div>
             }
-        <div class="form-group">
-            <label for="materiaalInput">Medium</label>
-            <input id="materiaalInput" @bind-value="@Model.Materiaal" list="materiaalId" class="form-control" />
-            <datalist id="materiaalId">
-                @foreach (var materiaal in _materialen)
-                {
-                    <option value="@materiaal"></option>
-                }
-            </datalist>
+            <div class="form-group">
+                <label for="materiaalInput">Medium</label>
+                <input id="materiaalInput" @bind-value="@Model.Materiaal" list="materiaalId" class="form-control" />
+                <datalist id="materiaalId">
+                    @foreach (var materiaal in _materialen)
+                    {
+                        <option value="@materiaal"></option>
+                    }
+                </datalist>
 
 
-        </div>
+            </div>
             <div class="form-group">
                 <label for="@Model.Beschrijving">Description</label>
                 <InputTextArea @bind-Value="@Model.Beschrijving" class="form-control" />
@@ -102,6 +92,7 @@ else
     [Parameter] public Kunstwerk_DTO.Create Model { get; set; }
 
     private IList<string> _materialen = new List<string>();
+    private IList<IBrowserFile> _imagesFiles = new List<IBrowserFile>();
 
     protected override void OnInitialized()
     {
@@ -142,7 +133,7 @@ else
         if (Model is Kunstwerk_DTO.Edit)
         {
             //API call "PUT"
-            Kunstwerk_DTO.Edit model = (Kunstwerk_DTO.Edit) Model;
+            Kunstwerk_DTO.Edit model = (Kunstwerk_DTO.Edit)Model;
             var response = await httpClient.PutAsJsonAsync<Kunstwerk_DTO.Edit>($"api/kunstwerk/{model.Id}", model);
             response.EnsureSuccessStatusCode();
             NavManager.NavigateTo($"artworks/{model.Id}"); //hier kennnen we het Id al
@@ -153,8 +144,13 @@ else
             //API call "POST"
             var response = await httpClient.PostAsJsonAsync<Kunstwerk_DTO.Create>($"api/kunstwerk", Model);
             response.EnsureSuccessStatusCode();
-            int artworkId = await response.Content.ReadFromJsonAsync<int>(); //hier geeft de server het Id mee
-            NavManager.NavigateTo($"artworks/{artworkId}");
+
+            var createResponse = await response.Content.ReadFromJsonAsync<KunstwerkResponse.Create>();
+            //image uploaden
+            await StorageService.UploadImageAsync(createResponse.UploadUri, _imagesFiles.First());
+            
+
+            NavManager.NavigateTo($"artworks/{createResponse.KunstwerkId}");
         }
         else
         {
@@ -167,20 +163,14 @@ else
 
         foreach (var file in e.GetMultipleFiles())
         {
-            Model.NieuweFotos.Add(new() { Naam = file.Name });
+            _imagesFiles.Add(file); //volledig bestand hier tijdelijk opslaan tot het op blob komt
+            Model.Fotos.Add(new() { Naam = file.Name }); //geven we mee aan databank
         }
     }
 
     private void RemoveImage(Foto_DTO foto)
     {
-        if(Model.Fotos.Contains(foto))
-        {
-            Model.Fotos.Remove(foto);
-        }
-        else if(Model.NieuweFotos.Contains(foto))
-        {
-            Model.NieuweFotos.Remove(foto);
-        }
+        Model.Fotos.Remove(foto);
     }
 
 }

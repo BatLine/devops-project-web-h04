@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Project3H04.Client.Shared;
 using Append.Blazor.Sidepanel;
+using Project3H04.Client.Services;
 
 
 namespace Project3H04.Client
@@ -44,6 +45,10 @@ namespace Project3H04.Client
 
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
               .CreateClient("ServerAPI"));
+
+            //blobstorage:
+            builder.Services.AddHttpClient<StorageService>();
+
             await builder.Build().RunAsync();
         }
     }

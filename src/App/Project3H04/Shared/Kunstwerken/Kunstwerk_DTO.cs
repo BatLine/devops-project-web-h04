@@ -44,17 +44,17 @@ namespace Project3H04.Shared.Kunstwerken
             public Create()
             {
                 Fotos = new();
-                NieuweFotos = new();
             }
             public string Naam { get; set; }
             public decimal Prijs { get; set; }
             public List<Foto_DTO> Fotos { get; set; }
-            public List<Foto_DTO> NieuweFotos { get; set; }
 
             public string Materiaal { get; set; }
             public string Beschrijving { get; set; }
             public bool TeKoop { get; set; }
             public bool IsVeilbaar { get; set; }
+
+            public List<Foto_DTO> NieuweFotos => Fotos.Where(f => f.Uploaded == false).ToList();
         }
 
         public class Edit : Create
@@ -78,6 +78,8 @@ namespace Project3H04.Shared.Kunstwerken
             public int Id { get; set; }
             public int KunstenaarId { get; set; }
 
+            public List<Foto_DTO> OudeFotos => Fotos.Where(f => f.Uploaded).ToList(); //reeds in blob
+
         }
         //bij aanmaken van kunstwerk dan validatie met validator
         //=>bij andere DTO's wnr nodig/moet aanmaken/create heeft, dan ook validatie doen !!!
@@ -88,7 +90,7 @@ namespace Project3H04.Shared.Kunstwerken
                 RuleFor(artwork => artwork.Naam).NotEmpty().OverridePropertyName("Name");
                 RuleFor(artwork => artwork.Prijs).GreaterThanOrEqualTo(0).OverridePropertyName("Price");
                 RuleFor(artwork => artwork.Materiaal).NotEmpty().OverridePropertyName("Material");
-                RuleFor(artwork => artwork.Fotos).NotEmpty().OverridePropertyName("Images");
+                RuleFor(artwork => artwork.Fotos).NotEmpty().OverridePropertyName("Images"); //wordt een probleem voor edit....
             }
         }
 

@@ -47,12 +47,11 @@ namespace Project3H04.Server.Controllers
         // POST api/<KunstwerkController>
         [HttpPost]
         [Authorize] //AUTH
-        public async Task<int> Create(Kunstwerk_DTO.Create kunst)
+        public Task<KunstwerkResponse.Create> Create(Kunstwerk_DTO.Create kunst)
         {
 
             int gebruikerId = GetAangemeldeGebruikerId();
-            int kunstwerkId = await kunstwerkService.CreateAsync(kunst, gebruikerId);
-            return kunstwerkId;
+            return kunstwerkService.CreateAsync(kunst, gebruikerId);
         }
 
 
