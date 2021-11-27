@@ -14,7 +14,7 @@ namespace Project3H04.Server.Services
         private readonly string connectionString;
         private const string containerName = "fotos";
 
-        public string StorageBaseUri => "https://devopsh04storage.blob.core.windows.net/fotos/images/";
+        public string StorageBaseUri => "https://devopsh04storage.blob.core.windows.net/fotos/";
 
         public BlobStorageService(IConfiguration configuration)
         {

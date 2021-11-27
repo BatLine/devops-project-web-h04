@@ -79,6 +79,9 @@
 
         </EditForm>
     </div>
+    @if(loading) {
+        <LoadingSpinner></LoadingSpinner>
+    }
 }
 else
 {
@@ -93,6 +96,7 @@ else
 
     private IList<string> _materialen = new List<string>();
     private IList<IBrowserFile> _imagesFiles = new List<IBrowserFile>();
+    private bool loading = false;
 
     protected override void OnInitialized()
     {
@@ -110,6 +114,7 @@ else
 
     public async Task Submit()
     {
+        loading = true;
         if (!Model.TeKoop)
         {
             Model.IsVeilbaar = false; //als het niet te koop is is het ook niet per opbod te koop

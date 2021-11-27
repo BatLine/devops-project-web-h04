@@ -9,6 +9,7 @@ using Project3H04.Shared.Kunstenaars;
 using Project3H04.Shared.Kunstwerken;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -78,15 +79,11 @@ namespace Project3H04.Server.Services
         public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk, int gebruikerId)
         {
             //eerst nieuwe foto's regelen
-            var imageFilename = Guid.NewGuid().ToString() + kunstwerk.NieuweFotos.First().Naam;
-            var imagePath = $"{storageService.StorageBaseUri}{imageFilename}";
-            var uploadUri = storageService.CreateUploadUri(imageFilename);
-            kunstwerk.NieuweFotos.First().Locatie = imagePath; //opslaan in db
-            kunstwerk.NieuweFotos.First().Naam = imageFilename;
+            Uri uploadUri = UploadFotos(kunstwerk.NieuweFotos);
 
-            List<Foto> fotos = kunstwerk.NieuweFotos.Select(fotoDTO => new Foto() { Naam = fotoDTO.Pad }).ToList();
-            
-            
+            List<Foto> fotos = kunstwerk.NieuweFotos.Select(fotoDTO => new Foto(fotoDTO.Naam, fotoDTO.Locatie)).ToList();
+
+
             Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
 
             Kunstwerk kunstwerkToCreate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
@@ -95,10 +92,22 @@ namespace Project3H04.Server.Services
             await dbContext.Kunstwerken.AddAsync(kunstwerkToCreate);
             await dbContext.SaveChangesAsync();
 
-            return new() {
-                KunstwerkId = kunstwerkToCreate.Id, 
-                UploadUri =  uploadUri
-             };
+            return new()
+            {
+                KunstwerkId = kunstwerkToCreate.Id,
+                UploadUri = uploadUri
+            };
+        }
+
+        private Uri UploadFotos(IList<Foto_DTO> nieuweFotos)
+        {
+            var imageFilename = Path.Combine("Kunstwerken", Guid.NewGuid().ToString(), nieuweFotos.First().Naam);
+            var uploadUri = storageService.CreateUploadUri(imageFilename);
+
+            nieuweFotos.First().Locatie = storageService.StorageBaseUri; //opslaan in db
+            nieuweFotos.First().Naam = imageFilename;
+
+            return uploadUri;
         }
 
         public async Task UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)

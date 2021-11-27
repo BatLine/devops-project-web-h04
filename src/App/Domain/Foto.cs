@@ -22,6 +22,12 @@ namespace Domain
             Locatie = defaultLocatie;
         }
 
+        public Foto(string naam, string locatie)
+        {
+            Naam = naam;
+            Locatie = locatie;
+        }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Id;
