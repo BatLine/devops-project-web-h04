@@ -4,20 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project3H04.Server.Data {
-    public class DataInitialiser {
+namespace Project3H04.Server.Data
+{
+    public class DataInitialiser
+    {
         private readonly ApplicationDbcontext _dbContext;
 
-        public DataInitialiser(ApplicationDbcontext dbContext) {
+        public DataInitialiser(ApplicationDbcontext dbContext)
+        {
             _dbContext = dbContext;
         }
 
-        public void InitializeData() {
+        public void InitializeData()
+        {
             _dbContext.Database.EnsureDeleted();
             if (!_dbContext.Database.EnsureCreated()) return;
             //seeding the database, see DBContext
-            Klant klant1 = new Klant("gillesdp", Convert.ToDateTime("28/12/2001"), "gilles.depessemier@gmail.com", "artist3.PNG");
-            Klant klantTest = new Klant("test", Convert.ToDateTime("28/12/2001"), "test@gmail.com", "artist3.PNG");
+            //   Klant klant1 = new Klant("gillesdp", Convert.ToDateTime("28/12/2001"), "gilles.depessemier@gmail.com", "artist3.PNG");
+            //   Klant klantTest = new Klant("test", Convert.ToDateTime("28/12/2001"), "test@gmail.com", "artist3.PNG");
 
             AbonnementType at = new AbonnementType("default", 3, 200);
             Abonnement abonnement1 = new Abonnement(DateTime.UtcNow, at);
@@ -39,13 +43,13 @@ namespace Project3H04.Server.Data {
             Kunstwerk kunstwerk2 = new Kunstwerk("Thrill of Harmony", DateTime.UtcNow, 300, "Thoughtful colorplay made by the genius Issac Ellis", new List<Foto> { new() { Naam = "A1AT2.png" } }, false, "painting", kunstenaar2);
             Kunstwerk kunstwerk3 = new Kunstwerk("Stunning Psychology", DateTime.UtcNow, 1500, "Delicate work, that touches the senses", new List<Foto> { new() { Naam = "A2AT1.png" } }, false, "painting", kunstenaar3);
             Kunstwerk kunstwerk4 = new Kunstwerk("Curtain of Desire", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A3AT1.png" } }, false, "sculpture", kunstenaar4);
-            Kunstwerk kunstwerk5 = new Kunstwerk("Reality of Crime", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A3AT2.png" }  }, false, "sculpture", kunstenaar4);
-            Kunstwerk kunstwerk6 = new Kunstwerk("Gone", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A4AT1.png"} }, false, "drawing", kunstenaar5);
-            Kunstwerk kunstwerk7 = new Kunstwerk("Supermodel", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A4AT2.png" }}, false, "drawing", kunstenaar5);
+            Kunstwerk kunstwerk5 = new Kunstwerk("Reality of Crime", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A3AT2.png" } }, false, "sculpture", kunstenaar4);
+            Kunstwerk kunstwerk6 = new Kunstwerk("Gone", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A4AT1.png" } }, false, "drawing", kunstenaar5);
+            Kunstwerk kunstwerk7 = new Kunstwerk("Supermodel", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "A4AT2.png" } }, false, "drawing", kunstenaar5);
             Kunstwerk kunstwerk8 = new Kunstwerk("We've found comfort here", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "inaraA2.png" }, new() { Naam = "inaraA2Bis.png" } }, false, "painting", kunstenaar1);
-            Kunstwerk kunstwerk9 = new Kunstwerk("Flowers", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "artist3.PNG" }}, false, "painting", kunstenaar1);
+            Kunstwerk kunstwerk9 = new Kunstwerk("Flowers", DateTime.UtcNow, 200, "Beautiful work that inspires", new List<Foto> { new() { Naam = "artist3.PNG" } }, false, "painting", kunstenaar1);
 
-                
+
             // kunstenaar1.AddKunstwerk(kunstwerk6);
             // kunstenaar1.AddKunstwerk(kunstwerk7);
             kunstenaar1.AddKunstwerk(kunstwerk8);
@@ -59,8 +63,8 @@ namespace Project3H04.Server.Data {
             kunstenaar5.AddKunstwerk(kunstwerk6);
             kunstenaar5.AddKunstwerk(kunstwerk7);
 
-            _dbContext.Gebruikers.Add(klant1);
-            _dbContext.Gebruikers.Add(klantTest);
+            //   _dbContext.Gebruikers.Add(klant1);
+            //   _dbContext.Gebruikers.Add(klantTest);
             _dbContext.Gebruikers.Add(kunstenaar1);
             _dbContext.Gebruikers.Add(kunstenaar2);
             _dbContext.Gebruikers.Add(kunstenaar3);
@@ -70,7 +74,7 @@ namespace Project3H04.Server.Data {
 
             Veiling veiling1 = new Veiling(DateTime.UtcNow, DateTime.UtcNow.AddDays(1), kunstwerk1.Prijs, kunstwerk1);
             kunstenaar1.Veilingen.Add(veiling1);
-            veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 100, DateTime.UtcNow.AddHours(12));
+            // veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 100, DateTime.UtcNow.AddHours(12));
             _dbContext.Veilingen.Add(veiling1);
             _dbContext.SaveChanges();
         }

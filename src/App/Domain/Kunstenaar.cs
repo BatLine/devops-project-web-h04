@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Kunstenaar:Gebruiker
+    public class Kunstenaar : Gebruiker
     {
 
         public string Details { get; set; }
@@ -16,7 +16,7 @@ namespace Domain
         public ICollection<Veiling> Veilingen { get; set; }
         public Abonnement Abonnenment { get; set; }
         public int AbonnenmentId { get; private set; }
-        public Kunstenaar(string gebruikersnaam, DateTime geboortedatum, string email, string details, Abonnement abonnement, string fotoPad) : base(gebruikersnaam, geboortedatum, email,fotoPad)
+        public Kunstenaar(string gebruikersnaam, DateTime geboortedatum, string email, string details, Abonnement abonnement, string fotoPad) : base(gebruikersnaam, geboortedatum, email, fotoPad)
         {
             this.Details = Guard.Against.NullOrWhiteSpace(details, nameof(details));
             this.StatusActiefKunstenaar = false;
@@ -35,5 +35,6 @@ namespace Domain
         {
             Kunstwerken = new List<Kunstwerk>();
         }
+
     }
 }

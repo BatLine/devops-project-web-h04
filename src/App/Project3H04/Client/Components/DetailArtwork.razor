@@ -7,9 +7,6 @@
                 <img src="@Kunstwerk.Fotos.First().Pad" alt="@Kunstwerk.Fotos.First().Pad" style="width: 100%; height:auto" />
             </div>
 
-
-
-
             <div class="col-md-6 kunstwerkdetailcontainer">
 
                 <h1 style="text-align: center; font-family:sans-serif">@Kunstwerk.Naam</h1>
@@ -25,7 +22,7 @@
                     <!--Order-->
                     @if (Kunstwerk.TeKoop)
                     {
-                    <button class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()"  >Order</button>
+                        <button class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
                     }
                 </AuthorizeView>
 

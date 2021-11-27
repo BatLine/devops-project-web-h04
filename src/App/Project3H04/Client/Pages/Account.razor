@@ -32,7 +32,6 @@
         <div class="col-9 p-3">
 
             <!--=> Bewerken moet nog !!!-->
-
             <!-- Page Content  -->
             <!--eerst de algemene attributen als geb tonen en dan bv voor bestellingen of kunstwerken te tonen, de klant of kunstenaar obj gebruiken !!!-->
             <!--algemene dingen tonen met bestellingen en als kunstenaar(AuthorizeView) dan vanonder of een tab om als kunstenaar uw kunstwerken te zien en te editen-->
@@ -41,9 +40,13 @@
             <p> Day of birth: @geb.GeboorteDatum</p>
             <p> Email: @geb.Email</p>
 
+
+            <button type="button" class="button is-link is-light is-fullwidth">Edit</button>
+            <EditAccount GebruikerId="@geb.GebruikerId" gebruiker="@geb" />
             <!--hier de extra als kunstenaar dan zijn kunstwerken tonen-->
-           
-                @if(geb is Kunstenaar_DTO) { 
+
+            @if (geb is Kunstenaar_DTO)
+            {
                 <div class="container testimonial-group " style="padding-left:20px; padding-top:20px">
                     <div class="row">
                         @if (kunst.Kunstwerken.Count != 0)
@@ -68,7 +71,7 @@
 
                     </div>
                 </div>
-                    }
+            }
 
 
         </div>
@@ -89,7 +92,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        //de user ophalen uit auth en kijken welke soort user het is 
+        //de user ophalen uit auth en kijken welke soort user het is
         //|| of => user als geb ophalen en dan kijken welke type het is(kunst of klant) en dan de user met authorizeview roles = "Kunstenaar"
         //voor algemene attributen de geb gebruiken
 

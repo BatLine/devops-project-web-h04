@@ -30,7 +30,7 @@ namespace Project3H04.Server.Controllers
         [HttpGet]
         public Task<List<Kunstenaar_DTO>> GetKunstenaars(string term = "", int take = 25, bool recentArtists = false)
         {
-            return kunstenaarService.GetKunstenaars(term,take,recentArtists);
+            return kunstenaarService.GetKunstenaars(term, take, recentArtists);
         }
 
         //GET api/<KunstenaarController>/5
@@ -53,56 +53,10 @@ namespace Project3H04.Server.Controllers
 
             //return k;
         }
-        //    return NotFound();
-        //}
-
-        // POST api/<KunstenaarController>
-        //[HttpPost]
-        //public ActionResult<Kunstenaar> Post(Kunstenaar_DTO kunst)
-        //{
-
-        //    Abonnement ab = new Abonnement(kunst.Abonnenment.StartDatum,
-        //        new AbonnementType(kunst.Abonnenment.AbonnementType.Naam, kunst.Abonnenment.AbonnementType.Verlooptijd
-        //        , kunst.Abonnenment.AbonnementType.Prijs));
-        //    Kunstenaar kunstenaarToCreate = new Kunstenaar(kunst.Gebruikersnaam, kunst.GeboorteDatum, kunst.Email, kunst.Details,ab);
-
-        //    _context.Gebruikers.Add(kunstenaarToCreate);
-        //    _context.SaveChanges();
-
-        //    return CreatedAtAction(nameof(Get), new { id = kunstenaarToCreate.GebruikerId },kunstenaarToCreate);
-        //}
-
-        // PUT api/<KunstenaarController>/5
-        //[HttpPut("{id}")]
-        //public IActionResult Put(int id)
-        //{
-        //    /* if (string.IsNullOrEmpty(naam))
-        //         return BadRequest();*/
-
-        //    Kunstenaar kunst = _kunstenaars.SingleOrDefault(x => x.GebruikerId==id);
-        //    if (kunst == null)
-        //        return NotFound();
-
-
-        //    _context.Gebruikers.Update(kunst);
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
-
-        //// DELETE api/<KunstenaarController>/5
-        //[HttpDelete("{id}")]
-        //public IActionResult Delete(int id)
-        //{
-        //    /*if (string.IsNullOrEmpty(naam))
-        //        return BadRequest();*/
-
-        //    Kunstenaar kunst = _kunstenaars.SingleOrDefault(x => x.GebruikerId == id);
-        //    if (kunst == null)
-        //        return NotFound();
-
-        //    _context.Gebruikers.Remove(kunst);
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
+        [HttpPut]
+        public Task EditAsync(int id, Kunstenaar_DTO kunstenaar)
+        {
+            return kunstenaarService.EditAsync(id, kunstenaar);
+        }
     }
 }

@@ -53,11 +53,11 @@ namespace Project3H04.Server.Services
                     HoofdFoto = new() { Pad = x.Fotos.FirstOrDefault().Pad }, //enkel eerste foto is nodig voor index
                     Prijs = x.Prijs
                 }).ToList(),
-                Fotopad=x.FotoPad
+                Fotopad = x.FotoPad
                 //,Veilingen = (ICollection<Shared.DTO.Veiling_DTO>)x.Veilingen //omzetten naar dto
-            }); 
+            });
 
-            return k; 
+            return k;
         }
 
         public async Task<Kunstenaar_DTO> GetKunstenaarByEmail(string email)
@@ -88,7 +88,7 @@ namespace Project3H04.Server.Services
         public async Task<List<Kunstenaar_DTO>> GetKunstenaars(string term, int take, bool recentArtists)
         {
             //.Where(x=>x.Naam.Contains(searchterm))
-            List<Kunstenaar_DTO> kunstenaars = 
+            List<Kunstenaar_DTO> kunstenaars =
             await dbContext.Gebruikers.Where(x => x is Kunstenaar)  // .OfType<Kunstenaar>()
             .Select(x => new Kunstenaar_DTO
             {
@@ -96,38 +96,24 @@ namespace Project3H04.Server.Services
                 GebruikerId = x.GebruikerId,
                 DatumCreatie = x.DatumCreatie,
                 Fotopad = x.FotoPad
-            }).Where(k => k.Gebruikersnaam.Contains(term)).Take(take) 
+            }).Where(k => k.Gebruikersnaam.Contains(term)).Take(take)
             .ToListAsync();
-            if(recentArtists)
-            return kunstenaars.OrderByDescending(x => x.DatumCreatie).ToList();
+            if (recentArtists)
+                return kunstenaars.OrderByDescending(x => x.DatumCreatie).ToList();
 
             return kunstenaars;
 
 
             // return items;
         }
-
-        //    {
-        //        private readonly HttpClient _httpClient;
-        //        public KunstwerkService(HttpClient httpClient)
-        //        {
-        //            _httpClient = httpClient;
-        //        }
-
-        //        //public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; }
-
-        //        public async Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id)
-        //        {
-        //            Kunstwerk_DTO.Detail kunst = await _httpClient.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/Kunstwerk/{id}");
-        //            return kunst;
-        //        }
-
-        //        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(string searchterm)
-        //        {
-        //            var werken = await _httpClient.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?term={searchterm}");
-        //            return werken;
-        //        }
-        //    }
+        public async Task EditAsync(int id, Kunstenaar_DTO kunstenaar)
+        {
+            await Task.Delay(100);
+            Kunstenaar k = dbContext.Gebruikers.OfType<Kunstenaar>().FirstOrDefault(k => k.GebruikerId == id);
+            k.Edit(kunstenaar.Gebruikersnaam, kunstenaar.GeboorteDatum, kunstenaar.Email, kunstenaar.Fotopad);
+            dbContext.Update(k);
+            dbContext.SaveChanges();
+        }
 
     }
 }

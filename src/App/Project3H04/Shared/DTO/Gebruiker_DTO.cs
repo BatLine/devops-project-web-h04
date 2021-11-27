@@ -20,9 +20,9 @@ namespace Project3H04.Shared.DTO
         {
             public Validator()
             {
-                RuleFor(x=>x.Gebruikersnaam).NotEmpty().OverridePropertyName("Username");
-                RuleFor(x=>x.GeboorteDatum).NotEmpty().OverridePropertyName("Birthdate");
-                RuleFor(x=>x.Email).NotEmpty().OverridePropertyName("Email");
+                RuleFor(x => x.Gebruikersnaam).NotEmpty().OverridePropertyName("Username");
+                RuleFor(x => x.GeboorteDatum).NotEmpty().OverridePropertyName("Birthdate");
+                RuleFor(x => x.Email).NotEmpty().OverridePropertyName("Email");
                 //RuleFor(x=>x.Fotopad).NotEmpty().OverridePropertyName("Images");
             }
         }
