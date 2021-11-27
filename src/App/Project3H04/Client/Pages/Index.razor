@@ -12,7 +12,7 @@
     </div>
 </header>
 <body>
-
+    
     <div class="container">
         <div class="row">
             <div class="col-4">
@@ -54,6 +54,7 @@
     {
         kunstenaars = await httpClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar?take=4&recentArtists=true");
         //kunstenaarsCopy = kunstenaars;
+        
     }
 
     public void OpenSidepanel()

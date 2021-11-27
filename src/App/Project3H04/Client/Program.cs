@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Project3H04.Client.Shared;
 using Append.Blazor.Sidepanel;
 
+
 namespace Project3H04.Client
 {
     public class Program
@@ -24,7 +25,7 @@ namespace Project3H04.Client
             {
                 builder.Configuration.Bind("Auth0", options.ProviderOptions);
                 options.ProviderOptions.ResponseType = "code";
-            });
+            }).AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>(); ;
             //AUTH client
             builder.Services.AddHttpClient("ServerAPI",
             client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
