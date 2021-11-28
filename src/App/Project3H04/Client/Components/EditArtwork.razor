@@ -141,6 +141,12 @@ else
             Kunstwerk_DTO.Edit model = (Kunstwerk_DTO.Edit)Model;
             var response = await httpClient.PutAsJsonAsync<Kunstwerk_DTO.Edit>($"api/kunstwerk/{model.Id}", model);
             response.EnsureSuccessStatusCode();
+
+
+            var editResponse = await response.Content.ReadFromJsonAsync<KunstwerkResponse.Edit>();
+            //images uploaden
+            await StorageService.UploadImagesAsync(editResponse.UploadUris, _imagesFiles);
+
             NavManager.NavigateTo($"artworks/{model.Id}"); //hier kennnen we het Id al
 
         }
@@ -151,9 +157,9 @@ else
             response.EnsureSuccessStatusCode();
 
             var createResponse = await response.Content.ReadFromJsonAsync<KunstwerkResponse.Create>();
-            //image uploaden
+            //images uploaden
             await StorageService.UploadImagesAsync(createResponse.UploadUris, _imagesFiles);
-            
+
 
             NavManager.NavigateTo($"artworks/{createResponse.KunstwerkId}");
         }

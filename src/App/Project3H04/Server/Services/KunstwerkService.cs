@@ -34,7 +34,7 @@ namespace Project3H04.Server.Services
             {
                 Id = x.Id,
                 Naam = x.Naam,
-                Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie }),
+                Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie, Uploaded = true }),
                 Kunstenaar = new Kunstenaar_DTO
                 {
                     Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
@@ -99,6 +99,54 @@ namespace Project3H04.Server.Services
             };
         }
 
+        public async Task<KunstwerkResponse.Edit> UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)
+        {
+            await Task.Delay(10);
+
+            //eerst nieuwe foto's regelen
+            var uploadUris = UploadFotos(kunstwerk.NieuweFotos);
+
+            /*if (kunstwerk.KunstenaarId != gebruikerId)
+            {
+                throw new ArgumentException();
+            }*/
+
+            List<Foto> updatedFotoLijst = kunstwerk.Fotos.Select(fotoDTO => new Foto() { Id = fotoDTO.Id, Naam = fotoDTO.Naam, Locatie = fotoDTO.Locatie }).ToList(); //id wordt meegegeven als de foto al in de databank zit
+            Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
+
+            Kunstwerk kunstwerkToUpdate = dbContext.Kunstwerken.Include(k => k.Fotos).FirstOrDefault(x => x.Id == kunstwerk.Id);
+            kunstwerkToUpdate.Edit(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, kunstwerk.IsVeilbaar, kunstwerk.Materiaal);
+
+            //final foto update
+            kunstwerkToUpdate.Fotos = updatedFotoLijst;
+
+
+            dbContext.Kunstwerken.Update(kunstwerkToUpdate);
+            dbContext.SaveChanges();
+
+            //nodige fotos verwijderen
+            List<Foto> teVerwijderen = kunstwerkToUpdate.Fotos.Where(x => !updatedFotoLijst.Contains(x)).ToList(); //alle fotos in de databank die niet in de updatedFotlijst staan moeten verwijderd worden
+            if (teVerwijderen.Count() > 0)
+            {
+                dbContext.Fotos.RemoveRange(teVerwijderen);
+            }
+
+            dbContext.SaveChanges();
+
+            return new() { UploadUris = uploadUris };
+        }
+
+        public async Task<List<string>> GetMediums(int amount) //aantal meestvoorkomende mediums ophalen
+        {
+            var kunstwerken = await dbContext.Kunstwerken
+                .ToListAsync();
+            return kunstwerken.OrderByDescending(g => g.Materiaal.Count())
+                .Select(g => g.Materiaal)
+                .Distinct()
+                .Take(amount)
+                .ToList();
+        }
+
         private IList<Uri> UploadFotos(IList<Foto_DTO> nieuweFotos)
         {
             IList<Uri> uploadUris = new List<Uri>();
@@ -113,46 +161,6 @@ namespace Project3H04.Server.Services
 
 
             return uploadUris;
-        }
-
-        public async Task UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)
-        {
-            await Task.Delay(10);
-            if (kunstwerk.KunstenaarId != gebruikerId)
-            {
-                throw new ArgumentException();
-            }
-
-            List<Foto> updatedFotoLijst = kunstwerk.Fotos.Select(fotoDTO => new Foto() { Id = fotoDTO.Id, Naam = fotoDTO.Pad }).ToList(); //id wordt meegegeven als de foto al in de databank zit
-            Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
-
-            Kunstwerk kunstwerkToUpdate = dbContext.Kunstwerken.Include(k => k.Fotos).FirstOrDefault(x => x.Id == kunstwerk.Id);
-            kunstwerkToUpdate.Edit(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, kunstwerk.IsVeilbaar, kunstwerk.Materiaal);
-
-            //nodige fotos verwijderen
-            List<Foto> teVerwijderen = kunstwerkToUpdate.Fotos.Where(x => !updatedFotoLijst.Contains(x)).ToList(); //alle fotos in de databank die niet in de updatedFotlijst staan moeten verwijderd worden
-            if (teVerwijderen.Count() > 0)
-            {
-                dbContext.Fotos.RemoveRange(teVerwijderen);
-            }
-
-            //final foto update
-            kunstwerkToUpdate.Fotos = updatedFotoLijst;
-
-
-            dbContext.Kunstwerken.Update(kunstwerkToUpdate);
-            dbContext.SaveChanges();
-        }
-
-        public async Task<List<string>> GetMediums(int amount) //aantal meestvoorkomende mediums ophalen
-        {
-            var kunstwerken = await dbContext.Kunstwerken
-                .ToListAsync();
-            return kunstwerken.OrderByDescending(g => g.Materiaal.Count())
-                .Select(g => g.Materiaal)
-                .Distinct()
-                .Take(amount)
-                .ToList();
         }
     }
 }

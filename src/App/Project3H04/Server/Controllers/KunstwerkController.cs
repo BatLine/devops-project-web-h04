@@ -58,10 +58,10 @@ namespace Project3H04.Server.Controllers
 
         // PUT api/<KunstwerkController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Kunstwerk_DTO.Edit kunst)
+        public Task<KunstwerkResponse.Edit> Put(int id, Kunstwerk_DTO.Edit kunst)
         {
-            if (id != kunst.Id)
-                return BadRequest();
+            /*if (id != kunst.Id)
+                return BadRequest(); */
 
 
 
@@ -71,13 +71,12 @@ namespace Project3H04.Server.Controllers
 
             int gebruikerId = GetAangemeldeGebruikerId();
 
-            if (gebruikerId != kunst.KunstenaarId)
+            /*if (gebruikerId != kunst.KunstenaarId)
             {
                 return BadRequest();
-            }
+            }*/
 
-            await kunstwerkService.UpdateAsync(kunst, gebruikerId);
-            return NoContent();
+            return kunstwerkService.UpdateAsync(kunst, gebruikerId);
         }
 
 

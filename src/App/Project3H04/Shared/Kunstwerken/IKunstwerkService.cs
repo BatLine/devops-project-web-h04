@@ -11,7 +11,7 @@ namespace Project3H04.Shared.Kunstwerken
         Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(Kunstwerk_DTO.Filter request);
         Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id);
         Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk, int gebruikerId);
-        Task UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId);
+        Task<KunstwerkResponse.Edit> UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId);
         Task<List<string>> GetMediums(int amount);
     }
 }
