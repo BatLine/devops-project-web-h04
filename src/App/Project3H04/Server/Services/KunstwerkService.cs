@@ -79,7 +79,7 @@ namespace Project3H04.Server.Services
         public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk, int gebruikerId)
         {
             //eerst nieuwe foto's regelen
-            Uri uploadUri = UploadFotos(kunstwerk.NieuweFotos);
+            var uploadUris  = UploadFotos(kunstwerk.NieuweFotos);
 
             List<Foto> fotos = kunstwerk.NieuweFotos.Select(fotoDTO => new Foto(fotoDTO.Naam, fotoDTO.Locatie)).ToList();
 
@@ -95,19 +95,24 @@ namespace Project3H04.Server.Services
             return new()
             {
                 KunstwerkId = kunstwerkToCreate.Id,
-                UploadUri = uploadUri
+                UploadUris = uploadUris
             };
         }
 
-        private Uri UploadFotos(IList<Foto_DTO> nieuweFotos)
+        private IList<Uri> UploadFotos(IList<Foto_DTO> nieuweFotos)
         {
-            var imageFilename = Path.Combine("Kunstwerken", Guid.NewGuid().ToString(), nieuweFotos.First().Naam);
-            var uploadUri = storageService.CreateUploadUri(imageFilename);
+            IList<Uri> uploadUris = new List<Uri>();
+            foreach (Foto_DTO foto in nieuweFotos)
+            {
+                var imageFilename = Path.Combine("Kunstwerken", Guid.NewGuid().ToString(), foto.Naam);
+                uploadUris.Add(storageService.CreateUploadUri(imageFilename));
 
-            nieuweFotos.First().Locatie = storageService.StorageBaseUri; //opslaan in db
-            nieuweFotos.First().Naam = imageFilename;
+                foto.Locatie = storageService.StorageBaseUri; //opslaan in db
+                foto.Naam = imageFilename;
+            }
 
-            return uploadUri;
+
+            return uploadUris;
         }
 
         public async Task UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)

@@ -152,7 +152,7 @@ else
 
             var createResponse = await response.Content.ReadFromJsonAsync<KunstwerkResponse.Create>();
             //image uploaden
-            await StorageService.UploadImageAsync(createResponse.UploadUri, _imagesFiles.First());
+            await StorageService.UploadImagesAsync(createResponse.UploadUris, _imagesFiles);
             
 
             NavManager.NavigateTo($"artworks/{createResponse.KunstwerkId}");

@@ -23,5 +23,13 @@ namespace Project3H04.Client.Services
             response.EnsureSuccessStatusCode();
         }
 
+        public async Task UploadImagesAsync(IList<Uri> sases, IList<IBrowserFile> files) {
+            Queue<IBrowserFile> fileQueue = new(files);
+            Queue<Uri> sasQueue = new(sases);
+            while(fileQueue.Count() != 0)
+            {
+                await UploadImageAsync(sasQueue.Dequeue(), fileQueue.Dequeue());
+            }
+        }
     }
 }

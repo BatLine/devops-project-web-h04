@@ -11,7 +11,13 @@ namespace Project3H04.Shared.Kunstwerken
         public class Create
         {
             public int KunstwerkId { get; set; }
-            public Uri UploadUri { get; set; }
+            public IList<Uri> UploadUris { get; set; }
+        }
+
+        public class Edit
+        {
+            public IList<Uri> UploadUris { get; set; }
+
         }
     }
 }
