@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Project3H04.Shared.DTO;
 
-namespace Project3H04.Shared.DTO {
+namespace Project3H04.Shared.Veilingen {
     public class Veiling_DTO {
         public DateTime StartDatum { get; set; }
         public DateTime EindDatum { get; set; }
