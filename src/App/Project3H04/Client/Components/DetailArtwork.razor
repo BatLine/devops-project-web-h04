@@ -21,9 +21,14 @@
                 <p><span style="font-weight:bold">Medium</span> : @Kunstwerk.Materiaal</p>
                 <p style="font-size:2rem; color:dimgray">€@Kunstwerk.Prijs</p>
                 <!--Enkel als AUTH dit zien-->
-                <AuthorizeView>
+                <AuthorizeView Roles="Kunstenaar">
                     <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
-                    <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
+                    @if (userEmail == Kunstwerk.Kunstenaar.Email)
+                    {
+                        <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
+                    }
+                </AuthorizeView>
+                <AuthorizeView>
                     <!--Order-->
                     @if (Kunstwerk.TeKoop)
                     {
@@ -53,8 +58,24 @@
 
 @code {
     [Parameter] public Kunstwerk_DTO.Detail Kunstwerk { get; set; }
-
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private string userEmail;
     //public bool InCart = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var user = (await authenticationStateTask).User;
+        userEmail = user.Identity.Name;
+        Console.WriteLine(userEmail); //dit nog gwn
+        Console.WriteLine(Kunstwerk.Kunstenaar.Email +"kunstwerk kunstenaar email");
+    }
+
+    //public async Task<string> GetUserEmail()
+    //{
+    //    var user = (await authenticationStateTask).User;
+    //    return user.Identity.Name;
+    //}
 
     public bool Check()
     {
@@ -66,6 +87,7 @@
     {
         cartState.AddKunstwerk(Kunstwerk);
     }
+
 
 
 }
