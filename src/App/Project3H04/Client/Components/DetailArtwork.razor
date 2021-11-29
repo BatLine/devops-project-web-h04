@@ -11,7 +11,12 @@
 
                 <h1 style="text-align: center; font-family:sans-serif">@Kunstwerk.Naam</h1>
                 <p><span style="font-weight:bold">Artist</span> : @Kunstwerk.Kunstenaar.Gebruikersnaam</p>
-                <p class="subtitle" style="text-align:left; font-weight:bold">about</p>
+                <p><span style="font-weight:bold">Dimensions</span> : @Kunstwerk.Lengte x @Kunstwerk.Breedte x @Kunstwerk.Hoogte (in cm)</p>
+                @if (Kunstwerk.Gewicht != default(decimal))
+                {
+                    <p><span style="font-weight:bold">Weight</span> : @Kunstwerk.Gewicht kg</p>
+                }
+                <p class="subtitle" style="text-align:left; font-weight:bold">About</p>
                 <p style="border: 1px thin grey; width:100%; height:auto">@Kunstwerk.Beschrijving</p>
                 <p><span style="font-weight:bold">Medium</span> : @Kunstwerk.Materiaal</p>
                 <p style="font-size:2rem; color:dimgray">€@Kunstwerk.Prijs</p>

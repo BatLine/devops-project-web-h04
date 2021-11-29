@@ -82,20 +82,23 @@
                             <i></i>
                             <h2>Size</h2>
                             <div class="checkbox">
+
                                 @if (kunstwerken != null)
                                 {
                                     @foreach (var size in artSizes)
                                     {
                                         <div class="form-check">
 
-                                            <input class="form-check-input" type="checkbox" value="@size" name="size-checkbox" @onchange="_ => BindCheckboxes(_,filterSize:size)">
+                                            <input class="form-check-input" type="checkbox" name="size-checkbox" @onchange="_ => BindCheckboxes(_,filterSize:size)">
                                             <label class="form-check-label">
                                                 @size
                                             </label>
                                         </div>
                                     }
                                 }
+
                             </div>
+
                         </li>
                     </ul>
                 </div>
@@ -148,8 +151,7 @@
         //vul artMediums met alle mogelijke mediums van kunstwerken
         artMediums = kunstCopy.Select(x => x.Materiaal).Distinct();
         //vul artSizes met alle mogelijke groottes van kunstwerken
-        //small(minder dan 50cm),medium(50cm-100cm),large(groter dan 100cm)
-        //artSizes = kunstCopy.Select(x=>x.Grootte).Distinct();
+        artSizes = new List<string> { "Small", "Medium", "Large" };
         //subscribe
         filter.OnArtworkFilterChanged += FilterArtworksAsync;
     }
@@ -171,7 +173,7 @@
 
         filter.Mediums = selectedMediums;
 
-        /*
+
         //selectedSizes
         if (filterSize != "")
         {
@@ -181,7 +183,6 @@
         }
 
         filter.Sizes = selectedSizes;
-        */
 
     }
 
@@ -193,6 +194,7 @@
             MinimumPrijs = filter.MinimumPrice,
             MaximumPrijs = filter.MaximumPrice,
             Materiaal = filter.Mediums,
+            Grootte = filter.Sizes,
             Kunstenaar = filter.ArtistSearchterm
 
         };

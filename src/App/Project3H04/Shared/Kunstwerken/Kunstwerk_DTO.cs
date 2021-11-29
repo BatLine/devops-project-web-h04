@@ -14,6 +14,10 @@ namespace Project3H04.Shared.Kunstwerken
             public int Id { get; set; }
             public string Naam { get; set; }
             public decimal Prijs { get; set; }
+            public decimal Lengte { get; set; }
+            public decimal Breedte { get; set; }
+            public decimal Hoogte { get; set; }
+            public decimal Gewicht { get; set; }
             public string Materiaal { get; set; }
             public Kunstenaar_DTO Kunstenaar { get; set; }
             public Foto_DTO HoofdFoto { get; set; }
@@ -36,7 +40,9 @@ namespace Project3H04.Shared.Kunstwerken
             public decimal MinimumPrijs { get; set; }
             public decimal MaximumPrijs { get; set; }
             public List<string> Materiaal { get; set; }
+            public List<string> Grootte { get; set; }
             public string Kunstenaar { get; set; }
+
         }
 
         public class Create
@@ -53,6 +59,10 @@ namespace Project3H04.Shared.Kunstwerken
             public string Beschrijving { get; set; }
             public bool TeKoop { get; set; }
             public bool IsVeilbaar { get; set; }
+            public decimal Lengte { get; set; }
+            public decimal Breedte { get; set; }
+            public decimal Hoogte { get; set; }
+            public decimal Gewicht { get; set; }
 
             public List<Foto_DTO> NieuweFotos => Fotos.Where(f => f.Uploaded == false).ToList();
         }
@@ -73,6 +83,11 @@ namespace Project3H04.Shared.Kunstwerken
                 Beschrijving = kunstwerk.Beschrijving;
                 KunstenaarId = kunstwerk.Kunstenaar.GebruikerId;
                 TeKoop = kunstwerk.TeKoop;
+                Lengte = kunstwerk.Lengte;
+                Breedte = kunstwerk.Breedte;
+                Hoogte = kunstwerk.Hoogte;
+                Gewicht = kunstwerk.Gewicht;
+
             }
 
             public int Id { get; set; }

@@ -14,6 +14,22 @@
                 <label for="@Model.Naam">Name</label>
                 <InputText @bind-Value="@Model.Naam" class="form-control" />
             </div>
+            <div class="form-group">
+                <label for="@Model.Lengte">Length</label>
+                <InputNumber @bind-Value="@Model.Lengte" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="@Model.Breedte">Width</label>
+                <InputNumber @bind-Value="@Model.Breedte" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="@Model.Hoogte">Height</label>
+                <InputNumber @bind-Value="@Model.Hoogte" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="@Model.Gewicht">Weight</label>
+                <InputNumber @bind-Value="@Model.Gewicht" class="form-control" />
+            </div>
             <!--Fotos-->
             <div class="form-group">
                 <label>Pictures: </label>
@@ -79,7 +95,8 @@
 
         </EditForm>
     </div>
-    @if(loading) {
+    @if (loading)
+    {
         <LoadingSpinner></LoadingSpinner>
     }
 }

@@ -10,7 +10,7 @@ namespace Project3H04.Server.Data
     public class ApplicationDbcontext : DbContext
     {
         //Bij relatie moet foreign keys meestal niet meegeven, nrml pakt hij altijd de primary key
-        
+
         public ApplicationDbcontext(DbContextOptions<ApplicationDbcontext> options)
             : base(options)
         {
@@ -22,7 +22,7 @@ namespace Project3H04.Server.Data
 
             //Gebruiker
             builder.Entity<Gebruiker>()
-                    .ToTable("Gebruiker").HasKey(x=>x.GebruikerId);
+                    .ToTable("Gebruiker").HasKey(x => x.GebruikerId);
 
             builder.Entity<Gebruiker>()
              .HasDiscriminator<String>("gebruiker_type")
@@ -31,7 +31,7 @@ namespace Project3H04.Server.Data
              .HasValue<Admin>("gebruiker_admin");
 
 
-            builder.Entity<Gebruiker>().Property(x=>x.GebruikerId).ValueGeneratedOnAdd();
+            builder.Entity<Gebruiker>().Property(x => x.GebruikerId).ValueGeneratedOnAdd();
             builder.Entity<Gebruiker>().Property(x => x.Email).HasMaxLength(100);
             builder.Entity<Gebruiker>().Property(x => x.Geboortedatum).IsRequired();
             builder.Entity<Gebruiker>().Property(x => x.Gebruikersnaam).HasMaxLength(50).IsRequired();
@@ -45,7 +45,7 @@ namespace Project3H04.Server.Data
             builder.Entity<Kunstenaar>().HasMany(x => x.Veilingen).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Kunstenaar>().Property(x => x.Details).HasMaxLength(1000).IsRequired();
             builder.Entity<Kunstenaar>().Property(x => x.StatusActiefKunstenaar).IsRequired();
-            
+
 
             //Kunstwerk
 
@@ -55,6 +55,10 @@ namespace Project3H04.Server.Data
             builder.Entity<Kunstwerk>().Property(x => x.Beschrijving).HasMaxLength(500).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.Einddatum).IsRequired();
             //builder.Entity<Kunstwerk>().Property(x => x.Fotos);
+            builder.Entity<Kunstwerk>().Property(x => x.Lengte).IsRequired();
+            builder.Entity<Kunstwerk>().Property(x => x.Breedte);
+            builder.Entity<Kunstwerk>().Property(x => x.Gewicht);
+            builder.Entity<Kunstwerk>().Property(x => x.Hoogte).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.IsVeilbaar).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.Materiaal).IsRequired().HasMaxLength(100);
             builder.Entity<Kunstwerk>().Property(x => x.Naam).IsRequired().HasMaxLength(100);
@@ -95,7 +99,7 @@ namespace Project3H04.Server.Data
             // builder.Entity<Bestelling>().Property(x => x.Straat).IsRequired().HasMaxLength(200);
             //builder.Entity<Bestelling>().HasOne(x => x.Adres).WithOne().OnDelete(DeleteBehavior.Cascade).IsRequired();
             builder.Entity<Bestelling>().Property(x => x.TotalePrijs).IsRequired();
-           // builder.Entity<Bestelling>().Property(x => x.PaymentId).IsRequired();
+            // builder.Entity<Bestelling>().Property(x => x.PaymentId).IsRequired();
             builder.Entity<Bestelling>().OwnsOne(x => x.Adres).Property(a => a.Gemeente).IsRequired().HasMaxLength(100);
             builder.Entity<Bestelling>().OwnsOne(x => x.Adres).Property(a => a.Postcode).IsRequired();
             builder.Entity<Bestelling>().OwnsOne(x => x.Adres).Property(a => a.Straat).IsRequired().HasMaxLength(200);
@@ -122,7 +126,7 @@ namespace Project3H04.Server.Data
             //Foto
             builder.Entity<Foto>()
                                 .ToTable("Foto").HasKey(f => f.Id);
-            
+
             //Bestelling
             builder.Entity<Bestelling>().Property(x => x.Id).ValueGeneratedOnAdd();
 
