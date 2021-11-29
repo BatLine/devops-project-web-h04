@@ -9,7 +9,7 @@ using Project3H04.Shared.Veilingen;
 
 namespace Project3H04.Server.Controllers {
     //TODO: [Authorize] overal toevoegen?
-    //[AllowAnonymous]
+    [AllowAnonymous]
     [Route("api/[controller]/[Action]")]
     [ApiController]
     public class VeilingController : ControllerBase {
