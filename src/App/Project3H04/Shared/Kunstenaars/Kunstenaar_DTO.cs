@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Project3H04.Shared.Veilingen;
 
 namespace Project3H04.Shared.Kunstenaars
 {
@@ -14,10 +15,8 @@ namespace Project3H04.Shared.Kunstenaars
         //public string Details { get; set; }
         public bool StatusActiefKunstenaar { get; set; }
         public ICollection<Kunstwerk_DTO.Index> Kunstwerken { get; set; }
-        public ICollection<Veiling_DTO> Veilingen { get; set; }
-        public Abonnement_DTO Abonnenment { get; set; }
+        public Abonnement_DTO Abonnement { get; set; }
 
         //bij aanmaken van kunstenaar dan validatie met validator
-
     }
 }

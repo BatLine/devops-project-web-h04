@@ -18,6 +18,7 @@ using Project3H04.Shared.Klant;
 using Project3H04.Shared.Kunstenaars;
 using Project3H04.Shared.Kunstwerken;
 using System.Linq;
+using Project3H04.Shared.Veilingen;
 
 namespace Project3H04.Server {
     public class Startup {
@@ -58,7 +59,7 @@ namespace Project3H04.Server {
                 #pragma warning disable CS0162 // Unreachable code detected
                 services.AddDbContext<ApplicationDbcontext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
             } else {
-                #pragma warning disable IDE0079
+                #pragma warning disable IDE0079 // Remove unnecessary suppression
                 #pragma warning disable CS0162 // Unreachable code detected
                 services.AddDbContext<ApplicationDbcontext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDBContext")));
             }
@@ -72,6 +73,7 @@ namespace Project3H04.Server {
 
             services.AddScoped<IStorageService, BlobStorageService>();
             services.AddScoped<IGebruikerService, GebruikerService>();
+            services.AddScoped<IVeilingService, VeilingService>();
             //services.AddSingleton<IOrderService, OrderService>();
             services.AddRazorPages();
         }

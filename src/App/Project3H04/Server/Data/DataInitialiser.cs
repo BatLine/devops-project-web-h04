@@ -74,7 +74,7 @@ namespace Project3H04.Server.Data
 
             Veiling veiling1 = new Veiling(DateTime.UtcNow, DateTime.UtcNow.AddDays(1), kunstwerk1.Prijs, kunstwerk1);
             kunstenaar1.Veilingen.Add(veiling1);
-            // veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 100, DateTime.UtcNow.AddHours(12));
+            veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 100, DateTime.UtcNow.AddHours(12));
             _dbContext.Veilingen.Add(veiling1);
             _dbContext.SaveChanges();
         }

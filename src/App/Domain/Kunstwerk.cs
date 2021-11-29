@@ -3,10 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Domain
-{
-    public class Kunstwerk
-    {
+namespace Domain {
+    public class Kunstwerk {
         public int Id { get; set; }
         public string Naam { get; private set; }
         public DateTime Einddatum { get; private set; }
@@ -22,8 +20,7 @@ namespace Domain
         public string Materiaal { get; private set; }
         public Kunstenaar Kunstenaar { get; private set; }
 
-        public Kunstwerk(string naam, DateTime einddatum, decimal prijs, string beschrijving, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, List<Foto> fotos, bool isVeilbaar, string materiaal, Kunstenaar kunstenaar) : this()
-        {
+        public Kunstwerk(string naam, DateTime einddatum, decimal prijs, string beschrijving, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, List<Foto> fotos, bool isVeilbaar, string materiaal, Kunstenaar kunstenaar) : this() {
             Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
             Einddatum = Guard.Against.Null(einddatum, nameof(einddatum));
             Prijs = Guard.Against.Null(prijs, nameof(prijs));
@@ -40,13 +37,9 @@ namespace Domain
             IsVeilbaar = isVeilbaar;
         }
 
-        public Kunstwerk()
-        {
+        public Kunstwerk() { }
 
-        }
-
-        public void Edit(string naam, DateTime einddatum, decimal prijs, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, string beschrijving, bool isVeilbaar, string materiaal)
-        {
+        public void Edit(string naam, DateTime einddatum, decimal prijs, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, string beschrijving, bool isVeilbaar, string materiaal)  {
             Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
             Einddatum = Guard.Against.Null(einddatum, nameof(einddatum));
             Prijs = Guard.Against.Null(prijs, nameof(prijs));

@@ -5,10 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
-{
-    public class Gebruiker
-    {
+namespace Domain {
+    public class Gebruiker {
         public string Gebruikersnaam { get; private set; }
         public DateTime Geboortedatum { get; private set; }
         public string Email { get; private set; }
@@ -28,8 +26,8 @@ namespace Domain
             this.Details = Guard.Against.NullOrWhiteSpace(details, nameof(details));
             //this.FotoPad = Guard.Against.NullOrEmpty(fotoPad, nameof(fotoPad));
         }
-        public Gebruiker()
-        {
+
+        public Gebruiker() {
 
         }
 
