@@ -81,7 +81,7 @@ namespace Project3H04.Server.Services {
              if (veiling == null)
                  return false;
 
-             var klant = new Klant(bod.Klant.Gebruikersnaam, bod.Klant.GeboorteDatum, bod.Klant.Email, bod.Klant.Fotopad);
+             var klant = new Klant(bod.Klant.Gebruikersnaam, bod.Klant.GeboorteDatum, bod.Klant.Email, bod.Klant.Fotopad, bod.Klant.Details);
              veiling.VoegBodToe(klant, bod.BodPrijs, bod.Datum);
 
             _dbContext.Veilingen.Update(veiling);
@@ -101,7 +101,7 @@ namespace Project3H04.Server.Services {
         public async Task<bool> CreateVeiling(Veiling_DTO veiling) {
             var abonnementType = new AbonnementType(veiling.Kunstwerk.Kunstenaar.Abonnement.AbonnementType.Naam, veiling.Kunstwerk.Kunstenaar.Abonnement.AbonnementType.Verlooptijd, veiling.Kunstwerk.Kunstenaar.Abonnement.AbonnementType.Prijs);
             var abonnement = new Abonnement(veiling.Kunstwerk.Kunstenaar.Abonnement.StartDatum, abonnementType);
-            var kunstenaar = new Kunstenaar(veiling.Kunstwerk.Kunstenaar.Gebruikersnaam, veiling.Kunstwerk.Kunstenaar.GeboorteDatum, veiling.Kunstwerk.Kunstenaar.Email, veiling.Kunstwerk.Kunstenaar.Details, abonnement, veiling.Kunstwerk.Kunstenaar.Fotopad);
+            var kunstenaar = new Kunstenaar(veiling.Kunstwerk.Kunstenaar.Gebruikersnaam, veiling.Kunstwerk.Kunstenaar.GeboorteDatum, veiling.Kunstwerk.Kunstenaar.Email, abonnement, veiling.Kunstwerk.Kunstenaar.Fotopad, veiling.Kunstwerk.Kunstenaar.Details);
             var fotos = (List<Foto>) veiling.Kunstwerk.Fotos.Select(x => new Foto {
                 Id = x.Id,
                 Naam = x.Naam,
