@@ -106,14 +106,5 @@ namespace Project3H04.Server.Services
 
             // return items;
         }
-        public async Task EditAsync(int id, Kunstenaar_DTO kunstenaar)
-        {
-            await Task.Delay(100);
-            Kunstenaar k = dbContext.Gebruikers.OfType<Kunstenaar>().FirstOrDefault(k => k.GebruikerId == id);
-            k.Edit(kunstenaar.Gebruikersnaam, kunstenaar.GeboorteDatum, kunstenaar.Email, kunstenaar.Fotopad);
-            dbContext.Update(k);
-            dbContext.SaveChanges();
-        }
-
     }
 }

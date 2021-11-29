@@ -53,10 +53,5 @@ namespace Project3H04.Server.Controllers
 
             //return k;
         }
-        [HttpPut]
-        public Task EditAsync(int id, Kunstenaar_DTO kunstenaar)
-        {
-            return kunstenaarService.EditAsync(id, kunstenaar);
-        }
     }
 }

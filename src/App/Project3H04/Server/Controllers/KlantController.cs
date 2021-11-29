@@ -52,12 +52,5 @@ namespace Project3H04.Server.Controllers
             return klantService.CreateAsync(klant);
         }
 
-        [HttpPut]
-        public Task EditAsync(int id,Klant_DTO klant)
-        {
-            return klantService.EditAsync(id, klant);
-        }
-
-
     }
 }

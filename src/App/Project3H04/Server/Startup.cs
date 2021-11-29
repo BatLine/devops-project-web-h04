@@ -13,6 +13,7 @@ using Project3H04.Server.Data;
 using Project3H04.Server.Services;
 using Project3H04.Shared;
 using Project3H04.Shared.Fotos;
+using Project3H04.Shared.Gebruiker;
 using Project3H04.Shared.Klant;
 using Project3H04.Shared.Kunstenaars;
 using Project3H04.Shared.Kunstwerken;
@@ -68,7 +69,9 @@ namespace Project3H04.Server {
             services.AddScoped<IKunstenaarService, KunstenaarService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IKlantService, KlantService>();
+
             services.AddScoped<IStorageService, BlobStorageService>();
+            services.AddScoped<IGebruikerService, GebruikerService>();
             //services.AddSingleton<IOrderService, OrderService>();
             services.AddRazorPages();
         }

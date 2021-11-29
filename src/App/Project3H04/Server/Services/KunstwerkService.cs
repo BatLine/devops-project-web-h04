@@ -39,6 +39,7 @@ namespace Project3H04.Server.Services
                 {
                     Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
                     GebruikerId = x.Kunstenaar.GebruikerId,
+                    Email = x.Kunstenaar.Email //email toegevoegd
                 },
                 Prijs = x.Prijs,
                 Lengte = x.Lengte,

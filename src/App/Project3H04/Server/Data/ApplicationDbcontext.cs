@@ -35,7 +35,8 @@ namespace Project3H04.Server.Data
             builder.Entity<Gebruiker>().Property(x => x.Email).HasMaxLength(100);
             builder.Entity<Gebruiker>().Property(x => x.Geboortedatum).IsRequired();
             builder.Entity<Gebruiker>().Property(x => x.Gebruikersnaam).HasMaxLength(50).IsRequired();
-            builder.Entity<Gebruiker>().Property(x => x.FotoPad);
+            builder.Entity<Gebruiker>().Property(x => x.FotoPad).IsRequired(false);
+            builder.Entity<Gebruiker>().Property(x => x.Details).HasMaxLength(1000).IsRequired();
 
             builder.Entity<Klant>().HasMany(x => x.Boden).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Klant>().HasMany(x => x.Bestellingen).WithOne().OnDelete(DeleteBehavior.Cascade);
@@ -43,7 +44,6 @@ namespace Project3H04.Server.Data
             builder.Entity<Kunstenaar>().HasOne(x => x.Abonnenment).WithOne().HasForeignKey<Kunstenaar>(x => x.AbonnenmentId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Kunstenaar>().HasMany(x => x.Kunstwerken).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Kunstenaar>().HasMany(x => x.Veilingen).WithOne().OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<Kunstenaar>().Property(x => x.Details).HasMaxLength(1000).IsRequired();
             builder.Entity<Kunstenaar>().Property(x => x.StatusActiefKunstenaar).IsRequired();
 
 

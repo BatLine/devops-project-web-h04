@@ -13,66 +13,52 @@ namespace Project3H04.Client.Components
     {
         [Parameter] public int GebruikerId { get; set; }
         [Parameter] public Gebruiker_DTO gebruiker { get; set; }
-        public Kunstenaar_DTO kunstenaar;
-        private Kunstenaar_DTO model = new();
+        //public Kunstenaar_DTO kunstenaar;
+        private Gebruiker_DTO model = new();
         //public Klant_DTO klant { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
         [Inject] public HttpClient httpClient { get; set; }
         [Inject] public ISidepanelService Sidepanel { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnParametersSetAsync()
         {
-            //krijgen geb id via PARAMETER
-            //kunstwerken ophalen
             Console.WriteLine(GebruikerId + ":gebruikersid");
-            Console.WriteLine(gebruiker.Email + " " + "is kunstenaar");
-            Console.WriteLine(gebruiker is Kunstenaar_DTO);
-            if (gebruiker is Kunstenaar_DTO)
+            Console.WriteLine(gebruiker.Email + " " + "is Geb");
+            //Console.WriteLine((gebruiker is Kunstenaar_DTO) + "dees is kunst");
+
+            //Gebruiker_DTO geb;
+            //dees api call werkt nie blijkbaar => gwn API call fixen eeuy
+            //geb = await httpClient.GetFromJsonAsync<Gebruiker_DTO>($"api/Gebruiker/{GebruikerId}");
+            //gebruiker = kunstenaar;
+
+            //model = new Gebruiker_DTO
+            //{
+            //    GebruikerId = geb.GebruikerId,
+            //    Gebruikersnaam = geb.Gebruikersnaam,
+            //    GeboorteDatum = geb.GeboorteDatum,
+            //    Email = geb.Email,
+            //    Fotopad = geb.Fotopad
+            //};
+            //geen api call nodig eig, gwn de gebruikerDTO als param gegeven
+            await Task.Delay(100);
+            model = new Gebruiker_DTO
             {
-
-                kunstenaar = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{GebruikerId}");
-                gebruiker = kunstenaar;
-
-                model = new Kunstenaar_DTO
-                {
-                    GebruikerId = kunstenaar.GebruikerId,
-                    Gebruikersnaam = kunstenaar.Gebruikersnaam,
-                    GeboorteDatum = kunstenaar.GeboorteDatum,
-                    Email = kunstenaar.Email,
-                    Fotopad = kunstenaar.Fotopad
-                };
-            }
-
-            /*
-            else
-            {
-                klant = await httpClient.GetFromJsonAsync<Klant_DTO>($"api/Klant/{GebruikerId}");
-                gebruiker = klant;
-            }*/
+                GebruikerId = gebruiker.GebruikerId,
+                Gebruikersnaam = gebruiker.Gebruikersnaam,
+                GeboorteDatum = gebruiker.GeboorteDatum,
+                Email = gebruiker.Email, //email nie want in auth0 veranderd niet
+                Fotopad = gebruiker.Fotopad,
+                Details=gebruiker.Details
+            };
 
         }
-
-        // Gebruiker_DTO geb;
-        // Fetch the latest version of the product before editing.
-        //hier de product met die id ophalen voor te editen !!!
-        //var response = await IKunstwerkService.GetDetailAsync(new ProductRequest.GetDetail { ProductId = ProductId });
-        // product = response.Product;
-        //hier de product opvullen
-        /*
-        model = new ProductDto.Mutate
-        {
-            Category = product.CategoryName,
-            Description = product.Description,
-            InStock = product.IsInStock,
-            Name = product.Name,
-            Price = product.Price,
-        };*/
 
 
         private async Task EditGebruikerAsync()
         {
-            await httpClient.PutAsJsonAsync($"api/Kunstenaar/{model.GebruikerId}", model);
-            //return await response.Content.ReadFromJsonAsync<>();
+            await httpClient.PutAsJsonAsync($"api/Gebruiker/{GebruikerId}", model);
+            //na edit terug naar account page om geg te zien
+            NavigationManager.NavigateTo("/account", forceLoad: true);
         }
     }
 }

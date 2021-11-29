@@ -88,12 +88,11 @@
 
             var response = await c.PostAsJsonAsync<object>(url, request);
             var s = await response.Content.ReadAsStringAsync();
-
-
             Console.WriteLine(s);
 
+            sidepanel.Close();
             NavigationManager.NavigateTo("/");
-            //sidepanel.Close();
+
             // await JsRuntime.InvokeAsync<object>("alert", "User signed up!");
         }
     }

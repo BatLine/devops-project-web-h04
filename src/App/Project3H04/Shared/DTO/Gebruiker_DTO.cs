@@ -15,7 +15,7 @@ namespace Project3H04.Shared.DTO
         public string Email { get; set; }
         public DateTime DatumCreatie { get; set; }
         public string Fotopad { get; set; }
-
+        public string Details { get; set; }
         public class Validator : AbstractValidator<Gebruiker_DTO>
         {
             public Validator()
@@ -23,6 +23,7 @@ namespace Project3H04.Shared.DTO
                 RuleFor(x => x.Gebruikersnaam).NotEmpty().OverridePropertyName("Username");
                 RuleFor(x => x.GeboorteDatum).NotEmpty().OverridePropertyName("Birthdate");
                 RuleFor(x => x.Email).NotEmpty().OverridePropertyName("Email");
+                RuleFor(x => x.Details).NotEmpty();
                 //RuleFor(x=>x.Fotopad).NotEmpty().OverridePropertyName("Images");
             }
         }

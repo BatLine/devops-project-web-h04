@@ -10,31 +10,37 @@
         </div>
     </div>
 
-    <div class="field">
+    @*<div class="field">
         <label class="label">Email</label>
         <div class="control">
-            <InputTextArea class="textarea" @bind-Value="model.Email" />
+            <InputText class="input" @bind-Value="model.Email" />
         </div>
-    </div>
+    </div>*@
 
     <div class="field">
         <label class="label">GeboorteDatum</label>
         <div class="control">
-            <InputNumber class="input" step="0.01" @bind-Value="model.GeboorteDatum" />
+            <InputDate class="input"  @bind-Value="model.GeboorteDatum" />
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Details</label>
+        <div class="control">
+              <InputTextArea class="textarea" @bind-Value="model.Details" />
         </div>
     </div>
 
     <div class="field">
         <label class="label">Profiel foto</label>
         <div class="control">
-            <InputNumber class="input" step="0.01" @bind-Value="model.Fotopad" />
+            <InputText class="input" @bind-Value="model.Fotopad" />
         </div>
     </div>
 
 
     <div class="buttons">
         <button class="button is-link is-fullwidth" type="submit">Wijzigen</button>
-        <button type="button" class="button is-link is-light is-fullwidth" href="/account">Annuleren</button>
     </div>
 
 </EditForm>

@@ -29,7 +29,8 @@ namespace Project3H04.Server.Services
                 GebruikerId = x.GebruikerId,
                 GeboorteDatum = x.Geboortedatum,
                 Email = x.Email,
-                Fotopad = x.FotoPad
+                Fotopad = x.FotoPad,
+                Details = x.Details
                 //NTH
                 //Bestellingen = (ICollection<Bestelling_DTO.Index>)x.Bestellingen.Select(x => new Bestelling_DTO.Index
                 //{
@@ -61,7 +62,8 @@ namespace Project3H04.Server.Services
                 GebruikerId = x.GebruikerId,
                 GeboorteDatum = x.Geboortedatum,
                 Email = x.Email,
-                Fotopad = x.FotoPad
+                Fotopad = x.FotoPad,
+                Details = x.Details
                 //NTH
                 //Bestellingen = (ICollection<Bestelling_DTO.Index>)x.Bestellingen.Select(x => new Bestelling_DTO.Index
                 //{
@@ -85,85 +87,19 @@ namespace Project3H04.Server.Services
 
 
 
-
-
-
-
-
-        //----------------------
-
-        //public async Task<Klant_DTO> GetKlantById(int id)
-        //{
-        //    //var x = DbContext.Gebruikers.OfType<Klant>().FirstOrDefault(k => k.GebruikerId == id);
-        //    //Klant_DTO k = await Task.Run(() => new Klant_DTO
-        //    //{
-        //    //    Gebruikersnaam = x.Gebruikersnaam,
-        //    //    GebruikerId = x.GebruikerId,
-        //    //    Email = x.Email,
-        //    //    Fotopad = x.FotoPad,
-        //    //    Bestellingen = (ICollection<Bestelling_DTO.Index>)x.Bestellingen.Select(x=> new Bestelling_DTO.Index{ 
-        //    //        Datum = x.Datum,
-        //    //        Straat = x.Adres.Straat,
-        //    //        Postcode = x.Adres.Postcode,
-        //    //        Gemeente = x.Adres.Gemeente,
-        //    //        TotalePrijs = x.TotalePrijs,
-        //    //        WinkelmandKunstwerken = (ICollection<Kunstwerk_DTO.Detail>)x.WinkelmandKunstwerken.Select(x=> new Kunstwerk_DTO.Index { 
-        //    //            Naam = x.Naam,
-        //    //            Prijs = x.Prijs,
-        //    //            Materiaal = x.Materiaal
-        //    //        })
-        //    //    })
-        //    //});
-
-        //    var x = (Klant)DbContext.Gebruikers.OfType<Klant>().Include(k => k.Bestellingen).ThenInclude(x => x.WinkelmandKunstwerken).Include(k => k.Boden).SingleOrDefault(x => x.GebruikerId == id);
-        //    Klant_DTO k = await Task.Run(() => new Klant_DTO
-        //    {
-        //        Gebruikersnaam = x.Gebruikersnaam,
-        //        GebruikerId = x.GebruikerId,
-        //        Email = x.Email,
-        //        Fotopad = x.FotoPad//,
-        //        //Bestellingen = (ICollection<Bestelling_DTO.Index>)x.Bestellingen.Select(x => new Bestelling_DTO.Index
-        //        //{
-        //        //    Datum = x.Datum,
-        //        //    Straat = x.Adres.Straat,
-        //        //    Postcode = x.Adres.Postcode,
-        //        //    Gemeente = x.Adres.Gemeente,
-        //        //    TotalePrijs = x.TotalePrijs,
-        //        //    WinkelmandKunstwerken = (ICollection<Kunstwerk_DTO.Detail>)x.WinkelmandKunstwerken.Select(x => new Kunstwerk_DTO.Index
-        //        //    {
-        //        //        Naam = x.Naam,
-        //        //        Prijs = x.Prijs,
-        //        //        Materiaal = x.Materiaal
-        //        //    })
-        //        //})
-        //    });
-
-        //    return k;
-        //}
-       
-
         public async Task<string> CreateAsync(Klant_DTO klant)
         {
             //email uniek
             if (!DbContext.Gebruikers.Any(x => x.Email == klant.Email))
             {
                 await Task.Delay(100);
-                Klant k = new Klant(klant.Gebruikersnaam, klant.GeboorteDatum, klant.Email, klant.Fotopad);
+                Klant k = new Klant(klant.Gebruikersnaam, klant.GeboorteDatum, klant.Email, klant.Fotopad,klant.Details);
                 DbContext.Gebruikers.Add(k);
                 DbContext.SaveChanges();
                 return "succes";
             }
             else
                 return "fail";
-        }
-
-        public async Task EditAsync(int id, Klant_DTO klant)
-        {
-            await Task.Delay(100);
-            Klant k = DbContext.Gebruikers.OfType<Klant>().FirstOrDefault(k => k.GebruikerId == id);
-            k.Edit(klant.Gebruikersnaam, klant.GeboorteDatum, klant.Email, k.FotoPad);
-            DbContext.Update(k);
-            DbContext.SaveChanges();
         }
 
       
