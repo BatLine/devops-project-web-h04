@@ -9,6 +9,10 @@ namespace Domain
 {
     public class Kunstenaar : Gebruiker
     {
+        private string gebruikersnaam;
+        private DateTime geboorteDatum;
+        private string email;
+        private Abonnement abonnement;
 
         //public string Details { get; set; }
         public bool StatusActiefKunstenaar { get; set; }
@@ -36,5 +40,14 @@ namespace Domain
             Kunstwerken = new List<Kunstwerk>();
         }
 
+        public Kunstenaar(string gebruikersnaam, DateTime geboorteDatum, string email, string details, Abonnement abonnement, string fotopad)
+        {
+            this.gebruikersnaam = gebruikersnaam;
+            this.geboorteDatum = geboorteDatum;
+            this.email = email;
+            Details = details;
+            this.abonnement = abonnement;
+            FotoPad = fotopad;
+        }
     }
 }
