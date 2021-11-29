@@ -10,7 +10,7 @@ using Project3H04.Shared.Veilingen;
 namespace Project3H04.Server.Controllers {
     //TODO: [Authorize] overal toevoegen?
     //[AllowAnonymous]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
     public class VeilingController : ControllerBase {
         private readonly IVeilingService _veilingService;
@@ -19,7 +19,7 @@ namespace Project3H04.Server.Controllers {
             this._veilingService = veilingService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), ActionName("Get")]
         public Task<Veiling_DTO> Get(int id) {
             return _veilingService.GetVeilingById(id);
         }
@@ -34,7 +34,7 @@ namespace Project3H04.Server.Controllers {
             return _veilingService.AddBodToKunstwerk(bod, kunstwerkId);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Create")]
         public Task<bool> Create(Veiling_DTO veiling) {
             return _veilingService.CreateVeiling(veiling);
         }
