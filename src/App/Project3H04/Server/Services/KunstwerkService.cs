@@ -107,20 +107,15 @@ namespace Project3H04.Server.Services
             };
         }
 
-        public async Task<KunstwerkResponse.Edit> UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)
-        {
-            await Task.Delay(10);
-
+        public async Task<KunstwerkResponse.Edit> UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId) {
             //eerst nieuwe foto's regelen
             var uploadUris = UploadFotos(kunstwerk.NieuweFotos);
 
-            /*if (kunstwerk.KunstenaarId != gebruikerId)
-            {
+            /*if (kunstwerk.KunstenaarId != gebruikerId) {
                 throw new ArgumentException();
             }*/
 
             List<Foto> updatedFotoLijst = kunstwerk.Fotos.Select(fotoDTO => new Foto() { Id = fotoDTO.Id, Naam = fotoDTO.Naam, Locatie = fotoDTO.Locatie }).ToList(); //id wordt meegegeven als de foto al in de databank zit
-            Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
 
             Kunstwerk kunstwerkToUpdate = dbContext.Kunstwerken.Include(k => k.Fotos).FirstOrDefault(x => x.Id == kunstwerk.Id);
             kunstwerkToUpdate.Edit(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Lengte, kunstwerk.Breedte, kunstwerk.Hoogte, kunstwerk.Gewicht, kunstwerk.Beschrijving, kunstwerk.IsVeilbaar, kunstwerk.Materiaal);
@@ -130,16 +125,15 @@ namespace Project3H04.Server.Services
 
 
             dbContext.Kunstwerken.Update(kunstwerkToUpdate);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             //nodige fotos verwijderen
             List<Foto> teVerwijderen = kunstwerkToUpdate.Fotos.Where(x => !updatedFotoLijst.Contains(x)).ToList(); //alle fotos in de databank die niet in de updatedFotlijst staan moeten verwijderd worden
-            if (teVerwijderen.Count() > 0)
-            {
+            if (teVerwijderen.Any()) {
                 dbContext.Fotos.RemoveRange(teVerwijderen);
             }
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             return new() { UploadUris = uploadUris };
         }

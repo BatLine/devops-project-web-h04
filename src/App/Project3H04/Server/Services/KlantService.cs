@@ -9,14 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project3H04.Server.Services
-{
-    public class KlantService : IKlantService
-    {
-
+namespace Project3H04.Server.Services {
+    public class KlantService : IKlantService {
         private readonly ApplicationDbcontext DbContext;
-        public KlantService(ApplicationDbcontext dbContext)
-        {
+
+        public KlantService(ApplicationDbcontext dbContext) {
             DbContext = dbContext;
         }
 
@@ -30,7 +27,7 @@ namespace Project3H04.Server.Services
                 GeboorteDatum = x.Geboortedatum,
                 Email = x.Email,
                 Fotopad = x.FotoPad
-                //NTH
+                //TODO: Klant map (NTH): Maarten?
                 //Bestellingen = (ICollection<Bestelling_DTO.Index>)x.Bestellingen.Select(x => new Bestelling_DTO.Index
                 //{
                 //    Datum = x.Datum,
@@ -55,14 +52,13 @@ namespace Project3H04.Server.Services
         {
             var x = (Klant)DbContext.Gebruikers.OfType<Klant>()/*NTH.Include(k => k.Boden).Include(k => k.Bestellingen).ThenInclude(x => x.WinkelmandKunstwerken)*/.SingleOrDefault(x => x.GebruikerId == id);
             //include van fotos ...
-            Klant_DTO k = await Task.Run(() => new Klant_DTO
-            {
+            Klant_DTO k = await Task.Run(() => new Klant_DTO {
                 Gebruikersnaam = x.Gebruikersnaam,
                 GebruikerId = x.GebruikerId,
                 GeboorteDatum = x.Geboortedatum,
                 Email = x.Email,
                 Fotopad = x.FotoPad
-                //NTH
+                //TODO: Klant map (NTH): Maarten?
                 //Bestellingen = (ICollection<Bestelling_DTO.Index>)x.Bestellingen.Select(x => new Bestelling_DTO.Index
                 //{
                 //    Datum = x.Datum,
@@ -82,15 +78,6 @@ namespace Project3H04.Server.Services
 
             return k;
         }
-
-
-
-
-
-
-
-
-        //----------------------
 
         //public async Task<Klant_DTO> GetKlantById(int id)
         //{
@@ -165,7 +152,5 @@ namespace Project3H04.Server.Services
             DbContext.Update(k);
             DbContext.SaveChanges();
         }
-
-      
     }
 }
