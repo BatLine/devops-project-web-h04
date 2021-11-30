@@ -1,22 +1,23 @@
 ﻿@inject CartState cartState
+
 @if (Kunstwerk != null) {
-    <div class="container" style="margin-left:0px;padding-top:10px">
+    <div class="container" style="margin-left: 0; padding-top: 10px">
         <div class="row">
             <div class="col-md-6">
                 <img src="@Kunstwerk.Fotos.First().Pad" alt="@Kunstwerk.Fotos.First().Pad" style="width: 100%; height:auto" />
             </div>
 
             <div class="col-md-6 kunstwerkdetailcontainer">
-                <h1 style="font-family:sans-serif">@Kunstwerk.Naam</h1>
-                <p><span style="font-weight:bold">Artist</span> : @Kunstwerk.Kunstenaar.Gebruikersnaam</p>
-                <p><span style="font-weight:bold">Dimensions</span> : @Kunstwerk.Lengte x @Kunstwerk.Breedte x @Kunstwerk.Hoogte (in cm)</p>
+                <h1 style="font-family: sans-serif">@Kunstwerk.Naam</h1>
+                <p><span style="font-weight: bold">Artist</span> : @Kunstwerk.Kunstenaar.Gebruikersnaam</p>
+                <p><span style="font-weight: bold">Dimensions</span> : @Kunstwerk.Lengte x @Kunstwerk.Breedte x @Kunstwerk.Hoogte (in cm)</p>
                 @if (Kunstwerk.Gewicht != default(decimal)) {
-                    <p><span style="font-weight:bold">Weight</span> : @Kunstwerk.Gewicht kg</p>
+                    <p><span style="font-weight: bold">Weight</span> : @Kunstwerk.Gewicht kg</p>
                 }
-                <p class="subtitle" style="text-align:left; font-weight:bold">About</p>
-                <p style="border: 1px thin grey; width:100%; height:auto">@Kunstwerk.Beschrijving</p>
-                <p><span style="font-weight:bold">Medium</span> : @Kunstwerk.Materiaal</p>
-                <p style="font-size:2rem; color:dimgray">€@Kunstwerk.Prijs</p>
+                <p class="subtitle" style="text-align: left; font-weight: bold">About</p>
+                <p style="border: 1px thin grey; width: 100%; height: auto">@Kunstwerk.Beschrijving</p>
+                <p><span style="font-weight: bold">Medium</span> : @Kunstwerk.Materiaal</p>
+                <p style="font-size: 2rem; color: dimgray">€@Kunstwerk.Prijs</p>
                 <!--Enkel als AUTH dit zien-->
                 <AuthorizeView Roles="Kunstenaar">
                     <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
@@ -24,20 +25,25 @@
                         <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
                     }
                 </AuthorizeView>
-                <AuthorizeView>
-                    <!--Order button-->
+                <AuthorizeView Roles="Klant">
+                    <!--Order button, enkel zichtbaar als klant-->
                     @if (Kunstwerk.TeKoop) {
-                        <button class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
+                        @if (Kunstwerk.IsVeilbaar) {
+                            <DetailArtworkBieden KunstwerkId="@Kunstwerk.Id" />
+                        }
+                        else {
+                            <button class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
+                        }
                     }
                 </AuthorizeView>
             </div>
         </div>
-        <div class="row" style="padding-top:20px; padding-bottom:10px">
-            @if (Kunstwerk.Fotos.Count > 1) {
+        <div class="row" style="padding-top: 20px; padding-bottom:10px">
+            @if (Kunstwerk.Fotos.Any()) {
                 <div>
-                    <p style="text-align:left; font-weight:bold;padding-left:10px">photos</p>
+                    <p style="text-align: left; font-weight: bold; padding-left: 10px">photos</p>
                     @foreach (Foto_DTO foto in Kunstwerk.Fotos.Skip(1)) {
-                        <img src="@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-left:10px;" />
+                        <img src="@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-left: 10px;" />
                     }
                 </div>
             }
