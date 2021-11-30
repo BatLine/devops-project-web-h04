@@ -1,0 +1,12 @@
+﻿@inject PublicClient httpClient
+
+<h3>DetailArtworkBieden</h3>
+
+@code {
+    [Parameter] public int KunstwerkId { get; set; }
+    private Veiling_DTO Veiling { get; set; }
+
+    protected override async Task OnParametersSetAsync() {
+        Veiling = await httpClient.Client.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/{KunstwerkId}");
+    }
+}
