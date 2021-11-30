@@ -5,16 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project3H04.Server.Data
-{
-    public class ApplicationDbcontext : DbContext
-    {
+namespace Project3H04.Server.Data {
+    public class ApplicationDbcontext : DbContext {
         //Bij relatie moet foreign keys meestal niet meegeven, nrml pakt hij altijd de primary key
         
         public ApplicationDbcontext(DbContextOptions<ApplicationDbcontext> options) : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
+        protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
 
             //Gebruiker
@@ -123,10 +120,6 @@ namespace Project3H04.Server.Data
             //Bestelling
             builder.Entity<Bestelling>().Property(x => x.Id).ValueGeneratedOnAdd();
 
-
-
-
-
             /*  modelBuilder.Entity<PersonTph>()
       .HasDiscriminator(person => person.Discriminator)
       .HasValue<PersonTph>(nameof(PersonTph))
@@ -167,6 +160,5 @@ namespace Project3H04.Server.Data
         public DbSet<Abonnement> Abonnementen { get; set; }
         public DbSet<AbonnementType> AbonnementTypes { get; set; }
         public DbSet<Foto> Fotos { get; set; }
-
     }
 }
