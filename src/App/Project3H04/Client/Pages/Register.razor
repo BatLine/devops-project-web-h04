@@ -34,6 +34,10 @@
         <InputDate id="geboortedatum" aria-describedby="nameHelp" class="form-control" @bind-Value="@klant.GeboorteDatum"></InputDate>
     </div>
     <div class="form-group">
+        <label for="name">Your additional details:</label>
+        <InputTextArea id="details" aria-describedby="nameHelp" class="form-control" @bind-Value="@klant.Details"></InputTextArea>
+    </div>
+    <div class="form-group">
         <label for="name">Password:</label>
         <InputText type="password" id="password" aria-describedby="nameHelp" class="form-control" @bind-Value="@password" placeholder="Your Password"></InputText>
     </div>
