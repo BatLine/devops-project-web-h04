@@ -20,7 +20,7 @@ namespace Project3H04.Shared.DTO {
                 RuleFor(x => x.Gebruikersnaam).NotEmpty().OverridePropertyName("Username");
                 RuleFor(x => x.GeboorteDatum).NotEmpty().OverridePropertyName("Birthdate");
                 RuleFor(x => x.Email).NotEmpty().OverridePropertyName("Email");
-                //RuleFor(x => x.Details).NotEmpty(); wrm moet dat?
+                RuleFor(x => x.Details).NotEmpty(); 
                 //RuleFor(x=>x.Fotopad).NotEmpty().OverridePropertyName("Images");
             }
         }
