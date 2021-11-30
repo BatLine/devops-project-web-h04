@@ -7,7 +7,7 @@
             </div>
 
             <div class="col-md-6 kunstwerkdetailcontainer">
-                <h1 style="text-align: center; font-family:sans-serif">@Kunstwerk.Naam</h1>
+                <h1 style="font-family:sans-serif">@Kunstwerk.Naam</h1>
                 <p><span style="font-weight:bold">Artist</span> : @Kunstwerk.Kunstenaar.Gebruikersnaam</p>
                 <p><span style="font-weight:bold">Dimensions</span> : @Kunstwerk.Lengte x @Kunstwerk.Breedte x @Kunstwerk.Hoogte (in cm)</p>
                 @if (Kunstwerk.Gewicht != default(decimal)) {
