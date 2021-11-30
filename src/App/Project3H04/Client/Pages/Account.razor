@@ -21,17 +21,6 @@
                     @*Ik zou gwn zonder links doen en op 1 pagina de info tonen, tis te weinig info om in tabs op te delen*@
                     @*Enkel abonnement miss*@
 
-                    @if (geb is Kunstenaar_DTO) {
-                        <li>
-                            <a href="#">subscription</a>
-                        </li>
-                        <!--authorize kunstenaar-->
-                        <li>
-                            <a href="#">artworks</a>
-                        </li>
-                    }                 
-
-
                     @if (geb is Kunstenaar_DTO)
                     {
                         <li>
@@ -53,44 +42,8 @@
             <!--eerst de algemene attributen als geb tonen en dan bv voor bestellingen of kunstwerken te tonen, de klant of kunstenaar obj gebruiken !!!-->
             <!--algemene dingen tonen met bestellingen en als kunstenaar(AuthorizeView) dan vanonder of een tab om als kunstenaar uw kunstwerken te zien en te editen-->
 
-            @*@if(edit ==true)*@
-
-            @if (editForm == false) {
-                <p> Username: @geb.Gebruikersnaam</p>
-                <p> Day of birth: @geb.GeboorteDatum</p>
-                <p> Email: @geb.Email</p>
-                <p> Details: @geb.Details</p>
-
-                <button type="button" @onclick="ShowEditForm" class="button is-link is-light is-fullwidth">Edit</button>
-
-            } else {
-                <EditAccount GebruikerId="@geb.GebruikerId" gebruiker="@geb"/>
-                <button type="button" class="button is-link is-light is-fullwidth" @onclick="Showgeg">Annuleren</button>
-            }
             @*<EditAccount GebruikerId="@geb.GebruikerId" gebruiker="@geb" />*@
             <!--hier de extra als kunstenaar dan zijn kunstwerken tonen-->
-
-            @if (geb is Kunstenaar_DTO) {
-                <div class="container testimonial-group " style="padding-left: 20px; padding-top: 20px">
-                    <div class="row">
-                        @if (kunst.Kunstwerken.Count != 0) {
-                            @foreach (Kunstwerk_DTO.Index k in kunst.Kunstwerken) {
-                                <a href="artworks/@k.Id" style="text-decoration: none">
-                                    <div class="col-4">
-                                        <img src="@k.HoofdFoto.Pad" width="250"/>
-
-                                        <p style="color: black; width: 100%; height: auto">@k.Naam</p>
-                                        <p style="color: black; width: 100%; height: auto">€@k.Prijs</p>
-                                    </div>
-                                </a>
-                            }
-                            <!--edit artwork-->
-                        } else {
-                            <p>No artworks found</p>
-                        }
-                    </div>
-                </div>
-            }
 
             @if (showProfile == true)
             {
