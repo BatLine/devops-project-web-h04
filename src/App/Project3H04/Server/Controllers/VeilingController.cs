@@ -24,6 +24,11 @@ namespace Project3H04.Server.Controllers {
             return _veilingService.GetVeilingById(id);
         }
 
+        [HttpGet("{id}"), ActionName("GetByKunstwerkId")]
+        public Task<Veiling_DTO> GetByKunstwerkId(int id) {
+            return _veilingService.GetVeilingByKunstwerkId(id);
+        }
+
         [HttpPut("{id}"), ActionName("AddBodToVeiling")]
         public Task<bool> AddBodToVeiling(int veilingId, Bod_DTO bod) {
             return _veilingService.AddBodToVeiling(bod, veilingId);

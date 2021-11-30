@@ -48,8 +48,8 @@ namespace Project3H04.Server.Services
                 Gewicht = x.Gewicht ?? default(decimal),
                 Beschrijving = x.Beschrijving,
                 Materiaal = x.Materiaal,
-                TeKoop = x.TeKoop
-
+                TeKoop = x.TeKoop,
+                IsVeilbaar = x.IsVeilbaar
             }).SingleOrDefaultAsync(x => x.Id == id);
 
         }

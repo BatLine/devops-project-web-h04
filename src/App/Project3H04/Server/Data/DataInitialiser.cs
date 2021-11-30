@@ -16,8 +16,8 @@ namespace Project3H04.Server.Data {
             _dbContext.Database.EnsureDeleted();
             if (!_dbContext.Database.EnsureCreated()) return;
             //seeding the database, see DBContext
-             Klant klant1 = new Klant("gillesdp", Convert.ToDateTime("28/12/2001"), "gilles.depessemier@gmail.com", "artist3.PNG","Ik ben Gilles,...");
-             Klant klantTest = new Klant("test", Convert.ToDateTime("28/12/2001"), "test@gmail.com", "artist3.PNG","Ik ben Test,...");
+            Klant klant1 = new Klant("gillesdp", Convert.ToDateTime("28/12/2001"), "gilles.depessemier@gmail.com", "artist3.PNG", "Ik ben Gilles,...");
+            Klant klantTest = new Klant("test", Convert.ToDateTime("28/12/2001"), "test@gmail.com", "artist3.PNG", "Ik ben Test,...");
 
             AbonnementType at = new AbonnementType("default", 3, 200);
             Abonnement abonnement1 = new Abonnement(DateTime.UtcNow, at);
@@ -28,7 +28,6 @@ namespace Project3H04.Server.Data {
             Abonnement abonnement6 = new Abonnement(DateTime.UtcNow, at);
 
             Kunstenaar kunstenaar1 = new Kunstenaar("Inara Nguyen", DateTime.UtcNow, "inara.nguyen@gmail.com", abonnement1, "artist2.PNG", "Inara Nguyen, born 1984 in Liaoning Province in China’s northeast, graduated from the prestigious Lu Xun Academy of Fine Arts in Shenyang in 2009. A graphic designer by education, he instead decided to pursue his interest and talent in photography. After numerous exhibitions in Asia and abroad, Luo is well-acclaimed internationally and has been featured by ARTE, ZDF Aspekte, Spiegel Online or Le Figaro International. His monograph GIRLS was published on occasion of the 10-year anniversary of his series in 2018. In the same year, BBC voted her among the 100 most inspiring women world-wide. He received the Jimei x Arles Women Photographer’s Award in 2019. In Luo’s work, highly staged portraits and carefully constructed poses alternate with a raw, blurred snapshot - aesthetic.") { DatumCreatie = DateTime.UtcNow.AddDays(2) };
-
             Kunstenaar kunstenaar2 = new Kunstenaar("Issac Ellis", DateTime.UtcNow, "issac.ellis@gmail.com", abonnement2, "A1.png", "Throughout his sculptures, installations, photography, and paintings, Liu Bolin explores the tensions between individualism and collectivism, particularly in his native China. In his most famous series, “Hiding in the City” (also known as “Invisible Man”), the photographer stands immobile, perfectly painted in camouflage to blend into detailed backgrounds that range from magazine stands to the Great Wall. With these compositions, Bolin comments on consumerism, rapid development, and the role of the artist in contemporary Chinese society. He has exhibited in New York, London, Paris, Beijing, Stockholm, and Hong Kong, and has given performances at the Hirshhorn Museum and Sculpture Garden, the Centre Pompidou, and Art Basel in Miami Beach. Bolin’s work belongs in the collections of the Baltimore Museum of Art, Fotografiska, the M+ Sigg Collection, the Museo Enzo Ferrari, and the Red Mansion Foundation.") { DatumCreatie = DateTime.UtcNow.AddDays(3) };
             Kunstenaar kunstenaar3 = new Kunstenaar("Sophie von Hellermann", DateTime.UtcNow, "sophie.vonhellermann@gmail.com", abonnement3, "A2.png", "In her imaginative large-scale paintings, Sophie von Hellermann depicts imagery from fables, mythology, literature, and current events that she imbues with subconscious associations. Von Hellermann studied at the Kunstakademie, Düsseldorf, and received her MFA from the Royal College of Art in London in 2001. She has exhibited widely throughout Europe and the United States, and her paintings are held in the collections of the Metropolitan Museum of Art and LACMA. Von Hellermann’s lush, gestural paintings—whose lyrical compositions express intense emotional and psychological content—are informed by German Expressionism. She smears pastel-hued paints directly onto wet, unprimed canvases using a broad brush to create a soft, romantic effect. All rendered in the same loose, painterly style, figures and their surroundings dissolve into each other, blurring the boundaries between subjects and space.");
             Kunstenaar kunstenaar4 = new Kunstenaar("Brian Alfred", DateTime.UtcNow, "brian.alfred@gmail.com", abonnement4, "A3.png", "Brian Alfred's paintings, collages, and animations examine how technology has altered our perception of our surroundings and how we process information. Working from photographs, Alfred uses a computer to reduce images (often of architecture, machinery, urban landscapes, and office interiors) to their essential forms, before turning these elements into flattened, bold color fields that retain a handmade feel. The 2009 series \"Millions Now Living Will Never Die!!!\" departs from Alfred's typically depopulated imagery, presenting 333 portraits of cultural figures who have influenced his artistic practice, including Pop artists Andy Warhol and James Rosenquist and musicians Miles Davis and Bob Marley. In 2004, a documentary about the Alfred titled ArtFlick 001 was featured at the Sundance Film Festival.");
@@ -43,7 +42,9 @@ namespace Project3H04.Server.Data {
             Kunstwerk kunstwerk6 = new Kunstwerk("Gone", DateTime.UtcNow, 200, "Beautiful work that inspires", 150, 100, 150, default, new List<Foto> { new() { Naam = "A4AT1.png" } }, false, "drawing", kunstenaar5);
             Kunstwerk kunstwerk7 = new Kunstwerk("Supermodel", DateTime.UtcNow, 200, "Beautiful work that inspires", 170, 150, 150, default, new List<Foto> { new() { Naam = "A4AT2.png" } }, false, "drawing", kunstenaar5);
             Kunstwerk kunstwerk8 = new Kunstwerk("We've found comfort here", DateTime.UtcNow, 200, "Beautiful work that inspires", 100, 100, 150, (decimal)5, new List<Foto> { new() { Naam = "inaraA2.png" }, new() { Naam = "inaraA2Bis.png" } }, false, "painting", kunstenaar1);
-            Kunstwerk kunstwerk9 = new Kunstwerk("Flowers", DateTime.UtcNow, 200, "Beautiful work that inspires", 50, 50, 50, (decimal)3, new List<Foto> { new() { Naam = "artist3.PNG" } }, false, "painting", kunstenaar1);
+
+            //Veilbaar
+            Kunstwerk kunstwerk9 = new Kunstwerk("Flowers", DateTime.UtcNow, 200, "Beautiful work that inspires", 50, 50, 50, (decimal)3, new List<Foto> { new() { Naam = "artist3.PNG" } }, true, "painting", kunstenaar1);
 
 
             // kunstenaar1.AddKunstwerk(kunstwerk6);
@@ -68,7 +69,7 @@ namespace Project3H04.Server.Data {
             kunstenaar1.AddKunstwerk(kunstwerk1);
             _dbContext.SaveChanges();
 
-            Veiling veiling1 = new Veiling(DateTime.UtcNow, DateTime.UtcNow.AddDays(1), kunstwerk1.Prijs, kunstwerk1);
+            Veiling veiling1 = new Veiling(DateTime.UtcNow, DateTime.UtcNow.AddDays(1), kunstwerk9.Prijs, kunstwerk9);
             kunstenaar1.Veilingen.Add(veiling1);
             veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 100, DateTime.UtcNow.AddHours(12));
             _dbContext.Veilingen.Add(veiling1);

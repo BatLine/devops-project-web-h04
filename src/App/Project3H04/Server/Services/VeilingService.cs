@@ -18,8 +18,20 @@ namespace Project3H04.Server.Services {
             _dbContext = dbContext;
         }
 
+        public async Task<Veiling_DTO> GetVeilingByKunstwerkId(int id) {
+            var veiling = _dbContext.Veilingen.SingleOrDefault(v => v.Kunstwerk.Id == id);
+            if (veiling != null)
+                return await GetVeilingById(veiling.Id);
+            return null; //TODO: FOUT IMPLEMENTEREN
+        }
+
         public async Task<Veiling_DTO> GetVeilingById(int id) {
-            var x = (Veiling)_dbContext.Veilingen.OfType<Veiling>().FirstOrDefault(v => v.Id == id);
+            var x = await _dbContext.Veilingen
+                .Include(v => v.Kunstwerk)
+                .Include(v => v.BodenOpVeiling)
+                .ThenInclude(b => b.Klant)
+                .FirstOrDefaultAsync(v => v.Id == id);
+
             Veiling_DTO v = await Task.Run(() => new Veiling_DTO {
                 StartDatum = x.StartDatum,
                 EindDatum = x.EindDatum,
@@ -28,24 +40,24 @@ namespace Project3H04.Server.Services {
                     Id = x.Kunstwerk.Id,
                     Naam = x.Kunstwerk.Naam,
                     Prijs = x.Kunstwerk.Prijs,
-                    Materiaal = x.Kunstwerk.Materiaal,
-                    Kunstenaar = new Kunstenaar_DTO {
-                        Details = x.Kunstwerk.Kunstenaar.Details,
-                        StatusActiefKunstenaar = x.Kunstwerk.Kunstenaar.StatusActiefKunstenaar,
-                        //Kunstwerken =  *LOOP*
-                        Abonnement = new Abonnement_DTO {
-                            Id = x.Kunstwerk.Kunstenaar.Abonnenment.Id,
-                            StartDatum = x.Kunstwerk.Kunstenaar.Abonnenment.StartDatum,
-                            EindDatum = x.Kunstwerk.Kunstenaar.Abonnenment.EindDatum,
-                            AbonnementType = new AbonnementType_DTO {
-                                Naam = x.Kunstwerk.Kunstenaar.Abonnenment.AbonnementType.Naam,
-                                Verlooptijd = x.Kunstwerk.Kunstenaar.Abonnenment.AbonnementType.Verlooptijd,
-                                Prijs = x.Kunstwerk.Kunstenaar.Abonnenment.AbonnementType.Prijs
-                            }
-                        }
-                    }
+                    //Materiaal = x.Kunstwerk.Materiaal,
+                    //Kunstenaar = new Kunstenaar_DTO {
+                    //    Details = x.Kunstwerk.Kunstenaar.Details,
+                    //    StatusActiefKunstenaar = x.Kunstwerk.Kunstenaar.StatusActiefKunstenaar,
+                    //    //Kunstwerken =  *LOOP*
+                    //    Abonnement = new Abonnement_DTO {
+                    //        Id = x.Kunstwerk.Kunstenaar.Abonnenment.Id,
+                    //        StartDatum = x.Kunstwerk.Kunstenaar.Abonnenment.StartDatum,
+                    //        EindDatum = x.Kunstwerk.Kunstenaar.Abonnenment.EindDatum,
+                    //        AbonnementType = new AbonnementType_DTO {
+                    //            Naam = x.Kunstwerk.Kunstenaar.Abonnenment.AbonnementType.Naam,
+                    //            Verlooptijd = x.Kunstwerk.Kunstenaar.Abonnenment.AbonnementType.Verlooptijd,
+                    //            Prijs = x.Kunstwerk.Kunstenaar.Abonnenment.AbonnementType.Prijs
+                    //        }
+                    //    }
+                    //}
                 },
-                BodenOpVeiling = (ICollection<Bod_DTO>)x.BodenOpVeiling.Select(x => new Bod_DTO {
+                BodenOpVeiling = x.BodenOpVeiling.ToList().Select(x => new Bod_DTO {
                     BodPrijs = x.BodPrijs,
                     Datum = x.Datum,
                     Klant = new Klant_DTO {
@@ -53,8 +65,8 @@ namespace Project3H04.Server.Services {
                         Gebruikersnaam = x.Klant.Gebruikersnaam,
                         GeboorteDatum = x.Klant.Geboortedatum,
                         Email = x.Klant.Email,
-                        DatumCreatie = x.Klant.DatumCreatie,
-                        Fotopad = x.Klant.FotoPad,
+                        //DatumCreatie = x.Klant.DatumCreatie,
+                        //Fotopad = x.Klant.FotoPad,
                         //TODO: Klant map (NTH): Maarten?
                         //Bestellingen = (ICollection<Bestelling_DTO.Index>)x.Bestellingen.Select(x => new Bestelling_DTO.Index {
                         //    Datum = x.Datum,
