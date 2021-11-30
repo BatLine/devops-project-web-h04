@@ -1,6 +1,5 @@
 ﻿@inject CartState cartState
-@if (Kunstwerk != null)
-{
+@if (Kunstwerk != null) {
     <div class="container" style="margin-left:0px;padding-top:10px">
         <div class="row">
             <div class="col-md-6">
@@ -8,12 +7,10 @@
             </div>
 
             <div class="col-md-6 kunstwerkdetailcontainer">
-
-                <h1 style="text-align: center; font-family:sans-serif">@Kunstwerk.Naam</h1>
+                <h1 style="font-family:sans-serif">@Kunstwerk.Naam</h1>
                 <p><span style="font-weight:bold">Artist</span> : @Kunstwerk.Kunstenaar.Gebruikersnaam</p>
                 <p><span style="font-weight:bold">Dimensions</span> : @Kunstwerk.Lengte x @Kunstwerk.Breedte x @Kunstwerk.Hoogte (in cm)</p>
-                @if (Kunstwerk.Gewicht != default(decimal))
-                {
+                @if (Kunstwerk.Gewicht != default(decimal)) {
                     <p><span style="font-weight:bold">Weight</span> : @Kunstwerk.Gewicht kg</p>
                 }
                 <p class="subtitle" style="text-align:left; font-weight:bold">About</p>
@@ -23,37 +20,29 @@
                 <!--Enkel als AUTH dit zien-->
                 <AuthorizeView Roles="Kunstenaar">
                     <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
-                    @if (userEmail == Kunstwerk.Kunstenaar.Email)
-                    {
+                    @if (userEmail == Kunstwerk.Kunstenaar.Email) {
                         <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
                     }
                 </AuthorizeView>
                 <AuthorizeView>
-                    <!--Order-->
-                    @if (Kunstwerk.TeKoop)
-                    {
+                    <!--Order button-->
+                    @if (Kunstwerk.TeKoop) {
                         <button class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
                     }
                 </AuthorizeView>
-
             </div>
         </div>
         <div class="row" style="padding-top:20px; padding-bottom:10px">
-            @if (Kunstwerk.Fotos.Count > 1)
-            {
+            @if (Kunstwerk.Fotos.Count > 1) {
                 <div>
                     <p style="text-align:left; font-weight:bold;padding-left:10px">photos</p>
-
-
-                    @foreach (Foto_DTO foto in Kunstwerk.Fotos.Skip(1))
-                    {
+                    @foreach (Foto_DTO foto in Kunstwerk.Fotos.Skip(1)) {
                         <img src="@foto.Pad" alt="@foto.Pad" width="250" height="250" style="padding-left:10px;" />
                     }
                 </div>
             }
         </div>
     </div>
-
 }
 
 @code {
@@ -63,31 +52,24 @@
     private string userEmail;
     //public bool InCart = false;
 
-    protected override async Task OnParametersSetAsync()
-    {
+    protected override async Task OnParametersSetAsync() {
         var user = (await authenticationStateTask).User;
         userEmail = user.Identity.Name;
         Console.WriteLine(userEmail); //dit nog gwn
         Console.WriteLine(Kunstwerk.Kunstenaar.Email +"kunstwerk kunstenaar email");
     }
 
-    //public async Task<string> GetUserEmail()
-    //{
+    //public async Task<string> GetUserEmail() {
     //    var user = (await authenticationStateTask).User;
     //    return user.Identity.Name;
     //}
 
-    public bool Check()
-    {
+    public bool Check() {
         //checken op ID, anders ga niet !!!
         return cartState.CheckCartItem(Kunstwerk.Id);
     }
 
-    private void AddToCart()
-    {
+    private void AddToCart() {
         cartState.AddKunstwerk(Kunstwerk);
     }
-
-
-
 }
