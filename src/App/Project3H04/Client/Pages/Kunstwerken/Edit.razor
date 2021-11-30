@@ -1,13 +1,14 @@
 ﻿@page "/artworks/edit/{id:int}"
 <!--AUTH-->
-@attribute [Authorize] 
+@attribute [Authorize]
+@inject NavigationManager NavManager
 @inject HttpClient httpClient
 
 <h3>Edit Artwork</h3>
 
 @if (_kunstwerk != null)
 {
-    <EditArtwork Model="@_kunstwerk" />
+    <EditArtwork Model="@_kunstwerk" OnRedirect=@RedirectPage />
 }
 else
 {
@@ -30,5 +31,9 @@ else
         //    exception.Redirect();
         //}
 
+    }
+    private void RedirectPage()
+    {
+        NavManager.NavigateTo($"artworks/{Id}");
     }
 }

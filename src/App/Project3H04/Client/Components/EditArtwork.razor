@@ -1,6 +1,6 @@
 @inject HttpClient httpClient
-@inject NavigationManager NavManager
 @inject Services.StorageService StorageService
+@inject NavigationManager NavManager
 @using Blazored.FluentValidation
 
 
@@ -110,6 +110,7 @@ else
 @code{
     //parameter zodat we het ook als Edit formulier kunnen gebruiken
     [Parameter] public Kunstwerk_DTO.Create Model { get; set; }
+    [Parameter] public EventCallback OnRedirect { get; set; }
 
     private IList<string> _materialen = new List<string>();
     private IList<IBrowserFile> _imagesFiles = new List<IBrowserFile>();
@@ -138,7 +139,7 @@ else
             Model.Prijs = 0; //prijs zou nutteloos zijn als het niet te koop is
         }
 
-        #region Debug (mag weg opzich)
+        #region Debug
         Console.WriteLine("Naam: " + Model.Naam);
         Console.WriteLine("Te koop? " + Model.TeKoop);
         Console.WriteLine("Veilbaar? " + Model.IsVeilbaar);
@@ -150,21 +151,25 @@ else
         {
             Console.WriteLine("Foto: " + foto.Pad);
         }
+        Console.WriteLine(Model);
+        Console.WriteLine(Model is Kunstwerk_DTO.Edit);
+        Console.WriteLine("Aantal nieuwe fotos:" + Model.NieuweFotos.Count);
         #endregion
 
         if (Model is Kunstwerk_DTO.Edit)
         {
             //API call "PUT"
-            Kunstwerk_DTO.Edit model = (Kunstwerk_DTO.Edit)Model;
+            Kunstwerk_DTO.Edit model = (Kunstwerk_DTO.Edit)Model; //noodzakelijke cast
             var response = await httpClient.PutAsJsonAsync<Kunstwerk_DTO.Edit>($"api/kunstwerk/{model.Id}", model);
             response.EnsureSuccessStatusCode();
-
 
             var editResponse = await response.Content.ReadFromJsonAsync<KunstwerkResponse.Edit>();
             //images uploaden
             await StorageService.UploadImagesAsync(editResponse.UploadUris, _imagesFiles);
 
-            NavManager.NavigateTo($"artworks/{model.Id}"); //hier kennnen we het Id al
+            //callback
+            await OnRedirect.InvokeAsync();
+            //NavManager.NavigateTo($"artworks/{model.Id}"); //hier kennnen we het Id al
 
         }
         else if (Model is Kunstwerk_DTO.Create)
@@ -176,7 +181,6 @@ else
             var createResponse = await response.Content.ReadFromJsonAsync<KunstwerkResponse.Create>();
             //images uploaden
             await StorageService.UploadImagesAsync(createResponse.UploadUris, _imagesFiles);
-
 
             NavManager.NavigateTo($"artworks/{createResponse.KunstwerkId}");
         }
