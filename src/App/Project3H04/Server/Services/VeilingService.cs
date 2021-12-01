@@ -99,6 +99,10 @@ namespace Project3H04.Server.Services {
                  return false;
 
              var klant = new Klant(bod.Klant.Gebruikersnaam, bod.Klant.GeboorteDatum, bod.Klant.Email, bod.Klant.Fotopad, bod.Klant.Details);
+
+             if (veiling.HoogsteBod.KlantId == klant.GebruikerId)
+                 return false; //Mag zichzelf niet overbieden
+
              veiling.VoegBodToe(klant, bod.BodPrijs, bod.Datum);
 
             _dbContext.Veilingen.Update(veiling);
