@@ -1,6 +1,8 @@
-﻿@inject PublicClient httpClient
+﻿@using System.Security.Claims
+@inject PublicClient httpClient
 
-@if (Veiling != null) {
+@if (Veiling != null)
+{
     @if (!Veiling.BodenOpVeiling.Any())
     {
         <h4>Er is nog niet geboden.</h4>
@@ -8,33 +10,62 @@
     else
     {
         <p style="font-size: 1.5rem; color: dimgray"><span style="font-weight: bold; color: black">Hoogste bod: </span>€@Veiling.HoogsteBod.BodPrijs</p>
-        @if (Veiling.BodenOpVeiling.Count() > 1) {
+        @if (Veiling.BodenOpVeiling.Count() > 1)
+        {
             <p style="font-weight: bold">Vorige boden:</p>
             <p>
-                @foreach (var bod in Veiling.BodenOpVeiling.TakeLast(4).SkipLast(1)) {
+                @foreach (var bod in Veiling.BodenOpVeiling.TakeLast(4).SkipLast(1))
+                {
                     <span style="font-size: 1rem; color: dimgray">
-                        @if ((bod.Datum - DateTime.Now).Days < 1) {
+                        @if ((bod.Datum - DateTime.Now).Days < 1)
+                        {
                             //TODO: Met tabel/bootstrap ofzo mooi displayen
                             <span>@bod.Datum.ToString("HH:mm") - </span>
                         }
-                        else {
+                        else
+                        {
                             <span>@bod.Datum.ToShortDateString() - </span>
                         }
                         €@bod.BodPrijs
-                    </span><br/>
+                    </span><br />
                 }
             </p>
         }
+        @if (Veiling.HoogsteBod.Klant.GebruikerId != Klant.GebruikerId)
+        {
+            //Klant kan zichzelf niet outbieden
+            <label for="bidAmount">Bid amount:</label>
+            <input type="number" id="bidAmount" name="bidAmount" min="@Veiling.HoogsteBod.BodPrijs" max="@decimal.MaxValue" bind="@NewBidValue" value="@NewBidValue">
+            <br/>
+            <button class="btn btn-secondary ml-1" @onclick="PlaceBid">Place bid</button>
+        }
     }
-} else {
+}
+else
+{
     //Still loading?
 }
 
 @code {
     [Parameter] public int KunstwerkId { get; set; }
     private Veiling_DTO Veiling { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private Klant_DTO Klant;
+    private string NewBidValue { get; set; }
 
-    protected override async Task OnParametersSetAsync() {
+    protected override async Task OnParametersSetAsync()
+    {
         Veiling = await httpClient.Client.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{KunstwerkId}");
+        var user = (await authenticationStateTask).User;
+        Klant = await httpClient.Client.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
+        if (Veiling.BodenOpVeiling.Any())
+            NewBidValue = Veiling.HoogsteBod.BodPrijs.ToString();
+        else
+            NewBidValue = Veiling.Kunstwerk.Prijs.ToString();
+    }
+
+    private void PlaceBid() {
+        Console.WriteLine("Bod plaatsen: " + NewBidValue);
     }
 }
