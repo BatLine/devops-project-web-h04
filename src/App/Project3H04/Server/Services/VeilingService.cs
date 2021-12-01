@@ -28,8 +28,7 @@ namespace Project3H04.Server.Services {
         public async Task<Veiling_DTO> GetVeilingById(int id) {
             var x = await _dbContext.Veilingen
                 .Include(v => v.Kunstwerk).ThenInclude(k => k.Fotos)
-                .Include(v => v.BodenOpVeiling)
-                .ThenInclude(b => b.Klant)
+                .Include(v => v.BodenOpVeiling).ThenInclude(b => b.Klant)
                 .FirstOrDefaultAsync(v => v.Id == id);
 
             Veiling_DTO v = await Task.Run(() => new Veiling_DTO {
@@ -87,20 +86,23 @@ namespace Project3H04.Server.Services {
                         //    })
                         //})
                     }
-                })
+                }).OrderByDescending(b => b.BodPrijs)
             });
 
             return v;
         }
 
         public async Task<bool> AddBodToVeiling(Bod_DTO bod, int veilingId) {
-             var veiling = _dbContext.Veilingen.SingleOrDefault(v => v.Id == veilingId);
+             var veiling = _dbContext.Veilingen
+                 .Include(v => v.Kunstwerk).ThenInclude(k => k.Fotos)
+                 .Include(v => v.BodenOpVeiling).ThenInclude(b => b.Klant)
+                 .SingleOrDefault(v => v.Id == veilingId);
+             
+             var klant = (Klant)_dbContext.Gebruikers.SingleOrDefault(g => g.GebruikerId == bod.Klant.GebruikerId);
+
              if (veiling == null)
                  return false;
-
-             var klant = new Klant(bod.Klant.Gebruikersnaam, bod.Klant.GeboorteDatum, bod.Klant.Email, bod.Klant.Fotopad, bod.Klant.Details);
-
-             if (veiling.HoogsteBod.KlantId == klant.GebruikerId)
+             if (veiling.BodenOpVeiling.Any() && veiling.HoogsteBod.KlantId == bod.Klant.GebruikerId)
                  return false; //Mag zichzelf niet overbieden
 
              veiling.VoegBodToe(klant, bod.BodPrijs, bod.Datum);
@@ -168,7 +170,7 @@ namespace Project3H04.Server.Services {
                         GeboorteDatum = x.Klant.Geboortedatum,
                         Email = x.Klant.Email,
                     }
-                })
+                }).OrderByDescending(b => b.BodPrijs)
             }).Where(k => k.Kunstwerk.Naam.Contains(term)).Take(take).ToListAsync();
 
             return almostFinishedVeilingen ? veilings.OrderByDescending(x => x.EindDatum).ToList() : veilings.OrderByDescending(x => x.StartDatum).ToList();

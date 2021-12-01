@@ -34,12 +34,12 @@ namespace Project3H04.Server.Controllers {
             return _veilingService.GetVeilingByKunstwerkId(id);
         }
 
-        [HttpPut("{id}"), ActionName("AddBodToVeiling")]
+        [HttpPut("{veilingId}"), ActionName("AddBodToVeiling")]
         public Task<bool> AddBodToVeiling(int veilingId, Bod_DTO bod) {
             return _veilingService.AddBodToVeiling(bod, veilingId);
         }
 
-        [HttpPut("{id}"), ActionName("AddBodToKunstwerk")]
+        [HttpPut("{kunstwerkId}"), ActionName("AddBodToKunstwerk")]
         public Task<bool> AddBodToKunstwerk(int kunstwerkId, Bod_DTO bod) {
             return _veilingService.AddBodToKunstwerk(bod, kunstwerkId);
         }

@@ -35,7 +35,7 @@
         {
             //Klant kan zichzelf niet outbieden
             <label for="bidAmount">Bid amount:</label>
-            <input type="number" id="bidAmount" name="bidAmount" min="@Veiling.HoogsteBod.BodPrijs" max="@decimal.MaxValue" bind="@NewBidValue" value="@NewBidValue">
+            <input type="number" id="bidAmount" name="bidAmount" min="@Veiling.HoogsteBod.BodPrijs" max="@decimal.MaxValue" bind-value="@NewBidValue" value="@NewBidValue">
             <br/>
             <button class="btn btn-secondary ml-1" @onclick="PlaceBid">Place bid</button>
         }
@@ -56,16 +56,42 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
+        await SetProperties();
+    }
+
+    private async Task SetProperties() {
         Veiling = await httpClient.Client.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{KunstwerkId}");
         var user = (await authenticationStateTask).User;
         Klant = await httpClient.Client.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
-        if (Veiling.BodenOpVeiling.Any())
-            NewBidValue = Veiling.HoogsteBod.BodPrijs.ToString();
-        else
-            NewBidValue = Veiling.Kunstwerk.Prijs.ToString();
+        NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs.ToString() : Veiling.Kunstwerk.Prijs.ToString();
     }
 
-    private void PlaceBid() {
+    private async void PlaceBid() {
         Console.WriteLine("Bod plaatsen: " + NewBidValue);
+        //TODO: Wordt nog niet geupdate?
+        NewBidValue = (Convert.ToDouble(NewBidValue) + 1).ToString();
+
+        Bod_DTO bod = new Bod_DTO {
+            BodPrijs = Convert.ToDecimal(NewBidValue),
+            Datum = DateTime.Now,
+            Klant = this.Klant
+        };
+
+        //API call "PUT"
+        var response = await httpClient.Client.PutAsJsonAsync<Bod_DTO>($"api/Veiling/AddBodToVeiling/{Veiling.Id}", bod);
+        response.EnsureSuccessStatusCode();
+        var responseResult = await response.Content.ReadFromJsonAsync<bool>();
+
+        if (responseResult) {
+            //Bod geplaatst
+            Console.WriteLine("Bod geplaatst");
+        }
+        else {
+            //Bod niet geplaatst
+            Console.WriteLine("Bod niet geplaatst");
+        }
+
+        await SetProperties();
+        StateHasChanged();
     }
 }
