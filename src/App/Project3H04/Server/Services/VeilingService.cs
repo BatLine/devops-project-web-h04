@@ -97,7 +97,7 @@ namespace Project3H04.Server.Services {
                  .Include(v => v.Kunstwerk).ThenInclude(k => k.Fotos)
                  .Include(v => v.BodenOpVeiling).ThenInclude(b => b.Klant)
                  .SingleOrDefault(v => v.Id == veilingId);
-             
+
              var klant = (Klant)_dbContext.Gebruikers.SingleOrDefault(g => g.GebruikerId == bod.Klant.GebruikerId);
 
              if (veiling == null)
@@ -105,10 +105,25 @@ namespace Project3H04.Server.Services {
              if (veiling.BodenOpVeiling.Any() && veiling.HoogsteBod.KlantId == bod.Klant.GebruikerId)
                  return false; //Mag zichzelf niet overbieden
 
+             string oudeHighestBidder = null;
+             if (veiling.BodenOpVeiling.Any())
+                oudeHighestBidder = veiling.HoogsteBod.Klant.Email;
+
              veiling.VoegBodToe(klant, bod.BodPrijs, bod.Datum);
 
             _dbContext.Veilingen.Update(veiling);
             await _dbContext.SaveChangesAsync();
+
+            if (oudeHighestBidder == null)
+                return true;
+
+            //Mail sturen naar de vorige bieder dat hij outboden is
+            var response = MailServices.SendMail(oudeHighestBidder, 
+                $"There is a new bid that is higher than yours on '<b>{veiling.Kunstwerk.Naam}</b>'<br/>" + 
+                $"The bidding will last until {veiling.EindDatum}",
+                "Update: You have been outbid.");
+            if (!response.IsSuccessful)
+                Console.WriteLine(response.Content);
 
             return true;
         }
