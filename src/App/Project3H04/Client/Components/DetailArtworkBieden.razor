@@ -20,11 +20,11 @@
                         @if ((bod.Datum - DateTime.Now).Days < 1)
                         {
                             //TODO: Met tabel/bootstrap ofzo mooi displayen
-                            <span>@bod.Datum.ToString("HH:mm") - </span>
+                        <span>@bod.Datum.ToString("HH:mm")&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         }
                         else
                         {
-                            <span>@bod.Datum.ToShortDateString() - </span>
+                    <span>@bod.Datum.ToShortDateString()&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         }
                         €@bod.BodPrijs
                     </span><br />
@@ -63,7 +63,10 @@ else
         Veiling = await httpClient.Client.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{KunstwerkId}");
         var user = (await authenticationStateTask).User;
         Klant = await httpClient.Client.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
-        NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs.ToString() : Veiling.Kunstwerk.Prijs.ToString();
+        if (Veiling.BodenOpVeiling.Any())
+            NewBidValue = Veiling.HoogsteBod.BodPrijs.ToString();
+        else
+            NewBidValue = Veiling.Kunstwerk.Prijs.ToString();
     }
 
     private async void PlaceBid() {
