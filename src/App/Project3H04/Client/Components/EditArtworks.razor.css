@@ -1,6 +1,6 @@
 ﻿.image {
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
     padding-bottom: 100%;
 }
 
@@ -8,7 +8,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        /*  object-fit: cover; Not supported by Chrome v27 */
     }
 
 p.artwork, p.price {
