@@ -27,12 +27,13 @@ namespace Project3H04.Server.Services {
 
         public async Task<Veiling_DTO> GetVeilingById(int id) {
             var x = await _dbContext.Veilingen
-                .Include(v => v.Kunstwerk)
+                .Include(v => v.Kunstwerk).ThenInclude(k => k.Fotos)
                 .Include(v => v.BodenOpVeiling)
                 .ThenInclude(b => b.Klant)
                 .FirstOrDefaultAsync(v => v.Id == id);
 
             Veiling_DTO v = await Task.Run(() => new Veiling_DTO {
+                Id = x.Id,
                 StartDatum = x.StartDatum,
                 EindDatum = x.EindDatum,
                 MinPrijs = x.MinPrijs,
@@ -40,6 +41,11 @@ namespace Project3H04.Server.Services {
                     Id = x.Kunstwerk.Id,
                     Naam = x.Kunstwerk.Naam,
                     Prijs = x.Kunstwerk.Prijs,
+                    Fotos = x.Kunstwerk.Fotos.Select(x => new Foto_DTO
+                    {
+                        Id = x.Id,
+                        Naam = x.Naam
+                    }).ToList(),
                     //Materiaal = x.Kunstwerk.Materiaal,
                     //Kunstenaar = new Kunstenaar_DTO {
                     //    Details = x.Kunstwerk.Kunstenaar.Details,

@@ -8,6 +8,7 @@ using Project3H04.Shared.DTO;
 
 namespace Project3H04.Shared.Veilingen {
     public class Veiling_DTO {
+        public int Id { get; set; }
         public DateTime StartDatum { get; set; }
         public DateTime EindDatum { get; set; }
         public decimal MinPrijs { get; set; }
