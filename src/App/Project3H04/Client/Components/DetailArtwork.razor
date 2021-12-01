@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims
 @inject CartState cartState
+@inject IToastService toastService
 
 @if (Kunstwerk != null)
 {
@@ -76,7 +77,8 @@
     private ClaimsPrincipal user;
     //public bool InCart = false;
 
-    protected override async Task OnParametersSetAsync() {
+    protected override async Task OnParametersSetAsync()
+    {
         //userEmail = user.Identity.Name
         user = (await authenticationStateTask).User;
 
@@ -98,5 +100,6 @@
     private void AddToCart()
     {
         cartState.AddKunstwerk(Kunstwerk);
+        toastService.ShowSuccess("Order successfully added to cart");
     }
 }
