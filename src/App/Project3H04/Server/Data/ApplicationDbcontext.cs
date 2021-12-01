@@ -37,6 +37,7 @@ namespace Project3H04.Server.Data {
 
             builder.Entity<Kunstenaar>().HasOne(x => x.Abonnenment).WithOne().HasForeignKey<Kunstenaar>(x => x.AbonnenmentId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Kunstenaar>().HasMany(x => x.Kunstwerken).WithOne().OnDelete(DeleteBehavior.Cascade);
+            //TODO: Dit wijzigen naar veiling -> kunstenaar
             builder.Entity<Kunstenaar>().HasMany(x => x.Veilingen).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<Kunstenaar>().Property(x => x.StatusActiefKunstenaar).IsRequired();
 
@@ -74,9 +75,7 @@ namespace Project3H04.Server.Data {
             builder.Entity<Bod>().ToTable("Bod").HasKey(x => x.Id);
             builder.Entity<Bod>().Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Entity<Bod>().Property(x => x.BodPrijs).IsRequired();
-            builder.Entity<Bod>().HasOne(x => x.Klant).WithOne().HasForeignKey<Bod>(x => x.KlantId).IsRequired().OnDelete(DeleteBehavior.ClientSetNull);
-            //builder.Entity<Bod>().Property(x => x.).IsRequired().HasMaxLength(100);
-
+            builder.Entity<Bod>().HasOne(x => x.Klant).WithMany().IsRequired().OnDelete(DeleteBehavior.ClientCascade);
 
             //Bestellingen
             builder.Entity<Bestelling>()

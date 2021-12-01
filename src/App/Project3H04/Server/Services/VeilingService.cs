@@ -134,5 +134,16 @@ namespace Project3H04.Server.Services {
 
             return true;
         }
+
+        //public async Task<List<Veiling_DTO>> GetVeilingen(string term, int take, bool recentVeilingen)
+        //{
+        //    List<Veiling_DTO> veilings = await _dbContext.Veilingen.Select(x => new Veiling_DTO {
+                
+        //    }).Where(k => k.Gebruikersnaam.Contains(term)).Take(take).ToListAsync();
+        //    if (recentVeilingen)
+        //        return veilings.OrderByDescending(x => x.DatumCreatie).ToList();
+
+        //    return veilings;
+        //}
     }
 }

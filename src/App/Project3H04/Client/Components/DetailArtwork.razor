@@ -20,7 +20,10 @@
                 <p class="subtitle" style="text-align: left; font-weight: bold">About</p>
                 <p style="border: 1px thin grey; width: 100%; height: auto">@Kunstwerk.Beschrijving</p>
                 <p><span style="font-weight: bold">Medium</span> : @Kunstwerk.Materiaal</p>
-                <p style="font-size: 2rem; color: dimgray">€@Kunstwerk.Prijs</p>
+                @if (!Kunstwerk.IsVeilbaar)
+                {
+                    <p style="font-size: 2rem; color: dimgray">€@Kunstwerk.Prijs</p>
+                }
                 <!--Enkel als AUTH dit zien-->
                 <AuthorizeView Roles="Kunstenaar">
                     <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
@@ -30,27 +33,22 @@
                     }
                 </AuthorizeView>
                 <AuthorizeView>
-                    @{
-                        Console.WriteLine("a");
-                    }
-                    @if (!user.IsInRole("Kunstenaar") && !user.IsInRole("Administrator")) {
-                        Console.WriteLine("b");
+                    @if (!user.IsInRole("Kunstenaar") && !user.IsInRole("Administrator"))
+                    {
                         <!--Enkel zichtbaar als klant-->
 
-                        if (Kunstwerk.TeKoop) {
-                            if (Kunstwerk.IsVeilbaar) {
+                        if (Kunstwerk.TeKoop)
+                        {
+                            if (Kunstwerk.IsVeilbaar)
+                            {
                                 <!--Veiling component-->
-                                Console.WriteLine("c");
-                                <DetailArtworkBieden KunstwerkId="@Kunstwerk.Id"/>
+                                <DetailArtworkBieden KunstwerkId="@Kunstwerk.Id" />
                             }
-                            else {
+                            else
+                            {
                                 <!--Order button-->
-                                Console.WriteLine("d");
                                 <button class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
                             }
-                        }
-                        else {
-                            Console.WriteLine("e");
                         }
                     }
                 </AuthorizeView>
