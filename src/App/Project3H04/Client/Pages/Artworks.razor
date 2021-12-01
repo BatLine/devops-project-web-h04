@@ -161,7 +161,7 @@
         filter.OnArtworkFilterChanged -= FilterArtworksAsync;
     }
 
-    private async Task BindCheckboxes(ChangeEventArgs args, string filterMedium = "", string filterSize = "")
+    private void BindCheckboxes(ChangeEventArgs args, string filterMedium = "", string filterSize = "") //async Task
     {
         //selectedMediums
         if (filterMedium != "")
@@ -173,7 +173,6 @@
 
         filter.Mediums = selectedMediums;
 
-
         //selectedSizes
         if (filterSize != "")
         {
@@ -183,7 +182,6 @@
         }
 
         filter.Sizes = selectedSizes;
-
     }
 
     private async void FilterArtworksAsync()
