@@ -1,57 +1,53 @@
 ﻿@using System.Security.Claims
 @inject PublicClient httpClient
+@inject IToastService toastService
 
 @if (Veiling != null)
 {
     @if (!Veiling.BodenOpVeiling.Any())
     {
-        <h4>Er is nog niet geboden.</h4>
+        <h4>No bids yet.</h4>
     }
     else
     {
-        <p style="font-size: 1.5rem; color: dimgray"><span style="font-weight: bold; color: black">Hoogste bod: </span>€@Veiling.HoogsteBod.BodPrijs.ToString("0.##")</p>
+        <p style="font-size: 1.5rem; color: dimgray"><span style="font-weight: bold; color: black">Highest bid: </span>€@Veiling.HoogsteBod.BodPrijs.ToString("0.##")</p>
         @if (Veiling.BodenOpVeiling.Count() > 1)
         {
-            <p style="font-weight: bold">Vorige boden:</p>
+            <p style="font-weight: bold">Previous bids:</p>
             <p>
                 @foreach (var bod in Veiling.BodenOpVeiling.TakeLast(4).SkipLast(1))
                 {
-                <span style="font-size: 1rem; color: dimgray">
-                    @{
-                        TimeSpan ts = bod.Datum - DateTime.Now;
-                        if (ts.Days > 1)
-                        {
-                            <span>@ts.Days days ago</span>
-                        }
-                        else if (ts.Days == 1)
-                        {
-                            <span>1 day ago</span>
-                        }
-                        else
-                        {
-                            if (ts.Hours > 1)
+                    <span style="font-size: 1rem; color: dimgray">
+                        @{
+                            TimeSpan ts = bod.Datum - DateTime.Now;
+                            if (ts.Days > 1)
+                            {
+                                <span>@ts.Days days ago</span>
+                            }
+                            else if (ts.Days == 1)
+                            {
+                                <span>1 day ago</span>
+                            }
+                            else if (ts.Hours > 1)
                             {
                                 <span>@ts.Hours hours ago</span>
                             }
+
                             else if (ts.Hours == 1)
                             {
                                 <span>1 hour ago</span>
                             }
-                            else {
-                                if (ts.Minutes > 1)
-                                {
-                                    <span>@ts.Minutes minutes ago</span>
-                                }
-                                else
-                                {
-                                    <span>1 minute ago</span>
-                                }
+                            else if (ts.Minutes > 1)
+                            {
+                                <span>@ts.Minutes minutes ago</span>
                             }
-
+                            else
+                            {
+                                <span>1 minute ago</span>
+                            }
                         }
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;€@bod.BodPrijs.ToString("0.##")</span>
-                    }
-                </span><br />
+                    </span><br />
                 }
             </p>
         }
@@ -59,8 +55,8 @@
         {
             //Klant kan zichzelf niet outbieden
             <label for="bidAmount">Bid amount:</label>
-            <input type="number" id="bidAmount" name="bidAmount" min="@(Veiling.HoogsteBod.BodPrijs+IncrementValue)" max="@decimal.MaxValue" @bind-value="@NewBidValue" step="@IncrementValue"/>
-            <br/>
+            <input type="number" id="bidAmount" name="bidAmount" min="@(Veiling.HoogsteBod.BodPrijs+IncrementValue)" max="@decimal.MaxValue" @bind-value="@NewBidValue" step="@IncrementValue" />
+            <br />
             <button class="btn btn-secondary ml-1" @onclick="PlaceBid">Place bid</button>
         }
     }
@@ -78,13 +74,15 @@ else
     private Klant_DTO Klant;
     private int NewBidValue { get; set; }
     private int IncrementValue { get; set; }
+    private ToastParameters _toastParameters;
 
     protected override async Task OnParametersSetAsync()
     {
         await SetProperties();
     }
 
-    private async Task SetProperties() {
+    private async Task SetProperties()
+    {
         Veiling = await httpClient.Client.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{KunstwerkId}");
         var user = (await authenticationStateTask).User;
         Klant = await httpClient.Client.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
@@ -92,28 +90,35 @@ else
         NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs + IncrementValue : Veiling.Kunstwerk.Prijs + IncrementValue;
     }
 
-    private int GetIncrement() {
+    private int GetIncrement()
+    {
         var prijs = !Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs : Veiling.MinPrijs;
 
-        return prijs switch {
-            > 1000 => prijs/10,
+        return prijs switch
+        {
+            > 1000 => prijs / 10,
             _ => 100
         };
     }
 
-    private async void PlaceBid() {
+    private async void PlaceBid()
+    {
         //Check if increment is correctly done
-        if(Veiling.BodenOpVeiling.Any())
-            if (NewBidValue < Veiling.HoogsteBod.BodPrijs + IncrementValue) {
-                //Prijs is te klein verschil
+        if (Veiling.BodenOpVeiling.Any()) {
+            if (NewBidValue < Veiling.HoogsteBod.BodPrijs + IncrementValue)
+            {
+                toastService.ShowToast(ToastLevel.Error, "Price is to low");
                 return;
             }
-        else if (NewBidValue < Veiling.MinPrijs + IncrementValue) {
-            //Prijs is te klein verschil
+        }
+        else if (NewBidValue < Veiling.MinPrijs + IncrementValue)
+        {
+            toastService.ShowToast(ToastLevel.Error, "Price is to low");
             return;
         }
 
-        Bod_DTO bod = new Bod_DTO {
+        Bod_DTO bod = new Bod_DTO
+        {
             BodPrijs = NewBidValue,
             Datum = DateTime.Now,
             Klant = this.Klant
@@ -124,13 +129,13 @@ else
         response.EnsureSuccessStatusCode();
         var responseResult = await response.Content.ReadFromJsonAsync<bool>();
 
-        if (responseResult) {
-            //Bod geplaatst
-            Console.WriteLine("Bod geplaatst");
+        if (responseResult)
+        {
+            toastService.ShowToast(ToastLevel.Success, "Bid successfully placed");
         }
-        else {
-            //Bod niet geplaatst
-            Console.WriteLine("Bod niet geplaatst");
+        else
+        {
+            toastService.ShowToast(ToastLevel.Error, "Bid was not placed");
         }
 
         await SetProperties();

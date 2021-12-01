@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Project3H04.Client.Shared;
 using Append.Blazor.Sidepanel;
+using Blazored.Toast;
 using Project3H04.Client.Services;
 
 
@@ -31,6 +32,9 @@ namespace Project3H04.Client
             builder.Services.AddHttpClient("ServerAPI",
             client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
             .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+            //Toast
+            builder.Services.AddBlazoredToast();
 
             //UnAUTH client voor paginas anonymous te zetten
             //builder.Services.AddHttpClient("BlazorApp.PublicServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
