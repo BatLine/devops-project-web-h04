@@ -59,7 +59,7 @@
         {
             //Klant kan zichzelf niet outbieden
             <label for="bidAmount">Bid amount:</label>
-            <input type="number" id="bidAmount" name="bidAmount" min="@Veiling.HoogsteBod.BodPrijs" max="@decimal.MaxValue" @bind-value="@NewBidValue"/>
+            <input type="number" id="bidAmount" name="bidAmount" min="@(Veiling.HoogsteBod.BodPrijs+IncrementValue)" max="@decimal.MaxValue" @bind-value="@NewBidValue" step="@IncrementValue"/>
             <br/>
             <button class="btn btn-secondary ml-1" @onclick="PlaceBid">Place bid</button>
         }
@@ -77,6 +77,7 @@ else
     private Task<AuthenticationState> authenticationStateTask { get; set; }
     private Klant_DTO Klant;
     private int NewBidValue { get; set; }
+    private int IncrementValue { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -87,10 +88,31 @@ else
         Veiling = await httpClient.Client.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{KunstwerkId}");
         var user = (await authenticationStateTask).User;
         Klant = await httpClient.Client.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
-        NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs : Veiling.Kunstwerk.Prijs; //.ToString("0.##")
+        IncrementValue = GetIncrement();
+        NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs + IncrementValue : Veiling.Kunstwerk.Prijs + IncrementValue;
+    }
+
+    private int GetIncrement() {
+        var prijs = !Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs : Veiling.MinPrijs;
+
+        return prijs switch {
+            > 1000 => prijs/10,
+            _ => 100
+        };
     }
 
     private async void PlaceBid() {
+        //Check if increment is correctly done
+        if(Veiling.BodenOpVeiling.Any())
+            if (NewBidValue < Veiling.HoogsteBod.BodPrijs + IncrementValue) {
+                //Prijs is te klein verschil
+                return;
+            }
+        else if (NewBidValue < Veiling.MinPrijs + IncrementValue) {
+            //Prijs is te klein verschil
+            return;
+        }
+
         Bod_DTO bod = new Bod_DTO {
             BodPrijs = NewBidValue,
             Datum = DateTime.Now,
