@@ -13,8 +13,8 @@ namespace Project3H04.Client.Pages
         private List<String> mediums;
         private List<String> sizes;
         private List<String> buyingOptions;
-        private decimal minimumPrice;
-        private decimal maximumPrice;
+        private int minimumPrice;
+        private int maximumPrice;
 
         public string ArtistSearchterm
         {
@@ -61,7 +61,7 @@ namespace Project3H04.Client.Pages
                 NotifyStateChanged();
             }
         }
-        public decimal MinimumPrice
+        public int MinimumPrice
         {
             get => minimumPrice;
             set
@@ -70,7 +70,7 @@ namespace Project3H04.Client.Pages
                 NotifyStateChanged();
             }
         }
-        public decimal MaximumPrice
+        public int MaximumPrice
         {
             get => maximumPrice;
             set

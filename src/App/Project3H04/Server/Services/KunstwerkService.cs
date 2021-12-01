@@ -13,30 +13,26 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project3H04.Server.Services
-{
-    public class KunstwerkService : IKunstwerkService
-    {
+namespace Project3H04.Server.Services {
+    public class KunstwerkService : IKunstwerkService {
         private readonly ApplicationDbcontext dbContext;
         private readonly IStorageService storageService;
 
-        public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; }
+        public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; } //TODO: Wot dis?
 
-        public KunstwerkService(ApplicationDbcontext dbContext, IStorageService storageService)
-        {
+        public KunstwerkService(ApplicationDbcontext dbContext, IStorageService storageService) {
             this.dbContext = dbContext;
             this.storageService = storageService;
         }
+
         public async Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id)
         {
-
             return await dbContext.Kunstwerken.Include(k => k.Fotos).Select(x => new Kunstwerk_DTO.Detail
             {
                 Id = x.Id,
                 Naam = x.Naam,
                 Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie, Uploaded = true }),
-                Kunstenaar = new Kunstenaar_DTO
-                {
+                Kunstenaar = new Kunstenaar_DTO {
                     Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
                     GebruikerId = x.Kunstenaar.GebruikerId,
                     Email = x.Kunstenaar.Email //email toegevoegd
@@ -51,36 +47,31 @@ namespace Project3H04.Server.Services
                 TeKoop = x.TeKoop,
                 IsVeilbaar = x.IsVeilbaar
             }).SingleOrDefaultAsync(x => x.Id == id);
-
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
-        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(Kunstwerk_DTO.Filter request)
-        {
-
-            List<Kunstwerk_DTO.Index> kunstwerken =
-            await dbContext.Kunstwerken.Where(x => request.Materiaal == null || request.Materiaal.Contains(x.Materiaal))
-            .Where(x => request.Grootte == null || (request.Grootte.Contains("Large") && (x.Lengte >= 100 || x.Breedte >= 100 || x.Hoogte >= 100)) ||
-            (request.Grootte.Contains("Medium") && (x.Lengte >= 50 && x.Lengte < 100 || x.Breedte >= 50 && x.Breedte < 100 || x.Hoogte >= 50 && x.Hoogte < 100))
-           || (request.Grootte.Contains("Small") && (x.Lengte < 50 || x.Breedte < 50 || x.Hoogte < 50)))
-
-           .Select(x => new Kunstwerk_DTO.Index()
-           {
-               Id = x.Id,
-               Naam = x.Naam,
-               HoofdFoto = new(x.Fotos.FirstOrDefault().Naam, x.Fotos.FirstOrDefault().Locatie), //enkel eerste foto is nodig voor index
-               Materiaal = x.Materiaal,
-               Kunstenaar = new Kunstenaar_DTO
-               {
-                   Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
-                   GebruikerId = x.Kunstenaar.GebruikerId,
-               },
-               Prijs = x.Prijs
-           }).Where(x => String.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))
-           .Where(x => String.IsNullOrEmpty(request.Kunstenaar) || x.Kunstenaar.Gebruikersnaam.Contains(request.Kunstenaar))
-           .Where(x => request.MinimumPrijs.Equals(default(decimal)) || x.Prijs >= request.MinimumPrijs)
-           .Where(x => request.MaximumPrijs.Equals(default(decimal)) || x.Prijs <= request.MaximumPrijs)
-           .Take(15).ToListAsync();
+        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(Kunstwerk_DTO.Filter request) {
+            List<Kunstwerk_DTO.Index> kunstwerken = await dbContext.Kunstwerken
+                .Where(x => request.Materiaal == null || request.Materiaal.Contains(x.Materiaal))
+                .Where(x => request.Grootte == null || (request.Grootte.Contains("Large") && (x.Lengte >= 100 || x.Breedte >= 100 || x.Hoogte >= 100)) || 
+                            (request.Grootte.Contains("Medium") && (x.Lengte >= 50 && x.Lengte < 100 || x.Breedte >= 50 && x.Breedte < 100 || x.Hoogte >= 50 && x.Hoogte < 100)) 
+                            || (request.Grootte.Contains("Small") && (x.Lengte < 50 || x.Breedte < 50 || x.Hoogte < 50)))
+                .Select(x => new Kunstwerk_DTO.Index() {
+                    Id = x.Id,
+                    Naam = x.Naam,
+                    HoofdFoto = new Foto_DTO(x.Fotos.FirstOrDefault().Naam, x.Fotos.FirstOrDefault().Locatie), //enkel eerste foto is nodig voor index
+                    Materiaal = x.Materiaal,
+                    Kunstenaar = new Kunstenaar_DTO {
+                        Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
+                        GebruikerId = x.Kunstenaar.GebruikerId,
+                    },
+                    Prijs = x.Prijs
+                })
+                .Where(x => string.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))
+                .Where(x => string.IsNullOrEmpty(request.Kunstenaar) || x.Kunstenaar.Gebruikersnaam.Contains(request.Kunstenaar))
+                .Where(x => request.MinimumPrijs.Equals(default(int)) || x.Prijs >= request.MinimumPrijs)
+                .Where(x => request.MaximumPrijs.Equals(default(int)) || x.Prijs <= request.MaximumPrijs)
+                .Take(15).ToListAsync();
 
             return kunstwerken;
         }
@@ -101,7 +92,7 @@ namespace Project3H04.Server.Services
             await dbContext.Kunstwerken.AddAsync(kunstwerkToCreate);
             await dbContext.SaveChangesAsync();
 
-            return new()
+            return new KunstwerkResponse.Create()
             {
                 KunstwerkId = kunstwerkToCreate.Id,
                 UploadUris = uploadUris
@@ -136,7 +127,7 @@ namespace Project3H04.Server.Services
 
             await dbContext.SaveChangesAsync();
 
-            return new() { UploadUris = uploadUris };
+            return new KunstwerkResponse.Edit() { UploadUris = uploadUris };
         }
 
         public async Task<List<string>> GetMediums(int amount) //aantal meestvoorkomende mediums ophalen

@@ -8,7 +8,7 @@ namespace Domain {
         public int Id { get; set; }
         public string Naam { get; private set; }
         public DateTime Einddatum { get; private set; }
-        public decimal Prijs { get; private set; }
+        public int Prijs { get; private set; }
         public decimal Lengte { get; private set; }
         public decimal Breedte { get; private set; }
         public decimal Hoogte { get; set; }
@@ -20,7 +20,7 @@ namespace Domain {
         public string Materiaal { get; private set; }
         public Kunstenaar Kunstenaar { get; private set; }
 
-        public Kunstwerk(string naam, DateTime einddatum, decimal prijs, string beschrijving, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, List<Foto> fotos, bool isVeilbaar, string materiaal, Kunstenaar kunstenaar) : this() {
+        public Kunstwerk(string naam, DateTime einddatum, int prijs, string beschrijving, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, List<Foto> fotos, bool isVeilbaar, string materiaal, Kunstenaar kunstenaar) : this() {
             Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
             Einddatum = Guard.Against.Null(einddatum, nameof(einddatum));
             Prijs = Guard.Against.Null(prijs, nameof(prijs));
@@ -39,7 +39,7 @@ namespace Domain {
 
         public Kunstwerk() { }
 
-        public void Edit(string naam, DateTime einddatum, decimal prijs, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, string beschrijving, bool isVeilbaar, string materiaal)  {
+        public void Edit(string naam, DateTime einddatum, int prijs, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, string beschrijving, bool isVeilbaar, string materiaal)  {
             Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
             Einddatum = Guard.Against.Null(einddatum, nameof(einddatum));
             Prijs = Guard.Against.Null(prijs, nameof(prijs));

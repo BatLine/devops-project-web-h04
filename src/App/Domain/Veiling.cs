@@ -10,14 +10,14 @@ namespace Domain {
         public int Id { get; private set; }
         public DateTime StartDatum { get; set; }
         public DateTime EindDatum { get; set; }
-        public decimal MinPrijs { get; set; }
+        public int MinPrijs { get; set; }
         public ICollection<Bod> BodenOpVeiling { get; set; }
         public Kunstwerk Kunstwerk { get; private set; }
         public int KunstwerkId { get; private set; }
         public Bod HoogsteBod => BodenOpVeiling.OrderByDescending(b => b.BodPrijs).FirstOrDefault();
 
 
-        public Veiling(DateTime startDatum, DateTime eindDatum, decimal minPrijs, Kunstwerk kunstwerk) : this() {
+        public Veiling(DateTime startDatum, DateTime eindDatum, int minPrijs, Kunstwerk kunstwerk) : this() {
             StartDatum = Guard.Against.Null(startDatum, nameof(startDatum));
             EindDatum = Guard.Against.Null(eindDatum, nameof(eindDatum));
             MinPrijs = Guard.Against.Null(minPrijs, nameof(MinPrijs));
@@ -26,7 +26,7 @@ namespace Domain {
             Kunstwerk.IsVeilbaar = true;
         }
 
-        public void VoegBodToe(Klant klant, decimal prijs, DateTime datum) {
+        public void VoegBodToe(Klant klant, int prijs, DateTime datum) {
             Bod bod = new Bod(klant, prijs, datum);
 
             if ((BodenOpVeiling.Count > 0) && (prijs <= HoogsteBod.BodPrijs))

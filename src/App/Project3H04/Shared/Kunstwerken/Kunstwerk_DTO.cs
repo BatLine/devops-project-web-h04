@@ -13,7 +13,7 @@ namespace Project3H04.Shared.Kunstwerken
         {
             public int Id { get; set; }
             public string Naam { get; set; }
-            public decimal Prijs { get; set; }
+            public int Prijs { get; set; }
 
             public string Materiaal { get; set; }
             public DateTime Einddatum { get; set; }
@@ -42,8 +42,8 @@ namespace Project3H04.Shared.Kunstwerken
         public class Filter
         {
             public string Naam { get; set; }
-            public decimal MinimumPrijs { get; set; }
-            public decimal MaximumPrijs { get; set; }
+            public int MinimumPrijs { get; set; }
+            public int MaximumPrijs { get; set; }
             public List<string> Materiaal { get; set; }
             public List<string> Grootte { get; set; }
             public string Kunstenaar { get; set; }
@@ -57,7 +57,7 @@ namespace Project3H04.Shared.Kunstwerken
                 Fotos = new();
             }
             public string Naam { get; set; }
-            public decimal Prijs { get; set; }
+            public int Prijs { get; set; }
             public List<Foto_DTO> Fotos { get; set; }
 
             public string Materiaal { get; set; }
