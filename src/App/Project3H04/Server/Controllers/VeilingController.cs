@@ -19,6 +19,11 @@ namespace Project3H04.Server.Controllers {
             this._veilingService = veilingService;
         }
 
+        [HttpGet, ActionName("")]
+        public Task<List<Veiling_DTO>> GetVeilings(string term = "", int take = 25, bool almostFinishedVeilingen = false) {
+            return _veilingService.GetVeilingen(term, take, almostFinishedVeilingen);
+        }
+
         [HttpGet("{id}"), ActionName("Get")]
         public Task<Veiling_DTO> Get(int id) {
             return _veilingService.GetVeilingById(id);

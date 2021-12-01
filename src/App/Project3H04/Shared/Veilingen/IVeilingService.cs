@@ -12,5 +12,6 @@ namespace Project3H04.Shared.Veilingen {
         Task<bool> AddBodToVeiling(Bod_DTO bod, int veilingId);
         Task<bool> AddBodToKunstwerk(Bod_DTO bod, int kunstwerkId);
         Task<bool> CreateVeiling(Veiling_DTO veiling);
+        Task<List<Veiling_DTO>> GetVeilingen(string term, int take, bool almostFinishedVeilingen);
     }
 }

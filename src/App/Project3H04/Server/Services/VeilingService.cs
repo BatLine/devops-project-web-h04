@@ -41,8 +41,7 @@ namespace Project3H04.Server.Services {
                     Id = x.Kunstwerk.Id,
                     Naam = x.Kunstwerk.Naam,
                     Prijs = x.Kunstwerk.Prijs,
-                    Fotos = x.Kunstwerk.Fotos.Select(x => new Foto_DTO
-                    {
+                    Fotos = x.Kunstwerk.Fotos.Select(x => new Foto_DTO {
                         Id = x.Id,
                         Naam = x.Naam
                     }).ToList(),
@@ -141,15 +140,34 @@ namespace Project3H04.Server.Services {
             return true;
         }
 
-        //public async Task<List<Veiling_DTO>> GetVeilingen(string term, int take, bool recentVeilingen)
-        //{
-        //    List<Veiling_DTO> veilings = await _dbContext.Veilingen.Select(x => new Veiling_DTO {
-                
-        //    }).Where(k => k.Gebruikersnaam.Contains(term)).Take(take).ToListAsync();
-        //    if (recentVeilingen)
-        //        return veilings.OrderByDescending(x => x.DatumCreatie).ToList();
+        public async Task<List<Veiling_DTO>> GetVeilingen(string term, int take, bool almostFinishedVeilingen) {
+            List<Veiling_DTO> veilings = await _dbContext.Veilingen.Select(x => new Veiling_DTO {
+                Id = x.Id,
+                StartDatum = x.StartDatum,
+                EindDatum = x.EindDatum,
+                MinPrijs = x.MinPrijs,
+                Kunstwerk = new Kunstwerk_DTO.Detail {
+                    Id = x.Kunstwerk.Id,
+                    Naam = x.Kunstwerk.Naam,
+                    Prijs = x.Kunstwerk.Prijs,
+                    Fotos = x.Kunstwerk.Fotos.Select(x => new Foto_DTO {
+                        Id = x.Id,
+                        Naam = x.Naam
+                    }).ToList(),
+                },
+                BodenOpVeiling = x.BodenOpVeiling.ToList().Select(x => new Bod_DTO {
+                    BodPrijs = x.BodPrijs,
+                    Datum = x.Datum,
+                    Klant = new Klant_DTO {
+                        GebruikerId = x.Klant.GebruikerId,
+                        Gebruikersnaam = x.Klant.Gebruikersnaam,
+                        GeboorteDatum = x.Klant.Geboortedatum,
+                        Email = x.Klant.Email,
+                    }
+                })
+            }).Where(k => k.Kunstwerk.Naam.Contains(term)).Take(take).ToListAsync();
 
-        //    return veilings;
-        //}
+            return almostFinishedVeilingen ? veilings.OrderByDescending(x => x.EindDatum).ToList() : veilings.OrderByDescending(x => x.StartDatum).ToList();
+        }
     }
 }
