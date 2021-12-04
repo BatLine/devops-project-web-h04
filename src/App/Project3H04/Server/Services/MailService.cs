@@ -9,7 +9,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 
 namespace Project3H04.Server.Services {
-    public static class MailServices {
+    public static class MailService {
         public static IRestResponse SendMail(string emailToSendTo, string body, string subject) {
             RestClient client = new RestClient ();
             client.BaseUrl = new Uri ("https://api.mailgun.net/v3");
