@@ -42,7 +42,9 @@ namespace Project3H04.Server.Services {
                     Prijs = x.Kunstwerk.Prijs,
                     Fotos = x.Kunstwerk.Fotos.Select(x => new Foto_DTO {
                         Id = x.Id,
-                        Naam = x.Naam
+                        Naam = x.Naam,
+                       Locatie = x.Locatie,
+                       Uploaded = true
                     }).ToList(),
                     //Materiaal = x.Kunstwerk.Materiaal,
                     //Kunstenaar = new Kunstenaar_DTO {
@@ -171,12 +173,16 @@ namespace Project3H04.Server.Services {
                     Id = x.Kunstwerk.Id,
                     Naam = x.Kunstwerk.Naam,
                     Prijs = x.Kunstwerk.Prijs,
+                    Kunstenaar = new Kunstenaar_DTO
+                    {
+                        Gebruikersnaam = x.Kunstwerk.Kunstenaar.Gebruikersnaam
+                    },
                     Fotos = x.Kunstwerk.Fotos.Select(x => new Foto_DTO {
                         Id = x.Id,
                         Naam = x.Naam
                     }).ToList(),
-                },
-                BodenOpVeiling = x.BodenOpVeiling.ToList().Select(x => new Bod_DTO {
+                },                
+                BodenOpVeiling = x.BodenOpVeiling.Select(x => new Bod_DTO {
                     BodPrijs = x.BodPrijs,
                     Datum = x.Datum,
                     Klant = new Klant_DTO {
@@ -185,7 +191,7 @@ namespace Project3H04.Server.Services {
                         GeboorteDatum = x.Klant.Geboortedatum,
                         Email = x.Klant.Email,
                     }
-                }).OrderByDescending(b => b.BodPrijs)
+                }).OrderByDescending(b => b.BodPrijs).ToList()
             }).Where(k => k.Kunstwerk.Naam.Contains(term)).Take(take).ToListAsync();
 
             return almostFinishedVeilingen ? veilings.OrderByDescending(x => x.EindDatum).ToList() : veilings.OrderByDescending(x => x.StartDatum).ToList();
