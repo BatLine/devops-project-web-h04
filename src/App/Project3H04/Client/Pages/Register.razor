@@ -51,11 +51,10 @@
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
 
-    //[Required(ErrorMessage = "Please enter registration code.")]
     private Klant_DTO klant = new Klant_DTO();
 
     [Required(ErrorMessage = "Please enter password")] //deze validatie triggert niet, ookal dataAnnotation in de form gezet
-    [MinLength(5, ErrorMessage = "Password length must be atleast 5 characters")]
+    [MinLength(5, ErrorMessage = "Password length must be atleast 5 characters")] //TODO: deze validatie ke vragen tijdens meeting woensdag
     private string password = string.Empty;
 
     string _resultMessage;
