@@ -17,6 +17,7 @@ namespace Project3H04.Server.Data {
             if (!_dbContext.Database.EnsureCreated()) return;
             //seeding the database, see DBContext
             Klant klant1 = new Klant("gillesdp", Convert.ToDateTime("28/12/2001"), "gilles.depessemier@gmail.com", "artist3.PNG", "Ik ben Gilles,...");
+            Klant klant2 = new Klant("frank", Convert.ToDateTime("28/12/2006"), "email@gmail.com", "artist3.PNG", "Ik ben niet Gilles,...");
             Klant klantTest = new Klant("test", Convert.ToDateTime("28/12/2001"), "test@gmail.com", "artist3.PNG", "Ik ben Test,...");
 
             AbonnementType at = new AbonnementType("default", 3, 200);
@@ -72,9 +73,9 @@ namespace Project3H04.Server.Data {
             Veiling veiling1 = new Veiling(DateTime.UtcNow, DateTime.UtcNow.AddDays(1), kunstwerk9.Prijs, kunstwerk9);
             kunstenaar1.Veilingen.Add(veiling1);
             veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 100, DateTime.UtcNow.AddHours(12));
-            veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 110, DateTime.UtcNow.AddHours(12).AddMinutes(10));
+            veiling1.VoegBodToe(klant2, veiling1.MinPrijs + 110, DateTime.UtcNow.AddHours(12).AddMinutes(10));
             veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 120, DateTime.UtcNow.AddHours(12).AddMinutes(20));
-            veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 130, DateTime.UtcNow.AddHours(12).AddMinutes(30));
+            veiling1.VoegBodToe(klant2, veiling1.MinPrijs + 130, DateTime.UtcNow.AddHours(12).AddMinutes(30));
             _dbContext.Veilingen.Add(veiling1);
             _dbContext.SaveChanges();
         }

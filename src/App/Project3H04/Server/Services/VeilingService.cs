@@ -120,7 +120,7 @@ namespace Project3H04.Server.Services {
                 return true;
 
             //Mail sturen naar de vorige bieder dat hij outboden is
-            var response = MailServices.SendMail(oudeHighestBidder, 
+            var response = MailService.SendMail(oudeHighestBidder, 
                 $"There is a new bid that is higher than yours on '<b>{veiling.Kunstwerk.Naam}</b>'<br/>" + 
                 $"The bidding will last until {veiling.EindDatum}",
                 "Update: You have been outbid.");
