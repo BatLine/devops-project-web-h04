@@ -21,16 +21,18 @@ jobs:
         with:
           dotnet-version: '3.1.301'
           include-prerelease: true
-
-        
+          
+          
       - name: Install dependencies
-        run: dotnet restore "./src/App"
-      - name: Build code
-        run: dotnet build "./src/App" --configuration Release --no-restore
-      - name: Test code 
-        run: dotnet test "./src/App" --no-restore --verbosity normal
-      - name: Publish application
-        run: dotnet publish "./src/App" -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet restore "Project3H04/Server/Project3H04.Server.csproj"
+
+      - name: Build with dotnet
+        working-directory: ./src/App/Project3H04/Server
+        run: dotnet build "Project3H04.Server.csproj" -c Release --no-restore
+
+      - name: dotnet publish
+        working-directory: ./src/App/Project3H04/Server
+        run: dotnet publish "Project3H04.Server.csproj" -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
