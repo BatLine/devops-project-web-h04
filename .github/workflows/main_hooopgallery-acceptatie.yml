@@ -24,7 +24,7 @@ jobs:
 
       - name: Build with dotnet
         working-directory: ./src/App/Project3H04
-        run: dotnet build Project3H04.sln --configuration Release
+        run: dotnet build Project3H04.sln --configuration Release -v d
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
