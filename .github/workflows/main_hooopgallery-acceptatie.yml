@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - hooopgallery-acceptat
 on:
   push:
     branches:
-      - main
+      - pipeline_workflow
   workflow_dispatch:
 
 jobs:
