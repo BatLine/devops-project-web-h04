@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./src/App/Project3H04
 
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +26,6 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        working-directory: ./src/App
         run: dotnet build --configuration Release
 
       - name: dotnet publish
