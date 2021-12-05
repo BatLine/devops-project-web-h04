@@ -25,7 +25,7 @@ jobs:
           
       - name: Install dependencies
         working-directory: ./src/App/
-        run: dotnet restore "Project3H04/Server/Project3H04.Server.csproj"
+        run: dotnet restore "Project3H04/Project3H04.sln"
 
       - name: Build with dotnet
         working-directory: ./src/App/Project3H04/Server
