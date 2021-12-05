@@ -23,8 +23,8 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        working-directory: ./src/App
-        run: dotnet build Project3H04/Project3H04.sln --configuration Release
+        working-directory: ./src/App/Project3H04
+        run: dotnet build Project3H04.sln --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
