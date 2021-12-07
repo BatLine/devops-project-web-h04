@@ -91,7 +91,7 @@ else
         var user = (await authenticationStateTask).User;
         Klant = await httpClient.Client.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
         IncrementValue = GetIncrement();
-        NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs + IncrementValue : Veiling.Kunstwerk.Prijs + IncrementValue;
+        NewBidValue = MinPrice;
     }
 
     private int GetIncrement()
