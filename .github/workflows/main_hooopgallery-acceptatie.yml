@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - hooopgallery-acceptat
 on:
   push:
     branches:
-      - pipeline_workflow
+      - main
   workflow_dispatch:
 
 jobs:
@@ -19,21 +19,16 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.301'
+          dotnet-version: '5.0.x'
           include-prerelease: true
-          
-          
-      - name: Install dependencies
-        working-directory: ./src/App/
-        run: dotnet restore "Project3H04/Project3H04.sln"
-
+                 
       - name: Build with dotnet
-        working-directory: ./src/App/Project3H04/Server
-        run: dotnet build "Project3H04.Server.csproj" -c Release --no-restore
+        working-directory: ./src/App/Project3H04
+        run: dotnet build "Project3H04.sln"
 
       - name: dotnet publish
-        working-directory: ./src/App/Project3H04/Server
-        run: dotnet publish "Project3H04.Server.csproj" -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        working-directory: ./src/App/Project3H04
+        run: dotnet publish "Project3H04.sln" -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -60,5 +55,5 @@ jobs:
         with:
           app-name: 'hooopgallery-acceptatie'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EB67385B57B94CD5A41807F076A170E3 }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
