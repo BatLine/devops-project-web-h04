@@ -22,13 +22,13 @@
                 <div class="row mb-4">
                     <div class="col">
                         <a href="artworks/@kunst.Id" style="text-decoration:none"> </a>
-                        <img src="/images/@kunst.Fotos.First().Pad" alt="" style="width:100%" />
+                        <img src="@kunst.Fotos.First().Pad" alt="" style="width:100%" />
                     </div>
                     <div class="col-md-7 col-lg-10">
                         <div class="artwork-text">
                             <p class="artwork">@kunst.Naam</p>
                             <p class="price">€@kunst.Prijs</p>
-                            <p>Aantal: @kunstwerken.Count(x => x.Id == kunst.Id)</p>
+                            <p>Amount: @kunstwerken.Count(x => x.Id == kunst.Id)</p>
                         </div>
                         <a class="btn btn-secondary" @onclick="_ =>RemoveFromCart(kunst)">Remove</a>
                     </div>
