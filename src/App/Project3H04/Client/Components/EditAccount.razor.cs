@@ -58,7 +58,7 @@ namespace Project3H04.Client.Components
         {
             await httpClient.PutAsJsonAsync($"api/Gebruiker/{GebruikerId}", model);
             //na edit terug naar account page om geg te zien
-            NavigationManager.NavigateTo("/account", forceLoad: true);
+            NavigationManager.NavigateTo("/account", forceLoad: true); //TODO: miss hier geen hard refresh, bij finetunen dit verbeteren
         }
     }
 }

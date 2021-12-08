@@ -10,19 +10,29 @@
 @using Microsoft.Extensions.Configuration
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Newtonsoft.Json
-@using System.ComponentModel.DataAnnotations;
 
 <h3>Sign up</h3>
-<EditForm Model="@klant" OnValidSubmit="CompleteRegistration">
-    <DataAnnotationsValidator />
+<EditForm Model="klant" OnValidSubmit="CompleteRegistration">
     <FluentValidationValidator />
     <ValidationSummary />
+    @*@if (passwordValidationMessage is not null) {
+            <p class="alert-danger">passwordValidationMessage</p>
+        }*@
+
     <div class="form-group">
         <label for="name">Email:</label>
         <InputText type="email" id="email" aria-describedby="nameHelp" class="form-control" @bind-Value="@klant.Email" placeholder="Your Email"></InputText>
         <p class="alert-danger">
             @_resultMessage
         </p>
+    </div>
+    <div class="form-group">
+        <label for="name">Password:</label>
+        <InputText type="password" id="password" aria-describedby="nameHelp" class="form-control" @bind-Value="@password" @oninput="OnPasswordSet" placeholder="Your Password"></InputText>
+        @if (!string.IsNullOrEmpty(passwordValidationMessage))
+        {
+            <p class="alert-danger">@passwordValidationMessage</p>
+        }
     </div>
 
     <div class="form-group">
@@ -37,11 +47,12 @@
         <label for="name">Your additional details:</label>
         <InputTextArea id="details" aria-describedby="nameHelp" class="form-control" @bind-Value="@klant.Details"></InputTextArea>
     </div>
-    <div class="form-group">
-        <label for="name">Password:</label>
-        <InputText type="password" id="password" aria-describedby="nameHelp" class="form-control" @bind-Value="@password" placeholder="Your Password"></InputText>
-    </div>
-    <button type="submit" id="BtnSave" class="btn btn-primary">Complete registration</button>
+
+    @if (password.Length >= 5)
+    {
+        <button type="submit" id="BtnSave" class="btn btn-primary">Complete registration</button>
+    }
+   
     <button type="reset" id="BtnCancel" class="btn btn-secondary" @onclick="@(() => OnCancel())">Cancel ...</button>
 </EditForm>
 
@@ -50,12 +61,10 @@
 @code {
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
-
     private Klant_DTO klant = new Klant_DTO();
 
-    [Required(ErrorMessage = "Please enter password")] //deze validatie triggert niet, ookal dataAnnotation in de form gezet
-    [MinLength(5, ErrorMessage = "Password length must be atleast 5 characters")] //TODO: deze validatie ke vragen tijdens meeting woensdag
     private string password = string.Empty;
+    private string passwordValidationMessage= string.Empty;
 
     string _resultMessage;
     //string _userId;
@@ -78,7 +87,7 @@
         }
         else
         {
-
+            //client service
             var url = $"{Configuration["Auth0:Authority"]}/dbconnections/signup";
             var c = new HttpClient();
             var request = new
@@ -99,7 +108,17 @@
             // await JsRuntime.InvokeAsync<object>("alert", "User signed up!");
         }
     }
-
+   
+    private void OnPasswordSet()
+    {
+        // Do Validation
+        if (password.Length < 5 || string.IsNullOrEmpty(password))
+        {
+            passwordValidationMessage = "Password must have atleast 5 characters";
+        }
+        else
+            passwordValidationMessage = string.Empty;
+    }
 
     protected void OnCancel()
     {
