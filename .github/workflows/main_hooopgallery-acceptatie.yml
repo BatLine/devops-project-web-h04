@@ -21,6 +21,10 @@ jobs:
         with:
           dotnet-version: '5.0.x'
           include-prerelease: true
+      
+      - name: Install dependencies
+        working-directory: ./src/App/Project3H04
+        run: dotnet restore
                  
       - name: Build with dotnet
         working-directory: ./src/App/Project3H04
