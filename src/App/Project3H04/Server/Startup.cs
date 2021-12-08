@@ -22,7 +22,7 @@ using Project3H04.Shared.Veilingen;
 
 namespace Project3H04.Server {
     public class Startup {
-        private const bool UseLocalDb = true;
+        private const bool UseLocalDb = false;
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
