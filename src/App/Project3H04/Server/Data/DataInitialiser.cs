@@ -16,6 +16,9 @@ namespace Project3H04.Server.Data {
             _dbContext.Database.EnsureDeleted();
             if (!_dbContext.Database.EnsureCreated()) return;
             //seeding the database, see DBContext
+            //Admintest
+            Admin admintest = new Admin("admintest", Convert.ToDateTime("28/12/2001"),"admintest@gmail.com", "artist3.PNG","ik ben admin,...");
+
             Klant klant1 = new Klant("gillesdp", Convert.ToDateTime("28/12/2001"), "gilles.depessemier@gmail.com", "artist3.PNG", "Ik ben Gilles,...");
             Klant klant2 = new Klant("frank", Convert.ToDateTime("28/12/2006"), "email@gmail.com", "artist3.PNG", "Ik ben niet Gilles,...");
             Klant klantTest = new Klant("test", Convert.ToDateTime("28/12/2001"), "test@gmail.com", "artist3.PNG", "Ik ben Test,...");
@@ -61,6 +64,7 @@ namespace Project3H04.Server.Data {
             kunstenaar5.AddKunstwerk(kunstwerk6);
             kunstenaar5.AddKunstwerk(kunstwerk7);
 
+            _dbContext.Gebruikers.Add(admintest);
             _dbContext.Gebruikers.Add(klant1);
             _dbContext.Gebruikers.Add(klantTest);
             _dbContext.Gebruikers.Add(kunstenaar1);

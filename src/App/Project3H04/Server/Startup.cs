@@ -22,7 +22,7 @@ using Project3H04.Shared.Veilingen;
 
 namespace Project3H04.Server {
     public class Startup {
-        private const bool UseLocalDb = true;
+        private bool _useLocalDb = true;
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
@@ -53,8 +53,12 @@ namespace Project3H04.Server {
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
             });
 
+            //Never use localdb when not debugging
+            #if !DEBUG
+                _useLocalDb = false;
+            #endif
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            if (UseLocalDb) { // Bovenaan klasse de bool veranderen
+            if (_useLocalDb) { // Bovenaan klasse de bool veranderen
                 #pragma warning disable IDE0079 // Remove unnecessary suppression
                 #pragma warning disable CS0162 // Unreachable code detected
                 services.AddDbContext<ApplicationDbcontext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBContext")));
@@ -104,7 +108,7 @@ namespace Project3H04.Server {
             });
 
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
-            if (UseLocalDb)
+            if (_useLocalDb)
                 dataInitialiser.InitializeData(); //enkel aanzetten wanneer je op local db werkt
         }
     }

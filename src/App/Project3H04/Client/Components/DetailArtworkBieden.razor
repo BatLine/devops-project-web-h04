@@ -55,9 +55,12 @@
         {
             //Klant kan zichzelf niet outbieden
             <label for="bidAmount">Bid amount:</label>
-            <input type="number" id="bidAmount" name="bidAmount" min="@(Veiling.HoogsteBod.BodPrijs+IncrementValue)" max="@decimal.MaxValue" @bind-value="@NewBidValue" step="@IncrementValue" />
+            <input type="number" id="bidAmount" name="bidAmount" min="@MinPrice" max="@decimal.MaxValue" @bind-value="@NewBidValue" step="@IncrementValue" />
             <br />
             <button class="btn btn-secondary ml-1" @onclick="PlaceBid">Place bid</button>
+        } else
+        {
+            <text>You have the highest bid!</text>
         }
     }
 }
@@ -75,6 +78,8 @@ else
     private int NewBidValue { get; set; }
     private int IncrementValue { get; set; }
 
+    public int MinPrice => Veiling.HoogsteBod.BodPrijs + IncrementValue;
+
     protected override async Task OnParametersSetAsync()
     {
         await SetProperties();
@@ -86,7 +91,7 @@ else
         var user = (await authenticationStateTask).User;
         Klant = await httpClient.Client.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
         IncrementValue = GetIncrement();
-        NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs + IncrementValue : Veiling.Kunstwerk.Prijs + IncrementValue;
+        NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs + IncrementValue : Veiling.Kunstwerk.Prijs + IncrementValue; ;
     }
 
     private int GetIncrement()
@@ -104,7 +109,7 @@ else
     {
         //Check if increment is correctly done
         if (Veiling.BodenOpVeiling.Any()) {
-            if (NewBidValue < Veiling.HoogsteBod.BodPrijs + IncrementValue)
+            if (NewBidValue < MinPrice)
             {
                 toastService.ShowToast(ToastLevel.Error, "Price is to low");
                 return;

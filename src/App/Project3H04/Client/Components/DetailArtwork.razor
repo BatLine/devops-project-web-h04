@@ -26,9 +26,9 @@
                     <p style="font-size: 2rem; color: dimgray">€@Kunstwerk.Prijs</p>
                 }
                 <!--Enkel als AUTH dit zien-->
-                <AuthorizeView Roles="Kunstenaar">
+                <AuthorizeView Roles="Kunstenaar, Administrator">
                     <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
-                    @if (user.Identity.Name == Kunstwerk.Kunstenaar.Email)
+                    @if (user.Identity.Name == Kunstwerk.Kunstenaar.Email || user.IsInRole("Administrator"))
                     {
                         <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
                     }
