@@ -53,18 +53,20 @@
                             <h2>Ways to buy</h2>
                             <div class="checkbox">
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="bid" name="pay-checkbox" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Bid
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="buy" name="pay-checkbox" id="flexCheckDefault">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Buy now
-                                    </label>
-                                </div>
+                                @if (kunstwerken != null)
+                                {
+
+                                    @foreach (var payOption in payOptions)
+                                    {
+                                        <div class="form-check">
+
+                                            <input class="form-check-input" type="checkbox" name="size-checkbox" @onchange="_ => BindCheckboxes(_, filterPayOption: payOption)">
+                                            <label class="form-check-label">
+                                                @payOption
+                                            </label>
+                                        </div>
+                                    }
+                                }
 
                             </div>
                         </li>
@@ -134,12 +136,14 @@
 @code {
     public IEnumerable<string> artMediums;
     public IEnumerable<string> artSizes;
+    public IEnumerable<string> payOptions;
 
     private List<Kunstwerk_DTO.Index> kunstwerken;
     private List<Kunstwerk_DTO.Index> kunstCopy;
 
     private List<String> selectedMediums = new();
     private List<String> selectedSizes = new();
+    private List<String> selectedPayOptions = new();
 
     private ArtworkFilter filter = new();
 
@@ -152,6 +156,7 @@
         artMediums = kunstCopy.Select(x => x.Materiaal).Distinct();
         //vul artSizes met alle mogelijke groottes van kunstwerken
         artSizes = new List<string> { "Small", "Medium", "Large" };
+        payOptions = new List<string> { "Buy", "Bid" };
         //subscribe
         filter.OnArtworkFilterChanged += FilterArtworksAsync;
     }
@@ -161,7 +166,7 @@
         filter.OnArtworkFilterChanged -= FilterArtworksAsync;
     }
 
-    private void BindCheckboxes(ChangeEventArgs args, string filterMedium = "", string filterSize = "") //async Task
+    private void BindCheckboxes(ChangeEventArgs args, string filterMedium = "", string filterSize = "", string filterPayOption = "")
     {
         //selectedMediums
         if (filterMedium != "")
@@ -169,9 +174,10 @@
             if (!selectedMediums.Contains(filterMedium))
                 selectedMediums.Add(filterMedium);
             else selectedMediums.Remove(filterMedium);
+            filter.Mediums = selectedMediums;
         }
 
-        filter.Mediums = selectedMediums;
+
 
         //selectedSizes
         if (filterSize != "")
@@ -179,9 +185,21 @@
             if (!selectedSizes.Contains(filterSize))
                 selectedSizes.Add(filterSize);
             else selectedSizes.Remove(filterSize);
+            filter.Sizes = selectedSizes;
         }
 
-        filter.Sizes = selectedSizes;
+
+
+        //selectedSizes
+        if (filterPayOption != "")
+        {
+            if (!selectedPayOptions.Contains(filterPayOption))
+                selectedPayOptions.Add(filterPayOption);
+            else selectedPayOptions.Remove(filterPayOption);
+            filter.BuyingOptions = selectedPayOptions;
+        }
+
+
     }
 
     private async void FilterArtworksAsync()
@@ -193,7 +211,8 @@
             MaximumPrijs = filter.MaximumPrice,
             Materiaal = filter.Mediums,
             Grootte = filter.Sizes,
-            Kunstenaar = filter.ArtistSearchterm
+            Kunstenaar = filter.ArtistSearchterm,
+            BetaalOpties = filter.BuyingOptions
 
         };
         var queryParameters = request.GetQueryString();

@@ -61,6 +61,8 @@ namespace Project3H04.Client.Pages
                 NotifyStateChanged();
             }
         }
+
+
         public int MinimumPrice
         {
             get => minimumPrice;

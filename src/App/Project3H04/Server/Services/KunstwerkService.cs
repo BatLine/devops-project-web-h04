@@ -13,14 +13,17 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project3H04.Server.Services {
-    public class KunstwerkService : IKunstwerkService {
+namespace Project3H04.Server.Services
+{
+    public class KunstwerkService : IKunstwerkService
+    {
         private readonly ApplicationDbcontext dbContext;
         private readonly IStorageService storageService;
 
         public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; } //TODO: Wot dis?
 
-        public KunstwerkService(ApplicationDbcontext dbContext, IStorageService storageService) {
+        public KunstwerkService(ApplicationDbcontext dbContext, IStorageService storageService)
+        {
             this.dbContext = dbContext;
             this.storageService = storageService;
         }
@@ -32,7 +35,8 @@ namespace Project3H04.Server.Services {
                 Id = x.Id,
                 Naam = x.Naam,
                 Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie, Uploaded = true }),
-                Kunstenaar = new Kunstenaar_DTO {
+                Kunstenaar = new Kunstenaar_DTO
+                {
                     Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
                     GebruikerId = x.Kunstenaar.GebruikerId,
                     Email = x.Kunstenaar.Email //email toegevoegd
@@ -50,23 +54,30 @@ namespace Project3H04.Server.Services {
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
-        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(Kunstwerk_DTO.Filter request) {
+        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(Kunstwerk_DTO.Filter request)
+        {
             List<Kunstwerk_DTO.Index> kunstwerken = await dbContext.Kunstwerken
                 .Where(x => request.Materiaal == null || request.Materiaal.Contains(x.Materiaal))
-                .Where(x => request.Grootte == null || (request.Grootte.Contains("Large") && (x.Lengte >= 100 || x.Breedte >= 100 || x.Hoogte >= 100)) || 
-                            (request.Grootte.Contains("Medium") && (x.Lengte >= 50 && x.Lengte < 100 || x.Breedte >= 50 && x.Breedte < 100 || x.Hoogte >= 50 && x.Hoogte < 100)) 
+                .Where(x => request.Grootte == null || (request.Grootte.Contains("Large") && (x.Lengte >= 100 || x.Breedte >= 100 || x.Hoogte >= 100)) ||
+                            (request.Grootte.Contains("Medium") && (x.Lengte >= 50 && x.Lengte < 100 || x.Breedte >= 50 && x.Breedte < 100 || x.Hoogte >= 50 && x.Hoogte < 100))
                             || (request.Grootte.Contains("Small") && (x.Lengte < 50 || x.Breedte < 50 || x.Hoogte < 50)))
-                .Select(x => new Kunstwerk_DTO.Index() {
+
+                .Where(x => request.BetaalOpties == null || request.BetaalOpties.Contains("Buy") && x.TeKoop == true)
+                .Where(x => request.BetaalOpties == null || request.BetaalOpties.Contains("Bid") && x.IsVeilbaar == true)
+                .Select(x => new Kunstwerk_DTO.Index()
+                {
                     Id = x.Id,
                     Naam = x.Naam,
                     HoofdFoto = new Foto_DTO(x.Fotos.FirstOrDefault().Naam, x.Fotos.FirstOrDefault().Locatie), //enkel eerste foto is nodig voor index
                     Materiaal = x.Materiaal,
-                    Kunstenaar = new Kunstenaar_DTO {
+                    Kunstenaar = new Kunstenaar_DTO
+                    {
                         Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
                         GebruikerId = x.Kunstenaar.GebruikerId,
                     },
                     Prijs = x.Prijs
                 })
+
                 .Where(x => string.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))
                 .Where(x => string.IsNullOrEmpty(request.Kunstenaar) || x.Kunstenaar.Gebruikersnaam.Contains(request.Kunstenaar))
                 .Where(x => request.MinimumPrijs.Equals(default(int)) || x.Prijs >= request.MinimumPrijs)
@@ -99,7 +110,8 @@ namespace Project3H04.Server.Services {
             };
         }
 
-        public async Task<KunstwerkResponse.Edit> UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId) {
+        public async Task<KunstwerkResponse.Edit> UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)
+        {
             //eerst nieuwe foto's regelen
             var uploadUris = UploadFotos(kunstwerk.NieuweFotos);
 
@@ -121,7 +133,8 @@ namespace Project3H04.Server.Services {
 
             //nodige fotos verwijderen
             List<Foto> teVerwijderen = kunstwerkToUpdate.Fotos.Where(x => !updatedFotoLijst.Contains(x)).ToList(); //alle fotos in de databank die niet in de updatedFotlijst staan moeten verwijderd worden
-            if (teVerwijderen.Any()) {
+            if (teVerwijderen.Any())
+            {
                 dbContext.Fotos.RemoveRange(teVerwijderen);
             }
 
