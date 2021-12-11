@@ -19,7 +19,7 @@
                 {
                     <span style="font-size: 1rem; color: dimgray">
                         @{
-                            TimeSpan ts = bod.Datum - DateTime.Now;
+                            TimeSpan ts = DateTime.Now - bod.Datum; //stond omgekeerd
                             if (ts.Days > 1)
                             {
                                 <span>@ts.Days days ago</span>
