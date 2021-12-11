@@ -9,10 +9,10 @@
 @if (_kunstwerk != null)
 {
     <EditArtwork Model="@_kunstwerk" OnRedirect=@RedirectPage />
-    <a class="btn btn-secondary" href="/artworks">
+    <button class="btn btn-secondary" @onclick="@RedirectPage">
         <i class="fas fa-chevron-left"></i>
         <span>Cancel</span>
-    </a>
+    </button>
 }
 else
 {

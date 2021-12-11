@@ -15,7 +15,7 @@
         {
             <p style="font-weight: bold">Previous bids:</p>
             <p>
-                @foreach (var bod in Veiling.BodenOpVeiling.TakeLast(4).SkipLast(1))
+                @foreach (var bod in Veiling.BodenOpVeiling.TakeLast(4).Skip(1))
                 {
                     <span style="font-size: 1rem; color: dimgray">
                         @{
@@ -60,7 +60,7 @@
             <button class="btn btn-secondary ml-1" @onclick="PlaceBid">Place bid</button>
         } else
         {
-            <text>You have the highest bid!</text>
+            <span>You have the highest bid!</span>
         }
     }
 }
@@ -136,13 +136,16 @@ else
         if (responseResult)
         {
             toastService.ShowToast(ToastLevel.Success, "Bid successfully placed");
+            //dit moet toch enkel als het bieden lukt?
+            await SetProperties(); 
+            StateHasChanged();
+            //also, kunnen we niet gewoon het bod locaal toevoegen, we weten toch wanneer het gelukt is? 
         }
         else
         {
             toastService.ShowToast(ToastLevel.Error, "Bid was not placed");
         }
 
-        await SetProperties();
-        StateHasChanged();
+
     }
 }

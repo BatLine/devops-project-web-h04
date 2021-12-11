@@ -14,6 +14,7 @@ namespace Project3H04.Shared.Veilingen {
         public int MinPrijs { get; set; }
         public IEnumerable<Bod_DTO> BodenOpVeiling { get; set; }
         public Kunstwerk_DTO.Detail Kunstwerk { get; set; }
-        public Bod_DTO HoogsteBod => BodenOpVeiling.OrderByDescending(b => b.BodPrijs).FirstOrDefault();
+        public Bod_DTO HoogsteBod => BodenOpVolgorde.FirstOrDefault();
+        public IEnumerable<Bod_DTO> BodenOpVolgorde => BodenOpVeiling.OrderByDescending(b => b.BodPrijs);
     }
 }
