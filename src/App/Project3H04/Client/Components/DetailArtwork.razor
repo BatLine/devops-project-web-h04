@@ -31,6 +31,7 @@
                     @if (user.Identity.Name == Kunstwerk.Kunstenaar.Email || user.IsInRole("Administrator"))
                     {
                         <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
+                        <a class="btn btn-secondary" href="auction/@Kunstwerk.Id">Manage Auction</a>
                     }
                 </AuthorizeView>
                 <AuthorizeView>

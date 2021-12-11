@@ -1,0 +1,21 @@
+﻿@page "/auction/{id:int}"
+@inject PublicClient httpClient
+<AuthorizeView>
+    <button>Veiling aanmaken</button>
+    <button>Veiling bewerken</button>
+</AuthorizeView>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private Kunstwerk_DTO.Detail _kunstwerk;
+    private Veiling_DTO _veiling;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _kunstwerk = await httpClient.Client.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/Kunstwerk/{Id}");
+        if(_kunstwerk.IsVeilbaar)
+        {
+            _veiling = await httpClient.Client.GetFromJsonAsync<Veiling_DTO>($"api/GetByKunstwerkId/{_kunstwerk.Id}");
+        }
+    }
+}

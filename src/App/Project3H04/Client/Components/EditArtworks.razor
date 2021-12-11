@@ -8,17 +8,18 @@
         @foreach (Kunstwerk_DTO.Index k in kunstenaar.Kunstwerken)
         {
 
-            <div class="col-3">
-                <a href="artworks/@k.Id" style="text-decoration:none">
-                    <div class="image">
-                        <img src="@k.HoofdFoto.Pad" />
-                    </div>
-                </a>
-                <p class="artwork">@k.Naam</p>
-
-                <a class="btn btn-light btn-xl" @onclick="(()=>OpenEditSidepanel(k))" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">Edit</a>
-
+    <div class="col-3">
+        <a href="artworks/@k.Id" style="text-decoration:none">
+            <div class="image">
+                <img src="@k.HoofdFoto.Pad" />
             </div>
+        </a>
+        <p class="artwork">@k.Naam</p>
+
+        <a class="btn btn-light btn-xl" @onclick="(()=>OpenEditSidepanel(k))" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">Edit</a>
+        <a class="btn btn-light btn-xl" href="auction/@k.Id" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">Manage Auction</a>
+
+    </div>
         }
     }
     else
