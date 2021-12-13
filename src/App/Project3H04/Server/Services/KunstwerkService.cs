@@ -76,15 +76,14 @@ namespace Project3H04.Server.Services {
             return kunstwerken;
         }
 
-        public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk, int gebruikerId)
+        public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk/*, int gebruikerId*/)
         {
             //eerst nieuwe foto's regelen
             var uploadUris = UploadFotos(kunstwerk.NieuweFotos);
 
             List<Foto> fotos = kunstwerk.NieuweFotos.Select(fotoDTO => new Foto(fotoDTO.Naam, fotoDTO.Locatie)).ToList();
 
-
-            Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.GebruikerId == gebruikerId);
+            Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.Email == kunstwerk.KunstenaarEmail);
 
             Kunstwerk kunstwerkToCreate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, kunstwerk.Lengte, kunstwerk.Breedte, kunstwerk.Hoogte, kunstwerk.Gewicht, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
 

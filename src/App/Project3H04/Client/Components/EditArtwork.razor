@@ -108,6 +108,9 @@ else
 
 
 @code{
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private string userEmail = string.Empty;
     //parameter zodat we het ook als Edit formulier kunnen gebruiken
     [Parameter] public Kunstwerk_DTO.Create Model { get; set; }
     [Parameter] public EventCallback OnRedirect { get; set; }
@@ -128,6 +131,10 @@ else
     {
         _materialen = await httpClient.GetFromJsonAsync<List<string>>($"api/kunstwerk/materiaal/{5}");
         await base.OnParametersSetAsync();
+
+        var user = (await authenticationStateTask).User;
+        userEmail = user.Identity.Name;
+        Model.KunstenaarEmail = userEmail;
     }
 
     public async Task Submit()
@@ -174,6 +181,7 @@ else
         }
         else if (Model is Kunstwerk_DTO.Create)
         {
+
             //API call "POST"
             var response = await httpClient.PostAsJsonAsync<Kunstwerk_DTO.Create>($"api/kunstwerk", Model);
             response.EnsureSuccessStatusCode();

@@ -50,8 +50,8 @@ namespace Project3H04.Server.Controllers
         public Task<KunstwerkResponse.Create> Create(Kunstwerk_DTO.Create kunst)
         {
 
-            int gebruikerId = GetAangemeldeGebruikerId();
-            return kunstwerkService.CreateAsync(kunst, gebruikerId);
+            //int gebruikerId = GetAangemeldeGebruikerId();
+            return kunstwerkService.CreateAsync(kunst);
         }
 
 

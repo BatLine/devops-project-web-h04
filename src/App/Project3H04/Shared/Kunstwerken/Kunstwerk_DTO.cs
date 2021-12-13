@@ -69,6 +69,7 @@ namespace Project3H04.Shared.Kunstwerken
             public decimal Hoogte { get; set; }
             public decimal Gewicht { get; set; }
             public DateTime Einddatum { get; set; }
+            public string KunstenaarEmail { get; set; }
 
             public List<Foto_DTO> NieuweFotos => Fotos.Where(f => f.Uploaded == false).ToList();
         }
