@@ -47,6 +47,8 @@ namespace Project3H04.Shared.Kunstwerken
             public List<string> Materiaal { get; set; }
             public List<string> Grootte { get; set; }
             public string Kunstenaar { get; set; }
+            public List<string> BetaalOpties { get; set; }
+
 
         }
 
