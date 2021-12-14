@@ -31,22 +31,8 @@
                 <InputNumber @bind-Value="@Model.Gewicht" class="form-control" />
             </div>
             <!--Fotos-->
-            <div class="form-group">
-                <label>Pictures: </label>
-                <InputFile OnChange="@OnInputFileChange" multiple accept="image/*" />
-                <div>
-                    @foreach (var foto in Model.Fotos)
-                    {
-                        <div class="form-control-file">
-                            <img src="@foto.Pad" alt="@foto.Naam" width="250" height="250" style="padding-right:20px;" />
-
-                            <button type="button" class="btn btn-secondary" @onclick="() => RemoveImage(foto)">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    }
-                </div>
-            </div>
+            <EditFotos Fotos="Model.Fotos" ImageFiles="_imagesFiles" />
+            <!--TeKoop?-->
             <div class="form-group">
                 <label>
                     For Sale
@@ -89,9 +75,9 @@
                 <span>Confirm</span>
             </button>
             <!--<a class="btn btn-secondary" href="/">
-                <i class="fas fa-chevron-left"></i>
-                <span>Cancel</span>
-            </a>-->
+        <i class="fas fa-chevron-left"></i>
+        <span>Cancel</span>
+    </a>-->
 
         </EditForm>
     </div>
@@ -196,21 +182,6 @@ else
         {
             //Error
         }
-    }
-
-    private void OnInputFileChange(InputFileChangeEventArgs e)
-    {
-
-        foreach (var file in e.GetMultipleFiles())
-        {
-            _imagesFiles.Add(file); //volledig bestand hier tijdelijk opslaan tot het op blob komt
-            Model.Fotos.Add(new() { Naam = file.Name }); //geven we mee aan databank
-        }
-    }
-
-    private void RemoveImage(Foto_DTO foto)
-    {
-        Model.Fotos.Remove(foto);
     }
 
 }
