@@ -89,12 +89,12 @@ namespace Project3H04.Server.Services
 
         public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk/*, int gebruikerId*/)
         {
-            //eerst nieuwe foto's regelen
-            var uploadUris = ManageUploadUris(kunstwerk.NieuweFotos);
+            Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.Email == kunstwerk.KunstenaarEmail);
+            //eerst nieuwe foto's regelen, belangrijk want fotonamen worden ook aangepast!
+            var uploadUris = ManageUploadUris(kunstwerk.NieuweFotos, kunstenaar.GebruikerId);
 
             List<Foto> fotos = kunstwerk.NieuweFotos.Select(fotoDTO => new Foto(fotoDTO.Naam, fotoDTO.Locatie)).ToList();
 
-            Kunstenaar kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.Email == kunstwerk.KunstenaarEmail);
 
             Kunstwerk kunstwerkToCreate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, kunstwerk.Lengte, kunstwerk.Breedte, kunstwerk.Hoogte, kunstwerk.Gewicht, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
 
@@ -113,7 +113,7 @@ namespace Project3H04.Server.Services
         {
             KunstwerkResponse.Edit response = new();
             //eerst nieuwe foto's regelen
-            response.UploadUris = ManageUploadUris(kunstwerk.NieuweFotos);
+            response.UploadUris = ManageUploadUris(kunstwerk.NieuweFotos, gebruikerId);
 
             /*if (kunstwerk.KunstenaarId != gebruikerId) {
                 throw new ArgumentException();
@@ -155,16 +155,17 @@ namespace Project3H04.Server.Services
                 .ToList();
         }
 
-        private IList<Uri> ManageUploadUris(IList<Foto_DTO> nieuweFotos)
+        private IList<Uri> ManageUploadUris(IList<Foto_DTO> nieuweFotos, int gebruikerId)
         {
             IList<Uri> uploadUris = new List<Uri>();
             foreach (var foto in nieuweFotos)
             {
-                var imageFilename = Path.Combine("Kunstwerken", Guid.NewGuid().ToString(), foto.Naam);
-                uploadUris.Add(storageService.CreateUploadUri(imageFilename));
+                var imageFolderPath = Path.Combine("Kunstwerken", $"{gebruikerId}", Guid.NewGuid().ToString());
+                var imageFileName = Path.Combine(imageFolderPath, foto.Naam);
+                uploadUris.Add(storageService.CreateUploadUri(imageFileName));
 
-                foto.Locatie = storageService.StorageBaseUri; //opslaan in db
-                foto.Naam = imageFilename;
+                foto.Locatie = Path.Combine(storageService.StorageBaseUri, imageFolderPath); //opslaan in db
+                //foto.Naam = foto.Naam;
             }
 
             return uploadUris;
