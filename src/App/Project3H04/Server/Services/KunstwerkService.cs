@@ -90,7 +90,7 @@ namespace Project3H04.Server.Services
         public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk/*, int gebruikerId*/)
         {
             //eerst nieuwe foto's regelen
-            var uploadUris = UploadFotos(kunstwerk.NieuweFotos);
+            var uploadUris = ManageUploadUris(kunstwerk.NieuweFotos);
 
             List<Foto> fotos = kunstwerk.NieuweFotos.Select(fotoDTO => new Foto(fotoDTO.Naam, fotoDTO.Locatie)).ToList();
 
@@ -111,8 +111,9 @@ namespace Project3H04.Server.Services
 
         public async Task<KunstwerkResponse.Edit> UpdateAsync(Kunstwerk_DTO.Edit kunstwerk, int gebruikerId)
         {
+            KunstwerkResponse.Edit response = new();
             //eerst nieuwe foto's regelen
-            var uploadUris = UploadFotos(kunstwerk.NieuweFotos);
+            response.UploadUris = ManageUploadUris(kunstwerk.NieuweFotos);
 
             /*if (kunstwerk.KunstenaarId != gebruikerId) {
                 throw new ArgumentException();
@@ -123,6 +124,14 @@ namespace Project3H04.Server.Services
             Kunstwerk kunstwerkToUpdate = dbContext.Kunstwerken.Include(k => k.Fotos).FirstOrDefault(x => x.Id == kunstwerk.Id);
             kunstwerkToUpdate.Edit(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Lengte, kunstwerk.Breedte, kunstwerk.Hoogte, kunstwerk.Gewicht, kunstwerk.Beschrijving, kunstwerk.IsVeilbaar, kunstwerk.Materiaal);
 
+            //nodige fotos verwijderen
+            List<Foto> teVerwijderenFotos = kunstwerkToUpdate.Fotos.Where(x => !updatedFotoLijst.Contains(x)).ToList(); //alle fotos in de databank die niet in de updatedFotlijst staan moeten verwijderd worden
+            if (teVerwijderenFotos.Any())
+            {
+                await DeleteFotos(teVerwijderenFotos); //meegeven aan frontend om blob leeg te halen
+            }
+
+
             //final foto update
             kunstwerkToUpdate.Fotos = updatedFotoLijst;
 
@@ -130,16 +139,9 @@ namespace Project3H04.Server.Services
             dbContext.Kunstwerken.Update(kunstwerkToUpdate);
             await dbContext.SaveChangesAsync();
 
-            //nodige fotos verwijderen
-            List<Foto> teVerwijderen = kunstwerkToUpdate.Fotos.Where(x => !updatedFotoLijst.Contains(x)).ToList(); //alle fotos in de databank die niet in de updatedFotlijst staan moeten verwijderd worden
-            if (teVerwijderen.Any())
-            {
-                dbContext.Fotos.RemoveRange(teVerwijderen);
-            }
 
-            await dbContext.SaveChangesAsync();
 
-            return new KunstwerkResponse.Edit() { UploadUris = uploadUris };
+            return response;
         }
 
         public async Task<List<string>> GetMediums(int amount) //aantal meestvoorkomende mediums ophalen
@@ -153,10 +155,10 @@ namespace Project3H04.Server.Services
                 .ToList();
         }
 
-        private IList<Uri> UploadFotos(IList<Foto_DTO> nieuweFotos)
+        private IList<Uri> ManageUploadUris(IList<Foto_DTO> nieuweFotos)
         {
             IList<Uri> uploadUris = new List<Uri>();
-            foreach (Foto_DTO foto in nieuweFotos)
+            foreach (var foto in nieuweFotos)
             {
                 var imageFilename = Path.Combine("Kunstwerken", Guid.NewGuid().ToString(), foto.Naam);
                 uploadUris.Add(storageService.CreateUploadUri(imageFilename));
@@ -165,8 +167,14 @@ namespace Project3H04.Server.Services
                 foto.Naam = imageFilename;
             }
 
-
             return uploadUris;
+        }
+        private async Task DeleteFotos(IList<Foto> teVerwijderenFotos)
+        {
+            foreach (var foto in teVerwijderenFotos)
+            {
+                await storageService.DeleteImage(foto.Pad);
+            }
         }
     }
 }
