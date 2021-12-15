@@ -27,7 +27,8 @@ namespace Project3H04.Server.Services
                 GebruikerId = x.GebruikerId,
                 Details = x.Details,
                 Email = x.Email,
-                Fotopad = x.FotoPad
+                Fotopad = x.FotoPad,
+                GeboorteDatum = x.Geboortedatum
             });
 
             return g;
