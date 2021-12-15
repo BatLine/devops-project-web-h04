@@ -36,7 +36,7 @@ namespace Project3H04.Server.Controllers
 
         // creates payment and order
 
-        [HttpPost,ActionName("Mollie")]
+        [HttpPost, ActionName("Mollie")]
         public async Task<IActionResult> CreateOrder(Bestelling_DTO.Create bestelling)
         {
             int i = await OrderService.PostOrderAsync(bestelling);
@@ -46,36 +46,66 @@ namespace Project3H04.Server.Controllers
             {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
                 Description = $"HoopGallery test payment",
-                WebhookUrl= "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus",    // uses ngrok      
+                WebhookUrl = "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus",    // uses ngrok      
                 RedirectUrl = $"https://hooopgallery-acceptatie.azurewebsites.net/ordersuccessful/{i}",
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,
                    PaymentMethod.CreditCard,
                    PaymentMethod.DirectDebit }
             };
-           //int id =  OrderService.PostOrderAsync(bestelling);
+            //int id =  OrderService.PostOrderAsync(bestelling);
             PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
             string paymentId = paymentResponse.Id;
             await OrderService.PutOrderAsync(paymentId, i);
             Console.WriteLine(paymentRequest.RedirectUrl);
-           // await OrderService.PostOrderAsync(bestelling);
+            // await OrderService.PostOrderAsync(bestelling);
             // paymentResponse.Links.Checkout;
             return Ok(paymentResponse);
-            
+
             //return Redirect(paymentResponse.Links.Checkout.ToString());
 
         }
+        [HttpPost, ActionName("MollieAndroid")]
+        public async Task<IActionResult> CreateOrderAndroid(Bestelling_DTO.Create bestelling)
+        {
+            int i = await OrderService.PostOrderAsync(bestelling);
+            //int id = await OrderService.PostOrderAsync(bestelling);
+            IPaymentClient paymentClient = new PaymentClient("test_5hj5GaUDpQDyrhVK4yqRfhV4PnERfn");
+            PaymentRequest paymentRequest = new PaymentRequest()
+            {
+                Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
+                Description = $"HoopGallery test payment",
+                WebhookUrl = "https://webshop.example.org/payments/webhook/",    // uses ngrok      
+                RedirectUrl = "com.hooop.android://payment-return",
+                Methods = new List<string>() {
+                   PaymentMethod.Ideal,
+                   PaymentMethod.CreditCard,
+                   PaymentMethod.DirectDebit 
+                }
+            };
+            //int id =  OrderService.PostOrderAsync(bestelling);
+            PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
+            string paymentId = paymentResponse.Id;
+            await OrderService.PutOrderAsync(paymentId, i);
+            Console.WriteLine(paymentRequest.RedirectUrl);
+            // await OrderService.PostOrderAsync(bestelling);
+            // paymentResponse.Links.Checkout;
+            return Ok(paymentResponse.Links.Checkout.Href);
 
+            //return Redirect(paymentResponse.Links.Checkout.ToString());
+
+        }
+     
         // This method doesn't get used anymore, Create Order creates the payment and bestelling
 
         // [HttpGet("{id}")]
-/*        [HttpPost, ActionName("persistOrder")]  
-        public async Task<int> PostOrder(Bestelling_DTO.Create bestelling)
-        {
-            // Klant_DTO k = KlantService.GetKlantById(1).Result;
-            return await OrderService.PostOrderAsync(bestelling);
-            //await Task.Delay(500);
-        }*/
+        /*        [HttpPost, ActionName("persistOrder")]  
+                public async Task<int> PostOrder(Bestelling_DTO.Create bestelling)
+                {
+                    // Klant_DTO k = KlantService.GetKlantById(1).Result;
+                    return await OrderService.PostOrderAsync(bestelling);
+                    //await Task.Delay(500);
+                }*/
 
         //[HttpPost, ActionName("orderstatus")]
         [HttpPost, ActionName("orderstatus")]

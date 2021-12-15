@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Project3H04.Shared.Fotos;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,5 +38,16 @@ namespace Project3H04.Server.Services
             var sas = blobClient.GenerateSasUri(blobSasBuilder);
             return sas;
         }
+
+        public Task DeleteImage(string fullURL)
+        {
+            string filename = Path.GetRelativePath(StorageBaseUri, fullURL);
+            var blobServiceClient = new BlobServiceClient(connectionString);
+            var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+            BlobClient blobClient = containerClient.GetBlobClient(filename);
+            return blobClient.DeleteIfExistsAsync();
+        }
+
+        
     }
 }

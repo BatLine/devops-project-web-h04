@@ -47,6 +47,8 @@ namespace Project3H04.Shared.Kunstwerken
             public List<string> Materiaal { get; set; }
             public List<string> Grootte { get; set; }
             public string Kunstenaar { get; set; }
+            public List<string> BetaalOpties { get; set; }
+
 
         }
 
@@ -69,6 +71,7 @@ namespace Project3H04.Shared.Kunstwerken
             public decimal Hoogte { get; set; }
             public decimal Gewicht { get; set; }
             public DateTime Einddatum { get; set; }
+            public string KunstenaarEmail { get; set; }
 
             public List<Foto_DTO> NieuweFotos => Fotos.Where(f => f.Uploaded == false).ToList();
         }

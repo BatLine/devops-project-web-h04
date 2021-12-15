@@ -56,7 +56,7 @@ namespace Project3H04.Server.Services
                 }
             Address adres = new Address(bestelling.Land, bestelling.Gemeente, bestelling.Postcode, bestelling.Straat);
                 Bestelling b = new Bestelling(DateTime.UtcNow, adres/* bestelling.Straat, bestelling.Postcode, bestelling.Gemeente,*/, bestelling.PaymentId, bestelling.TotalePrijs, kunstwerken);
-                Klant k = DbContext.Gebruikers.OfType<Klant>().FirstOrDefault(k => k.GebruikerId == 1);
+                Klant k = DbContext.Gebruikers.OfType<Klant>().FirstOrDefault(k => k.GebruikerId == 3);
                 k.Bestellingen.Add(b);
 
                 DbContext.Kunstwerken.UpdateRange(kunstwerken);
