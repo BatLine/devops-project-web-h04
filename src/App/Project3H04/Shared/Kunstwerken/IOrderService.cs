@@ -1,4 +1,5 @@
 ﻿using Project3H04.Shared.DTO;
+using Project3H04.Shared.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace Project3H04.Shared.Kunstwerken
         
         bool Bestellingexists(int id);
         public Task PutOrderAsync(string id, int bestellingId);
+        Task<OrderResponse.Detail> GetUserOrders(string email);
+        Task<Bestelling_DTO.Index> GetBestelling(int id);
         //public Task CreateBestelling();
     }
 }

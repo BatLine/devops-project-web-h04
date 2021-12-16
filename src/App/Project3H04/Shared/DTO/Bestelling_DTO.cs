@@ -10,15 +10,17 @@ namespace Project3H04.Shared.DTO
 {
     public static class Bestelling_DTO
     {
-        public class Index {  
+        public class Index {
+        public int Id { get; set; }
         public DateTime Datum { get; set; }
         public string Straat { get; set; }
         public string Postcode { get; set; }
         public string Gemeente { get; set; }
-        public DateTime LeverDatum { get; set; }
+        //public DateTime LeverDatum { get; set; }
         public decimal TotalePrijs { get; set; }
         public ICollection<Kunstwerk_DTO.Detail> WinkelmandKunstwerken { get; set; }
         }
+
         public class Create
         {
            // public DateTime Datum { get; set; }
