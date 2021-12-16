@@ -8,10 +8,13 @@ using Mollie.Api.Models.Payment.Response;
 using Project3H04.Shared.DTO;
 using Project3H04.Shared.Klant;
 using Project3H04.Shared.Kunstwerken;
+using Project3H04.Shared.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+
 
 namespace Project3H04.Server.Controllers
 {
@@ -28,10 +31,25 @@ namespace Project3H04.Server.Controllers
             KlantService = klantservice;
         }
 
+        [HttpGet("{id}"), ActionName("get")]
+        public Task <Bestelling_DTO.Index> GetBestelling(int id)
+        {
+            return OrderService.GetBestelling(id);
+        }
+
         [HttpGet("{Id}"), ActionName("exists")]
         public bool CheckIfBestellingExists(int id)
         {
             return OrderService.Bestellingexists(id);
+        }
+
+        [HttpGet("{userEmail}"), ActionName("myOrders")]
+        public async Task<IEnumerable<Bestelling_DTO.Index>> GetBestellingenByUser(string userEmail)
+        {
+            await Task.Delay(10);
+            //var authState = await AuthProvider.GetAuthenticationStateAsync();
+            OrderResponse.Detail response = await OrderService.GetUserOrders(userEmail);
+            return response.Bestellingen;
         }
 
         // creates payment and order
