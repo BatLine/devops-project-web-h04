@@ -13,6 +13,7 @@ namespace Project3H04.Client.Components
     {
         [Parameter] public int GebruikerId { get; set; }
         [Parameter] public Gebruiker_DTO gebruiker { get; set; }
+        [Parameter] public EventCallback OnRedirect { get; set; }
         //public Kunstenaar_DTO kunstenaar;
         private Gebruiker_DTO model = new();
         //public Klant_DTO klant { get; set; }
@@ -57,8 +58,10 @@ namespace Project3H04.Client.Components
         private async Task EditGebruikerAsync()
         {
             await httpClient.PutAsJsonAsync($"api/Gebruiker/{GebruikerId}", model);
-            //na edit terug naar account page om geg te zien
-            NavigationManager.NavigateTo("/account", forceLoad: true); //TODO: miss hier geen hard refresh, bij finetunen dit verbeteren
+            //na edit terug naar account page om geg te zien   
+            await OnRedirect.InvokeAsync();
+           // StateHasChanged();
         }
+
     }
 }

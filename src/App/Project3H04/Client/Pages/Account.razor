@@ -41,7 +41,6 @@
             <!-- Page Content  -->
             <!--eerst de algemene attributen als geb tonen en dan bv voor bestellingen of kunstwerken te tonen, de klant of kunstenaar obj gebruiken !!!-->
             <!--algemene dingen tonen met bestellingen en als kunstenaar(AuthorizeView) dan vanonder of een tab om als kunstenaar uw kunstwerken te zien en te editen-->
-
             @*<EditAccount GebruikerId="@geb.GebruikerId" gebruiker="@geb" />*@
             <!--hier de extra als kunstenaar dan zijn kunstwerken tonen-->
 
@@ -59,8 +58,8 @@
                 }
                 else
                 {
-                    <EditAccount GebruikerId="@geb.GebruikerId" gebruiker="@geb" />
-                    <button type="button" class="button is-link is-light is-fullwidth" @onclick="Showgeg">Annuleren</button>
+                    <EditAccount GebruikerId="@geb.GebruikerId" gebruiker="@geb" OnRedirect="callback" /><!-- hoe na de edit, de editForm bool terug op false zetten?-->
+                    <button type="button" class="button is-link is-light is-fullwidth" @onclick="Showgeg">Return</button>
                 }
 
             }
@@ -79,10 +78,12 @@
     private Gebruiker_DTO geb = new Gebruiker_DTO();
     private Klant_DTO klant = new Klant_DTO();
     private Kunstenaar_DTO kunst = new Kunstenaar_DTO();
-    private bool editForm = false;
+    private bool editForm = false; //TODO: hoe na de edit, de editForm bool terug op false zetten?
 
     private bool showArtworks = false;
     private bool showProfile = true;
+    //zo geen hard refresh door callback mee te geven aan de edit form
+    EventCallback callback;
     protected override async Task OnParametersSetAsync()
     {
         //de user ophalen uit auth en kijken welke soort user het is
@@ -109,6 +110,7 @@
 
     public void ShowEditForm() {
         editForm = true;
+        callback = EventCallback.Factory.Create(this, RedirectPage);
     }
 
     public void Showgeg() {
@@ -119,6 +121,11 @@
     {
         showArtworks = true;
         showProfile = false;
+    }
+    private async Task RedirectPage()
+    {
+        this.OnParametersSetAsync();
+
     }
     //public void OpenEditSidePanel()
     //{
