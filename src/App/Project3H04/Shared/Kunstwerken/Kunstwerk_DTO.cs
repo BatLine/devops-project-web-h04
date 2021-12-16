@@ -19,6 +19,8 @@ namespace Project3H04.Shared.Kunstwerken
             public DateTime Einddatum { get; set; }
             public Kunstenaar_DTO Kunstenaar { get; set; }
             public Foto_DTO HoofdFoto { get; set; }
+            public bool TeKoop { get; set; }
+            public bool IsVeilbaar { get; set; }
         }
 
         public class Detail : Index
@@ -29,8 +31,8 @@ namespace Project3H04.Shared.Kunstwerken
             public decimal Gewicht { get; set; }
             public List<Foto_DTO> Fotos { get; set; }
             public string Beschrijving { get; set; }
-            public bool TeKoop { get; set; }
-            public bool IsVeilbaar { get; set; }
+            //public bool TeKoop { get; set; }
+            //public bool IsVeilbaar { get; set; }
 
 
             public Detail()

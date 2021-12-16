@@ -75,7 +75,9 @@ namespace Project3H04.Server.Services
                         Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
                         GebruikerId = x.Kunstenaar.GebruikerId,
                     },
-                    Prijs = x.Prijs
+                    Prijs = x.Prijs,
+                    TeKoop = x.TeKoop //voor tekoop icon
+                    ,IsVeilbaar = x.IsVeilbaar
                 })
 
                 .Where(x => string.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))
