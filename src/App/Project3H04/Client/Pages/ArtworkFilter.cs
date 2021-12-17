@@ -15,6 +15,7 @@ namespace Project3H04.Client.Pages
         private List<String> buyingOptions;
         private int minimumPrice;
         private int maximumPrice;
+        private int page;
 
         public string ArtistSearchterm
         {
@@ -78,6 +79,16 @@ namespace Project3H04.Client.Pages
             set
             {
                 maximumPrice = value;
+                NotifyStateChanged();
+            }
+        }
+
+        public int Page
+        {
+            get => page;
+            set
+            {
+                page = value;
                 NotifyStateChanged();
             }
         }

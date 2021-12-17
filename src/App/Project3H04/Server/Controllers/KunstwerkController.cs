@@ -104,6 +104,12 @@ namespace Project3H04.Server.Controllers
             return kunstwerkService.GetMediums(amount);
         }
 
+        [HttpGet("aantalKunst")]
+        public Task<int> GetAantalKunst()
+        {
+            return kunstwerkService.GetAantalKunst();
+        }
+
         private int GetAangemeldeGebruikerId()
         {
             //fakedata: 

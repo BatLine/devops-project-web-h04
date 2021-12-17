@@ -3,12 +3,13 @@
 @attribute [AllowAnonymous]
 <!--=> Deze http PublicClient gebruiken voor Anonymous-->
 @inject PublicClient httpClient
-
+<head><link rel="stylesheet" href="_content/LoreSoft.Blazor.Controls/BlazorControls.css" /></head>
 <body>
     <div class="container">
         <p class="black-style" style="padding-left:25em;justify-content:left;">Artworks</p>
         <div class="row">
-            <div class="filter-container"> <!--Filters-->
+            <div class="filter-container">
+                <!--Filters-->
                 <div class="col-md-12 col-lg-10 col-xl-10">
                     <ul>
                         <li>
@@ -127,7 +128,7 @@
                                                 </svg>
                                             }
                                         </p>
-                                       
+
                                     </div>
 
                                 </a>
@@ -138,7 +139,11 @@
             </div>
         </div>
     </div>
-
+    <div class="text-center" style="flex:auto;">
+        <button class="btn btn-secondary" @onclick="PrevPage" disabled="@HasNoPrev">Prev</button>
+        <p class="artwork"> page: @filter.Page</p>
+        <button class="btn btn-secondary" @onclick="NextPage" disabled="@HasNoNext">Next</button>
+    </div>
 </body>
 
 @code {
@@ -148,6 +153,7 @@
 
     private List<Kunstwerk_DTO.Index> kunstwerken;
     private List<Kunstwerk_DTO.Index> kunstCopy;
+    private int aantalKunst;
 
     private List<String> selectedMediums = new();
     private List<String> selectedSizes = new();
@@ -155,8 +161,15 @@
 
     private ArtworkFilter filter = new();
 
+    public int TotalPages;
+    public bool HasNoPrev => !(filter.Page > 0);
+    public bool HasNoNext => !(filter.Page < TotalPages-1);
+
     protected override async Task OnInitializedAsync()
     {
+        //voor paging
+        aantalKunst = await httpClient.Client.GetFromJsonAsync<int>($"api/Kunstwerk/aantalKunst"); Console.WriteLine("aantalKunst: "+aantalKunst);
+        TotalPages = (int)Math.Ceiling(aantalKunst / (double)4);
 
         kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk");
         kunstCopy = kunstwerken;
@@ -220,13 +233,23 @@
             Materiaal = filter.Mediums,
             Grootte = filter.Sizes,
             Kunstenaar = filter.ArtistSearchterm,
-            BetaalOpties = filter.BuyingOptions
-
+            BetaalOpties = filter.BuyingOptions,
+            Page = filter.Page
         };
         var queryParameters = request.GetQueryString();
         kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?{queryParameters}");
         StateHasChanged(); // Since it's not a UI-event.
     }
 
+    public void NextPage()
+    {
+        filter.Page+=1;
+        Console.WriteLine("page:"+filter.Page);
+    }
+    public void PrevPage()
+    {
+        filter.Page -= 1;
+        Console.WriteLine("page:" + filter.Page);
+    }
 }
 

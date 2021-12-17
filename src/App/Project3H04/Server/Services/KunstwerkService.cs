@@ -27,7 +27,10 @@ namespace Project3H04.Server.Services
             this.dbContext = dbContext;
             this.storageService = storageService;
         }
-
+        public async Task<int> GetAantalKunst()
+        {
+            return await dbContext.Kunstwerken.CountAsync();
+        }
         public async Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id)
         {
             return await dbContext.Kunstwerken.Include(k => k.Fotos).Select(x => new Kunstwerk_DTO.Detail
@@ -83,8 +86,8 @@ namespace Project3H04.Server.Services
                 .Where(x => string.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))
                 .Where(x => string.IsNullOrEmpty(request.Kunstenaar) || x.Kunstenaar.Gebruikersnaam.Contains(request.Kunstenaar))
                 .Where(x => request.MinimumPrijs.Equals(default(int)) || x.Prijs >= request.MinimumPrijs)
-                .Where(x => request.MaximumPrijs.Equals(default(int)) || x.Prijs <= request.MaximumPrijs)
-                .Take(15).ToListAsync();
+                .Where(x => request.MaximumPrijs.Equals(default(int)) || x.Prijs <= request.MaximumPrijs).Skip(4 * request.Page)
+                .Take(4).ToListAsync(); Console.WriteLine("pagee"+request.Page); //skip moet eerst en dan take, in oef opl is andersom=fout
 
             return kunstwerken;
         }

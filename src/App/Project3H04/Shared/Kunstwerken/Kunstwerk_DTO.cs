@@ -51,6 +51,7 @@ namespace Project3H04.Shared.Kunstwerken
             public string Kunstenaar { get; set; }
             public List<string> BetaalOpties { get; set; }
 
+            public int Page { get; set; }
 
         }
 
