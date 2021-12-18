@@ -46,13 +46,13 @@ namespace Project3H04.Server.Data {
             builder.Entity<Kunstwerk>().ToTable("Kunstwerk").HasKey(x => x.Id);
             builder.Entity<Kunstwerk>().Property(x => x.Naam).HasMaxLength(500).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.Beschrijving).HasMaxLength(500).IsRequired();
-            builder.Entity<Kunstwerk>().Property(x => x.Einddatum).IsRequired();
+            builder.Entity<Kunstwerk>().Property(x => x.Einddatum); //wat is hier het nut van, dit wordt nooit gebruikt
             //builder.Entity<Kunstwerk>().Property(x => x.Fotos);
             builder.Entity<Kunstwerk>().Property(x => x.Lengte).IsRequired();
             builder.Entity<Kunstwerk>().Property(x => x.Breedte);
             builder.Entity<Kunstwerk>().Property(x => x.Gewicht);
             builder.Entity<Kunstwerk>().Property(x => x.Hoogte).IsRequired();
-            builder.Entity<Kunstwerk>().Property(x => x.IsVeilbaar).IsRequired();
+            builder.Entity<Kunstwerk>().Property(x => x.IsVeilbaar); //fuck dees, waarom is dit een waarde in de database
             builder.Entity<Kunstwerk>().Property(x => x.Materiaal).IsRequired().HasMaxLength(100);
             builder.Entity<Kunstwerk>().Property(x => x.Naam).IsRequired().HasMaxLength(100);
             //builder.Entity<Kunstwerk>().Property(x => x.NaamKunstenaar).IsRequired().HasMaxLength(100);

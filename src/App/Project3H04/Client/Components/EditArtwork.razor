@@ -73,6 +73,10 @@
             </div>
             <button type="submit" class="btn btn-primary">
                 <span>Confirm</span>
+                @if (loading)
+                {
+                    <TinySpinner/>
+                }
             </button>
             <!--<a class="btn btn-secondary" href="/">
         <i class="fas fa-chevron-left"></i>
@@ -81,14 +85,14 @@
 
         </EditForm>
     </div>
-    @if (loading)
+    @if(loading)
     {
         <LoadingSpinner></LoadingSpinner>
     }
 }
 else
 {
-    <!--<LoadingSpinner />-->
+    <LoadingSpinner />
 }
 
 

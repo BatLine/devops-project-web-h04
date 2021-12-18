@@ -116,7 +116,16 @@ namespace Project3H04.Shared.Kunstwerken
                 RuleFor(artwork => artwork.Naam).NotEmpty().OverridePropertyName("Name");
                 RuleFor(artwork => artwork.Prijs).GreaterThanOrEqualTo(0).OverridePropertyName("Price");
                 RuleFor(artwork => artwork.Materiaal).NotEmpty().OverridePropertyName("Material");
-                RuleFor(artwork => artwork.Fotos).NotEmpty().OverridePropertyName("Images"); //wordt een probleem voor edit....
+                RuleFor(artwork => artwork.Fotos).NotEmpty().OverridePropertyName("Images");
+                RuleFor(artwork => artwork.Beschrijving).NotEmpty().OverridePropertyName("Description");
+                RuleFor(artwork => artwork.Lengte).NotEmpty().OverridePropertyName("Length");
+                RuleFor(artwork => artwork.Breedte).NotEmpty().OverridePropertyName("Width");
+                RuleFor(artwork => artwork.Hoogte).NotEmpty().OverridePropertyName("Height");
+                RuleFor(artwork => artwork.Gewicht).NotEmpty().OverridePropertyName("Weight");
+
+
+
+
             }
         }
     }

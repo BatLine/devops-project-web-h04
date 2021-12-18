@@ -20,7 +20,7 @@ namespace Project3H04.Server.Services
         private readonly ApplicationDbcontext dbContext;
         private readonly IStorageService storageService;
 
-        public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; } //TODO: Wot dis?
+        //public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; } //TODO: Wot dis?
 
         public KunstwerkService(ApplicationDbcontext dbContext, IStorageService storageService)
         {

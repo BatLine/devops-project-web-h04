@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project3H04.Shared", "Share
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.csproj", "{2771FC08-59FE-42D8-AC69-6EA26F12F208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project3h04.Tests", "Project3h04.Tests\Project3h04.Tests.csproj", "{BBB7A8B4-1FC7-494D-BA00-35BB76A49043}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project3h04.Tests", "Project3h04.Tests\Project3h04.Tests.csproj", "{BBB7A8B4-1FC7-494D-BA00-35BB76A49043}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
