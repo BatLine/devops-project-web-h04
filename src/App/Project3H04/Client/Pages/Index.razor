@@ -8,15 +8,15 @@
     <div class="container">
         <div class="masthead-heading">showcase, connect and inspire!</div>
         <div class="masthead-subheading">join us and show your work to the world</div>
-        <div style="text-align: left;"><a class="btn btn-light btn-xl" @onclick="OpenSidepanel" style="border-radius: 25px; padding-left: 40px;padding-right: 40px; ">Sign up</a></div>
+        <div style="text-align: left;"><button class="btn btn-light btn-xl" @onclick="OpenSidepanel" style="border-radius: 25px; padding-left: 40px;padding-right: 40px; ">Sign up</button></div>
     </div>
 </header>
 <body>
-    
+
     <div class="container">
         <div class="row">
-            <div class="col-4">
-                <p class="black-style">recently joined artists</p>
+            <div class="col">
+                <p class="black-style">recently joined artists </p>
             </div>
         </div>
         <div class="row">
@@ -25,7 +25,7 @@
                 @foreach (var kunstenaar in kunstenaars)
                 {
                     <div class="col-lg-3 col-6">
-                        <a href="artists/@kunstenaar.GebruikerId" style="text-decoration:none">
+                        <a href="artists/@kunstenaar.GebruikerId" style="text-decoration:none !important;color:black">
                             <div>
                                 <div class="image"><img src="/images/@kunstenaar.Fotopad" alt="" style="width: 100%; height:auto"></div>
                                 <p class="artistname">@kunstenaar.Gebruikersnaam</p>
@@ -36,7 +36,9 @@
             }
         </div>
         <div class="row">
-            <a class="btn btn-light btn-xl" href="artists" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">browse all artists</a>
+            <div class="col">
+                <a class="btn btn-light btn-xl" href="artists" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">browse all artists</a>
+            </div>
         </div>
     </div>
     <footer>
@@ -54,7 +56,7 @@
     {
         kunstenaars = await httpClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar?take=4&recentArtists=true");
         //kunstenaarsCopy = kunstenaars;
-        
+
     }
 
     public void OpenSidepanel()

@@ -1,18 +1,7 @@
-﻿@media (max-width: 720px) {
-    /* Niet wegdoen */
-    body {
-        box-sizing: border-box;
-        transform: translate(0, 0);
-        max-width: 100%;
-        min-height: 100%;
-        margin: 0;
-        left: 0;
-    }
+﻿
 
-    .filter-container {
-        margin-left: 2em;
-        display: none;
-    }
+.collapsable-filter-container {
+    display: none;
 }
 
 .artwork-text {
@@ -229,5 +218,34 @@ ul {
     100% {
         transform-origin: top center;
         transform: rotateX(0deg);
+    }
+}
+
+@media (max-width: 720px) {
+    /* Niet wegdoen */
+    body {
+        box-sizing: border-box;
+        transform: translate(0, 0);
+        max-width: 100%;
+        min-height: 100%;
+        margin: 0;
+        left: 0;
+    }
+
+    .collapsable-filter-container {
+        display: block;
+    }
+
+    .card {
+        border: none;
+    }
+
+    .filter-container {
+        margin-left: 2em;
+        display: none;
+    }
+
+    ul li {
+        animation: none;
     }
 }

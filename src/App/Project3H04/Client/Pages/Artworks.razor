@@ -3,10 +3,119 @@
 @attribute [AllowAnonymous]
 <!--=> Deze http PublicClient gebruiken voor Anonymous-->
 @inject PublicClient httpClient
-<head><link rel="stylesheet" href="_content/LoreSoft.Blazor.Controls/BlazorControls.css" /></head>
+<head>
+    <link rel="stylesheet" href="_content/LoreSoft.Blazor.Controls/BlazorControls.css" />
+</head>
 <body>
     <div class="container">
-        <p class="black-style" style="padding-left:25em;justify-content:left;">Artworks</p>
+
+        <div class="row">
+            <div class="col">
+                <div class="collapsable-filter-container">
+                    <button class="btn" type="button" data-toggle="collapse" data-target="#filterCollapse" aria-expanded="false" aria-controls="filters">
+                        filters
+                    </button>
+                </div>
+                <div class="collapse" id="filterCollapse">
+                    <div class="card card-body">
+                        <ul>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Artists</h2>
+                                <div class="checkbox">
+                                    <input @bind="filter.ArtistSearchterm" type="search" style="width:100%" placeholder="Artist Name" />
+                                </div>
+                            </li>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Artworks</h2>
+                                <div class="checkbox">
+                                    <input @bind="filter.ArtworkSearchterm" type="search" style="width:100%" placeholder="Artwork Name" />
+                                </div>
+                            </li>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Medium</h2>
+                                <div class="checkbox">
+                                    @if (kunstwerken != null)
+                                    {
+                                        @foreach (var medium in artMediums)
+                                        {
+                                            <div class="form-check">
+
+                                                <input class="form-check-input" type="checkbox" value="@medium" name="material-checkbox" @onchange="_ => BindCheckboxes(_,filterMedium:medium)">
+                                                <label class="form-check-label">
+                                                    @medium
+                                                </label>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </li>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Ways to buy</h2>
+                                <div class="checkbox">
+
+                                    @if (kunstwerken != null)
+                                    {
+
+                                        @foreach (var payOption in payOptions)
+                                        {
+                                            <div class="form-check">
+
+                                                <input class="form-check-input" type="checkbox" name="size-checkbox" @onchange="_ => BindCheckboxes(_, filterPayOption: payOption)">
+                                                <label class="form-check-label">
+                                                    @payOption
+                                                </label>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </li>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Price</h2>
+                                <div class="checkbox">
+                                    <input @bind="filter.MinimumPrice" type="search" placeholder="low" />  to
+                                    <input @bind="filter.MaximumPrice" type="search" placeholder="high" />
+                                </div>
+                            </li>
+                            <li>
+                                <input type="checkbox" checked>
+                                <i></i>
+                                <h2>Size</h2>
+                                <div class="checkbox">
+
+                                    @if (kunstwerken != null)
+                                    {
+                                        @foreach (var size in artSizes)
+                                        {
+                                            <div class="form-check">
+
+                                                <input class="form-check-input" type="checkbox" name="size-checkbox" @onchange="_ => BindCheckboxes(_,filterSize:size)">
+                                                <label class="form-check-label">
+                                                    @size
+                                                </label>
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="filter-container">
                 <!--Filters-->
@@ -107,7 +216,9 @@
                 </div>
             </div>
             <div class="col">
+
                 <div class="row">
+
                     @if (kunstwerken != null)
                     {
                         @foreach (var kunst in kunstwerken)
@@ -138,11 +249,14 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="text-center" style="flex:auto;">
-        <button class="btn btn-secondary" @onclick="PrevPage" disabled="@HasNoPrev">Prev</button>
-        <p class="artwork"> page: @filter.Page</p>
-        <button class="btn btn-secondary" @onclick="NextPage" disabled="@HasNoNext">Next</button>
+        <div class="row">
+            <div class="paging" style="display:flex;align-items:center;justify-content:center">
+                <button class="btn" @onclick="PrevPage" disabled="@HasNoPrev">Prev</button>
+                <p class="artwork" style="padding:5px"> page: @filter.Page</p>
+                <button class="btn" @onclick="NextPage" disabled="@HasNoNext">Next</button>
+
+            </div>
+        </div>
     </div>
 </body>
 
@@ -163,12 +277,12 @@
 
     public int TotalPages;
     public bool HasNoPrev => !(filter.Page > 0);
-    public bool HasNoNext => !(filter.Page < TotalPages-1);
+    public bool HasNoNext => !(filter.Page < TotalPages - 1);
 
     protected override async Task OnInitializedAsync()
     {
         //voor paging
-        aantalKunst = await httpClient.Client.GetFromJsonAsync<int>($"api/Kunstwerk/aantalKunst"); Console.WriteLine("aantalKunst: "+aantalKunst);
+        aantalKunst = await httpClient.Client.GetFromJsonAsync<int>($"api/Kunstwerk/aantalKunst"); Console.WriteLine("aantalKunst: " + aantalKunst);
         TotalPages = (int)Math.Ceiling(aantalKunst / (double)4);
 
         kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk");
@@ -243,8 +357,8 @@
 
     public void NextPage()
     {
-        filter.Page+=1;
-        Console.WriteLine("page:"+filter.Page);
+        filter.Page += 1;
+        Console.WriteLine("page:" + filter.Page);
     }
     public void PrevPage()
     {

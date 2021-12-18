@@ -4,13 +4,10 @@
 <!--=> Deze http PublicClient gebruiken voor Anonymous-->
 @inject PublicClient httpClient
 <body>
-
-
-
     <div class="container">
         <p class="black-style">Artists</p>
         <div class="row">
-            <div class="col-lg-12 mb-4">
+            <div class="col-12 mb-4">
                 <input type="search" placeholder="search artist..." value="@artistSearch" @onchange="SearchArtist" />
             </div>
         </div>
@@ -20,16 +17,11 @@
                 @foreach (var kunst in kunstenaars)
                 {
 
-
                     <div class="col-lg-4 col-md-6">
                         <a href="artists/@kunst.GebruikerId" style="text-decoration:none !important;color:black">
                             <div>
                                 <div class="image"><img src="/images/@kunst.Fotopad" alt="" width="250" /></div>
-                                <div class="artwork-text">
-                                    <p>@kunst.Gebruikersnaam</p>
-                                    <p>@kunst.Email</p>
-
-                                </div>
+                                <p class="artistname">@kunst.Gebruikersnaam</p>
                             </div>
                         </a>
                     </div>

@@ -36,26 +36,6 @@ img {
     width: 100%;
 }
 
-
-.artwork-text {
-    width: auto;
-    height: 6em;
-}
-
-p.artistname {
-    font-size: 1.2em;
-    font-weight: 500;
-    margin: 0;
-}
-
-p.artwork, p.price {
-    font-size: 1em;
-    font-weight: 300;
-    font-style: italic;
-    margin: 0;
-}
-
-
 input[type="search"], input[type="search"]:focus {
     opacity: 1;
     border: none;
