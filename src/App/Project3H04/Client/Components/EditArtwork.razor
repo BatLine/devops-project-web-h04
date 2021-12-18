@@ -42,18 +42,15 @@
             @if (Model.TeKoop)
             {
                 <div class="form-group">
-                    @if (Model.IsVeilbaar)
-                    {<label for="@Model.Prijs">StartingPrice </label> }
-                    else
-                    { <label for="@Model.Prijs">Price </label>}
+                    <label for="@Model.Prijs">Price </label>
                     <InputNumber @bind-Value="@Model.Prijs" class="form-control" />
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label>
                         Sell by auction?
                         <InputCheckbox @bind-Value="@Model.IsVeilbaar" />
                     </label>
-                </div>
+                </div>-->
             }
             <div class="form-group">
                 <label for="materiaalInput">Medium</label>
@@ -132,14 +129,12 @@ else
         loading = true;
         if (!Model.TeKoop)
         {
-            Model.IsVeilbaar = false; //als het niet te koop is is het ook niet per opbod te koop
             Model.Prijs = 0; //prijs zou nutteloos zijn als het niet te koop is
         }
 
         #region Debug
         Console.WriteLine("Naam: " + Model.Naam);
         Console.WriteLine("Te koop? " + Model.TeKoop);
-        Console.WriteLine("Veilbaar? " + Model.IsVeilbaar);
 
         Console.WriteLine("Prijs: " + Model.Prijs);
         Console.WriteLine(Model.Materiaal);

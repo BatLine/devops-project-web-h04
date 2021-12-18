@@ -39,7 +39,7 @@ namespace Domain {
 
         public Kunstwerk() { }
 
-        public void Edit(string naam, DateTime einddatum, int prijs, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, string beschrijving, bool isVeilbaar, string materiaal)  {
+        public void Edit(string naam, DateTime einddatum, int prijs, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, string beschrijving, string materiaal)  {
             Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
             Einddatum = Guard.Against.Null(einddatum, nameof(einddatum));
             Prijs = Guard.Against.Null(prijs, nameof(prijs));

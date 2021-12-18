@@ -101,7 +101,7 @@ namespace Project3H04.Server.Services
             List<Foto> fotos = kunstwerk.NieuweFotos.Select(fotoDTO => new Foto(fotoDTO.Naam, fotoDTO.Locatie)).ToList();
 
 
-            Kunstwerk kunstwerkToCreate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, kunstwerk.Lengte, kunstwerk.Breedte, kunstwerk.Hoogte, kunstwerk.Gewicht, fotos, kunstwerk.IsVeilbaar, kunstwerk.Materiaal, kunstenaar);
+            Kunstwerk kunstwerkToCreate = new Kunstwerk(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Beschrijving, kunstwerk.Lengte, kunstwerk.Breedte, kunstwerk.Hoogte, kunstwerk.Gewicht, fotos, false, kunstwerk.Materiaal, kunstenaar);
 
 
             await dbContext.Kunstwerken.AddAsync(kunstwerkToCreate);
@@ -127,7 +127,7 @@ namespace Project3H04.Server.Services
             List<Foto> updatedFotoLijst = kunstwerk.Fotos.Select(fotoDTO => new Foto() { Id = fotoDTO.Id, Naam = fotoDTO.Naam, Locatie = fotoDTO.Locatie }).ToList(); //id wordt meegegeven als de foto al in de databank zit
 
             Kunstwerk kunstwerkToUpdate = dbContext.Kunstwerken.Include(k => k.Fotos).FirstOrDefault(x => x.Id == kunstwerk.Id);
-            kunstwerkToUpdate.Edit(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Lengte, kunstwerk.Breedte, kunstwerk.Hoogte, kunstwerk.Gewicht, kunstwerk.Beschrijving, kunstwerk.IsVeilbaar, kunstwerk.Materiaal);
+            kunstwerkToUpdate.Edit(kunstwerk.Naam, DateTime.Now.AddDays(25), kunstwerk.Prijs, kunstwerk.Lengte, kunstwerk.Breedte, kunstwerk.Hoogte, kunstwerk.Gewicht, kunstwerk.Beschrijving, kunstwerk.Materiaal);
 
             //nodige fotos verwijderen
             List<Foto> teVerwijderenFotos = kunstwerkToUpdate.Fotos.Where(x => !updatedFotoLijst.Contains(x)).ToList(); //alle fotos in de databank die niet in de updatedFotlijst staan moeten verwijderd worden
