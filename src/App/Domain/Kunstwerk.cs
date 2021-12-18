@@ -16,11 +16,11 @@ namespace Domain {
         public string Beschrijving { get; private set; }
         public List<Foto> Fotos { get; set; }
         public bool TeKoop { get; set; }
-        //public bool IsVeilbaar { get; set; } dit houdt geen steek, het is gewoon veilbaar als het een actieve veilling heeft
+        public bool IsVeilbaar { get; set; }
         public string Materiaal { get; private set; }
         public Kunstenaar Kunstenaar { get; private set; }
 
-        public Kunstwerk(string naam, DateTime einddatum, int prijs, string beschrijving, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, List<Foto> fotos, string materiaal, Kunstenaar kunstenaar) : this() {
+        public Kunstwerk(string naam, DateTime einddatum, int prijs, string beschrijving, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, List<Foto> fotos, bool isVeilbaar, string materiaal, Kunstenaar kunstenaar) : this() {
             Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
             Einddatum = Guard.Against.Null(einddatum, nameof(einddatum));
             Prijs = Guard.Against.Null(prijs, nameof(prijs));
@@ -34,11 +34,12 @@ namespace Domain {
 
             TeKoop = true;
             Fotos = fotos;
+            IsVeilbaar = isVeilbaar;
         }
 
         public Kunstwerk() { }
 
-        public void Edit(string naam, DateTime einddatum, int prijs, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, string beschrijving, string materiaal)  {
+        public void Edit(string naam, DateTime einddatum, int prijs, decimal lengte, decimal breedte, decimal hoogte, decimal gewicht, string beschrijving, bool isVeilbaar, string materiaal)  {
             Naam = Guard.Against.NullOrWhiteSpace(naam, nameof(naam));
             Einddatum = Guard.Against.Null(einddatum, nameof(einddatum));
             Prijs = Guard.Against.Null(prijs, nameof(prijs));

@@ -23,6 +23,7 @@ namespace Domain {
             MinPrijs = Guard.Against.Null(minPrijs, nameof(MinPrijs));
             Kunstwerk = Guard.Against.Null(kunstwerk, nameof(kunstwerk));
             KunstwerkId = kunstwerk.Id;
+            Kunstwerk.IsVeilbaar = true;
         }
 
         public void VoegBodToe(Klant klant, int prijs, DateTime datum) {

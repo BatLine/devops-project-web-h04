@@ -68,6 +68,7 @@ namespace Project3H04.Shared.Kunstwerken
             public string Materiaal { get; set; }
             public string Beschrijving { get; set; }
             public bool TeKoop { get; set; }
+            public bool IsVeilbaar { get; set; }
             public decimal Lengte { get; set; }
             public decimal Breedte { get; set; }
             public decimal Hoogte { get; set; }

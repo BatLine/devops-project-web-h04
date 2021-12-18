@@ -52,7 +52,7 @@ namespace Project3H04.Server.Data {
             builder.Entity<Kunstwerk>().Property(x => x.Breedte);
             builder.Entity<Kunstwerk>().Property(x => x.Gewicht);
             builder.Entity<Kunstwerk>().Property(x => x.Hoogte).IsRequired();
-            //builder.Entity<Kunstwerk>().Property(x => x.IsVeilbaar); //fuck dees, waarom is dit een waarde in de database
+            builder.Entity<Kunstwerk>().Property(x => x.IsVeilbaar);
             builder.Entity<Kunstwerk>().Property(x => x.Materiaal).IsRequired().HasMaxLength(100);
             builder.Entity<Kunstwerk>().Property(x => x.Naam).IsRequired().HasMaxLength(100);
             //builder.Entity<Kunstwerk>().Property(x => x.NaamKunstenaar).IsRequired().HasMaxLength(100);
