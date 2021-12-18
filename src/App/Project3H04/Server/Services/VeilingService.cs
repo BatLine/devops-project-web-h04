@@ -149,11 +149,10 @@ namespace Project3H04.Server.Services {
             });
 
             Kunstwerk kunstwerk = new Kunstwerk(veiling.Kunstwerk.Naam, veiling.Kunstwerk.Einddatum, veiling.Kunstwerk.Prijs,
-                veiling.Kunstwerk.Beschrijving, veiling.Kunstwerk.Lengte, veiling.Kunstwerk.Breedte, veiling.Kunstwerk.Hoogte, veiling.Kunstwerk.Gewicht, fotos, veiling.Kunstwerk.IsVeilbaar,
+                veiling.Kunstwerk.Beschrijving, veiling.Kunstwerk.Lengte, veiling.Kunstwerk.Breedte, veiling.Kunstwerk.Hoogte, veiling.Kunstwerk.Gewicht, fotos,
                 veiling.Kunstwerk.Materiaal, kunstenaar);
 
-            if (!kunstwerk.IsVeilbaar)
-                return false;
+
 
             var v = new Veiling(veiling.StartDatum, veiling.EindDatum, veiling.MinPrijs, kunstwerk);
 
