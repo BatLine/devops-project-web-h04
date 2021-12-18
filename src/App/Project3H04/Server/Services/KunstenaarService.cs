@@ -95,7 +95,8 @@ namespace Project3H04.Server.Services
                 Gebruikersnaam = x.Gebruikersnaam,
                 GebruikerId = x.GebruikerId,
                 DatumCreatie = x.DatumCreatie,
-                Fotopad = x.FotoPad
+                Fotopad = x.FotoPad,
+               GeboortedatumShort = x.Geboortedatum.ToShortDateString()
             }).Where(k => k.Gebruikersnaam.Contains(term)).Take(take)
             .ToListAsync();
             if (recentArtists)

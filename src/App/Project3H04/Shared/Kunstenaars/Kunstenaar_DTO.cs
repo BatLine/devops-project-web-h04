@@ -16,6 +16,7 @@ namespace Project3H04.Shared.Kunstenaars
         public bool StatusActiefKunstenaar { get; set; }
         public ICollection<Kunstwerk_DTO.Index> Kunstwerken { get; set; }
         public Abonnement_DTO Abonnement { get; set; }
+        public string GeboortedatumShort { get; set; }
 
         //bij aanmaken van kunstenaar dan validatie met validator
     }
