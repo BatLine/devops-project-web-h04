@@ -4,13 +4,27 @@
     <div>
         @foreach (var foto in Fotos)
         {
-            <div class="form-control-file">
-                <img src="@foto.Pad" alt="@foto.Naam" width="250" height="250" style="padding-right:20px;" />
-
+        <div class="form-control-file">
+            <img src="@foto.Pad" alt="@foto.Naam" width="250" height="250" style="padding-right:20px;" />
+            @if (!foto.PendingDelete)
+            {
                 <button type="button" class="btn btn-secondary" @onclick="() => RemoveImage(foto)">
                     <i class="far fa-trash-alt"></i>
                 </button>
-            </div>
+
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary" @onclick="() => CancelRemove(foto)">
+                    <i>Cancel</i>
+                </button>
+                <button type="button" class="btn btn-danger" @onclick="() => RemoveImageConfirm(foto)">
+                    <i class="far fa-trash-alt"></i>
+                </button>
+            }
+
+
+        </div>
         }
     </div>
 </div>
@@ -32,6 +46,18 @@
 
     private void RemoveImage(Foto_DTO foto)
     {
+        foto.PendingDelete = true;
+    }
+
+
+    private void RemoveImageConfirm(Foto_DTO foto)
+    {
         Fotos.Remove(foto);
+    }
+
+
+    private void CancelRemove(Foto_DTO foto)
+    {
+        foto.PendingDelete = false;
     }
 }

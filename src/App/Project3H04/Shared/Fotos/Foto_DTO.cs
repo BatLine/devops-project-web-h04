@@ -13,9 +13,11 @@ namespace Project3H04.Shared.Kunstwerken
         public bool Uploaded { get; set; }
         public string Pad => Path.Combine(Locatie is not null ? Locatie : defaultLocatie, Naam);
 
+        public bool PendingDelete { get; set; }
         public Foto_DTO()
         {
             Uploaded = false;
+            PendingDelete = false;
         }
 
         public Foto_DTO(string naam) : this()
