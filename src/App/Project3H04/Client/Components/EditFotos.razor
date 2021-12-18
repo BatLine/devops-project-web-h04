@@ -33,14 +33,17 @@
 @code {
     [Parameter] public List<Foto_DTO> Fotos { get; set; }
     [Parameter] public IList<IBrowserFile> ImageFiles { get; set; }
+    private  Dictionary<Foto_DTO, IBrowserFile> logbook = new Dictionary<Foto_DTO, IBrowserFile>();
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
     {
 
         foreach (var file in e.GetMultipleFiles())
         {
+            var foto = new Foto_DTO() { Naam = file.Name };
             ImageFiles.Add(file); //volledig bestand hier tijdelijk opslaan tot het op blob komt
-            Fotos.Add(new() { Naam = file.Name }); //geven we mee aan databank
+            Fotos.Add(foto); //geven we mee aan databank
+            logbook.Add(foto, file); //hier houden we bij welke imagefile bij welke fotoDTO hoort
         }
     }
 
@@ -53,6 +56,12 @@
     private void RemoveImageConfirm(Foto_DTO foto)
     {
         Fotos.Remove(foto);
+        IBrowserFile imgFile = logbook[foto]; //uitzoeken welke ImgFile bij de huidige foto hoort
+        ImageFiles.Remove(imgFile);
+
+        Console.WriteLine(Fotos.Count);
+        Console.WriteLine(ImageFiles.Count);
+
     }
 
 
