@@ -63,11 +63,13 @@
     private void RemoveImageConfirm(Foto_DTO foto)
     {
         Fotos.Remove(foto);
-        IBrowserFile imgFile = logbook[foto]; //uitzoeken welke ImgFile bij de huidige foto hoort
-        ImageFiles.Remove(imgFile);
+        IBrowserFile imgFile;
+        if (logbook.TryGetValue(foto, out imgFile))
+        {
+            imgFile = logbook[foto]; //uitzoeken welke ImgFile bij de huidige foto hoort
+            ImageFiles.Remove(imgFile);
+        }
 
-        Console.WriteLine(Fotos.Count);
-        Console.WriteLine(ImageFiles.Count);
 
     }
 
