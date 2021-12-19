@@ -36,10 +36,6 @@ namespace Project3H04.Server.Controllers
         public Task<Kunstwerk_DTO.Detail> Get(int id)
         {
             return kunstwerkService.GetDetailAsync(id);
-            //if(k == null)
-            //    return NotFound();
-
-            //return k;
         }
 
 
@@ -49,34 +45,16 @@ namespace Project3H04.Server.Controllers
         [Authorize] //AUTH
         public Task<KunstwerkResponse.Create> Create(Kunstwerk_DTO.Create kunst)
         {
-
-            //int gebruikerId = GetAangemeldeGebruikerId();
             return kunstwerkService.CreateAsync(kunst);
         }
 
 
 
         // PUT api/<KunstwerkController>/5
-        [HttpPut("{id}")]
-        public Task<KunstwerkResponse.Edit> Put(int id, Kunstwerk_DTO.Edit kunst)
+        [HttpPut]
+        public Task<KunstwerkResponse.Edit> Put(Kunstwerk_DTO.Edit kunst)
         {
-            /*if (id != kunst.Id)
-                return BadRequest(); */
-
-
-
-            /*Kunstwerk kunstwerk = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
-            if (kunstwerk == null)
-                return NotFound();*/
-
-            int gebruikerId = GetAangemeldeGebruikerId();
-
-            /*if (gebruikerId != kunst.KunstenaarId)
-            {
-                return BadRequest();
-            }*/
-
-            return kunstwerkService.UpdateAsync(kunst, gebruikerId);
+            return kunstwerkService.UpdateAsync(kunst, kunst.KunstenaarId);
         }
 
 
@@ -110,10 +88,5 @@ namespace Project3H04.Server.Controllers
             return kunstwerkService.GetAantalKunst();
         }
 
-        private int GetAangemeldeGebruikerId()
-        {
-            //fakedata: 
-            return 4;
-        }
     }
 }

@@ -157,7 +157,7 @@ else
         {
             //API call "PUT"
             Kunstwerk_DTO.Edit model = (Kunstwerk_DTO.Edit)Model; //noodzakelijke cast
-            var response = await httpClient.PutAsJsonAsync<Kunstwerk_DTO.Edit>($"api/kunstwerk/{model.Id}", model);
+            var response = await httpClient.PutAsJsonAsync<Kunstwerk_DTO.Edit>($"api/kunstwerk", model);
             response.EnsureSuccessStatusCode();
 
             var editResponse = await response.Content.ReadFromJsonAsync<KunstwerkResponse.Edit>();
