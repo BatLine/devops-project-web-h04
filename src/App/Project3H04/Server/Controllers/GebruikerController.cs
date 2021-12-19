@@ -33,10 +33,10 @@ namespace Project3H04.Server.Controllers
             //return k;
         }
 
-        [HttpPut("{id}")]
-        public Task EditAsync(int id, Gebruiker_DTO geb)
+        [HttpPut]
+        public Task<GebruikerResponse.Edit> EditAsync([FromBody] GebruikerRequest.Edit request)
         {
-            return gebruikerService.EditAsync(id, geb);
+            return gebruikerService.EditAsync(request);
         }
 
 

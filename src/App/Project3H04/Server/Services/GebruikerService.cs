@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Project3H04.Server.Data;
 using Project3H04.Shared.DTO;
+using Project3H04.Shared.Fotos;
 using Project3H04.Shared.Gebruiker;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,12 @@ namespace Project3H04.Server.Services
     public class GebruikerService : IGebruikerService
     {
         private readonly ApplicationDbcontext dbContext;
-        public GebruikerService(ApplicationDbcontext dbContext)
+        private readonly IStorageService storageService;
+
+        public GebruikerService(ApplicationDbcontext dbContext, IStorageService storageService)
         {
             this.dbContext = dbContext;
+            this.storageService = storageService;
         }
 
         public async Task<Gebruiker_DTO> GetDetailAsync(int id)
@@ -34,13 +38,13 @@ namespace Project3H04.Server.Services
             return g;
         }
 
-        public async Task EditAsync(int id, Gebruiker_DTO geb)
+        public async Task<GebruikerResponse.Edit> EditAsync(GebruikerRequest.Edit request)
         {
             //await Task.Delay(100);
             Gebruiker gebruiker = dbContext.Gebruikers.FirstOrDefault(g => g.GebruikerId == id);
             gebruiker.Edit(geb.Gebruikersnaam, geb.GeboorteDatum/*, geb.Email*/, geb.Fotopad, geb.Details);
             dbContext.Update(gebruiker);
-            await dbContext.SaveChangesAsync();
+            dbContext.SaveChanges();
         }
 
     }

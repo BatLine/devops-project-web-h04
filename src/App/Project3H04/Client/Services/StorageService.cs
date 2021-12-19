@@ -17,6 +17,10 @@ namespace Project3H04.Client.Services
         }
         public async Task UploadImageAsync(Uri sas, IBrowserFile file)
         {
+            if(sas is null || file is null)
+            {
+                return;
+            }
             var content = new StreamContent(file.OpenReadStream(maxFileSize));
             content.Headers.Add("x-ms-blob-type", "BlockBlob");
             var response = await httpClient.PutAsync(sas, content);

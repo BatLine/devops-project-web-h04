@@ -1,40 +1,40 @@
 ﻿
-<EditForm Model="@model" OnValidSubmit="@EditGebruikerAsync">
+<EditForm Model="@Model" OnValidSubmit="@EditGebruikerAsync">
     <FluentValidationValidator />
     <ValidationSummary />
 
     <div class="field">
         <label class="label">Gebruikersnaam</label>
         <div class="control">
-            <InputText class="input" @bind-Value="model.Gebruikersnaam" />
+            <InputText class="input" @bind-Value="Model.Gebruikersnaam" />
         </div>
     </div>
 
     @*<div class="field">
         <label class="label">Email</label>
         <div class="control">
-            <InputText class="input" @bind-Value="model.Email" />
+            <InputText class="input" @bind-Value="Model.Email" />
         </div>
     </div>*@
 
     <div class="field">
         <label class="label">GeboorteDatum</label>
         <div class="control">
-            <InputDate class="input"  @bind-Value="model.GeboorteDatum" />
+            <InputDate class="input"  @bind-Value="Model.GeboorteDatum" />
         </div>
     </div>
 
     <div class="field">
         <label class="label">Details</label>
         <div class="control">
-              <InputTextArea class="textarea" @bind-Value="model.Details" />
+            <InputTextArea class="textarea" @bind-Value="Model.Details" />
         </div>
     </div>
 
     <div class="field">
         <label class="label">Profiel foto</label>
         <div class="control">
-            <InputText class="input" @bind-Value="model.Fotopad" />
+            <InputText class="input" @bind-Value="Model.Fotopad" />
         </div>
     </div>
 
