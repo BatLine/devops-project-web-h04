@@ -19,6 +19,8 @@ using Project3H04.Shared.Kunstenaars;
 using Project3H04.Shared.Kunstwerken;
 using System.Linq;
 using Project3H04.Shared.Veilingen;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Project3H04.Server {
     public class Startup {
@@ -51,6 +53,10 @@ namespace Project3H04.Server {
             }).AddJwtBearer(options => {
                 options.Authority = Configuration["Auth0:Authority"];
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = ClaimTypes.NameIdentifier
+                };
             });
 
             //Never use localdb when not debugging

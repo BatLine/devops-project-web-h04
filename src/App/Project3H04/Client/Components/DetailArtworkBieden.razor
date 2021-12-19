@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims
-@inject PublicClient httpClient
+@inject HttpClient httpClient
 @inject IToastService toastService
 
 @if (Veiling != null)
@@ -87,9 +87,9 @@ else
 
     private async Task SetProperties()
     {
-        Veiling = await httpClient.Client.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{KunstwerkId}");
+        Veiling = await httpClient.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{KunstwerkId}");
         var user = (await authenticationStateTask).User;
-        Klant = await httpClient.Client.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
+        Klant = await httpClient.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
         IncrementValue = GetIncrement();
         NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs + IncrementValue : Veiling.Kunstwerk.Prijs + IncrementValue; ;
     }
@@ -129,7 +129,7 @@ else
         };
 
         //API call "PUT"
-        var response = await httpClient.Client.PutAsJsonAsync<Bod_DTO>($"api/Veiling/AddBodToVeiling/{Veiling.Id}", bod);
+        var response = await httpClient.PutAsJsonAsync<Bod_DTO>($"api/Veiling/AddBodToVeiling/{Veiling.Id}", bod);
         response.EnsureSuccessStatusCode();
         var responseResult = await response.Content.ReadFromJsonAsync<bool>();
 

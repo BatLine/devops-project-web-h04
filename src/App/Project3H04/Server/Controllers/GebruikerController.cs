@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Project3H04.Server.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class GebruikerController : ControllerBase
@@ -22,6 +22,7 @@ namespace Project3H04.Server.Controllers
             this.gebruikerService = gebruikerService;
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public Task<Gebruiker_DTO> Get(int id)
         {

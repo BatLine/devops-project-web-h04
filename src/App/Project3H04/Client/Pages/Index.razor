@@ -8,8 +8,12 @@
     <div class="container">
         <div class="masthead-heading">showcase, connect and inspire!</div>
         <div class="masthead-subheading">join us and show your work to the world</div>
-        <div style="text-align: left;"><button class="btn btn-light btn-xl" @onclick="OpenSidepanel" style="border-radius: 25px; padding-left: 40px;padding-right: 40px; ">Sign up</button></div>
-    </div>
+        <AuthorizeView>
+            <NotAuthorized>
+                <div style="text-align: left;"><button class="btn btn-light btn-xl" @onclick="OpenSidepanel" style="border-radius: 25px; padding-left: 40px;padding-right: 40px; ">Sign up</button></div>
+            </NotAuthorized>
+        </AuthorizeView>
+        </div>
 </header>
 <body>
 

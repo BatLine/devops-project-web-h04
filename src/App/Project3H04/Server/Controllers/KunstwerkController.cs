@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;  //AUTH
 
 namespace Project3H04.Server.Controllers
 {
-    [AllowAnonymous] //AUTH
+    [Authorize] //AUTH, op controller level altijd Authorize en dan bij de methods AllowAnonymous !
     [Route("api/[controller]")]
     [ApiController]
     public class KunstwerkController : ControllerBase
@@ -25,6 +25,7 @@ namespace Project3H04.Server.Controllers
         }
 
         //GET: api/<KunstwerkController>
+        [AllowAnonymous]
         [HttpGet]
         public Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery] Kunstwerk_DTO.Filter request)
         {
@@ -32,6 +33,7 @@ namespace Project3H04.Server.Controllers
         }
 
         // GET api/<KunstwerkController>/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public Task<Kunstwerk_DTO.Detail> Get(int id)
         {
@@ -45,8 +47,8 @@ namespace Project3H04.Server.Controllers
 
 
         // POST api/<KunstwerkController>
+        [Authorize(Roles = "Administrator,Kunstenaar")]
         [HttpPost]
-        [Authorize] //AUTH
         public Task<KunstwerkResponse.Create> Create(Kunstwerk_DTO.Create kunst)
         {
 
@@ -57,6 +59,7 @@ namespace Project3H04.Server.Controllers
 
 
         // PUT api/<KunstwerkController>/5
+        [Authorize(Roles = "Administrator,Kunstenaar")]
         [HttpPut("{id}")]
         public Task<KunstwerkResponse.Edit> Put(int id, Kunstwerk_DTO.Edit kunst)
         {
@@ -98,12 +101,14 @@ namespace Project3H04.Server.Controllers
         //}
 
         //GET: api/<KunstwerkController>/materiaal/5
+        [AllowAnonymous]
         [HttpGet("materiaal/{amount}")]
         public Task<List<string>> GetMediums(int amount)
         {
             return kunstwerkService.GetMediums(amount);
         }
 
+        [AllowAnonymous]
         [HttpGet("aantalKunst")]
         public Task<int> GetAantalKunst()
         {

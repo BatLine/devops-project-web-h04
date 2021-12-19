@@ -36,11 +36,11 @@ namespace Project3H04.Server.Services
 
         public async Task EditAsync(int id, Gebruiker_DTO geb)
         {
-            await Task.Delay(100);
+            //await Task.Delay(100);
             Gebruiker gebruiker = dbContext.Gebruikers.FirstOrDefault(g => g.GebruikerId == id);
             gebruiker.Edit(geb.Gebruikersnaam, geb.GeboorteDatum/*, geb.Email*/, geb.Fotopad, geb.Details);
             dbContext.Update(gebruiker);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
     }

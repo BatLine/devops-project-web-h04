@@ -27,7 +27,8 @@ namespace Project3H04.Client
             {
                 builder.Configuration.Bind("Auth0", options.ProviderOptions);
                 options.ProviderOptions.ResponseType = "code";
-            }).AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>(); ;
+                //options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration["Auth0:Audience"]);  //=> hiervoor blazor 6 nodig !
+            }).AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>(); 
             //AUTH client
             builder.Services.AddHttpClient("ServerAPI",
             client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))

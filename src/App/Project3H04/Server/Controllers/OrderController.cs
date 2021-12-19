@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Mollie.Api.Client;
 using Mollie.Api.Client.Abstract;
 using Mollie.Api.Models;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 
 namespace Project3H04.Server.Controllers
 {
+    [Authorize]
     [Route("api/[controller]/[Action]")]
     [ApiController]
     public class OrderController : ControllerBase
@@ -53,7 +55,7 @@ namespace Project3H04.Server.Controllers
         }
 
         // creates payment and order
-
+       
         [HttpPost, ActionName("Mollie")]
         public async Task<IActionResult> CreateOrder(Bestelling_DTO.Create bestelling)
         {
@@ -83,6 +85,7 @@ namespace Project3H04.Server.Controllers
             //return Redirect(paymentResponse.Links.Checkout.ToString());
 
         }
+
         [HttpPost, ActionName("MollieAndroid")]
         public async Task<IActionResult> CreateOrderAndroid(Bestelling_DTO.Create bestelling)
         {
@@ -113,7 +116,7 @@ namespace Project3H04.Server.Controllers
             //return Redirect(paymentResponse.Links.Checkout.ToString());
 
         }
-     
+
         // This method doesn't get used anymore, Create Order creates the payment and bestelling
 
         // [HttpGet("{id}")]
@@ -126,6 +129,7 @@ namespace Project3H04.Server.Controllers
                 }*/
 
         //[HttpPost, ActionName("orderstatus")]
+        [AllowAnonymous]
         [HttpPost, ActionName("orderstatus")]
         //public async Task PostOrderStatus()
         public async Task<IActionResult> GetOrderStatus([FromForm] string id)

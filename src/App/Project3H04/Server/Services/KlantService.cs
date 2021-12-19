@@ -71,10 +71,10 @@ namespace Project3H04.Server.Services {
             //email uniek
             if (!DbContext.Gebruikers.Any(x => x.Email == klant.Email))
             {
-                await Task.Delay(100);
+                //await Task.Delay(100);
                 Klant k = new Klant(klant.Gebruikersnaam, klant.GeboorteDatum, klant.Email, klant.Fotopad,klant.Details);
                 DbContext.Gebruikers.Add(k);
-                DbContext.SaveChanges();
+                await DbContext.SaveChangesAsync(); 
                 return "succes";
             }
             else

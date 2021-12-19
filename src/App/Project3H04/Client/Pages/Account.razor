@@ -16,7 +16,7 @@
                 </div>
                 <ul class="list-unstyled mb-5">
                     <li>
-                        <a role="button">profile</a>
+                        <a role="button" @onclick="ShowProfile">profile</a>
                     </li>
                     @*Ik zou gwn zonder links doen en op 1 pagina de info tonen, tis te weinig info om in tabs op te delen*@
                     @*Enkel abonnement miss*@
@@ -57,7 +57,7 @@
                     <button type="button" @onclick="ShowEditForm" class="button is-link is-light is-fullwidth">Edit</button>
                 }
                 else
-                {
+                {<!--met sidepanel-->
                     <EditAccount GebruikerId="@geb.GebruikerId" gebruiker="@geb" OnRedirect="callback" /><!-- hoe na de edit, de editForm bool terug op false zetten?-->
                     <button type="button" class="button is-link is-light is-fullwidth" @onclick="Showgeg">Return</button>
                 }
@@ -115,6 +115,12 @@
 
     public void Showgeg() {
         editForm = false;
+    }
+    public void ShowProfile()
+    {
+        showProfile = true;
+        editForm = false;
+        showArtworks = false;
     }
 
     public void ShowArtworks()

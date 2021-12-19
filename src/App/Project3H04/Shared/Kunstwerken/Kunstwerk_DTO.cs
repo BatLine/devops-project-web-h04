@@ -52,6 +52,7 @@ namespace Project3H04.Shared.Kunstwerken
             public List<string> BetaalOpties { get; set; }
 
             public int Page { get; set; }
+            public string SortOpNaam { get; set; }
 
         }
 

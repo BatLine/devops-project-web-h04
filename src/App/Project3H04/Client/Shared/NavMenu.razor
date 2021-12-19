@@ -18,26 +18,26 @@
                 </NavLink>
             </li>
             <!--enkel als AUTH dit zien-->
-            <AuthorizeView>
+            @*<AuthorizeView>
                 <li class="nav-item">
                     <NavLink class="nav-link" href="auction">
                         auction
                     </NavLink>
                 </li>
-            </AuthorizeView>
+            </AuthorizeView>*@
             <li class="nav-item">
 
                 <NavLink class="nav-link" href="artworks/create">
                     about
                 </NavLink>
             </li>
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <NavLink class="nav-link" href="contact">
                     contact
                 </NavLink>
-            </li>
+            </li>*@
             <AuthorizeView>
-                @if (!isAdmin)
+                @if (!isAdmin && !isKunst)
                 {
                     <li class="nav-item">
                         <NavLink class="nav-link" href="OrdersCart">
@@ -80,11 +80,13 @@
 @code {
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
-    private bool isAdmin=false;
+    private bool isAdmin = false;
+    private bool isKunst=false;
     protected override async Task OnParametersSetAsync()
     {
         var user = (await authenticationStateTask).User;
         isAdmin = user.IsInRole("Administrator");
+        isKunst = user.IsInRole("Kunstenaar");
     }
 
 }
