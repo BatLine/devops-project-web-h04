@@ -5,7 +5,14 @@
         @foreach (var foto in Fotos)
         {
         <div class="form-control-file">
-            <img src="@foto.Pad" alt="@foto.Naam" width="250" height="250" style="padding-right:20px;" />
+            @if (foto.Uploaded)
+            {
+                <img src="@foto.Pad" alt="@foto.Naam" width="250" height="250" style="padding-right:20px;" />
+            }
+            else
+            {
+                <img alt="@foto.Naam" width="250" height="250" style="padding-right:20px;" />
+            }
             @if (!foto.PendingDelete)
             {
                 <button type="button" class="btn btn-secondary" @onclick="() => RemoveImage(foto)">
@@ -16,7 +23,7 @@
             else
             {
                 <button type="button" class="btn btn-secondary" @onclick="() => CancelRemove(foto)">
-                    <i>Cancel</i>
+                    <i class="fas fa-trash-restore"></i>
                 </button>
                 <button type="button" class="btn btn-danger" @onclick="() => RemoveImageConfirm(foto)">
                     <i class="far fa-trash-alt"></i>
@@ -56,11 +63,13 @@
     private void RemoveImageConfirm(Foto_DTO foto)
     {
         Fotos.Remove(foto);
-        IBrowserFile imgFile = logbook[foto]; //uitzoeken welke ImgFile bij de huidige foto hoort
-        ImageFiles.Remove(imgFile);
+        IBrowserFile imgFile;
+        if (logbook.TryGetValue(foto, out imgFile))
+        {
+            imgFile = logbook[foto]; //uitzoeken welke ImgFile bij de huidige foto hoort
+            ImageFiles.Remove(imgFile);
+        }
 
-        Console.WriteLine(Fotos.Count);
-        Console.WriteLine(ImageFiles.Count);
 
     }
 
