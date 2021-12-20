@@ -1,48 +1,21 @@
-﻿
-<EditForm Model="@Model" OnValidSubmit="@EditGebruikerAsync">
+﻿<EditForm Model="@Model" OnValidSubmit="@EditGebruikerAsync">
     <FluentValidationValidator />
     <ValidationSummary />
-
-    <div class="field">
-        <label class="label">Gebruikersnaam</label>
-        <div class="control">
-            <InputText class="input" @bind-Value="Model.Gebruikersnaam" />
-        </div>
+    <div class="form-group">
+        <label for="name">Username:</label>
+        <InputText id="gebruikersnaam" aria-describedby="nameHelp" class="form-control" @bind-Value="@Model.Gebruikersnaam" placeholder="Your username"></InputText>
     </div>
-
-    @*<div class="field">
-        <label class="label">Email</label>
-        <div class="control">
-            <InputText class="input" @bind-Value="Model.Email" />
-        </div>
-    </div>*@
-
-    <div class="field">
-        <label class="label">GeboorteDatum</label>
-        <div class="control">
-            <InputDate class="input"  @bind-Value="Model.GeboorteDatum" />
-        </div>
+    <div class="form-group">
+        <label for="name">Birthdate:</label>
+        <InputDate id="geboortedatum" aria-describedby="nameHelp" class="form-control" @bind-Value="@Model.GeboorteDatum"></InputDate>
     </div>
-
-    <div class="field">
-        <label class="label">Details</label>
-        <div class="control">
-            <InputTextArea class="textarea" @bind-Value="Model.Details" />
-        </div>
+    <div class="form-group">
+        <label for="name">Your additional details:</label>
+        <InputTextArea id="details" aria-describedby="nameHelp" class="form-control" @bind-Value="@Model.Details"></InputTextArea>
     </div>
-
-    <div class="field">
-        <label class="label">Profiel foto</label>
-        <div class="control">
-            <InputFile OnChange="@OnInputFileChange" accept="image/*" />
-            <img src="@Model.Fotopad" alt="@Model.Fotopad" width="250" height="250" style="padding-right:20px;" />
-
-        </div>
+    <div class="form-group">
+        <label for="name">Profile picture:</label>
+        <InputText id="fotopad" aria-describedby="nameHelp" class="form-control" @bind-Value="@Model.Fotopad" placeholder="Profile picture"></InputText>
     </div>
-
-
-    <div class="buttons">
-        <button class="button is-link is-fullwidth" type="submit">Submit</button>
-    </div>
-
+    <button type="submit" id="BtnSave" class="btn btn-primary">Submit</button>
 </EditForm>

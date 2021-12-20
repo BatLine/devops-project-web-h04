@@ -54,12 +54,12 @@
                     <p> Email: @geb.Email</p>
                     <p> Details: @geb.Details</p>
 
-                    <button type="button" @onclick="ShowEditForm" class="button is-link is-light is-fullwidth">Edit</button>
+                    <button type="button" @onclick="ShowEditForm" class="btn btn-secondary">Edit</button>
                 }
                 else
                 {<!--met sidepanel-->
-                    <EditAccount Model="@geb" OnRedirect="callback" /><!-- hoe na de edit, de editForm bool terug op false zetten?-->
-                    <button type="button" class="button is-link is-light is-fullwidth" @onclick="Showgeg">Return</button>
+                    <EditAccount Model="@geb" OnRedirect="Callback" /><!-- hoe na de edit, de editForm bool terug op false zetten?-->
+        <button type="reset" id="BtnCancel" class="btn btn-secondary" @onclick="Showgeg">Cancel</button>
                 }
 
             }
@@ -83,7 +83,7 @@
     private bool showArtworks = false;
     private bool showProfile = true;
     //zo geen hard refresh door callback mee te geven aan de edit form
-    EventCallback callback;
+    //EventCallback callback;
     protected override async Task OnParametersSetAsync()
     {
         //de user ophalen uit auth en kijken welke soort user het is
@@ -108,13 +108,22 @@
         }
     }
 
-    public void ShowEditForm() {
-        editForm = true;
-        callback = EventCallback.Factory.Create(this, RedirectPage);
+    void Callback()
+    {
+        showProfile = true;
+        editForm = false;
+        showArtworks = false;
     }
 
-    public void Showgeg() {
+    public void ShowEditForm() {
+        editForm = true;
+        // callback = EventCallback.Factory.Create(this, RedirectPage);
+    }
+
+    public async Task Showgeg() {
         editForm = false;
+        await this.OnParametersSetAsync();
+        StateHasChanged();
     }
     public void ShowProfile()
     {
@@ -128,11 +137,11 @@
         showArtworks = true;
         showProfile = false;
     }
-    private async Task RedirectPage()
-    {
-        this.OnParametersSetAsync();
+    /*  private async Task RedirectPage()
+      {
+          this.OnParametersSetAsync();
 
-    }
+      }*/
     //public void OpenEditSidePanel()
     //{
     //    var parameters = new Dictionary<string, object>
