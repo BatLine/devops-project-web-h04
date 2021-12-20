@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project3h04.Tests", "Project3h04.Tests\Project3h04.Tests.csproj", "{BBB7A8B4-1FC7-494D-BA00-35BB76A49043}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project3H04.PlaywrightTests", "Project3H04.PlaywrightTests\Project3H04.PlaywrightTests.csproj", "{974901B5-3D16-4DDF-9AF0-FF0430BA9741}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{BBB7A8B4-1FC7-494D-BA00-35BB76A49043}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBB7A8B4-1FC7-494D-BA00-35BB76A49043}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBB7A8B4-1FC7-494D-BA00-35BB76A49043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{974901B5-3D16-4DDF-9AF0-FF0430BA9741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{974901B5-3D16-4DDF-9AF0-FF0430BA9741}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{974901B5-3D16-4DDF-9AF0-FF0430BA9741}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{974901B5-3D16-4DDF-9AF0-FF0430BA9741}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
