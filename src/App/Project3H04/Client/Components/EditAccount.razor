@@ -34,7 +34,9 @@
     <div class="field">
         <label class="label">Profiel foto</label>
         <div class="control">
-            <InputText class="input" @bind-Value="Model.Fotopad" />
+            <InputFile OnChange="@OnInputFileChange" accept="image/*" />
+            <img src="@Model.Fotopad" alt="@Model.Fotopad" width="250" height="250" style="padding-right:20px;" />
+
         </div>
     </div>
 

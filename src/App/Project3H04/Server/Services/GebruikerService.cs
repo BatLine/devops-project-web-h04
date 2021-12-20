@@ -5,6 +5,7 @@ using Project3H04.Shared.Fotos;
 using Project3H04.Shared.Gebruiker;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
