@@ -58,7 +58,7 @@
                 }
                 else
                 {<!--met sidepanel-->
-                    <EditAccount GebruikerId="@geb.GebruikerId" gebruiker="@geb" OnRedirect="callback" /><!-- hoe na de edit, de editForm bool terug op false zetten?-->
+                    <EditAccount Model="@geb" OnRedirect="callback" /><!-- hoe na de edit, de editForm bool terug op false zetten?-->
                     <button type="button" class="button is-link is-light is-fullwidth" @onclick="Showgeg">Return</button>
                 }
 

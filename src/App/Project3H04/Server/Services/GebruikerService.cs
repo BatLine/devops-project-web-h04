@@ -41,11 +41,22 @@ namespace Project3H04.Server.Services
 
         public async Task<GebruikerResponse.Edit> EditAsync(GebruikerRequest.Edit request)
         {
-            //await Task.Delay(100);
-            Gebruiker gebruiker = dbContext.Gebruikers.FirstOrDefault(g => g.GebruikerId == id);
-            gebruiker.Edit(geb.Gebruikersnaam, geb.GeboorteDatum/*, geb.Email*/, geb.Fotopad, geb.Details);
+            Gebruiker_DTO gebruiker_DTO = request.Model;
+            GebruikerResponse.Edit response = new();
+            Gebruiker gebruiker = dbContext.Gebruikers.FirstOrDefault(g => g.GebruikerId == gebruiker_DTO.GebruikerId);
+
+            if(request.newImage)
+            {
+                var imageFilename = Path.Combine("Kunstenaars", ""+ gebruiker_DTO.GebruikerId, Guid.NewGuid().ToString() + request.newImageName);
+                var imagePath = $"{storageService.StorageBaseUri}{imageFilename}";
+                gebruiker_DTO.Fotopad = imagePath;
+                response.Sas = storageService.CreateUploadUri(imageFilename);
+            }
+
+            gebruiker.Edit(gebruiker_DTO.Gebruikersnaam, gebruiker_DTO.GeboorteDatum/*, gebruiker_DTO.Email*/, gebruiker_DTO.Fotopad, gebruiker_DTO.Details);
             dbContext.Update(gebruiker);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
+            return response;
         }
 
     }
