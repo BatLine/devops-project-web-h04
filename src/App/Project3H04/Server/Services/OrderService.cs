@@ -107,17 +107,25 @@ namespace Project3H04.Server.Services
 
         public async Task<OrderResponse.Detail> GetUserOrders(string email)
         {
-            var gebruiker = DbContext.Gebruikers.OfType<Klant>().Include(k => k.Bestellingen).ThenInclude(b => b.WinkelmandKunstwerken).FirstOrDefault(k => k.Email.Equals(email));
+            var gebruiker = DbContext.Gebruikers.OfType<Klant>().Include(k => k.Bestellingen).ThenInclude(b => b.WinkelmandKunstwerken).ThenInclude(k => k.Fotos).FirstOrDefault(k => k.Email.Equals(email));
             List<Bestelling_DTO.Index> bestellingen = gebruiker.Bestellingen.Select(x => new Bestelling_DTO.Index
             {
                 Id = x.Id,
                 Datum = x.Datum,
                 Gemeente = x.Adres.Gemeente,
                 Postcode = x.Adres.Postcode,
+                Straat = x.Adres.Straat,
                 TotalePrijs = x.TotalePrijs,
                 WinkelmandKunstwerken = x.WinkelmandKunstwerken.Select(x => new Kunstwerk_DTO.Detail
                 {
-                    Naam = x.Naam
+                    Naam = x.Naam,
+                    Prijs = x.Prijs,
+                    HoofdFoto = x.Fotos.Select(x => new Foto_DTO
+                    {
+                        Id = x.Id,
+                        Naam = x.Naam,
+                        Locatie = x.Locatie                        
+                    }).FirstOrDefault()
                 }).ToList()
 
             }).ToList();

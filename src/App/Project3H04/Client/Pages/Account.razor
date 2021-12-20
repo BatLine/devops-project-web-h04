@@ -18,6 +18,9 @@
                     <li>
                         <a role="button" @onclick="ShowProfile">profile</a>
                     </li>
+                    <li>
+                        <a role="button" @onclick="ShowOrders">orders</a>
+                    </li>
                     @*Ik zou gwn zonder links doen en op 1 pagina de info tonen, tis te weinig info om in tabs op te delen*@
                     @*Enkel abonnement miss*@
 
@@ -67,6 +70,10 @@
             {
                 <EditArtworks kunstenaar="@kunst" />
             }
+            @if (showOrders)
+            {
+                <Orders />
+            }
 
         </div>
     </div>
@@ -82,6 +89,7 @@
 
     private bool showArtworks = false;
     private bool showProfile = true;
+    private bool showOrders = false;
     //zo geen hard refresh door callback mee te geven aan de edit form
     //EventCallback callback;
     protected override async Task OnParametersSetAsync()
@@ -108,6 +116,13 @@
         }
     }
 
+    public void ShowOrders()
+    {
+        showArtworks = false;
+        showProfile = false;
+        showOrders = true;
+    }
+
     void Callback()
     {
         showProfile = true;
@@ -130,6 +145,7 @@
         showProfile = true;
         editForm = false;
         showArtworks = false;
+        showOrders = false;
     }
 
     public void ShowArtworks()
