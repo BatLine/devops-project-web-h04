@@ -1,6 +1,6 @@
 ﻿@page "/OrdersCart"
 <!--AUTH-->
-@attribute [AllowAnonymous]
+@attribute [Authorize]
 @inject HttpClient httpClient
 <!--inject IOrderService orderService-->
 @inject CartState cartState
@@ -19,7 +19,7 @@
         {
             @foreach (var kunst in kunstwerken)
             {
-                <div class="row mb-4">
+                <div class="row mb-4" data-test-id="cartitem">
                     <div class="col">
                         <a href="artworks/@kunst.Id" style="text-decoration:none"> </a>
                         <img src="@kunst.Fotos.First().Pad" alt="" style="width:100%" />

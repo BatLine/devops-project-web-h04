@@ -134,7 +134,7 @@
                             <i></i>
                             <h2>Artworks</h2>
                             <div class="checkbox">
-                                <input @bind="filter.ArtworkSearchterm" type="search" style="width:100%" placeholder="Artwork Name" />
+                                <input data-test-id="artworksearch" @bind="filter.ArtworkSearchterm" type="search" style="width:100%" placeholder="Artwork Name" />
                             </div>
                         </li>
                         <li>
@@ -148,7 +148,7 @@
                                     {
                                         <div class="form-check">
 
-                                            <input class="form-check-input" type="checkbox" value="@medium" name="material-checkbox" @onchange="_ => BindCheckboxes(_,filterMedium:medium)">
+                                            <input data-test-id="mediumsearch" class="form-check-input" type="checkbox" value="@medium" name="material-checkbox" @onchange="_ => BindCheckboxes(_,filterMedium:medium)">
                                             <label class="form-check-label">
                                                 @medium
                                             </label>
@@ -185,8 +185,8 @@
                             <i></i>
                             <h2>Price</h2>
                             <div class="checkbox">
-                                <input @bind="filter.MinimumPrice" type="search" placeholder="low" />  to
-                                <input @bind="filter.MaximumPrice" type="search" placeholder="high" />
+                                <input data-test-id="minPrice" @bind="filter.MinimumPrice" type="search" placeholder="low" />  to
+                                <input data-test-id="maxPrice" @bind="filter.MaximumPrice" type="search" placeholder="high" />
                             </div>
                         </li>
                         <li>

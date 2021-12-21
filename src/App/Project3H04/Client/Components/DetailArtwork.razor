@@ -49,7 +49,7 @@
                             else
                             {
                                 <!--Order button-->
-                                <button class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
+                                <button data-test-id="orderbutton" class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
                             }
                         }
                     }
