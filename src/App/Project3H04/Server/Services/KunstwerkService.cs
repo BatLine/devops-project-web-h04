@@ -28,9 +28,9 @@ namespace Project3H04.Server.Services {
             return await dbContext.Kunstwerken.CountAsync();
         }
 
-        public Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id)
+        public async Task<KunstwerkResponse.Detail> GetDetailAsync(int id)
         {
-            return dbContext.Kunstwerken.Include(k => k.Fotos).Select(x => new Kunstwerk_DTO.Detail {
+            var kunstwerk = await dbContext.Kunstwerken.Include(k => k.Fotos).Select(x => new Kunstwerk_DTO.Detail {
                 Id = x.Id,
                 Naam = x.Naam,
                 Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie, Uploaded = true }),
@@ -49,6 +49,8 @@ namespace Project3H04.Server.Services {
                 TeKoop = x.TeKoop,
                 IsVeilbaar = x.IsVeilbaar
             }).SingleOrDefaultAsync(x => x.Id == id);
+            var response = new KunstwerkResponse.Detail() { Kunstwerk = kunstwerk };
+            return response;
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!

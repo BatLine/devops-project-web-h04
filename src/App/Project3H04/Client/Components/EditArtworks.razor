@@ -36,8 +36,8 @@
 
     public async Task OpenEditSidepanel(Kunstwerk_DTO.Index k)
     {
-        var kunstwerkDetail = await httpClient.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/kunstwerk/{k.Id}");
-        _kunstwerk = new Kunstwerk_DTO.Edit(kunstwerkDetail);
+        var response = await httpClient.GetFromJsonAsync<KunstwerkResponse.Detail>($"api/kunstwerk/{k.Id}");
+        _kunstwerk = new Kunstwerk_DTO.Edit(response.Kunstwerk);
 
         var callback = EventCallback.Factory.Create(this, RedirectPage);
 

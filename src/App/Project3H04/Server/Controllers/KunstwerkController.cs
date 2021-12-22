@@ -35,7 +35,7 @@ namespace Project3H04.Server.Controllers
         // GET api/<KunstwerkController>/5
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public Task<Kunstwerk_DTO.Detail> Get(int id)
+        public Task<KunstwerkResponse.Detail> Get(int id)
         {
             return kunstwerkService.GetDetailAsync(id);
         }

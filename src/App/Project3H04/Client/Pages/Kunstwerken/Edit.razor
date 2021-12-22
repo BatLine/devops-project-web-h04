@@ -27,8 +27,8 @@ else
     {
         //try //AUTH
         //{
-        Kunstwerk_DTO.Detail kunstwerkDetail = await httpClient.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/Kunstwerk/{Id}");
-        _kunstwerk = new Kunstwerk_DTO.Edit(kunstwerkDetail);
+        var response = await httpClient.GetFromJsonAsync<KunstwerkResponse.Detail>($"api/Kunstwerk/{Id}");
+        _kunstwerk = new Kunstwerk_DTO.Edit(response.Kunstwerk);
         //}
         //catch (AccessTokenNotAvailableException exception)
         //{
