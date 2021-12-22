@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col">
                 <div class="collapsable-filter-container">
-                    <button  class="btn" type="button" data-toggle="collapse" data-target="#filterCollapse" aria-expanded="false" aria-controls="filters">
+                    <button class="btn" type="button" data-toggle="collapse" data-target="#filterCollapse" aria-expanded="false" aria-controls="filters">
                         filters
                         <i class="bi bi-filter"></i>
                     </button>
@@ -26,7 +26,7 @@
                                 <i></i>
                                 <h2>Artists</h2>
                                 <div class="checkbox">
-                                    <input  @bind="filter.ArtistSearchterm" type="search" style="width:100%" placeholder="Artist Name" />
+                                    <input @bind="filter.ArtistSearchterm" type="search" style="width:100%" placeholder="Artist Name" />
                                 </div>
                             </li>
                             <li>
@@ -119,15 +119,15 @@
         </div>
 
         <div class="row">
-            <div class="filter-container">
-                <!--Filters-->
-                <div class="col-md-12 col-lg-10 col-xl-10">
+            <div class="col-md-6 col-lg-4">
+                <div class="filter-container">
+                    <!--Filters-->
                     <ul>
                         <li>
-                            <input type="checkbox" checked >
+                            <input type="checkbox" checked>
                             <i></i>
                             <h2>Artists</h2>
-                            <div class="checkbox" >
+                            <div class="checkbox">
                                 <input data-test-id="artistsearch" @bind="filter.ArtistSearchterm" type="search" style="width:100%" placeholder="Artist Name" />
                             </div>
                         </li>

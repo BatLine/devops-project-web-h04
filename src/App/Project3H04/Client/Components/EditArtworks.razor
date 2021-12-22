@@ -8,7 +8,7 @@
         @foreach (Kunstwerk_DTO.Index k in kunstenaar.Kunstwerken)
         {
 
-            <div class="col-3">
+            <div class="col-sm-6 col-lg-5 mb-4">
                 <a href="artworks/@k.Id" style="text-decoration:none">
                     <div class="image">
                         <img src="@k.HoofdFoto.Pad" />
@@ -21,10 +21,10 @@
 
             </div>
         }
-        <div class="col-3">
+        <div class="col-6">
             <a href="artworks/create" style="text-decoration:none">
                 <div class="image">
-                    <img alt="Create new artwork"/>
+                    <img alt="Create new artwork" />
                 </div>
             </a>
 
