@@ -1,4 +1,4 @@
-@inject HttpClient httpClient
+@inject Services.KunstwerkService KunstwerkService
 @inject Services.StorageService StorageService
 @inject NavigationManager NavManager
 @using Blazored.FluentValidation
@@ -119,7 +119,7 @@ else
 
     protected async override Task OnParametersSetAsync()
     {
-        _materialen = await httpClient.GetFromJsonAsync<List<string>>($"api/kunstwerk/materiaal/{5}");
+        _materialen = await KunstwerkService.GetMaterialenAsync(5);
         await base.OnParametersSetAsync();
 
         var user = (await authenticationStateTask).User;
@@ -157,10 +157,8 @@ else
         {
             //API call "PUT"
             Kunstwerk_DTO.Edit model = (Kunstwerk_DTO.Edit)Model; //noodzakelijke cast
-            var response = await httpClient.PutAsJsonAsync<Kunstwerk_DTO.Edit>($"api/kunstwerk", model);
-            response.EnsureSuccessStatusCode();
 
-            var editResponse = await response.Content.ReadFromJsonAsync<KunstwerkResponse.Edit>();
+            var editResponse = await KunstwerkService.EditAsync(model);
             //images uploaden
             await StorageService.UploadImagesAsync(editResponse.UploadUris, _imagesFiles);
 
@@ -173,10 +171,7 @@ else
         {
 
             //API call "POST"
-            var response = await httpClient.PostAsJsonAsync<Kunstwerk_DTO.Create>($"api/kunstwerk", Model);
-            response.EnsureSuccessStatusCode();
-
-            var createResponse = await response.Content.ReadFromJsonAsync<KunstwerkResponse.Create>();
+            var createResponse = await KunstwerkService.CreateAsync(Model);
             //images uploaden
             await StorageService.UploadImagesAsync(createResponse.UploadUris, _imagesFiles);
 

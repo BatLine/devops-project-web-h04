@@ -354,7 +354,8 @@
             Page = filter.Page
         };
         var queryParameters = request.GetQueryString();
-        kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?{queryParameters}");
+        var response = await httpClient.Client.GetFromJsonAsync<KunstwerkResponse.Index>($"api/Kunstwerk?{queryParameters}");
+        kunstwerken = response.Kunstwerken;
         StateHasChanged(); // Since it's not a UI-event.
     }
 
