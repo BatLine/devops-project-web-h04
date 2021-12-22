@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - hooopgallery-acceptat
 on:
   push:
     branches:
-      - main
+      - productie-test
   workflow_dispatch:
 
 jobs:
@@ -57,9 +57,9 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'hooopgallery-acceptatie'
+          app-name: 'hooopgallery-productie'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PRODUCTION }}
           package: .
           
       - name: Remove old artifacts
