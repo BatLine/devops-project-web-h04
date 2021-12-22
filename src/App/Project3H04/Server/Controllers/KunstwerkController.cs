@@ -52,10 +52,10 @@ namespace Project3H04.Server.Controllers
 
 
 
-        // PUT api/<KunstwerkController>/5
+        // PUT api/<KunstwerkController>
         [Authorize(Roles = "Administrator,Kunstenaar")]
-        [HttpPut("{id}")]
-        public Task<KunstwerkResponse.Edit> Put(int id, Kunstwerk_DTO.Edit kunst)
+        [HttpPut]
+        public Task<KunstwerkResponse.Edit> Put([FromBody] Kunstwerk_DTO.Edit kunst)
         {
             return kunstwerkService.UpdateAsync(kunst, kunst.KunstenaarId);
         }
