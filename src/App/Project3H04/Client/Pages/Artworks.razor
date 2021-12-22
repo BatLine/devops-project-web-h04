@@ -1,8 +1,8 @@
 ﻿@page "/artworks"
+@inject Services.KunstwerkService KunstwerkService 
 <!--AUTH-->
 @attribute [AllowAnonymous]
-<!--=> Deze http PublicClient gebruiken voor Anonymous-->
-@inject PublicClient httpClient
+
 <head>
     <link rel="stylesheet" href="_content/LoreSoft.Blazor.Controls/BlazorControls.css" />
 </head>
@@ -284,10 +284,10 @@
     protected override async Task OnInitializedAsync()
     {
         //voor paging
-        aantalKunst = await httpClient.Client.GetFromJsonAsync<int>($"api/Kunstwerk/aantalKunst"); Console.WriteLine("aantalKunst: " + aantalKunst);
+        aantalKunst = await KunstwerkService.GetAantalKunstAsync(); Console.WriteLine("aantalKunst: " + aantalKunst);
         TotalPages = (int)Math.Ceiling(aantalKunst / (double)4);
 
-        var response = await httpClient.Client.GetFromJsonAsync<KunstwerkResponse.Index>($"api/Kunstwerk");
+        var response = await KunstwerkService.GetIndexAsync();
         kunstwerken = response.Kunstwerken;
         kunstCopy = kunstwerken;
         //vul artMediums met alle mogelijke mediums van kunstwerken
@@ -353,8 +353,7 @@
             BetaalOpties = filter.BuyingOptions,
             Page = filter.Page
         };
-        var queryParameters = request.GetQueryString();
-        var response = await httpClient.Client.GetFromJsonAsync<KunstwerkResponse.Index>($"api/Kunstwerk?{queryParameters}");
+        var response = await KunstwerkService.GetIndexAsync(request);
         kunstwerken = response.Kunstwerken;
         StateHasChanged(); // Since it's not a UI-event.
     }

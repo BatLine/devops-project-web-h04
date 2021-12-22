@@ -119,8 +119,9 @@ else
 
     protected async override Task OnParametersSetAsync()
     {
-        _materialen = await KunstwerkService.GetMaterialenAsync(5);
         await base.OnParametersSetAsync();
+        _materialen = await KunstwerkService.GetMaterialenAsync(5);
+
 
         var user = (await authenticationStateTask).User;
         userEmail = user.Identity.Name;
