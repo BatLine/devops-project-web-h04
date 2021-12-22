@@ -27,7 +27,7 @@ namespace Project3H04.Server.Controllers
         //GET: api/<KunstwerkController>
         [AllowAnonymous]
         [HttpGet]
-        public Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery] Kunstwerk_DTO.Filter request)
+        public Task<KunstwerkResponse.Index> GetKunstwerken([FromQuery] Kunstwerk_DTO.Filter request)
         {
             return kunstwerkService.GetKunstwerken(request);
         }

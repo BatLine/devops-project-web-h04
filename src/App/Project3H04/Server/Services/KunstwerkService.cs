@@ -52,7 +52,8 @@ namespace Project3H04.Server.Services {
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
-        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(Kunstwerk_DTO.Filter request) {
+        public async Task<KunstwerkResponse.Index> GetKunstwerken(Kunstwerk_DTO.Filter request) {
+            var respons = new KunstwerkResponse.Index();
             List<Kunstwerk_DTO.Index> kunstwerken = await dbContext.Kunstwerken
                 .Where(x => request.Materiaal == null || request.Materiaal.Contains(x.Materiaal))
                 .Where(x => request.Grootte == null || (request.Grootte.Contains("Large") && (x.Lengte >= 100 || x.Breedte >= 100 || x.Hoogte >= 100)) ||
@@ -81,7 +82,8 @@ namespace Project3H04.Server.Services {
                 .Where(x => request.MaximumPrijs.Equals(default(int)) || x.Prijs <= request.MaximumPrijs).OrderBy(x=>x.Naam).Skip(4 * request.Page)
                 .Take(4).ToListAsync(); Console.WriteLine("pagee"+request.Page); //skip moet eerst en dan take, in oef opl is andersom=fout
 
-            return kunstwerken;
+            respons.Kunstwerken = kunstwerken;
+            return respons;
         }
 
         public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk/*, int gebruikerId*/)

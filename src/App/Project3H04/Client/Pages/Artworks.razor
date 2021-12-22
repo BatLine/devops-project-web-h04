@@ -287,7 +287,8 @@
         aantalKunst = await httpClient.Client.GetFromJsonAsync<int>($"api/Kunstwerk/aantalKunst"); Console.WriteLine("aantalKunst: " + aantalKunst);
         TotalPages = (int)Math.Ceiling(aantalKunst / (double)4);
 
-        kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk");
+        var response = await httpClient.Client.GetFromJsonAsync<KunstwerkResponse.Index>($"api/Kunstwerk");
+        kunstwerken = response.Kunstwerken;
         kunstCopy = kunstwerken;
         //vul artMediums met alle mogelijke mediums van kunstwerken
         artMediums = kunstCopy.Select(x => x.Materiaal).Distinct();
