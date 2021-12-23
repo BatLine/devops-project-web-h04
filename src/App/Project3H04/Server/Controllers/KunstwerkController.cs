@@ -27,7 +27,7 @@ namespace Project3H04.Server.Controllers
         //GET: api/<KunstwerkController>
         [AllowAnonymous]
         [HttpGet]
-        public Task<List<Kunstwerk_DTO.Index>> GetKunstwerken([FromQuery] Kunstwerk_DTO.Filter request)
+        public Task<KunstwerkResponse.Index> GetKunstwerken([FromQuery] Kunstwerk_DTO.Filter request)
         {
             return kunstwerkService.GetKunstwerken(request);
         }
@@ -35,7 +35,7 @@ namespace Project3H04.Server.Controllers
         // GET api/<KunstwerkController>/5
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public Task<Kunstwerk_DTO.Detail> Get(int id)
+        public Task<KunstwerkResponse.Detail> Get(int id)
         {
             return kunstwerkService.GetDetailAsync(id);
         }
@@ -52,10 +52,10 @@ namespace Project3H04.Server.Controllers
 
 
 
-        // PUT api/<KunstwerkController>/5
+        // PUT api/<KunstwerkController>
         [Authorize(Roles = "Administrator,Kunstenaar")]
-        [HttpPut("{id}")]
-        public Task<KunstwerkResponse.Edit> Put(int id, Kunstwerk_DTO.Edit kunst)
+        [HttpPut]
+        public Task<KunstwerkResponse.Edit> Put([FromBody] Kunstwerk_DTO.Edit kunst)
         {
             return kunstwerkService.UpdateAsync(kunst, kunst.KunstenaarId);
         }

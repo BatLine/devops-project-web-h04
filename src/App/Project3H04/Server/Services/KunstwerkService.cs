@@ -28,9 +28,9 @@ namespace Project3H04.Server.Services {
             return await dbContext.Kunstwerken.CountAsync();
         }
 
-        public Task<Kunstwerk_DTO.Detail> GetDetailAsync(int id)
+        public async Task<KunstwerkResponse.Detail> GetDetailAsync(int id)
         {
-            return dbContext.Kunstwerken.Include(k => k.Fotos).Select(x => new Kunstwerk_DTO.Detail {
+            var kunstwerk = await dbContext.Kunstwerken.Include(k => k.Fotos).Select(x => new Kunstwerk_DTO.Detail {
                 Id = x.Id,
                 Naam = x.Naam,
                 Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie, Uploaded = true }),
@@ -49,10 +49,13 @@ namespace Project3H04.Server.Services {
                 TeKoop = x.TeKoop,
                 IsVeilbaar = x.IsVeilbaar
             }).SingleOrDefaultAsync(x => x.Id == id);
+            var response = new KunstwerkResponse.Detail() { Kunstwerk = kunstwerk };
+            return response;
         }
 
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
-        public async Task<List<Kunstwerk_DTO.Index>> GetKunstwerken(Kunstwerk_DTO.Filter request) {
+        public async Task<KunstwerkResponse.Index> GetKunstwerken(Kunstwerk_DTO.Filter request) {
+            var respons = new KunstwerkResponse.Index();
             List<Kunstwerk_DTO.Index> kunstwerken = await dbContext.Kunstwerken
                 .Where(x => request.Materiaal == null || request.Materiaal.Contains(x.Materiaal))
                 .Where(x => request.Grootte == null || (request.Grootte.Contains("Large") && (x.Lengte >= 100 || x.Breedte >= 100 || x.Hoogte >= 100)) ||
@@ -81,7 +84,8 @@ namespace Project3H04.Server.Services {
                 .Where(x => request.MaximumPrijs.Equals(default(int)) || x.Prijs <= request.MaximumPrijs).OrderBy(x=>x.Naam).Skip(4 * request.Page)
                 .Take(4).ToListAsync(); Console.WriteLine("pagee"+request.Page); //skip moet eerst en dan take, in oef opl is andersom=fout
 
-            return kunstwerken;
+            respons.Kunstwerken = kunstwerken;
+            return respons;
         }
 
         public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk/*, int gebruikerId*/)

@@ -5,7 +5,7 @@
 @inject ISidepanelService Sidepanel
 <div class="container-fluid m-0 vh-100">
     <div class="row vh-100">
-        <div class="col-3 p-0">
+        <div class="col-sm-12 col-md-3 col-lg-3 p-0">
             <nav id="sidebar">
                 <div class="row justify-content-center">
                     <div class="col-6 p-4">
@@ -38,7 +38,7 @@
                 </ul>
             </nav>
         </div>
-        <div class="col-9 p-3">
+        <div class="col-sm-12 col-md-9 col-lg-9 p-3">
 
             <!--=> Bewerken moet nog !!!-->
             <!-- Page Content  -->
@@ -62,7 +62,7 @@
                 else
                 {<!--met sidepanel-->
                     <EditAccount Model="@geb" OnRedirect="Callback" /><!-- hoe na de edit, de editForm bool terug op false zetten?-->
-        <button type="reset" id="BtnCancel" class="btn btn-secondary" @onclick="Showgeg">Cancel</button>
+                    <button type="reset" id="BtnCancel" class="btn btn-secondary" @onclick="Showgeg">Cancel</button>
                 }
 
             }
@@ -99,16 +99,20 @@
         //voor algemene attributen de geb gebruiken
 
         var user = (await authenticationStateTask).User;
-        if (user.Identity != null) {
+        if (user.Identity != null)
+        {
             Console.WriteLine(user.Identity.Name);
             Console.WriteLine(user.IsInRole("Kunstenaar"));
             //Console.WriteLine(user.Claims.FirstOrDefault().Value == "Kunstenaar");
         }
-        if (user.IsInRole("Kunstenaar")) {
+        if (user.IsInRole("Kunstenaar"))
+        {
             kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/byEmail/{user.Identity.Name}");
             geb = kunst;
             Console.WriteLine("Kunst");
-        } else {
+        }
+        else
+        {
             klant = await httpClient.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
             geb = klant;
             //Console.WriteLine(klant.Email);
@@ -130,12 +134,14 @@
         showArtworks = false;
     }
 
-    public void ShowEditForm() {
+    public void ShowEditForm()
+    {
         editForm = true;
         // callback = EventCallback.Factory.Create(this, RedirectPage);
     }
 
-    public async Task Showgeg() {
+    public async Task Showgeg()
+    {
         editForm = false;
         await this.OnParametersSetAsync();
         StateHasChanged();

@@ -8,19 +8,27 @@
         @foreach (Kunstwerk_DTO.Index k in kunstenaar.Kunstwerken)
         {
 
-    <div class="col-3">
-        <a href="artworks/@k.Id" style="text-decoration:none">
-            <div class="image">
-                <img src="@k.HoofdFoto.Pad" />
+            <div class="col-sm-6 col-lg-5 mb-4">
+                <a href="artworks/@k.Id" style="text-decoration:none">
+                    <div class="image">
+                        <img src="@k.HoofdFoto.Pad" />
+                    </div>
+                </a>
+                <p class="artwork">@k.Naam</p>
+
+                <a class="btn btn-light btn-xl" @onclick="(()=>OpenEditSidepanel(k))" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">Edit</a>
+                <a class="btn btn-light btn-xl" href="auction/@k.Id" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">Manage Auction</a>
+
             </div>
-        </a>
-        <p class="artwork">@k.Naam</p>
-
-        <a class="btn btn-light btn-xl" @onclick="(()=>OpenEditSidepanel(k))" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">Edit</a>
-        <a class="btn btn-light btn-xl" href="auction/@k.Id" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">Manage Auction</a>
-
-    </div>
         }
+        <div class="col-6">
+            <a href="artworks/create" style="text-decoration:none">
+                <div class="image">
+                    <img alt="Create new artwork" />
+                </div>
+            </a>
+
+        </div>
     }
     else
     {
@@ -36,8 +44,8 @@
 
     public async Task OpenEditSidepanel(Kunstwerk_DTO.Index k)
     {
-        var kunstwerkDetail = await httpClient.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/kunstwerk/{k.Id}");
-        _kunstwerk = new Kunstwerk_DTO.Edit(kunstwerkDetail);
+        var response = await httpClient.GetFromJsonAsync<KunstwerkResponse.Detail>($"api/kunstwerk/{k.Id}");
+        _kunstwerk = new Kunstwerk_DTO.Edit(response.Kunstwerk);
 
         var callback = EventCallback.Factory.Create(this, RedirectPage);
 

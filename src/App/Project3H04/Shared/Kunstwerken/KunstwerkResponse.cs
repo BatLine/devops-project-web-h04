@@ -19,5 +19,15 @@ namespace Project3H04.Shared.Kunstwerken
             public IList<Uri> UploadUris { get; set; }
 
         }
+
+        public class Index
+        {
+            public List<Kunstwerk_DTO.Index> Kunstwerken { get; set; }
+        }
+
+        public class Detail
+        {
+            public Kunstwerk_DTO.Detail Kunstwerk { get; set; }
+        }
     }
 }

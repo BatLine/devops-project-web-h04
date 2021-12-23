@@ -63,7 +63,7 @@ namespace Project3H04.Client.Components
 
             if (Model.Fotopad == null || Model.Fotopad.Equals(""))
             {
-                Model.Fotopad = "anonymous.JPG";
+                Model.Fotopad = "/images/anonymous.JPG";
             } else if(newImage is not null)
             {
                 //stuff om te uploaden

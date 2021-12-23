@@ -13,7 +13,7 @@
                 <div style="text-align: left;"><button class="btn btn-light btn-xl" @onclick="OpenSidepanel" style="border-radius: 25px; padding-left: 40px;padding-right: 40px; ">Sign up</button></div>
             </NotAuthorized>
         </AuthorizeView>
-        </div>
+    </div>
 </header>
 <body>
 
@@ -28,11 +28,11 @@
             {
                 @foreach (var kunstenaar in kunstenaars)
                 {
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-3 col-6" data-test-id="recentlyjoined">
                         <a href="artists/@kunstenaar.GebruikerId" style="text-decoration:none !important;color:black">
                             <div>
 
-                                <div class="image"><img src="/images/@kunstenaar.Fotopad" alt="" style="width: 100%; height:auto"></div>
+                                <div class="image"><img src="@kunstenaar.Fotopad" alt="" style="width: 100%; height:auto"></div>
                                 <p class="artistname" style="font-weight:400">@kunstenaar.Gebruikersnaam</p>
 
                             </div>

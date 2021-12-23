@@ -1,8 +1,8 @@
 ﻿@page "/artworks"
+@inject Services.KunstwerkService KunstwerkService 
 <!--AUTH-->
 @attribute [AllowAnonymous]
-<!--=> Deze http PublicClient gebruiken voor Anonymous-->
-@inject PublicClient httpClient
+
 <head>
     <link rel="stylesheet" href="_content/LoreSoft.Blazor.Controls/BlazorControls.css" />
 </head>
@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col">
                 <div class="collapsable-filter-container">
-                    <button  class="btn" type="button" data-toggle="collapse" data-target="#filterCollapse" aria-expanded="false" aria-controls="filters">
+                    <button class="btn" type="button" data-toggle="collapse" data-target="#filterCollapse" aria-expanded="false" aria-controls="filters">
                         filters
                         <i class="bi bi-filter"></i>
                     </button>
@@ -26,7 +26,7 @@
                                 <i></i>
                                 <h2>Artists</h2>
                                 <div class="checkbox">
-                                    <input  @bind="filter.ArtistSearchterm" type="search" style="width:100%" placeholder="Artist Name" />
+                                    <input @bind="filter.ArtistSearchterm" type="search" style="width:100%" placeholder="Artist Name" />
                                 </div>
                             </li>
                             <li>
@@ -119,15 +119,15 @@
         </div>
 
         <div class="row">
-            <div class="filter-container">
-                <!--Filters-->
-                <div class="col-md-12 col-lg-10 col-xl-10">
+            <div class="col-md-6 col-lg-4">
+                <div class="filter-container">
+                    <!--Filters-->
                     <ul>
                         <li>
-                            <input type="checkbox" checked >
+                            <input type="checkbox" checked>
                             <i></i>
                             <h2>Artists</h2>
-                            <div class="checkbox" >
+                            <div class="checkbox">
                                 <input data-test-id="artistsearch" @bind="filter.ArtistSearchterm" type="search" style="width:100%" placeholder="Artist Name" />
                             </div>
                         </li>
@@ -284,10 +284,11 @@
     protected override async Task OnInitializedAsync()
     {
         //voor paging
-        aantalKunst = await httpClient.Client.GetFromJsonAsync<int>($"api/Kunstwerk/aantalKunst"); Console.WriteLine("aantalKunst: " + aantalKunst);
+        aantalKunst = await KunstwerkService.GetAantalKunstAsync(); Console.WriteLine("aantalKunst: " + aantalKunst);
         TotalPages = (int)Math.Ceiling(aantalKunst / (double)4);
 
-        kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk");
+        var response = await KunstwerkService.GetIndexAsync();
+        kunstwerken = response.Kunstwerken;
         kunstCopy = kunstwerken;
         //vul artMediums met alle mogelijke mediums van kunstwerken
         artMediums = kunstCopy.Select(x => x.Materiaal).Distinct();
@@ -352,8 +353,8 @@
             BetaalOpties = filter.BuyingOptions,
             Page = filter.Page
         };
-        var queryParameters = request.GetQueryString();
-        kunstwerken = await httpClient.Client.GetFromJsonAsync<List<Kunstwerk_DTO.Index>>($"api/Kunstwerk?{queryParameters}");
+        var response = await KunstwerkService.GetIndexAsync(request);
+        kunstwerken = response.Kunstwerken;
         StateHasChanged(); // Since it's not a UI-event.
     }
 

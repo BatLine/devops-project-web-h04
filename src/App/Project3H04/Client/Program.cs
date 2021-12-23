@@ -51,8 +51,10 @@ namespace Project3H04.Client
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
               .CreateClient("ServerAPI"));
 
-            //blobstorage:
+            //Storages injecteren:
             builder.Services.AddHttpClient<StorageService>();
+            builder.Services.AddHttpClient<KunstwerkService>();
+
 
             await builder.Build().RunAsync();
         }

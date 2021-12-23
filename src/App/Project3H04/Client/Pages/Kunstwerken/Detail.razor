@@ -15,10 +15,11 @@ else
 
 @code {
     [Parameter] public int Id { get; set; }
-private Kunstwerk_DTO.Detail _kunstwerk;
+    private Kunstwerk_DTO.Detail _kunstwerk;
 
-protected override async Task OnParametersSetAsync()
-{
-    _kunstwerk = await httpClient.Client.GetFromJsonAsync<Kunstwerk_DTO.Detail>($"api/Kunstwerk/{Id}");
-}
+    protected override async Task OnParametersSetAsync()
+    {
+        var response = await httpClient.Client.GetFromJsonAsync<KunstwerkResponse.Detail>($"api/Kunstwerk/{Id}");
+        _kunstwerk = response.Kunstwerk;
+    }
 }
