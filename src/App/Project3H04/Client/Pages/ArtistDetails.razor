@@ -3,7 +3,7 @@
 @attribute [AllowAnonymous]
 @inject Services.KunstenaarService KunstenaarService
 
-@if (kunst == null)
+@if (kunstenaar == null)
 {
     // <LoadingSpinner />
     <p>Loading...</p>
@@ -16,9 +16,9 @@ else
             <div class="col-md-1 col-5">
                 <div style="padding-bottom:10px">
                     <div class="rounded-circle image">
-                        <img src="@kunst.Fotopad" alt="" />
+                        <img src="@kunstenaar.Fotopad" alt="" />
                     </div>
-                    <p style="display:inline-block">@kunst.Gebruikersnaam</p>
+                    <p style="display:inline-block">@kunstenaar.Gebruikersnaam</p>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@ else
         <div class="row">
             <div class="col-md-4">
                 <text>
-                    @kunst.Details
+                    @kunstenaar.Details
 
                 </text>
             </div>
@@ -37,10 +37,10 @@ else
 
                     <div class="container testimonial-group " style="padding-left:20px; padding-top:20px">
                         <div class="row">
-                            @if (kunst.Kunstwerken.Count != 0)
+                            @if (kunstenaar.Kunstwerken.Count != 0)
                             {
 
-                                @foreach (Kunstwerk_DTO.Index k in kunst.Kunstwerken)
+                                @foreach (Kunstwerk_DTO.Index k in kunstenaar.Kunstwerken)
                                 {
                                     <a href="artworks/@k.Id" style="text-decoration:none !important">
                                         <div class="col-4">
@@ -82,12 +82,12 @@ else
 
 @code {
     [Parameter] public int Id { get; set; }
-    private Kunstenaar_DTO kunst;
+    private Kunstenaar_DTO kunstenaar;
     //private List<Kunstwerk_DTO.Index> kunstwerken;
 
     protected override async Task OnParametersSetAsync()
     {
-        kunst = await KunstenaarService.GetDetailAsync(new(Id));
+        kunstenaar = await KunstenaarService.GetDetailAsync(new(Id));
         //Console.WriteLine(kunst.Fotopad);
         // Console.WriteLine(kunst.Kunstwerken.Count());
 
