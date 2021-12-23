@@ -2,7 +2,7 @@
 <!--AUTH-->
 @attribute [Authorize]
 @inject NavigationManager NavManager
-@inject HttpClient httpClient
+@inject Services.KunstwerkService kunstwerkService
 
 <h3>Edit Artwork</h3>
 
@@ -27,7 +27,7 @@ else
     {
         //try //AUTH
         //{
-        var response = await httpClient.GetFromJsonAsync<KunstwerkResponse.Detail>($"api/Kunstwerk/{Id}");
+        var response = await kunstwerkService.GetDetailAsync(Id);
         _kunstwerk = new Kunstwerk_DTO.Edit(response.Kunstwerk);
         //}
         //catch (AccessTokenNotAvailableException exception)

@@ -1,4 +1,8 @@
-﻿@inject HttpClient httpClient
+﻿@inject HttpClient httpCliento
+@inject Services.KunstwerkService kunstwerkService
+@inject Services.KunstenaarService kunstenaarService
+
+
 @inject ISidepanelService Sidepanel
 
 
@@ -44,7 +48,7 @@
 
     public async Task OpenEditSidepanel(Kunstwerk_DTO.Index k)
     {
-        var response = await httpClient.GetFromJsonAsync<KunstwerkResponse.Detail>($"api/kunstwerk/{k.Id}");
+        var response = await kunstwerkService.GetDetailAsync(k.Id);
         _kunstwerk = new Kunstwerk_DTO.Edit(response.Kunstwerk);
 
         var callback = EventCallback.Factory.Create(this, RedirectPage);
@@ -61,7 +65,7 @@
     private async Task RedirectPage()
     {
         //refresh?
-        var kunstenaarRefresh = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/kunstenaar/{kunstenaar.GebruikerId}");
+        var kunstenaarRefresh = await kunstenaarService.GetDetailAsync(kunstenaar.GebruikerId);
         kunstenaar = kunstenaarRefresh;
 
         Sidepanel.Close();

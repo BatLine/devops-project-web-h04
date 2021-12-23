@@ -33,6 +33,12 @@ namespace Project3H04.Client.Services
             return response;
         }
 
+        public async Task<KunstwerkResponse.Detail> GetDetailAsync(int Id)
+        {
+            var response = await publicClient.Client.GetFromJsonAsync<KunstwerkResponse.Detail>($"{endpoint}/{Id}");
+            return response;
+        }
+
         public async Task<KunstwerkResponse.Edit> EditAsync(Kunstwerk_DTO.Edit model)
         {
             var response = await authorisedClient.PutAsJsonAsync($"{endpoint}", model);
