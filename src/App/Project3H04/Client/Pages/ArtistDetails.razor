@@ -87,7 +87,7 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        kunst = await KunstenaarService.GetDetailAsync(Id);
+        kunst = await KunstenaarService.GetDetailAsync(new(Id));
         //Console.WriteLine(kunst.Fotopad);
         // Console.WriteLine(kunst.Kunstwerken.Count());
 

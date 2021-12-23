@@ -27,9 +27,9 @@ namespace Project3H04.Client.Services
             return kunstenaars;
         }
 
-        public async Task<Kunstenaar_DTO> GetDetailAsync(int Id)
+        public async Task<Kunstenaar_DTO> GetDetailAsync(KunstenaarRequest.Detail request)
         {
-            var kunstenaar = await publicClient.Client.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{Id}");
+            var kunstenaar = await publicClient.Client.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{request.Id}");
             return kunstenaar;
         }
     }

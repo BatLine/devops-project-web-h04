@@ -65,7 +65,7 @@
     private async Task RedirectPage()
     {
         //refresh?
-        var kunstenaarRefresh = await kunstenaarService.GetDetailAsync(kunstenaar.GebruikerId);
+        var kunstenaarRefresh = await kunstenaarService.GetDetailAsync(new(kunstenaar.GebruikerId));
         kunstenaar = kunstenaarRefresh;
 
         Sidepanel.Close();

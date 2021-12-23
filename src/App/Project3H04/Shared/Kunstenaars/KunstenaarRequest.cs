@@ -25,6 +25,11 @@ namespace Project3H04.Shared.Kunstenaars
         public class Detail
         {
             public int Id { get; set; }
+
+            public Detail(int id)
+            {
+                Id = id;
+            }
         }
     }
 }
