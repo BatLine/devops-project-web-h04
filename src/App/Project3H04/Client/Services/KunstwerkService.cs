@@ -10,13 +10,13 @@ namespace Project3H04.Client.Services
 {
     public class KunstwerkService
     {
-        private readonly HttpClient httpClient;
+        private readonly HttpClient authorisedClient;
         private readonly PublicClient publicClient; //Deze http PublicClient gebruiken voor Anonymous--> 
         private const string endpoint = "api/kunstwerk";
 
         public KunstwerkService(HttpClient httpClient, PublicClient publicClient)
         {
-            this.httpClient = httpClient;
+            this.authorisedClient = httpClient;
             this.publicClient = publicClient;
         }
 
@@ -35,14 +35,14 @@ namespace Project3H04.Client.Services
 
         public async Task<KunstwerkResponse.Edit> EditAsync(Kunstwerk_DTO.Edit model)
         {
-            var response = await httpClient.PutAsJsonAsync($"{endpoint}", model);
+            var response = await authorisedClient.PutAsJsonAsync($"{endpoint}", model);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<KunstwerkResponse.Edit>();
         }
 
         public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create model)
         {
-            var response = await httpClient.PostAsJsonAsync($"{endpoint}", model);
+            var response = await authorisedClient.PostAsJsonAsync($"{endpoint}", model);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<KunstwerkResponse.Create>();
         }
