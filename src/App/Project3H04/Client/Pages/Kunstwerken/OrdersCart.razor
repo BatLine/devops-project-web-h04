@@ -30,7 +30,7 @@
                             <p class="price">€@kunst.Prijs</p>
                             <p>Amount: @kunstwerken.Count(x => x.Id == kunst.Id)</p>
                         </div>
-                        <a class="btn btn-secondary" @onclick="_ =>RemoveFromCart(kunst)">Remove</a>
+                        <a class="btn btn-secondary" data-test-id="removebutton" @onclick="_ =>RemoveFromCart(kunst)">Remove</a>
                     </div>
                 </div>
             }

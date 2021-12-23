@@ -8,7 +8,7 @@
 <!--AUTH login en logout btn-->
 <AuthorizeView>
     <Authorized>
-        <!--  Hello,  @context.User.Identity.Name! -->
+        <!-- <p data-test-id="username">Hello,  @context.User.Identity.Name! </p> -->
         <a href="#" style="color: grey !important ; text-decoration:none" @onclick="BeginSignOut">log out</a>
     </Authorized>
     <NotAuthorized>
