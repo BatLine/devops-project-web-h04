@@ -45,7 +45,7 @@ namespace Project3H04.Server.Controllers
         // POST api/<KunstwerkController>
         [Authorize(Roles = "Administrator,Kunstenaar")]
         [HttpPost]
-        public Task<KunstwerkResponse.Create> Create(Kunstwerk_DTO.Create kunst)
+        public Task<KunstwerkResponse.Create> Create([FromBody] Kunstwerk_DTO.Create kunst)
         {
             return kunstwerkService.CreateAsync(kunst);
         }
