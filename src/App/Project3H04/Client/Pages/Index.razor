@@ -2,7 +2,7 @@
 <!--AUTH-->
 @attribute [AllowAnonymous]
 <!--=> Deze http PublicClient gebruiken voor Anonymous-->
-@inject PublicClient httpClient
+@inject Services.KunstenaarService KunstenaarService
 @inject ISidepanelService Sidepanel
 <header class="masthead">
     <div class="container">
@@ -60,7 +60,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        kunstenaars = await httpClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar?take=4&recentArtists=true");
+        kunstenaars = await KunstenaarService.GetRecentArtistsAsync();
         //kunstenaarsCopy = kunstenaars;
 
     }

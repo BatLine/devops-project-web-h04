@@ -54,7 +54,7 @@ namespace Project3H04.Client
             //Storages injecteren:
             builder.Services.AddHttpClient<StorageService>();
             builder.Services.AddScoped<KunstwerkService>();
-
+            builder.Services.AddScoped<KunstenaarService>();
 
             await builder.Build().RunAsync();
         }

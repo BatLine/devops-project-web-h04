@@ -2,7 +2,7 @@
 <!--AUTH-->
 @attribute [AllowAnonymous]
 <!--=> Deze http PublicClient gebruiken voor Anonymous-->
-@inject PublicClient httpClient
+@inject Services.KunstenaarService KunstenaarService
 <body>
     <div class="container">
         <p class="black-style">Artists</p>
@@ -20,7 +20,7 @@
                     <div class="col-lg-4 col-md-6" data-test-id="artists">
                         <a href="artists/@kunst.GebruikerId" style="text-decoration:none !important;color:black">
                             <div>
-                                <div class="image"><img src="/images/@kunst.Fotopad" alt="" width="250" /></div>
+                                <div class="image"><img src="@kunst.Fotopad" alt="" width="250" /></div>
                                 <p class="artistname" style="font-weight:500">@kunst.Gebruikersnaam</p>
                             </div>
                         </a>
@@ -48,7 +48,7 @@
     private string artistSearch;
     protected override async Task OnInitializedAsync()
     {
-        kunstenaars = await httpClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar");
+        kunstenaars = await KunstenaarService.GetIndexAsync();
         //kunstenaarsCopy = kunstenaars;
     }
 
@@ -56,9 +56,9 @@
     {
         artistSearch = args.Value.ToString();
         if (string.IsNullOrEmpty(artistSearch))
-            kunstenaars = await httpClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar");
+            kunstenaars = await KunstenaarService.GetIndexAsync();
         else
-            kunstenaars = await httpClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>($"api/Kunstenaar?term={artistSearch}");
+            kunstenaars = await KunstenaarService.GetIndexAsync(artistSearch);
     }
 
 }
