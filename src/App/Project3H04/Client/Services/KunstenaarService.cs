@@ -21,20 +21,9 @@ namespace Project3H04.Client.Services
             this.publicClient = publicClient;
         }
 
-        public async Task<List<Kunstenaar_DTO>> GetRecentArtistsAsync() {
-            var kunstenaars = await publicClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar?take=4&recentArtists=true");
-            return kunstenaars;
-        }
-
-        public async Task<List<Kunstenaar_DTO>> GetIndexAsync()
+        public async Task<List<Kunstenaar_DTO>> GetIndexAsync(KunstenaarRequest.Index request)
         {
-            var kunstenaars = await publicClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>("api/Kunstenaar");
-            return kunstenaars;
-        }
-
-        public async Task<List<Kunstenaar_DTO>> GetIndexAsync(string searchTerm)
-        {
-            var kunstenaars = await publicClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>($"api/Kunstenaar?term={searchTerm}");
+            var kunstenaars = await publicClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>($"api/Kunstenaar?term={request.Term}&take={request.Take}&recentArtists={request.RecentArtists}");
             return kunstenaars;
         }
 

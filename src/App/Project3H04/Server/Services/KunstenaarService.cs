@@ -87,6 +87,8 @@ namespace Project3H04.Server.Services
 
         public async Task<List<Kunstenaar_DTO>> GetKunstenaars(string term, int take, bool recentArtists)
         {
+            if (term is null)
+                term = "";
             //.Where(x=>x.Naam.Contains(searchterm))
             List<Kunstenaar_DTO> kunstenaars =
             await dbContext.Gebruikers.Where(x => x is Kunstenaar)  // .OfType<Kunstenaar>()

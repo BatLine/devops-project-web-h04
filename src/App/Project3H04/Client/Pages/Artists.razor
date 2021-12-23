@@ -48,7 +48,8 @@
     private string artistSearch;
     protected override async Task OnInitializedAsync()
     {
-        kunstenaars = await KunstenaarService.GetIndexAsync();
+
+        kunstenaars = await KunstenaarService.GetIndexAsync(new());
         //kunstenaarsCopy = kunstenaars;
     }
 
@@ -56,9 +57,9 @@
     {
         artistSearch = args.Value.ToString();
         if (string.IsNullOrEmpty(artistSearch))
-            kunstenaars = await KunstenaarService.GetIndexAsync();
+            kunstenaars = await KunstenaarService.GetIndexAsync(new());
         else
-            kunstenaars = await KunstenaarService.GetIndexAsync(artistSearch);
+            kunstenaars = await KunstenaarService.GetIndexAsync(new() { Term = artistSearch });
     }
 
 }
