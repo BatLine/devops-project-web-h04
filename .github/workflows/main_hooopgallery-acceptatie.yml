@@ -19,6 +19,7 @@ jobs:
         with:
           age: "2 hours"
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+          skip-recent: 1
           
       - uses: actions/checkout@v2
 
@@ -74,3 +75,4 @@ jobs:
         with:
           age: "2 hours"
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+          skip-recent: 1
