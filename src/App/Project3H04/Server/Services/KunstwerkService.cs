@@ -56,7 +56,7 @@ namespace Project3H04.Server.Services {
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
         public async Task<KunstwerkResponse.Index> GetKunstwerken(Kunstwerk_DTO.Filter request) {
             var respons = new KunstwerkResponse.Index();
-            List<Kunstwerk_DTO.Index> kunstwerken = await dbContext.Kunstwerken
+            List<Kunstwerk_DTO.Detail> kunstwerken = await dbContext.Kunstwerken.Include(k=>k.Fotos)
                 .Where(x => request.Materiaal == null || request.Materiaal.Contains(x.Materiaal))
                 .Where(x => request.Grootte == null || (request.Grootte.Contains("Large") && (x.Lengte >= 100 || x.Breedte >= 100 || x.Hoogte >= 100)) ||
                             (request.Grootte.Contains("Medium") && (x.Lengte >= 50 && x.Lengte < 100 || x.Breedte >= 50 && x.Breedte < 100 || x.Hoogte >= 50 && x.Hoogte < 100))
@@ -64,7 +64,7 @@ namespace Project3H04.Server.Services {
 
                 .Where(x => request.BetaalOpties == null || request.BetaalOpties.Contains("Buy") && x.TeKoop == true)
                 .Where(x => request.BetaalOpties == null || request.BetaalOpties.Contains("Bid") && x.IsVeilbaar)
-                .Select(x => new Kunstwerk_DTO.Index() {
+                .Select(x => new Kunstwerk_DTO.Detail() {
                     Id = x.Id,
                     Naam = x.Naam,
                     HoofdFoto = new Foto_DTO(x.Fotos.FirstOrDefault().Naam, x.Fotos.FirstOrDefault().Locatie), //enkel eerste foto is nodig voor index
@@ -74,8 +74,14 @@ namespace Project3H04.Server.Services {
                         GebruikerId = x.Kunstenaar.GebruikerId,
                     },
                     Prijs = x.Prijs,
-                    TeKoop = x.TeKoop //voor tekoop icon
-                    , IsVeilbaar = false
+                    Lengte = x.Lengte,
+                    Breedte = x.Breedte,
+                    Hoogte = x.Hoogte,
+                    Gewicht = x.Gewicht ?? default(decimal),
+                    Beschrijving = x.Beschrijving,
+                    Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie, Uploaded = true }),
+                    TeKoop = x.TeKoop, //voor tekoop icon
+                    IsVeilbaar = false
                 })
 
                 .Where(x => string.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))

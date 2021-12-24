@@ -14,7 +14,6 @@ namespace Project3H04.Shared.Kunstwerken
             public int Id { get; set; }
             public string Naam { get; set; }
             public int Prijs { get; set; }
-
             public string Materiaal { get; set; }
             public DateTime Einddatum { get; set; }
             public Kunstenaar_DTO Kunstenaar { get; set; }

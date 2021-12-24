@@ -22,7 +22,7 @@ namespace Project3H04.Shared.Kunstwerken
 
         public class Index
         {
-            public List<Kunstwerk_DTO.Index> Kunstwerken { get; set; }
+            public List<Kunstwerk_DTO.Detail> Kunstwerken { get; set; }
         }
 
         public class Detail

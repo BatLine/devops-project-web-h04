@@ -91,14 +91,22 @@ namespace Project3H04.Server.Services
                 term = "";
             //.Where(x=>x.Naam.Contains(searchterm))
             List<Kunstenaar_DTO> kunstenaars =
-            await dbContext.Gebruikers.Where(x => x is Kunstenaar)  // .OfType<Kunstenaar>()
+            await dbContext.Gebruikers.OfType<Kunstenaar>().Include(x=> x.Kunstwerken).ThenInclude(x=>x.Fotos)  // .OfType<Kunstenaar>()
             .Select(x => new Kunstenaar_DTO
             {
                 Gebruikersnaam = x.Gebruikersnaam,
                 GebruikerId = x.GebruikerId,
                 DatumCreatie = x.DatumCreatie,
                 Fotopad = x.FotoPad,
-               GeboortedatumShort = x.Geboortedatum.ToShortDateString()
+                GeboortedatumShort = x.Geboortedatum.ToShortDateString(),
+                Details = x.Details,
+                Kunstwerken = x.Kunstwerken.Select(x => new Kunstwerk_DTO.Index
+                {
+                    Id = x.Id,
+                    Naam = x.Naam,
+                    HoofdFoto = new(x.Fotos.FirstOrDefault().Naam, x.Fotos.FirstOrDefault().Locatie),
+                    Prijs = x.Prijs
+                }).ToList(),
             }).Where(k => k.Gebruikersnaam.Contains(term)).Take(take)
             .ToListAsync();
             if (recentArtists)
