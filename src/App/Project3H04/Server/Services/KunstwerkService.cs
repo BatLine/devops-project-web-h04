@@ -81,7 +81,7 @@ namespace Project3H04.Server.Services {
                     Beschrijving = x.Beschrijving,
                     Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie, Uploaded = true }),
                     TeKoop = x.TeKoop, //voor tekoop icon
-                    IsVeilbaar = false
+                    IsVeilbaar = x.IsVeilbaar
                 })
 
                 .Where(x => string.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))
