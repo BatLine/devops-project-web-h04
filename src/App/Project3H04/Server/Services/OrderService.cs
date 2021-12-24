@@ -105,8 +105,8 @@ namespace Project3H04.Server.Services
             await DbContext.SaveChangesAsync();
         }
 
-        public async Task<OrderResponse.Detail> GetUserOrders(string email)
-        {
+        public async Task<OrderResponse.Detail> GetUserOrders(string email) {
+            await Task.Delay(1);
             var gebruiker = DbContext.Gebruikers.OfType<Klant>().Include(k => k.Bestellingen).ThenInclude(b => b.WinkelmandKunstwerken).ThenInclude(k => k.Fotos).FirstOrDefault(k => k.Email.Equals(email));
             List<Bestelling_DTO.Index> bestellingen = gebruiker.Bestellingen.Select(x => new Bestelling_DTO.Index
             {
@@ -137,6 +137,7 @@ namespace Project3H04.Server.Services
 
         public async Task<Bestelling_DTO.Index> GetBestelling(int id)
         {
+            await Task.Delay(1);
             return DbContext.Bestellingen.Include(x => x.WinkelmandKunstwerken).Select(x => new Bestelling_DTO.Index
             {
                 Id = x.Id,
