@@ -107,13 +107,15 @@
         }
         if (user.IsInRole("Kunstenaar"))
         {
-            kunst = await httpClient.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/byEmail/{user.Identity.Name}");
+            var response = await httpClient.GetFromJsonAsync<KunstenaarResponse.Detail>($"api/Kunstenaar/byEmail/{user.Identity.Name}");
+            kunst = response.Kunstenaar;
             geb = kunst;
             Console.WriteLine("Kunst");
         }
         else
         {
-            klant = await httpClient.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
+            var response = await httpClient.GetFromJsonAsync<KlantResponse.Detail>($"api/Klant/byEmail/{user.Identity.Name}");
+            klant = response.Klant;
             geb = klant;
             //Console.WriteLine(klant.Email);
             Console.WriteLine("Klant");

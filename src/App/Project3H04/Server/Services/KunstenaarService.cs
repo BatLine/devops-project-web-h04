@@ -60,7 +60,7 @@ namespace Project3H04.Server.Services
             return new KunstenaarResponse.Detail() { Kunstenaar = k };
         }
 
-        public async Task<Kunstenaar_DTO> GetKunstenaarByEmail(string email)
+        public async Task<KunstenaarResponse.Detail> GetKunstenaarByEmail(string email)
         {
             var x = (Kunstenaar)dbContext.Gebruikers.OfType<Kunstenaar>().Include(k => k.Kunstwerken).ThenInclude(x => x.Fotos).SingleOrDefault(x => x.Email == email);
             //include van fotos ...
@@ -82,7 +82,7 @@ namespace Project3H04.Server.Services
                 //,Veilingen = (ICollection<Shared.DTO.Veiling_DTO>)x.Veilingen //omzetten naar dto
             });
 
-            return k;
+            return new() { Kunstenaar = k };
         }
 
         public async Task<KunstenaarResponse.Index> GetKunstenaars(string term, int take, bool recentArtists)

@@ -9,7 +9,7 @@ namespace Project3H04.Shared.Kunstenaars
     public interface IKunstenaarService
     {
         // List<Kunstenaar_DTO> Kunstenaars { get; set; }
-        Task<Kunstenaar_DTO> GetKunstenaarByEmail(string email);
+        Task<KunstenaarResponse.Detail> GetKunstenaarByEmail(string email);
         Task<KunstenaarResponse.Detail> GetDetailAsync(int id);
         Task<KunstenaarResponse.Index> GetKunstenaars(string term, int take, bool recentArtists);
 

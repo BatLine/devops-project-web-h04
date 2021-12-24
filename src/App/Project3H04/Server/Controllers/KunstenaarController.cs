@@ -45,7 +45,7 @@ namespace Project3H04.Server.Controllers
         }
 
         [Route("byEmail/{email}")]
-        public Task<Kunstenaar_DTO> Get(string email)
+        public Task<KunstenaarResponse.Detail> Get(string email)
         {
             return kunstenaarService.GetKunstenaarByEmail(email);
             //if(k == null)
