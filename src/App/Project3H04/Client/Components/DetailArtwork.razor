@@ -40,17 +40,16 @@
                         @if (!user.IsInRole("Kunstenaar") && !user.IsInRole("Administrator"))
                         {
                             <!--Enkel zichtbaar als klant-->
-
-                            if (Kunstwerk.TeKoop)
+                            if (Kunstwerk.IsVeilbaar)
                             {
-                                if (Kunstwerk.IsVeilbaar)
+                                <!--Veiling component-->
+                                <DetailArtworkBieden KunstwerkId="@Kunstwerk.Id" />
+                            }
+                            else
+                            {
+                                <!--Order button-->
+                                if (Kunstwerk.TeKoop)
                                 {
-                                    <!--Veiling component-->
-                                    <DetailArtworkBieden KunstwerkId="@Kunstwerk.Id" />
-                                }
-                                else
-                                {
-                                    <!--Order button-->
                                     <button data-test-id="orderbutton" class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
                                 }
                             }
