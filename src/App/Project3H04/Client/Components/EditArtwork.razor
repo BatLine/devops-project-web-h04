@@ -46,14 +46,14 @@
                     {<label for="@Model.Prijs">StartingPrice </label> }
                     else
                     { <label for="@Model.Prijs">Price </label>}
-                    <InputNumber @bind-Value="@Model.Prijs" class="form-control"/>
+                    <InputNumber @bind-Value="@Model.Prijs" class="form-control" />
                 </div>
                 <!--<div class="form-group">
-                    <label>
-                        Sell by auction?
-                        <InputCheckbox @bind-Value="@Model.IsVeilbaar" />
-                    </label>
-                </div>-->
+            <label>
+                Sell by auction?
+                <InputCheckbox @bind-Value="@Model.IsVeilbaar" />
+            </label>
+        </div>-->
             }
             <div class="form-group">
                 <label for="materiaalInput">Medium</label>
@@ -75,9 +75,22 @@
                 <span>Confirm</span>
                 @if (loading)
                 {
-                    <TinySpinner/>
+                    <TinySpinner />
                 }
             </button>
+            @if (Model is Kunstwerk_DTO.Edit)
+            {
+                <button hidden="@pendingDelete" type="button" class="btn btn-outline-secondary" @onclick="Delete">
+                    Delete Artwork
+                </button>
+                <button hidden="@notPendingDelete" type="button" class="btn btn-secondary" @onclick="CancelDelete">
+                    <i class="fas fa-trash-restore"></i>
+                </button>
+                <button hidden="@notPendingDelete" type="button" class="btn btn-danger" @onclick="DeleteConfirm">
+                    <i class="far fa-trash-alt"></i>
+                </button>
+            }
+
             <!--<a class="btn btn-secondary" href="/">
         <i class="fas fa-chevron-left"></i>
         <span>Cancel</span>
@@ -108,6 +121,8 @@ else
     private IList<string> _materialen = new List<string>();
     private IList<IBrowserFile> _imagesFiles = new List<IBrowserFile>();
     private bool loading = false;
+    private bool pendingDelete = false;
+    private bool notPendingDelete => !pendingDelete;
 
     protected override void OnInitialized()
     {
@@ -137,23 +152,6 @@ else
             Model.Prijs = 0; //prijs zou nutteloos zijn als het niet te koop is
         }
 
-        #region Debug
-        Console.WriteLine("Naam: " + Model.Naam);
-        Console.WriteLine("Te koop? " + Model.TeKoop);
-        Console.WriteLine("Veilbaar? " + Model.IsVeilbaar);
-
-        Console.WriteLine("Prijs: " + Model.Prijs);
-        Console.WriteLine(Model.Materiaal);
-        Console.WriteLine(Model.Beschrijving);
-        foreach (var foto in Model.Fotos)
-        {
-            Console.WriteLine("Foto: " + foto.Pad);
-        }
-        Console.WriteLine(Model);
-        Console.WriteLine(Model is Kunstwerk_DTO.Edit);
-        Console.WriteLine("Aantal nieuwe fotos:" + Model.NieuweFotos.Count);
-        #endregion
-
         if (Model is Kunstwerk_DTO.Edit)
         {
             //API call "PUT"
@@ -163,9 +161,7 @@ else
             //images uploaden
             await StorageService.UploadImagesAsync(editResponse.UploadUris, _imagesFiles);
 
-            //callback
-            await OnRedirect.InvokeAsync();
-            //NavManager.NavigateTo($"artworks/{model.Id}"); //hier kennnen we het Id al
+            await Redirect();
 
         }
         else if (Model is Kunstwerk_DTO.Create)
@@ -182,6 +178,42 @@ else
         {
             //Error
         }
+    }
+
+    private void Delete()
+    {
+        if (Model is Kunstwerk_DTO.Edit)
+        {
+            pendingDelete = true;
+        }
+    }
+
+    private void CancelDelete()
+    {
+        pendingDelete = false;
+    }
+
+    private async Task DeleteConfirm()
+    {
+        if(Model is Kunstwerk_DTO.Edit)
+        {
+            var response = await KunstwerkService.DeleteAsync(((Kunstwerk_DTO.Edit)Model).Id);
+            Console.WriteLine(response.Message);
+            if(response.Deleted)
+            {
+                await Redirect();
+            }
+            else
+            {
+                //kunstwerk cannot be deleted :(
+            }
+        }
+    }
+
+    private async Task Redirect()
+    {
+        //callback
+        await OnRedirect.InvokeAsync();
     }
 
 }

@@ -173,5 +173,24 @@ namespace Project3H04.Server.Services {
                 await storageService.DeleteImage(foto.Pad);
             }
         }
+
+        public async Task<KunstwerkResponse.Delete> DeleteAsync(int id)
+        {
+            KunstwerkResponse.Delete response = new();
+            var kunstwerk = await dbContext.Kunstwerken.Include(x => x.Fotos).FirstOrDefaultAsync(x => x.Id == id);
+            if(kunstwerk.IsVeilbaar)
+            {
+                response.Deleted = false;
+                response.Message = "Artwork cannot be deleted, it contains an active auction";
+                return response;
+            }
+            dbContext.Kunstwerken.Remove(kunstwerk);
+            await dbContext.SaveChangesAsync();
+            await DeleteFotos(kunstwerk.Fotos);
+            response.Deleted = true;
+            response.Message = "Artwork successfully deleted.";
+            return response;
+
+        }
     }
 }
