@@ -22,7 +22,7 @@ namespace Project3H04.Server.Services
             this.storageService = storageService;
         }
 
-        public async Task<Gebruiker_DTO> GetDetailAsync(int id)
+        public async Task<GebruikerResponse.Detail> GetDetailAsync(int id)
         {
 
             var x = dbContext.Gebruikers.SingleOrDefault(x => x.GebruikerId == id);
@@ -36,7 +36,7 @@ namespace Project3H04.Server.Services
                 GeboorteDatum = x.Geboortedatum
             });
 
-            return g;
+            return new GebruikerResponse.Detail() { Gebruiker = g };
         }
 
         public async Task<GebruikerResponse.Edit> EditAsync(GebruikerRequest.Edit request)

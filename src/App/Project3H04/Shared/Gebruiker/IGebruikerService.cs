@@ -9,7 +9,7 @@ namespace Project3H04.Shared.Gebruiker
 {
     public interface IGebruikerService
     {
-        Task<Gebruiker_DTO> GetDetailAsync(int id);
+        Task<GebruikerResponse.Detail> GetDetailAsync(int id);
         Task<GebruikerResponse.Edit> EditAsync(GebruikerRequest.Edit request);
     }
 }

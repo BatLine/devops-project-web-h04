@@ -24,7 +24,7 @@ namespace Project3H04.Server.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public Task<Gebruiker_DTO> Get(int id)
+        public Task<GebruikerResponse.Detail> Get(int id)
         {
             return gebruikerService.GetDetailAsync(id);
             //if(k == null)
