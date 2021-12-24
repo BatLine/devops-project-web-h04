@@ -62,5 +62,12 @@ namespace Project3H04.Client.Services
         {
             return publicClient.Client.GetFromJsonAsync<List<string>>($"{endpoint}/materiaal/{aantal}");
         }
+
+        public async Task<KunstwerkResponse.Delete> DeleteAsync(int Id)
+        {
+           var httpRespons = await publicClient.Client.DeleteAsync($"{endpoint}/{Id}");
+           var response = await httpRespons.Content.ReadFromJsonAsync<KunstwerkResponse.Delete>();
+           return response;
+        }
     }
 }
