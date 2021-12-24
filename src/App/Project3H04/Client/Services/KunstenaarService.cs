@@ -21,16 +21,16 @@ namespace Project3H04.Client.Services
             this.publicClient = publicClient;
         }
 
-        public async Task<List<Kunstenaar_DTO>> GetIndexAsync(KunstenaarRequest.Index request)
+        public async Task<KunstenaarResponse.Index> GetIndexAsync(KunstenaarRequest.Index request)
         {
-            var kunstenaars = await publicClient.Client.GetFromJsonAsync<List<Kunstenaar_DTO>>($"api/Kunstenaar?term={request.Term}&take={request.Take}&recentArtists={request.RecentArtists}");
-            return kunstenaars;
+            var response = await publicClient.Client.GetFromJsonAsync<KunstenaarResponse.Index>($"api/Kunstenaar?term={request.Term}&take={request.Take}&recentArtists={request.RecentArtists}");
+            return response;
         }
 
-        public async Task<Kunstenaar_DTO> GetDetailAsync(KunstenaarRequest.Detail request)
+        public async Task<KunstenaarResponse.Detail> GetDetailAsync(KunstenaarRequest.Detail request)
         {
-            var kunstenaar = await publicClient.Client.GetFromJsonAsync<Kunstenaar_DTO>($"api/Kunstenaar/{request.Id}");
-            return kunstenaar;
+            var response = await publicClient.Client.GetFromJsonAsync<KunstenaarResponse.Detail>($"api/Kunstenaar/{request.Id}");
+            return response;
         }
     }
 }

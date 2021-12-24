@@ -23,7 +23,7 @@ namespace Project3H04.Server.Services
 
         //public List<Kunstenaar_DTO> Kunstenaars { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public async Task<Kunstenaar_DTO> GetDetailAsync(int id)
+        public async Task<KunstenaarResponse.Detail> GetDetailAsync(int id)
         {
             //vanaf nu ALTIJD IList gebruiken, anders werkt de cast niet  !!!
             //=>>>DEZE zijn slecht, kan NIET casten op deze manier!!!<<<=
@@ -57,7 +57,7 @@ namespace Project3H04.Server.Services
                 //,Veilingen = (ICollection<Shared.DTO.Veiling_DTO>)x.Veilingen //omzetten naar dto
             });
 
-            return k;
+            return new KunstenaarResponse.Detail() { Kunstenaar = k };
         }
 
         public async Task<Kunstenaar_DTO> GetKunstenaarByEmail(string email)
@@ -85,7 +85,7 @@ namespace Project3H04.Server.Services
             return k;
         }
 
-        public async Task<List<Kunstenaar_DTO>> GetKunstenaars(string term, int take, bool recentArtists)
+        public async Task<KunstenaarResponse.Index> GetKunstenaars(string term, int take, bool recentArtists)
         {
             if (term is null)
                 term = "";
@@ -102,9 +102,9 @@ namespace Project3H04.Server.Services
             }).Where(k => k.Gebruikersnaam.Contains(term)).Take(take)
             .ToListAsync();
             if (recentArtists)
-                return kunstenaars.OrderByDescending(x => x.DatumCreatie).ToList();
+                kunstenaars = kunstenaars.OrderByDescending(x => x.DatumCreatie).ToList();
 
-            return kunstenaars;
+            return new KunstenaarResponse.Index() { Kunstenaars = kunstenaars };
 
 
             // return items;

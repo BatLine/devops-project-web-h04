@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Project3H04.Shared.Kunstenaars
+﻿namespace Project3H04.Shared.Kunstenaars
 {
     public class KunstenaarRequest
     {

@@ -61,8 +61,8 @@
     protected override async Task OnInitializedAsync()
     {
         KunstenaarRequest.Index request = new() { Term = "", RecentArtists = true, Take = 4 };
-        kunstenaars = await KunstenaarService.GetIndexAsync(request);
-        //kunstenaarsCopy = kunstenaars;
+        var response = await KunstenaarService.GetIndexAsync(request);
+        kunstenaars = response.Kunstenaars;
     }
 
     public void OpenSidepanel()

@@ -28,14 +28,14 @@ namespace Project3H04.Server.Controllers
 
         //GET: api/<KunstenaarController>
         [HttpGet]
-        public Task<List<Kunstenaar_DTO>> GetKunstenaars(string term = "", int take = 25, bool recentArtists = false)
+        public Task<KunstenaarResponse.Index> GetKunstenaars(string term = "", int take = 25, bool recentArtists = false)
         {
             return kunstenaarService.GetKunstenaars(term, take, recentArtists);
         }
 
         //GET api/<KunstenaarController>/5
         [HttpGet("{id}")]
-        public Task<Kunstenaar_DTO> Get(int id)
+        public Task<KunstenaarResponse.Detail> Get(int id)
         {
             return kunstenaarService.GetDetailAsync(id);
             //if(k == null)
