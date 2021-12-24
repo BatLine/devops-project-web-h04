@@ -29,5 +29,16 @@ namespace Project3H04.Shared.Kunstwerken
         {
             public Kunstwerk_DTO.Detail Kunstwerk { get; set; }
         }
+
+        public class Delete
+        {
+            public bool Deleted { get; set; }
+            public string Message { get; set; }
+
+            public Delete()
+            {
+                Deleted = false;
+            }
+        }
     }
 }
