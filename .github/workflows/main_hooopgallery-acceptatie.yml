@@ -17,7 +17,7 @@ jobs:
       - name: Remove old artifacts
         uses: c-hive/gha-remove-artifacts@v1.2.0
         with:
-          age: "1 day"
+          age: "2 hours"
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
           
       - uses: actions/checkout@v2
@@ -45,6 +45,7 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
+          retention-days: 1
 
   deploy:
     runs-on: windows-latest
@@ -71,5 +72,5 @@ jobs:
       - name: Remove old artifacts after
         uses: c-hive/gha-remove-artifacts@v1.2.0
         with:
-          age: "1 day"
+          age: "2 hours"
           GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
