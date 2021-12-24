@@ -12,7 +12,6 @@ namespace Domain
         public string Naam { get; private set; }
         public int Verlooptijd { get; private set; }
         public double Prijs { get; private set; }
-        public int Id { get; private set; }
 
         public AbonnementType()
         {
