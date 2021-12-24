@@ -82,7 +82,7 @@ namespace Project3H04.Server.Services {
                     Beschrijving = x.Beschrijving,
                     Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie, Uploaded = true }),
                     TeKoop = x.TeKoop, //voor tekoop icon
-                    IsVeilbaar = false
+                    IsVeilbaar = x.IsVeilbaar
                 })
 
                 .Where(x => string.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))
@@ -173,6 +173,25 @@ namespace Project3H04.Server.Services {
             foreach (var foto in teVerwijderenFotos) {
                 await storageService.DeleteImage(foto.Pad);
             }
+        }
+
+        public async Task<KunstwerkResponse.Delete> DeleteAsync(int id)
+        {
+            KunstwerkResponse.Delete response = new();
+            var kunstwerk = await dbContext.Kunstwerken.Include(x => x.Fotos).FirstOrDefaultAsync(x => x.Id == id);
+            if(kunstwerk.IsVeilbaar)
+            {
+                response.Deleted = false;
+                response.Message = "Artwork cannot be deleted, it contains an active auction";
+                return response;
+            }
+            dbContext.Kunstwerken.Remove(kunstwerk);
+            await dbContext.SaveChangesAsync();
+            await DeleteFotos(kunstwerk.Fotos);
+            response.Deleted = true;
+            response.Message = "Artwork successfully deleted.";
+            return response;
+
         }
     }
 }

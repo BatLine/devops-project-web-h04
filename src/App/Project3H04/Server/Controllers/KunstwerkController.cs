@@ -62,21 +62,12 @@ namespace Project3H04.Server.Controllers
 
 
 
-        //// DELETE api/<KunstwerkController>/5
-        //[HttpDelete("{id}")]
-        //public IActionResult Delete(string naam)
-        //{
-        //    /*if (string.IsNullOrEmpty(naam))
-        //    return BadRequest();*/
-        //    Kunstwerk kunst = _context.Kunstwerken.SingleOrDefault(x => x.Naam.Equals(naam));
-        //    if (kunst == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _context.Kunstwerken.Remove(kunst);
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
+        // DELETE api/<KunstwerkController>/5
+        [HttpDelete("{id}")]
+        public  Task<KunstwerkResponse.Delete> Delete(int id)
+        {
+            return kunstwerkService.DeleteAsync(id);
+        }
 
         //GET: api/<KunstwerkController>/materiaal/5
         [AllowAnonymous]

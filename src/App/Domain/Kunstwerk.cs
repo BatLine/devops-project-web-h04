@@ -32,9 +32,9 @@ namespace Domain {
             Materiaal = Guard.Against.NullOrEmpty(materiaal, nameof(materiaal));
             Kunstenaar = Guard.Against.Null(kunstenaar, nameof(kunstenaar));
 
-            TeKoop = true;
             Fotos = fotos;
             IsVeilbaar = isVeilbaar;
+            TeKoop = !isVeilbaar;
         }
 
         public Kunstwerk() { }

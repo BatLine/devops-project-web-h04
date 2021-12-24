@@ -13,7 +13,7 @@ namespace Project3H04.Client.Services
     {
         private readonly HttpClient authorisedClient;
         private readonly PublicClient publicClient; //Deze http PublicClient gebruiken voor Anonymous--> 
-        private const string endpoint = "api/kunstwerk";
+        private const string endpoint = "api/Kunstenaar";
 
         public KunstenaarService(HttpClient httpClient, PublicClient publicClient)
         {
