@@ -47,9 +47,8 @@
                                         @foreach (var medium in artMediums)
                                         {
                                             <div class="form-check">
-
-                                                <input class="form-check-input" type="checkbox" value="@medium" name="material-checkbox" @onchange="_ => BindCheckboxes(_,filterMedium:medium)">
-                                                <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="@medium" id="flexCheckDefault2{@medium}" @onchange='_ => BindCheckboxes(_,filterPayOption:medium)'>
+                                                <label class="form-check-label" for="flexCheckDefault2{@medium}">
                                                     @medium
                                                 </label>
                                             </div>
@@ -69,12 +68,12 @@
                                         @foreach (var payOption in payOptions)
                                         {
                                             <div class="form-check">
-
-                                                <input class="form-check-input" type="checkbox" name="size-checkbox" @onchange="_ => BindCheckboxes(_, filterPayOption: payOption)">
-                                                <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="@payOption" id="payOptions2{@payOption}" @onchange='_ => BindCheckboxes(_,filterMedium:payOption)'>
+                                                <label class="form-check-label" for="payOptions2{@payOption}">
                                                     @payOption
                                                 </label>
                                             </div>
+
                                         }
                                     }
 
@@ -149,14 +148,14 @@
                                     @foreach (var medium in artMediums)
                                     {
                                         <div class="form-check">
-
-                                            <input data-test-id="mediumsearch" class="form-check-input" type="checkbox" value="@medium" name="material-checkbox" @onchange="_ => BindCheckboxes(_,filterMedium:medium)">
-                                            <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" value="@medium" id="flexCheckDefault{@medium}" @onchange='_ => BindCheckboxes(_,filterMedium:medium)'>
+                                            <label class="form-check-label" for="flexCheckDefault{@medium}">
                                                 @medium
                                             </label>
                                         </div>
                                     }
                                 }
+
                             </div>
                         </li>
                         <li>
@@ -171,9 +170,8 @@
                                     @foreach (var payOption in payOptions)
                                     {
                                         <div class="form-check">
-
-                                            <input class="form-check-input" type="checkbox" name="size-checkbox" @onchange="_ => BindCheckboxes(_, filterPayOption: payOption)">
-                                            <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" value="@payOption" id="payOptions{@payOption}" @onchange='_ => BindCheckboxes(_,filterPayOption:payOption)'>
+                                            <label class="form-check-label" for="payOptions{@payOption}">
                                                 @payOption
                                             </label>
                                         </div>
@@ -215,6 +213,14 @@
 
                         </li>
                     </ul>
+                    <div class="row mt-2">
+                        <div class="paging" style="display:flex;align-items:center;justify-content:center">
+                            <button class="btn" @onclick="PrevPage" disabled="@HasNoPrev">Prev</button>
+                            <p class="artwork" style="padding:5px"> page: @filter.Page</p>
+                            <button class="btn" @onclick="NextPage" disabled="@HasNoNext">Next</button>
+
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col">
@@ -234,12 +240,12 @@
                                         <p class="artwork">@kunst.Naam</p>
                                         <p class="price">
                                             €@kunst.Prijs &nbsp;
-                                            @if (!kunst.IsVeilbaar)
-                                            { //te koop icon
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
-                                                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z" />
-                                                </svg>
-                                            }
+                                            <!--  @if (!kunst.IsVeilbaar)
+        { //te koop icon
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-fill" viewBox="0 0 16 16">
+                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5z" />
+            </svg>
+        }-->
                                         </p>
 
                                     </div>
@@ -251,12 +257,11 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row filter-mobile">
             <div class="paging" style="display:flex;align-items:center;justify-content:center">
                 <button class="btn" @onclick="PrevPage" disabled="@HasNoPrev">Prev</button>
                 <p class="artwork" style="padding:5px"> page: @filter.Page</p>
                 <button class="btn" @onclick="NextPage" disabled="@HasNoNext">Next</button>
-
             </div>
         </div>
     </div>

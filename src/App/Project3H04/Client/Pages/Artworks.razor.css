@@ -1,6 +1,6 @@
 ﻿
 
-.collapsable-filter-container {
+.collapsable-filter-container, .filter-mobile {
     display: none;
 }
 
@@ -232,7 +232,7 @@ ul {
         left: 0;
     }
 
-    .collapsable-filter-container {
+    .collapsable-filter-container, .filter-mobile {
         display: block;
     }
 

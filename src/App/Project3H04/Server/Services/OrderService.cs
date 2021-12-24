@@ -108,6 +108,10 @@ namespace Project3H04.Server.Services
         public async Task<OrderResponse.Detail> GetUserOrders(string email) {
             await Task.Delay(1);
             var gebruiker = DbContext.Gebruikers.OfType<Klant>().Include(k => k.Bestellingen).ThenInclude(b => b.WinkelmandKunstwerken).ThenInclude(k => k.Fotos).FirstOrDefault(k => k.Email.Equals(email));
+          /*  if(gebruiker == null)
+            {
+                return new OrderResponse.Detail();
+            }*/
             List<Bestelling_DTO.Index> bestellingen = gebruiker.Bestellingen.Select(x => new Bestelling_DTO.Index
             {
                 Id = x.Id,

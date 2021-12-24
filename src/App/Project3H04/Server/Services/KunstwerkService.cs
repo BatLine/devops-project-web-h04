@@ -56,14 +56,15 @@ namespace Project3H04.Server.Services {
         //.EntityFrameworkCore; //=>>>>>>>>altijd deze usen !!!
         public async Task<KunstwerkResponse.Index> GetKunstwerken(Kunstwerk_DTO.Filter request) {
             var respons = new KunstwerkResponse.Index();
+            
             List<Kunstwerk_DTO.Detail> kunstwerken = await dbContext.Kunstwerken.Include(k=>k.Fotos)
                 .Where(x => request.Materiaal == null || request.Materiaal.Contains(x.Materiaal))
                 .Where(x => request.Grootte == null || (request.Grootte.Contains("Large") && (x.Lengte >= 100 || x.Breedte >= 100 || x.Hoogte >= 100)) ||
                             (request.Grootte.Contains("Medium") && (x.Lengte >= 50 && x.Lengte < 100 || x.Breedte >= 50 && x.Breedte < 100 || x.Hoogte >= 50 && x.Hoogte < 100))
                             || (request.Grootte.Contains("Small") && (x.Lengte < 50 || x.Breedte < 50 || x.Hoogte < 50)))
 
-                .Where(x => request.BetaalOpties == null || request.BetaalOpties.Contains("Buy") && x.TeKoop == true)
-                .Where(x => request.BetaalOpties == null || request.BetaalOpties.Contains("Bid") && x.IsVeilbaar)
+                .Where(x => request.BetaalOpties == null || (request.BetaalOpties.Contains("Buy") && x.TeKoop) || (request.BetaalOpties.Contains("Bid") && x.IsVeilbaar))
+               // .Where(x => request.BetaalOpties == null || (request.BetaalOpties.Contains("Bid") && x.IsVeilbaar))
                 .Select(x => new Kunstwerk_DTO.Detail() {
                     Id = x.Id,
                     Naam = x.Naam,
