@@ -31,7 +31,7 @@
         <p>No artworks found</p>
     }
     <div class="col-sm-6 col-lg-5 mb-4">
-        <a class="btn btn-light btn-xl" href="artworks/create" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">Create new artwork</a>
+        <a class="btn btn-light btn-xl" @onclick="OpenCreateSidepanel" style="border-radius: 25px; padding-left: 30px;padding-right: 30px; border-color: brown;">Create new artwork</a>
     </div>
 
 </div>
@@ -54,9 +54,15 @@
                 { nameof(Components.EditArtwork.Model), _kunstwerk},
                 { nameof(Components.EditArtwork.OnRedirect),callback  }
         };
-        Sidepanel.Open<Components.EditArtwork>("Edit", "artwork", parameters); //lmpao, gg sidepanel
-
+        Sidepanel.Open<Components.EditArtwork>("Edit", "artwork", parameters);
     }
+
+    private void OpenCreateSidepanel()
+    {
+        Sidepanel.Open<Components.EditArtwork>("Create", "artwork");
+    }
+
+
     private async Task RedirectPage()
     {
         //refresh?
