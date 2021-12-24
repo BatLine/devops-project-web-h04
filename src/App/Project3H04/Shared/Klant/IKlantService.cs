@@ -9,8 +9,8 @@ namespace Project3H04.Shared.Klant
 {
     public interface IKlantService
     {
-        Task<Klant_DTO> GetKlantById(int id);
-        Task<Klant_DTO> GetKlantByEmail(string email);
-        Task<string> CreateAsync(Klant_DTO klant);
+        Task<KlantResponse.Detail> GetKlantById(int id);
+        Task<KlantResponse.Detail> GetKlantByEmail(string email);
+        Task<KlantResponse.Create> CreateAsync(Klant_DTO klant);
     }
 }

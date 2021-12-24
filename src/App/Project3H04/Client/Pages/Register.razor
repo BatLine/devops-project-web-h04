@@ -10,6 +10,7 @@
 @using Microsoft.Extensions.Configuration
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Newtonsoft.Json
+@using Project3H04.Shared.Klant 
 
 <h3>Sign up</h3>
 <EditForm Model="klant" OnValidSubmit="CompleteRegistration">
@@ -78,7 +79,8 @@
         Console.WriteLine(klant.Email);
 
         var res = await httpClient.Client.PostAsJsonAsync<Klant_DTO>("api/Klant", klant);
-        var k = await res.Content.ReadAsStringAsync();
+        var klantResponse = await res.Content.ReadFromJsonAsync<KlantResponse.Create>();
+        var k = klantResponse.Message;
         Console.WriteLine(k);
         if (k == "fail")
         {

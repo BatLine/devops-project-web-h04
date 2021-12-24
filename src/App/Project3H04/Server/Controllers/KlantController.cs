@@ -25,29 +25,21 @@ namespace Project3H04.Server.Controllers
         }
 
         [HttpGet("{id}")]
-        public Task<Klant_DTO> Get(int id)
+        public Task<KlantResponse.Detail> Get(int id)
         {
             return klantService.GetKlantById(id);
-            //if(k == null)
-            //    return NotFound();
-
-            //return k;
         }
 
         //zo andere get route geven
         [/*HttpGet("{email}"),*/Route("byEmail/{email}")]
-        public Task<Klant_DTO> Get(string email)
+        public Task<KlantResponse.Detail> Get(string email)
         {
             return klantService.GetKlantByEmail(email);
-            //if(k == null)
-            //    return NotFound();
-
-            //return k;
         }
 
 
         [HttpPost]
-        public Task<string> CreateAsync(Klant_DTO klant)
+        public Task<KlantResponse.Create> CreateAsync(Klant_DTO klant)
         {
             return klantService.CreateAsync(klant);
         }
