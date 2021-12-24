@@ -187,6 +187,7 @@ namespace Project3H04.Server.Services {
             dbContext.Kunstwerken.Remove(kunstwerk);
             await dbContext.SaveChangesAsync();
             response.Deleted = true;
+            response.Message = "Artwork successfully deleted.";
             return response;
 
         }

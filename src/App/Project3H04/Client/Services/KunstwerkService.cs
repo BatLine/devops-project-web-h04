@@ -65,7 +65,8 @@ namespace Project3H04.Client.Services
 
         public async Task<KunstwerkResponse.Delete> DeleteAsync(int Id)
         {
-           var httpRespons = await publicClient.Client.DeleteAsync($"{endpoint}/{Id}");
+           var httpRespons = await authorisedClient.DeleteAsync($"{endpoint}/{Id}");
+            httpRespons.EnsureSuccessStatusCode();
            var response = await httpRespons.Content.ReadFromJsonAsync<KunstwerkResponse.Delete>();
            return response;
         }

@@ -78,6 +78,9 @@
                     <TinySpinner/>
                 }
             </button>
+            <button type="button" class="btn btn-danger" @onclick="Delete">
+                Delete Artwork
+            </button>
             <!--<a class="btn btn-secondary" href="/">
         <i class="fas fa-chevron-left"></i>
         <span>Cancel</span>
@@ -163,9 +166,7 @@ else
             //images uploaden
             await StorageService.UploadImagesAsync(editResponse.UploadUris, _imagesFiles);
 
-            //callback
-            await OnRedirect.InvokeAsync();
-            //NavManager.NavigateTo($"artworks/{model.Id}"); //hier kennnen we het Id al
+            await Redirect();
 
         }
         else if (Model is Kunstwerk_DTO.Create)
@@ -182,6 +183,29 @@ else
         {
             //Error
         }
+    }
+
+    private async Task Delete()
+    {
+        if(Model is Kunstwerk_DTO.Edit)
+        {
+            var response = await KunstwerkService.DeleteAsync(((Kunstwerk_DTO.Edit)Model).Id);
+            Console.WriteLine(response.Message);
+            if(response.Deleted)
+            {
+                await Redirect();
+            }
+            else
+            {
+                //kunstwerk cannot be deleted :(
+            }
+        }
+    }
+
+    private async Task Redirect()
+    {
+        //callback
+        await OnRedirect.InvokeAsync();
     }
 
 }
