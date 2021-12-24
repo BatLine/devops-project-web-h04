@@ -49,11 +49,11 @@
                     <InputNumber @bind-Value="@Model.Prijs" class="form-control" />
                 </div>
                 <!--<div class="form-group">
-            <label>
-                Sell by auction?
-                <InputCheckbox @bind-Value="@Model.IsVeilbaar" />
-            </label>
-        </div>-->
+                    <label>
+                        Sell by auction?
+                        <InputCheckbox @bind-Value="@Model.IsVeilbaar" />
+                    </label>
+                </div>-->
             }
             <div class="form-group">
                 <label for="materiaalInput">Medium</label>
@@ -92,20 +92,20 @@
             }
 
             <!--<a class="btn btn-secondary" href="/">
-        <i class="fas fa-chevron-left"></i>
-        <span>Cancel</span>
-    </a>-->
+                <i class="fas fa-chevron-left"></i>
+                <span>Cancel</span>
+            </a>-->
 
         </EditForm>
     </div>
-    @if(loading)
+    @if (loading)
     {
         <LoadingSpinner></LoadingSpinner>
     }
 }
 else
 {
-    <LoadingSpinner />
+    <LoadingSpinner></LoadingSpinner>
 }
 
 
@@ -195,11 +195,11 @@ else
 
     private async Task DeleteConfirm()
     {
-        if(Model is Kunstwerk_DTO.Edit)
+        if (Model is Kunstwerk_DTO.Edit)
         {
             var response = await KunstwerkService.DeleteAsync(((Kunstwerk_DTO.Edit)Model).Id);
             Console.WriteLine(response.Message);
-            if(response.Deleted)
+            if (response.Deleted)
             {
                 await Redirect();
             }

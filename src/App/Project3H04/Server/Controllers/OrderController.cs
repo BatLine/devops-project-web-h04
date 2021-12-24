@@ -86,6 +86,7 @@ namespace Project3H04.Server.Controllers
 
         }
 
+        [AllowAnonymous]
         [HttpPost, ActionName("MollieAndroid")]
         public async Task<IActionResult> CreateOrderAndroid(Bestelling_DTO.Create bestelling)
         {
