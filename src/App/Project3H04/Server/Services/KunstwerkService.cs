@@ -177,7 +177,7 @@ namespace Project3H04.Server.Services {
         public async Task<KunstwerkResponse.Delete> DeleteAsync(int id)
         {
             KunstwerkResponse.Delete response = new();
-            var kunstwerk = await dbContext.Kunstwerken.FirstOrDefaultAsync(x => x.Id == id);
+            var kunstwerk = await dbContext.Kunstwerken.Include(x => x.Fotos).FirstOrDefaultAsync(x => x.Id == id);
             if(kunstwerk.IsVeilbaar)
             {
                 response.Deleted = false;
@@ -186,6 +186,7 @@ namespace Project3H04.Server.Services {
             }
             dbContext.Kunstwerken.Remove(kunstwerk);
             await dbContext.SaveChangesAsync();
+            await DeleteFotos(kunstwerk.Fotos);
             response.Deleted = true;
             response.Message = "Artwork successfully deleted.";
             return response;
