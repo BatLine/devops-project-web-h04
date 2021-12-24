@@ -34,8 +34,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Components\Subscriptions.razor.css" />
+    <None Remove="Components\SubscriptionTypeCard.razor.css" />
     <None Remove="jQuery" />
     <None Remove="Extensions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Components\Subscriptions.razor.css" />
+    <Content Include="Components\SubscriptionTypeCard.razor.css" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />

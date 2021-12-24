@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Project3H04.Shared.DTO;
 
 namespace Project3H04.Server.Services
 {
@@ -62,7 +63,7 @@ namespace Project3H04.Server.Services
 
         public async Task<KunstenaarResponse.Detail> GetKunstenaarByEmail(string email)
         {
-            var x = (Kunstenaar)dbContext.Gebruikers.OfType<Kunstenaar>().Include(k => k.Kunstwerken).ThenInclude(x => x.Fotos).SingleOrDefault(x => x.Email == email);
+            var x = (Kunstenaar)dbContext.Gebruikers.OfType<Kunstenaar>().Include(k => k.Kunstwerken).ThenInclude(x => x.Fotos).Include(x => x.Abonnenment).ThenInclude(x => x.AbonnementType).SingleOrDefault(x => x.Email == email);
             //include van fotos ...
             Kunstenaar_DTO k = await Task.Run(() => new Kunstenaar_DTO
             {
@@ -78,6 +79,16 @@ namespace Project3H04.Server.Services
                     HoofdFoto = new(x.Fotos.FirstOrDefault().Naam, x.Fotos.FirstOrDefault().Locatie), //enkel eerste foto is nodig voor index
                     Prijs = x.Prijs
                 }).ToList(),
+                Abonnement = new Abonnement_DTO {
+                    Id = x.AbonnenmentId,
+                    StartDatum = x.Abonnenment.StartDatum,
+                    EindDatum = x.Abonnenment.EindDatum,
+                    AbonnementType = new AbonnementType_DTO {
+                        Naam = x.Abonnenment.AbonnementType.Naam,
+                        Verlooptijd = x.Abonnenment.AbonnementType.Verlooptijd,
+                        Prijs = x.Abonnenment.AbonnementType.Prijs
+                    }
+                },
                 Fotopad = x.FotoPad
                 //,Veilingen = (ICollection<Shared.DTO.Veiling_DTO>)x.Veilingen //omzetten naar dto
             });

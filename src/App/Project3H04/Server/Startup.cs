@@ -21,6 +21,7 @@ using System.Linq;
 using Project3H04.Shared.Veilingen;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using Project3H04.Shared.Abonnementen;
 
 namespace Project3H04.Server {
     public class Startup {
@@ -81,6 +82,7 @@ namespace Project3H04.Server {
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IKlantService, KlantService>();
 
+            services.AddScoped<IAbonnementService, AbonnementService>();
             services.AddScoped<IStorageService, BlobStorageService>();
             services.AddScoped<IGebruikerService, GebruikerService>();
             services.AddScoped<IVeilingService, VeilingService>();

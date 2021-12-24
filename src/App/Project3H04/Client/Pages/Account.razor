@@ -30,7 +30,7 @@
                         @if (geb is Kunstenaar_DTO)
                         {
                             <li>
-                                <a role="button" style="cursor: pointer">subscription</a>
+                                <a role="button" style="cursor: pointer" @onclick="ShowSubscriptions">subscriptions</a>
                             </li>
                             <!--authorize kunstenaar-->
                             <li>
@@ -77,6 +77,9 @@
             {
                 <Orders />
             }
+            @if (showSubscriptions) {
+                <Subscriptions />
+            }
 
         </div>
     </div>
@@ -93,6 +96,8 @@
     private bool showArtworks = false;
     private bool showProfile = true;
     private bool showOrders = false;
+    private bool showSubscriptions = false;
+
     //zo geen hard refresh door callback mee te geven aan de edit form
     //EventCallback callback;
     protected override async Task OnParametersSetAsync()
@@ -130,6 +135,14 @@
         showArtworks = false;
         showProfile = false;
         showOrders = true;
+        showSubscriptions = false;
+    }
+
+    void ShowSubscriptions() {
+        showArtworks = false;
+        showProfile = false;
+        showOrders = false;
+        showSubscriptions = true;
     }
 
     void Callback()
@@ -137,11 +150,13 @@
         showProfile = true;
         editForm = false;
         showArtworks = false;
+        showSubscriptions = false;
     }
 
     public void ShowEditForm()
     {
         editForm = true;
+        showSubscriptions = false;
         // callback = EventCallback.Factory.Create(this, RedirectPage);
     }
 
@@ -157,12 +172,14 @@
         editForm = false;
         showArtworks = false;
         showOrders = false;
+        showSubscriptions = false;
     }
 
     public void ShowArtworks()
     {
         showArtworks = true;
         showProfile = false;
+        showSubscriptions = false;
     }
     /*  private async Task RedirectPage()
       {

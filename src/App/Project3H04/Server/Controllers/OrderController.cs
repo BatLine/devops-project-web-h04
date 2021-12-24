@@ -34,9 +34,9 @@ namespace Project3H04.Server.Controllers
         }
 
         [HttpGet("{id}"), ActionName("get")]
-        public Task <Bestelling_DTO.Index> GetBestelling(int id)
+        public async Task<Bestelling_DTO.Index> GetBestelling(int id)
         {
-            return OrderService.GetBestelling(id);
+            return await OrderService.GetBestelling(id);
         }
 
         [HttpGet("{Id}"), ActionName("exists")]
