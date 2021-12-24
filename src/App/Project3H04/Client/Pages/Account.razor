@@ -16,12 +16,12 @@
                 </div>
                 <ul class="list-unstyled mb-5">
                     <li>
-                        <a role="button" @onclick="ShowProfile">profile</a>
+                        <a role="button" style="cursor: pointer" @onclick="ShowProfile">profile</a>
                     </li>
                     @if (geb is Klant_DTO)
                     {
                         <li>
-                            <a role="button" @onclick="ShowOrders">orders</a>
+                            <a role="button" style="cursor: pointer" @onclick="ShowOrders">orders</a>
                         </li>
                     }
                         @*Ik zou gwn zonder links doen en op 1 pagina de info tonen, tis te weinig info om in tabs op te delen*@
@@ -30,11 +30,11 @@
                         @if (geb is Kunstenaar_DTO)
                         {
                             <li>
-                                <a role="button">subscription</a>
+                                <a role="button" style="cursor: pointer">subscription</a>
                             </li>
                             <!--authorize kunstenaar-->
                             <li>
-                                <a role="button" @onclick="ShowArtworks">artworks</a>
+                                <a role="button" style="cursor: pointer" @onclick="ShowArtworks">artworks</a>
                             </li>
                         }
 
