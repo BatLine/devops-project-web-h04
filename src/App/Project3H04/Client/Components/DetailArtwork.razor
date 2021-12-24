@@ -12,48 +12,50 @@
 
             <div class="col-md-6 kunstwerkdetailcontainer">
                 <h1 style="font-family: sans-serif">@Kunstwerk.Naam</h1>
-                <p><span style="font-weight: bold">Artist</span> : @Kunstwerk.Kunstenaar.Gebruikersnaam</p>
-                <p><span style="font-weight: bold">Dimensions</span> : @Kunstwerk.Lengte x @Kunstwerk.Breedte x @Kunstwerk.Hoogte (in cm)</p>
-                @if (Kunstwerk.Gewicht != default(decimal))
-                {
-                    <p><span style="font-weight: bold">Weight</span> : @Kunstwerk.Gewicht kg</p>
-                }
-                <p class="subtitle" style="text-align: left; font-weight: bold">About</p>
-                <p style="border: 1px thin grey; width: 100%; height: auto">@Kunstwerk.Beschrijving</p>
-                <p><span style="font-weight: bold">Medium</span> : @Kunstwerk.Materiaal</p>
-                @if (!Kunstwerk.IsVeilbaar)
-                {
-                    <p style="font-size: 2rem; color: dimgray">€@Kunstwerk.Prijs</p>
-                }
-                <!--Enkel als AUTH dit zien-->
-                <AuthorizeView Roles="Kunstenaar, Administrator">
-                    <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
-                    @if (user.Identity.Name == Kunstwerk.Kunstenaar.Email || user.IsInRole("Administrator"))
+                    <a href="artists/@Kunstwerk.Kunstenaar.GebruikerId" style="text-decoration:none">
+                    <p> <span style="font-weight: bold">Artist</span> : @Kunstwerk.Kunstenaar.Gebruikersnaam</p>
+                    </a>
+                    <p><span style="font-weight: bold">Dimensions</span> : @Kunstwerk.Lengte x @Kunstwerk.Breedte x @Kunstwerk.Hoogte (in cm)</p>
+                    @if (Kunstwerk.Gewicht != default(decimal))
                     {
-                        <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
-                        <a class="btn btn-secondary" href="auction/@Kunstwerk.Id">Manage Auction</a>
+                        <p><span style="font-weight: bold">Weight</span> : @Kunstwerk.Gewicht kg</p>
                     }
-                </AuthorizeView>
-                <AuthorizeView>
-                    @if (!user.IsInRole("Kunstenaar") && !user.IsInRole("Administrator"))
+                    <p class="subtitle" style="text-align: left; font-weight: bold">About</p>
+                    <p style="border: 1px thin grey; width: 100%; height: auto">@Kunstwerk.Beschrijving</p>
+                    <p><span style="font-weight: bold">Medium</span> : @Kunstwerk.Materiaal</p>
+                    @if (!Kunstwerk.IsVeilbaar)
                     {
-                        <!--Enkel zichtbaar als klant-->
-
-                        if (Kunstwerk.TeKoop)
+                        <p style="font-size: 2rem; color: dimgray">€@Kunstwerk.Prijs</p>
+                    }
+                    <!--Enkel als AUTH dit zien-->
+                    <AuthorizeView Roles="Kunstenaar, Administrator">
+                        <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
+                        @if (user.Identity.Name == Kunstwerk.Kunstenaar.Email || user.IsInRole("Administrator"))
                         {
-                            if (Kunstwerk.IsVeilbaar)
+                            <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
+                            <a class="btn btn-secondary" href="auction/@Kunstwerk.Id">Manage Auction</a>
+                        }
+                    </AuthorizeView>
+                    <AuthorizeView>
+                        @if (!user.IsInRole("Kunstenaar") && !user.IsInRole("Administrator"))
+                        {
+                            <!--Enkel zichtbaar als klant-->
+
+                            if (Kunstwerk.TeKoop)
                             {
-                                <!--Veiling component-->
-                                <DetailArtworkBieden KunstwerkId="@Kunstwerk.Id" />
-                            }
-                            else
-                            {
-                                <!--Order button-->
-                                <button data-test-id="orderbutton" class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
+                                if (Kunstwerk.IsVeilbaar)
+                                {
+                                    <!--Veiling component-->
+                                    <DetailArtworkBieden KunstwerkId="@Kunstwerk.Id" />
+                                }
+                                else
+                                {
+                                    <!--Order button-->
+                                    <button data-test-id="orderbutton" class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
+                                }
                             }
                         }
-                    }
-                </AuthorizeView>
+                    </AuthorizeView>
             </div>
         </div>
         <div class="row" style="padding-top: 20px; padding-bottom:10px">

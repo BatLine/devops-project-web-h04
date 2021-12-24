@@ -10,7 +10,7 @@
                 <div class="row justify-content-center">
                     <div class="col-6 p-4">
                         <div class="rounded-circle image">
-                            <img src="@kunst.Fotopad" alt="" />
+                            <img src="@geb.Fotopad" alt="" />
                         </div>
                     </div>
                 </div>
@@ -18,24 +18,27 @@
                     <li>
                         <a role="button" @onclick="ShowProfile">profile</a>
                     </li>
-                    <li>
-                        <a role="button" @onclick="ShowOrders">orders</a>
-                    </li>
-                    @*Ik zou gwn zonder links doen en op 1 pagina de info tonen, tis te weinig info om in tabs op te delen*@
-                    @*Enkel abonnement miss*@
-
-                    @if (geb is Kunstenaar_DTO)
+                    @if (geb is Klant_DTO)
                     {
                         <li>
-                            <a role="button">subscription</a>
-                        </li>
-                        <!--authorize kunstenaar-->
-                        <li>
-                            <a role="button" @onclick="ShowArtworks">artworks</a>
+                            <a role="button" @onclick="ShowOrders">orders</a>
                         </li>
                     }
+                        @*Ik zou gwn zonder links doen en op 1 pagina de info tonen, tis te weinig info om in tabs op te delen*@
+                        @*Enkel abonnement miss*@
 
-                </ul>
+                        @if (geb is Kunstenaar_DTO)
+                        {
+                            <li>
+                                <a role="button">subscription</a>
+                            </li>
+                            <!--authorize kunstenaar-->
+                            <li>
+                                <a role="button" @onclick="ShowArtworks">artworks</a>
+                            </li>
+                        }
+
+                    </ul>
             </nav>
         </div>
         <div class="col-sm-12 col-md-9 col-lg-9 p-3">
@@ -53,7 +56,7 @@
                 {
 
                     <p> Username: @geb.Gebruikersnaam</p>
-                    <p> Day of birth: @geb.GeboorteDatum</p>
+                    <p> Day of birth: @geb.GeboorteDatum.ToShortDateString()</p>
                     <p> Email: @geb.Email</p>
                     <p> Details: @geb.Details</p>
 
