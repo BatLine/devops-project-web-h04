@@ -17,7 +17,7 @@ namespace Project3H04.Server.Data {
             if (!_dbContext.Database.EnsureCreated()) return;
             //seeding the database, see DBContext
             //Admintest
-            Admin admintest = new Admin("admintest", Convert.ToDateTime("28/12/2001"),"admintest@gmail.com", "artist3.PNG","ik ben admin,...");
+            Admin admintest = new Admin("admintest", Convert.ToDateTime("28/12/2001"),"admintest@gmail.com", "images/artist3.PNG","ik ben admin,...");
 
             Klant klant1 = new Klant("gillesdp", Convert.ToDateTime("28/12/2001"), "gilles.depessemier@gmail.com", "/images/artist3.PNG", "Ik ben Gilles,...");
             Klant klant2 = new Klant("frank", Convert.ToDateTime("28/12/2006"), "email@gmail.com", "/images/artist3.PNG", "Ik ben niet Gilles,...");
