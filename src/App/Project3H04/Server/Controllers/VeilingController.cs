@@ -44,6 +44,7 @@ namespace Project3H04.Server.Controllers {
         public Task<bool> AddBodToKunstwerk(int kunstwerkId, Bod_DTO bod) {
             return _veilingService.AddBodToKunstwerk(bod, kunstwerkId);
         }
+
         [Authorize(Roles = "Administrator,Kunstenaar")]
         [HttpPost, ActionName("Create")]
         public Task<bool> Create(Veiling_DTO veiling) {

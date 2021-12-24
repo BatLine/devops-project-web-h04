@@ -1,6 +1,7 @@
 ﻿@page "/auction/{id:int}"
-@inject PublicClient httpClient
 @inject Services.KunstwerkService kunstwerkService
+@inject Services.VeilingService veilingService
+
 <AuthorizeView>
     <button>Veiling aanmaken</button>
     <button>Veiling bewerken</button>
@@ -15,9 +16,9 @@
     {
         var response = await kunstwerkService.GetDetailAsync(Id);
         _kunstwerk = response.Kunstwerk;
-        if(_kunstwerk.IsVeilbaar)
+        if (_kunstwerk.IsVeilbaar)
         {
-            _veiling = await httpClient.Client.GetFromJsonAsync<Veiling_DTO>($"api/GetByKunstwerkId/{_kunstwerk.Id}");
+            _veiling = await veilingService.GetDetailAsync(_kunstwerk.Id);
         }
     }
 }

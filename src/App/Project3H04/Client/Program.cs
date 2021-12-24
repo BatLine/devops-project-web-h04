@@ -55,6 +55,7 @@ namespace Project3H04.Client
             builder.Services.AddHttpClient<StorageService>();
             builder.Services.AddScoped<KunstwerkService>();
             builder.Services.AddScoped<KunstenaarService>();
+            builder.Services.AddScoped<VeilingService>();
 
             await builder.Build().RunAsync();
         }
