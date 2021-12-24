@@ -1,6 +1,7 @@
 ﻿@using System.Security.Claims
-@inject HttpClient httpClient
 @inject IToastService toastService
+@inject Services.VeilingService veilingService
+@inject HttpClient httpClient
 
 @if (Veiling != null)
 {
@@ -87,9 +88,10 @@ else
 
     private async Task SetProperties()
     {
-        Veiling = await httpClient.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{KunstwerkId}");
+        Veiling = await veilingService.GetDetailAsync(KunstwerkId);
         var user = (await authenticationStateTask).User;
-        Klant = await httpClient.GetFromJsonAsync<Klant_DTO>($"api/Klant/byEmail/{user.Identity.Name}");
+        var klantResponse = await httpClient.GetFromJsonAsync<KlantResponse.Detail>($"api/Klant/byEmail/{user.Identity.Name}");
+        Klant = klantResponse.Klant;
         IncrementValue = GetIncrement();
         NewBidValue = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs + IncrementValue : Veiling.Kunstwerk.Prijs + IncrementValue; ;
     }
@@ -129,15 +131,13 @@ else
         };
 
         //API call "PUT"
-        var response = await httpClient.PutAsJsonAsync<Bod_DTO>($"api/Veiling/AddBodToVeiling/{Veiling.Id}", bod);
-        response.EnsureSuccessStatusCode();
-        var responseResult = await response.Content.ReadFromJsonAsync<bool>();
+        var responseResult = await veilingService.AddBodToVeilingAsync(Veiling.Id, bod);
 
         if (responseResult)
         {
             toastService.ShowToast(ToastLevel.Success, "Bid successfully placed");
             //dit moet toch enkel als het bieden lukt?
-            await SetProperties(); 
+            await SetProperties();
             StateHasChanged();
             //also, kunnen we niet gewoon het bod locaal toevoegen, we weten toch wanneer het gelukt is? 
         }
