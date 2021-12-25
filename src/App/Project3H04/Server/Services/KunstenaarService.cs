@@ -44,6 +44,10 @@ namespace Project3H04.Server.Services {
         public async Task<KunstenaarResponse.Detail> GetKunstenaarByEmail(string email) {
             var x = (Kunstenaar)dbContext.Gebruikers.OfType<Kunstenaar>().Include(k => k.Kunstwerken).ThenInclude(x => x.Fotos).Include(x => x.Abonnenment).ThenInclude(x => x.AbonnementType).SingleOrDefault(x => x.Email == email);
             //include van fotos ...
+            if(x == null)
+            {
+                return new KunstenaarResponse.Detail();
+            }
             var k = await Task.Run(() => new Kunstenaar_DTO {
                 Gebruikersnaam = x.Gebruikersnaam,
                 GebruikerId = x.GebruikerId,

@@ -26,7 +26,7 @@ namespace Project3H04.Server.Controllers {
         }
 
         //zo andere get route geven
-        [/*HttpGet("{email}"),*/Route("byEmail/{email}")]
+        [HttpGet, Route("byEmail/{email}")]
         public Task<KlantResponse.Detail> Get(string email) {
             return klantService.GetKlantByEmail(email);
         }

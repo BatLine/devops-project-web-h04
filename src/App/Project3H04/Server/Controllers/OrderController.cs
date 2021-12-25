@@ -33,6 +33,7 @@ namespace Project3H04.Server.Controllers {
             return await OrderService.GetBestelling(id);
         }
 
+        [AllowAnonymous]
         [HttpGet("{Id}"), ActionName("exists")]
         public bool CheckIfBestellingExists(int id) {
             return OrderService.Bestellingexists(id);
@@ -52,8 +53,10 @@ namespace Project3H04.Server.Controllers {
             var paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
                 Description = $"HoopGallery test payment",
-                WebhookUrl = "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus", // uses ngrok      
-                RedirectUrl = $"https://hooopgallery-acceptatie.azurewebsites.net/ordersuccessful/{bestellingId}",
+                WebhookUrl = "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus",      
+                 RedirectUrl = $"https://hooopgallery-acceptatie.azurewebsites.net/ordersuccessful/{bestellingId}",
+                // WebhookUrl = "https://e72c-2a02-a03f-eaee-3d00-15af-2cd4-87d-3fd7.ngrok.io/api/order/orderstatus", // uses ngrok 
+                // RedirectUrl = "https://localhost:5001/ordersuccessful/{bestellingId}",
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,
                    PaymentMethod.CreditCard,
@@ -79,6 +82,7 @@ namespace Project3H04.Server.Controllers {
                 Description = $"HoopGallery test payment",
                 WebhookUrl = "https://webshop.example.org/payments/webhook/", // uses ngrok      
                 RedirectUrl = "com.hooop.android://payment-return",
+               
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,
                    PaymentMethod.CreditCard,

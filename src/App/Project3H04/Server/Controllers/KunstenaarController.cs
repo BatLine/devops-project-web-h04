@@ -38,7 +38,7 @@ namespace Project3H04.Server.Controllers {
             //return k;
         }
 
-        [Route("byEmail/{email}")]
+        [HttpGet, Route("byEmail/{email}")]
         public Task<KunstenaarResponse.Detail> Get(string email) {
             return kunstenaarService.GetKunstenaarByEmail(email);
             //if(k == null)

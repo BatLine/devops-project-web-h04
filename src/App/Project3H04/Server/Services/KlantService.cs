@@ -19,6 +19,10 @@ namespace Project3H04.Server.Services {
 
         public async Task<KlantResponse.Detail> GetKlantByEmail(string email) {
             var x = DbContext.Gebruikers.OfType<Klant>().FirstOrDefault(k => k.Email == email);
+            if(x == null)
+            {
+                return new KlantResponse.Detail();
+            }
             var k = await Task.Run(() => new Klant_DTO {
                 Gebruikersnaam = x.Gebruikersnaam,
                 GebruikerId = x.GebruikerId,

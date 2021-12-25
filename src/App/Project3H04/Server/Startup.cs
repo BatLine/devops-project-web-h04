@@ -22,6 +22,7 @@ using Project3H04.Shared.Veilingen;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Project3H04.Shared.Abonnementen;
+using Microsoft.OpenApi.Models;
 
 namespace Project3H04.Server {
     public class Startup {
@@ -60,11 +61,16 @@ namespace Project3H04.Server {
                     NameClaimType = ClaimTypes.NameIdentifier
                 };
             });
+            services.AddSwaggerGen(c =>
+            {
+                c.CustomSchemaIds(x => x.FullName);
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
+            });
 
             //Never use localdb when not debugging
-            #if !DEBUG
+#if !DEBUG
                 _useLocalDb = false;
-            #endif
+#endif
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (_useLocalDb) { // Bovenaan klasse de bool veranderen
                 #pragma warning disable IDE0079 // Remove unnecessary suppression
@@ -96,6 +102,8 @@ namespace Project3H04.Server {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("./v1/swagger.json", "Api v1"));
             } else {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
