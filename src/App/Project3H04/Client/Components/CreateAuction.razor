@@ -1,0 +1,51 @@
+﻿@using System.Security.Claims
+@inject HttpClient httpClient
+
+<h3>CreateAuction</h3>
+@if (forKunstwerk == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <p>
+        For artwork with Id: @forKunstwerk.Id <br/>
+        <a href="" @onclick="CreateNewAuction">Create</a>
+    </p>
+
+    @if (isGelukt) {
+        <p>Is gelukt</p>
+    }
+}
+
+
+@code {
+    [Parameter]
+    public Kunstwerk_DTO.Detail forKunstwerk { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private ClaimsPrincipal user;
+    private bool isGelukt = false;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        user = (await authenticationStateTask).User;
+    }
+
+    private async Task<bool> CreateNewAuction()
+    {
+        var newAuction = new Veiling_DTO {
+            StartDatum = DateTime.UtcNow,
+            EindDatum = DateTime.UtcNow.AddDays(10),
+            MinPrijs = 100,
+            Kunstwerk = forKunstwerk
+        };
+
+        var response = await httpClient.PostAsJsonAsync($"api/Veiling/Create/", newAuction);
+        Console.WriteLine(response);
+        Console.WriteLine(response.StatusCode);
+
+        isGelukt = true;
+        return true;
+    }
+}

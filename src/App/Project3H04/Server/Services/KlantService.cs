@@ -44,23 +44,6 @@ namespace Project3H04.Server.Services {
                 Email = x.Email,
                 Fotopad = x.FotoPad,
                 Details = x.Details
-
-                //TODO: Klant map (NTH): Maarten?
-                //Bestellingen = (ICollection<Bestelling_DTO.Index>)x.Bestellingen.Select(x => new Bestelling_DTO.Index
-                //{
-                //    Datum = x.Datum,
-                //    Straat = x.Adres.Straat,
-                //    Postcode = x.Adres.Postcode,
-                //    Gemeente = x.Adres.Gemeente,
-                //    TotalePrijs = x.TotalePrijs,
-                    
-                //    WinkelmandKunstwerken = (ICollection<Kunstwerk_DTO.Detail>)x.WinkelmandKunstwerken.Select(x => new Kunstwerk_DTO.Index
-                //    {
-                //        Naam = x.Naam,
-                //        Prijs = x.Prijs,
-                //        Materiaal = x.Materiaal
-                //    })
-                //})
             });
 
             return new() { Klant = k };
@@ -72,7 +55,6 @@ namespace Project3H04.Server.Services {
             KlantResponse.Create response = new();
             if (!DbContext.Gebruikers.Any(x => x.Email == klant.Email))
             {
-                //await Task.Delay(100);
                 Klant k = new Klant(klant.Gebruikersnaam, klant.GeboorteDatum, klant.Email, klant.Fotopad, klant.Details);
                 DbContext.Gebruikers.Add(k);
                 await DbContext.SaveChangesAsync();

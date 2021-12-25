@@ -46,22 +46,6 @@ namespace Project3H04.Server.Services {
                        Locatie = x.Locatie,
                        Uploaded = true
                     }).ToList(),
-                    //Materiaal = x.Kunstwerk.Materiaal,
-                    //Kunstenaar = new Kunstenaar_DTO {
-                    //    Details = x.Kunstwerk.Kunstenaar.Details,
-                    //    StatusActiefKunstenaar = x.Kunstwerk.Kunstenaar.StatusActiefKunstenaar,
-                    //    //Kunstwerken =  *LOOP*
-                    //    Abonnement = new Abonnement_DTO {
-                    //        Id = x.Kunstwerk.Kunstenaar.Abonnenment.Id,
-                    //        StartDatum = x.Kunstwerk.Kunstenaar.Abonnenment.StartDatum,
-                    //        EindDatum = x.Kunstwerk.Kunstenaar.Abonnenment.EindDatum,
-                    //        AbonnementType = new AbonnementType_DTO {
-                    //            Naam = x.Kunstwerk.Kunstenaar.Abonnenment.AbonnementType.Naam,
-                    //            Verlooptijd = x.Kunstwerk.Kunstenaar.Abonnenment.AbonnementType.Verlooptijd,
-                    //            Prijs = x.Kunstwerk.Kunstenaar.Abonnenment.AbonnementType.Prijs
-                    //        }
-                    //    }
-                    //}
                 },
                 BodenOpVeiling = x.BodenOpVeiling.ToList().Select(x => new Bod_DTO {
                     BodPrijs = x.BodPrijs,
@@ -71,22 +55,6 @@ namespace Project3H04.Server.Services {
                         Gebruikersnaam = x.Klant.Gebruikersnaam,
                         GeboorteDatum = x.Klant.Geboortedatum,
                         Email = x.Klant.Email,
-                        //DatumCreatie = x.Klant.DatumCreatie,
-                        //Fotopad = x.Klant.FotoPad,
-                        //TODO: Klant map (NTH): Maarten?
-                        //Bestellingen = (ICollection<Bestelling_DTO.Index>)x.Bestellingen.Select(x => new Bestelling_DTO.Index {
-                        //    Datum = x.Datum,
-                        //    Straat = x.Adres.Straat,
-                        //    Postcode = x.Adres.Postcode,
-                        //    Gemeente = x.Adres.Gemeente,
-                        //    TotalePrijs = x.TotalePrijs,
-                        //
-                        //    WinkelmandKunstwerken = (ICollection<Kunstwerk_DTO.Detail>)x.WinkelmandKunstwerken.Select(x => new Kunstwerk_DTO.Index {
-                        //        Naam = x.Naam,
-                        //        Prijs = x.Prijs,
-                        //        Materiaal = x.Materiaal
-                        //    })
-                        //})
                     }
                 }).OrderByDescending(b => b.BodPrijs)
             });
@@ -139,24 +107,19 @@ namespace Project3H04.Server.Services {
         }
 
         public async Task<bool> CreateVeiling(Veiling_DTO veiling) {
-            var abonnementType = new AbonnementType(veiling.Kunstwerk.Kunstenaar.Abonnement.AbonnementType.Naam, veiling.Kunstwerk.Kunstenaar.Abonnement.AbonnementType.Verlooptijd, veiling.Kunstwerk.Kunstenaar.Abonnement.AbonnementType.Prijs);
-            var abonnement = new Abonnement(veiling.Kunstwerk.Kunstenaar.Abonnement.StartDatum, abonnementType);
-            var kunstenaar = new Kunstenaar(veiling.Kunstwerk.Kunstenaar.Gebruikersnaam, veiling.Kunstwerk.Kunstenaar.GeboorteDatum, veiling.Kunstwerk.Kunstenaar.Email, abonnement, veiling.Kunstwerk.Kunstenaar.Fotopad, veiling.Kunstwerk.Kunstenaar.Details);
-            var fotos = (List<Foto>) veiling.Kunstwerk.Fotos.Select(x => new Foto {
-                Id = x.Id,
-                Naam = x.Naam,
-                Locatie = x.Locatie
-            });
+            var kunstwerk = await _dbContext.Kunstwerken
+                .Include(x => x.Fotos)
+                .Include(x => x.Kunstenaar)
+                .ThenInclude(x => x.Abonnenment)
+                .ThenInclude(x => x.AbonnementType)
+                .SingleOrDefaultAsync(x => x.Id.Equals(veiling.Kunstwerk.Id));
 
-            Kunstwerk kunstwerk = new Kunstwerk(veiling.Kunstwerk.Naam, veiling.Kunstwerk.Einddatum, veiling.Kunstwerk.Prijs,
-                veiling.Kunstwerk.Beschrijving, veiling.Kunstwerk.Lengte, veiling.Kunstwerk.Breedte, veiling.Kunstwerk.Hoogte, veiling.Kunstwerk.Gewicht, fotos, veiling.Kunstwerk.IsVeilbaar,
-                veiling.Kunstwerk.Materiaal, kunstenaar);
-
-            if (!kunstwerk.IsVeilbaar)
-                return false;
+            kunstwerk.IsVeilbaar = true;
+            kunstwerk.TeKoop = false;
 
             var v = new Veiling(veiling.StartDatum, veiling.EindDatum, veiling.MinPrijs, kunstwerk);
 
+            //_dbContext.Kunstwerken.Update(kunstwerk);
             await _dbContext.Veilingen.AddAsync(v);
             await _dbContext.SaveChangesAsync();
 

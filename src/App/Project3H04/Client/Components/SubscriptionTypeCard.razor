@@ -20,17 +20,19 @@
         </p>
         <div class="user">
             <div class="user-info">
-                @if (isActive)
-                {
-                    @if (!abonnementType.Naam.Equals("default"))
+                <AuthorizeView>
+                    @if (isActive)
                     {
-                        <a @onclick="SetSubscription" class="card-link" style="color: lightcoral; cursor: pointer;">Cancel Subscription</a>
+                        @if (!abonnementType.Naam.Equals("default"))
+                        {
+                            <a @onclick="SetSubscription" class="card-link" style="color: lightcoral; cursor: pointer;">Cancel Subscription</a>
+                        }
                     }
-                }
-                else
-                {
-                    <a @onclick="SetSubscription" class="card-link" style="cursor: pointer">Select Subscription</a>
-                }
+                    else
+                    {
+                        <a @onclick="SetSubscription" class="card-link" style="cursor: pointer">Select Subscription</a>
+                    }
+                </AuthorizeView>
             </div>
         </div>
     </div>

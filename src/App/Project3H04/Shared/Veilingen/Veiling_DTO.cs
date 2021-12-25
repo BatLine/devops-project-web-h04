@@ -12,7 +12,7 @@ namespace Project3H04.Shared.Veilingen {
         public DateTime StartDatum { get; set; }
         public DateTime EindDatum { get; set; }
         public int MinPrijs { get; set; }
-        public IEnumerable<Bod_DTO> BodenOpVeiling { get; set; }
+        public IEnumerable<Bod_DTO> BodenOpVeiling { get; set; } = new List<Bod_DTO>();
         public Kunstwerk_DTO.Detail Kunstwerk { get; set; }
         public Bod_DTO HoogsteBod => BodenOpVolgorde.FirstOrDefault();
         public IEnumerable<Bod_DTO> BodenOpVolgorde => BodenOpVeiling.OrderByDescending(b => b.BodPrijs);

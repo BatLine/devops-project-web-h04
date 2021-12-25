@@ -23,7 +23,7 @@ namespace Project3H04.Server.Data {
             Klant klant2 = new Klant("frank", Convert.ToDateTime("28/12/2006"), "email@gmail.com", "/images/artist3.PNG", "Ik ben niet Gilles,...");
             Klant klantTest = new Klant("test", Convert.ToDateTime("28/12/2001"), "test@gmail.com", "/images/artist3.PNG", "Ik ben Test,...");
 
-            AbonnementType at = new AbonnementType("default", 1, 10);
+            AbonnementType at = new AbonnementType("default", 12, 0);
             AbonnementType at2 = new AbonnementType("express", 12, 150);
             Abonnement abonnement1 = new Abonnement(DateTime.UtcNow, at);
             Abonnement abonnement2 = new Abonnement(DateTime.UtcNow, at);

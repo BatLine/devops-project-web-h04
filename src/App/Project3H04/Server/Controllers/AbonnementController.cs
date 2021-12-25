@@ -11,7 +11,7 @@ using Project3H04.Shared.Kunstenaars;
 using Project3H04.Shared.Kunstwerken;
 
 namespace Project3H04.Server.Controllers {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]/[Action]")]
     [ApiController]
     public class AbonnementController : ControllerBase {

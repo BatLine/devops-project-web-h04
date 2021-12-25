@@ -98,7 +98,7 @@ else
 
     private int GetIncrement()
     {
-        var prijs = !Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs : Veiling.MinPrijs;
+        var prijs = Veiling.BodenOpVeiling.Any() ? Veiling.HoogsteBod.BodPrijs : Veiling.MinPrijs;
 
         return prijs switch
         {

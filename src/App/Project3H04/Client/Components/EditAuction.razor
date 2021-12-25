@@ -1,0 +1,28 @@
+﻿@using System.Security.Claims
+@inject HttpClient httpClient
+
+<h3>EditAuction</h3>
+@if (Veiling == null)
+{
+    <p>Loading ...</p>
+}
+else
+{
+    <p>
+        Id: @Veiling.Id
+        Min prijs: @Veiling.MinPrijs
+        Aantal boden: @Veiling.BodenOpVeiling.Count()
+    </p>
+}
+
+@code {
+    [Parameter]
+    public Veiling_DTO Veiling { get; set; }
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private ClaimsPrincipal user;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        user = (await authenticationStateTask).User;
+    }
+}
