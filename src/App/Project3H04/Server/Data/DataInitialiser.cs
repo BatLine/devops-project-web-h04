@@ -4,25 +4,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Project3H04.Server.Data {
-    public class DataInitialiser {
+namespace Project3H04.Server.Data
+{
+    public class DataInitialiser
+    {
         private readonly ApplicationDbcontext _dbContext;
 
-        public DataInitialiser(ApplicationDbcontext dbContext) {
+        public DataInitialiser(ApplicationDbcontext dbContext)
+        {
             _dbContext = dbContext;
         }
 
-        public void InitializeData() {
+        public void InitializeData()
+        {
             _dbContext.Database.EnsureDeleted();
             if (!_dbContext.Database.EnsureCreated()) return;
 
             //seeding the database, see DBContext
             //Admintest
-            Admin admintest = new Admin("admintest", Convert.ToDateTime("28/12/2001"),"admintest@gmail.com", "/images/artist3.PNG","ik ben admin,...");
+            Admin admintest = new Admin("admintest", new DateTime(2012, 12, 25), "admintest@gmail.com", "/images/artist3.PNG", "ik ben admin,...");
 
-            Klant klant1 = new Klant("gillesdp", Convert.ToDateTime("28/12/2001"), "gilles.depessemier@gmail.com", "/images/artist3.PNG", "Ik ben Gilles,...");
-            Klant klant2 = new Klant("frank", Convert.ToDateTime("28/12/2006"), "email@gmail.com", "/images/artist3.PNG", "Ik ben niet Gilles,...");
-            Klant klantTest = new Klant("test", Convert.ToDateTime("28/12/2001"), "test@gmail.com", "/images/artist3.PNG", "Ik ben Test,...");
+            Klant klant1 = new Klant("gillesdp", new DateTime(2012, 12, 25), "gilles.depessemier@gmail.com", "/images/artist3.PNG", "Ik ben Gilles,...");
+            Klant klant2 = new Klant("frank", new DateTime(2012, 12, 25), "email@gmail.com", "/images/artist3.PNG", "Ik ben niet Gilles,...");
+            Klant klantTest = new Klant("test", new DateTime(2012, 12, 25), "test@gmail.com", "/images/artist3.PNG", "Ik ben Test,...");
 
             AbonnementType at = new AbonnementType("default", 12, 0);
             AbonnementType at2 = new AbonnementType("express", 12, 150);
@@ -33,7 +37,7 @@ namespace Project3H04.Server.Data {
             Abonnement abonnement5 = new Abonnement(DateTime.UtcNow, at);
             Abonnement abonnement6 = new Abonnement(DateTime.UtcNow, at2);
 
-            Kunstenaar kunstenaar1 = new Kunstenaar("Inara Nguyen", DateTime.UtcNow, "inara.nguyen@gmail.com", abonnement6, "/images/artist2.PNG", "Inara Nguyen, born 1984 in Liaoning Province in China’s northeast, graduated from the prestigious Lu Xun Academy of Fine Arts in Shenyang in 2009. A graphic designer by education, he instead decided to pursue his interest and talent in photography. After numerous exhibitions in Asia and abroad, Luo is well-acclaimed internationally and has been featured by ARTE, ZDF Aspekte, Spiegel Online or Le Figaro International. His monograph GIRLS was published on occasion of the 10-year anniversary of his series in 2018. In the same year, BBC voted her among the 100 most inspiring women world-wide. He received the Jimei x Arles Women Photographer’s Award in 2019. In Luo’s work, highly staged portraits and carefully constructed poses alternate with a raw, blurred snapshot - aesthetic.") { DatumCreatie = DateTime.UtcNow.AddDays(2) };
+            Kunstenaar kunstenaar1 = new Kunstenaar("Inara Nguyen", new DateTime(2012, 12, 25), "inara.nguyen@gmail.com", abonnement6, "/images/artist2.PNG", "Inara Nguyen, born 1984 in Liaoning Province in China’s northeast, graduated from the prestigious Lu Xun Academy of Fine Arts in Shenyang in 2009. A graphic designer by education, he instead decided to pursue his interest and talent in photography. After numerous exhibitions in Asia and abroad, Luo is well-acclaimed internationally and has been featured by ARTE, ZDF Aspekte, Spiegel Online or Le Figaro International. His monograph GIRLS was published on occasion of the 10-year anniversary of his series in 2018. In the same year, BBC voted her among the 100 most inspiring women world-wide. He received the Jimei x Arles Women Photographer’s Award in 2019. In Luo’s work, highly staged portraits and carefully constructed poses alternate with a raw, blurred snapshot - aesthetic.") { DatumCreatie = DateTime.UtcNow.AddDays(2) };
             Kunstenaar kunstenaar2 = new Kunstenaar("Issac Ellis", DateTime.UtcNow, "issac.ellis@gmail.com", abonnement2, "/images/A1.png", "Throughout his sculptures, installations, photography, and paintings, Liu Bolin explores the tensions between individualism and collectivism, particularly in his native China. In his most famous series, “Hiding in the City” (also known as “Invisible Man”), the photographer stands immobile, perfectly painted in camouflage to blend into detailed backgrounds that range from magazine stands to the Great Wall. With these compositions, Bolin comments on consumerism, rapid development, and the role of the artist in contemporary Chinese society. He has exhibited in New York, London, Paris, Beijing, Stockholm, and Hong Kong, and has given performances at the Hirshhorn Museum and Sculpture Garden, the Centre Pompidou, and Art Basel in Miami Beach. Bolin’s work belongs in the collections of the Baltimore Museum of Art, Fotografiska, the M+ Sigg Collection, the Museo Enzo Ferrari, and the Red Mansion Foundation.") { DatumCreatie = DateTime.UtcNow.AddDays(3) };
             Kunstenaar kunstenaar3 = new Kunstenaar("Sophie von Hellermann", DateTime.UtcNow, "sophie.vonhellermann@gmail.com", abonnement3, "/images/A2.png", "In her imaginative large-scale paintings, Sophie von Hellermann depicts imagery from fables, mythology, literature, and current events that she imbues with subconscious associations. Von Hellermann studied at the Kunstakademie, Düsseldorf, and received her MFA from the Royal College of Art in London in 2001. She has exhibited widely throughout Europe and the United States, and her paintings are held in the collections of the Metropolitan Museum of Art and LACMA. Von Hellermann’s lush, gestural paintings—whose lyrical compositions express intense emotional and psychological content—are informed by German Expressionism. She smears pastel-hued paints directly onto wet, unprimed canvases using a broad brush to create a soft, romantic effect. All rendered in the same loose, painterly style, figures and their surroundings dissolve into each other, blurring the boundaries between subjects and space.");
             Kunstenaar kunstenaar4 = new Kunstenaar("Brian Alfred", DateTime.UtcNow, "brian.alfred@gmail.com", abonnement4, "/images/A3.png", "Brian Alfred's paintings, collages, and animations examine how technology has altered our perception of our surroundings and how we process information. Working from photographs, Alfred uses a computer to reduce images (often of architecture, machinery, urban landscapes, and office interiors) to their essential forms, before turning these elements into flattened, bold color fields that retain a handmade feel. The 2009 series \"Millions Now Living Will Never Die!!!\" departs from Alfred's typically depopulated imagery, presenting 333 portraits of cultural figures who have influenced his artistic practice, including Pop artists Andy Warhol and James Rosenquist and musicians Miles Davis and Bob Marley. In 2004, a documentary about the Alfred titled ArtFlick 001 was featured at the Sundance Film Festival.");
