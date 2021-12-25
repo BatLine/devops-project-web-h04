@@ -12,9 +12,7 @@ namespace Domain {
         public int Id { get; private set; }
         public AbonnementType AbonnementType { get; set; }
 
-        public Abonnement() {
-
-        }
+        public Abonnement() { }
 
         public Abonnement(DateTime startDatum, AbonnementType abonnementType) : this() {
             StartDatum = Guard.Against.Null(startDatum, nameof(startDatum));

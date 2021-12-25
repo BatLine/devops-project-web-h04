@@ -8,7 +8,6 @@ using Project3H04.Shared.DTO;
 using Project3H04.Shared.Veilingen;
 
 namespace Project3H04.Server.Controllers {
-
     [Authorize]
     [Route("api/[controller]/[Action]")]
     [ApiController]

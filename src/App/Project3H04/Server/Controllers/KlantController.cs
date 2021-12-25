@@ -9,40 +9,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore; //deze voor de async toevoegen, de andere is kek
 
-
-namespace Project3H04.Server.Controllers
-{
+namespace Project3H04.Server.Controllers {
     [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
-    public class KlantController : ControllerBase
-    {
+    public class KlantController : ControllerBase {
         private readonly IKlantService klantService;
 
-        public KlantController(IKlantService klantService)
-        {
+        public KlantController(IKlantService klantService) {
             this.klantService = klantService;
         }
 
         [HttpGet("{id}")]
-        public Task<KlantResponse.Detail> Get(int id)
-        {
+        public Task<KlantResponse.Detail> Get(int id) {
             return klantService.GetKlantById(id);
         }
 
         //zo andere get route geven
         [/*HttpGet("{email}"),*/Route("byEmail/{email}")]
-        public Task<KlantResponse.Detail> Get(string email)
-        {
+        public Task<KlantResponse.Detail> Get(string email) {
             return klantService.GetKlantByEmail(email);
         }
 
-
         [HttpPost]
-        public Task<KlantResponse.Create> CreateAsync(Klant_DTO klant)
-        {
+        public Task<KlantResponse.Create> CreateAsync(Klant_DTO klant) {
             return klantService.CreateAsync(klant);
         }
-
     }
 }

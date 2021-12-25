@@ -17,11 +17,9 @@ namespace Project3H04.Server.Services {
             DbContext = dbContext;
         }
 
-        public async Task<KlantResponse.Detail> GetKlantByEmail(string email)
-        {
+        public async Task<KlantResponse.Detail> GetKlantByEmail(string email) {
             var x = DbContext.Gebruikers.OfType<Klant>().FirstOrDefault(k => k.Email == email);
-            Klant_DTO k = await Task.Run(() => new Klant_DTO
-            {
+            var k = await Task.Run(() => new Klant_DTO {
                 Gebruikersnaam = x.Gebruikersnaam,
                 GebruikerId = x.GebruikerId,
                 GeboorteDatum = x.Geboortedatum,
@@ -30,11 +28,10 @@ namespace Project3H04.Server.Services {
                 Details = x.Details
             });
 
-            return new() { Klant = k };
+            return new KlantResponse.Detail() { Klant = k };
         }
 
-        public async Task<KlantResponse.Detail> GetKlantById(int id)
-        {
+        public async Task<KlantResponse.Detail> GetKlantById(int id) {
             var x = (Klant)DbContext.Gebruikers.OfType<Klant>()/*NTH.Include(k => k.Boden).Include(k => k.Bestellingen).ThenInclude(x => x.WinkelmandKunstwerken)*/.SingleOrDefault(x => x.GebruikerId == id);
             //include van fotos ...
             Klant_DTO k = await Task.Run(() => new Klant_DTO {
@@ -46,22 +43,21 @@ namespace Project3H04.Server.Services {
                 Details = x.Details
             });
 
-            return new() { Klant = k };
+            return new KlantResponse.Detail() { Klant = k };
         }
 
-        public async Task<KlantResponse.Create> CreateAsync(Klant_DTO klant)
-        {
+        public async Task<KlantResponse.Create> CreateAsync(Klant_DTO klant) {
             //email uniek
             KlantResponse.Create response = new();
-            if (!DbContext.Gebruikers.Any(x => x.Email == klant.Email))
-            {
-                Klant k = new Klant(klant.Gebruikersnaam, klant.GeboorteDatum, klant.Email, klant.Fotopad, klant.Details);
+            if (!DbContext.Gebruikers.Any(x => x.Email == klant.Email)) {
+                var k = new Klant(klant.Gebruikersnaam, klant.GeboorteDatum, klant.Email, klant.Fotopad, klant.Details);
                 DbContext.Gebruikers.Add(k);
                 await DbContext.SaveChangesAsync();
                 response.Message = "succes";
-            }
-            else
+            } else {
                 response.Message = "fail";
+            }
+                
             return response;
         }
     }

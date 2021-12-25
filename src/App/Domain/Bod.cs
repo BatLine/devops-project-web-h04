@@ -13,16 +13,14 @@ namespace Domain {
         public DateTime Datum { get; set; }
         public int KlantId { get; private set; }
 
-        public Bod(Klant klant, int bodPrijs, DateTime datum) {
+        public Bod(Klant klant, int bodPrijs, DateTime datum) : this() {
             Klant = Guard.Against.Null(klant, nameof(klant));
             KlantId = klant.GebruikerId;
             BodPrijs = Guard.Against.Null(bodPrijs, nameof(bodPrijs));
             Datum = Guard.Against.Null(datum, nameof(datum));
         }
 
-        public Bod() {
-
-        }
+        public Bod() { }
     }
 }
 

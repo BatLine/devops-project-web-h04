@@ -42,11 +42,13 @@ namespace Project3H04.Server {
                        .AllowAnyMethod()
                        .AllowAnyHeader());
             });
+
             //validatie
             services.AddControllers().AddFluentValidation(fv => {
                 fv.RegisterValidatorsFromAssemblyContaining<Kunstwerk_DTO.Validator>();
                 fv.ImplicitlyValidateChildProperties = true;
             });
+
             //AUTH
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -54,8 +56,7 @@ namespace Project3H04.Server {
             }).AddJwtBearer(options => {
                 options.Authority = Configuration["Auth0:Authority"];
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
+                options.TokenValidationParameters = new TokenValidationParameters {
                     NameClaimType = ClaimTypes.NameIdentifier
                 };
             });
@@ -86,7 +87,7 @@ namespace Project3H04.Server {
             services.AddScoped<IStorageService, BlobStorageService>();
             services.AddScoped<IGebruikerService, GebruikerService>();
             services.AddScoped<IVeilingService, VeilingService>();
-            //services.AddSingleton<IOrderService, OrderService>();
+            
             services.AddRazorPages();
         }
 
@@ -107,8 +108,8 @@ namespace Project3H04.Server {
 
             app.UseRouting();
             app.UseCors();
-            app.UseAuthentication();  //AUTH
-            app.UseAuthorization();   //AUTH
+            app.UseAuthentication(); //AUTH
+            app.UseAuthorization(); //AUTH
             app.UseEndpoints(endpoints => {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();

@@ -14,9 +14,8 @@ namespace Domain {
         public DateTime DatumCreatie { get;  set; }
         public string FotoPad { get; set; }
         public string Details { get; set; }
-        public Gebruiker(string gebruikersnaam, DateTime geboortedatum, string email, string fotoPad, string details)
 
-        {
+        public Gebruiker(string gebruikersnaam, DateTime geboortedatum, string email, string fotoPad, string details) : this() {
             //Guard.Against.NullOrEmpty(gebruikersnaam, nameof(gebruikersnaam));
             Gebruikersnaam = Guard.Against.NullOrWhiteSpace(gebruikersnaam, nameof(gebruikersnaam));
             Geboortedatum = Guard.Against.Null(geboortedatum, nameof(geboortedatum));
@@ -27,18 +26,9 @@ namespace Domain {
             //this.FotoPad = Guard.Against.NullOrEmpty(fotoPad, nameof(fotoPad));
         }
 
-        public Gebruiker() {
+        public Gebruiker() { }
 
-        }
-
-        /* public void EditGebruiker(Gebruiker gebruiker)
-          {
-              this.Naam = gebruiker.Naam;
-              this.Geboortedatum = gebruiker.
-
-          } */
-        public void Edit(string gebruikersnaam, DateTime geboortedatum/*, string email*/, string fotoPad, string details)
-        {
+        public void Edit(string gebruikersnaam, DateTime geboortedatum/*, string email*/, string fotoPad, string details) {
             this.Gebruikersnaam = gebruikersnaam;
             this.Geboortedatum = geboortedatum;
             //this.Email = email;

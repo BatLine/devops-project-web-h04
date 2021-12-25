@@ -31,7 +31,7 @@ namespace Project3H04.Server.Services {
                 .Include(v => v.BodenOpVeiling).ThenInclude(b => b.Klant)
                 .FirstOrDefaultAsync(v => v.Id == id);
 
-            Veiling_DTO v = await Task.Run(() => new Veiling_DTO {
+            var v = await Task.Run(() => new Veiling_DTO {
                 Id = x.Id,
                 StartDatum = x.StartDatum,
                 EindDatum = x.EindDatum,
@@ -119,7 +119,6 @@ namespace Project3H04.Server.Services {
 
             var v = new Veiling(veiling.StartDatum, veiling.EindDatum, veiling.MinPrijs, kunstwerk);
 
-            //_dbContext.Kunstwerken.Update(kunstwerk);
             await _dbContext.Veilingen.AddAsync(v);
             await _dbContext.SaveChangesAsync();
 
@@ -127,7 +126,7 @@ namespace Project3H04.Server.Services {
         }
 
         public async Task<List<Veiling_DTO>> GetVeilingen(string term, int take, bool almostFinishedVeilingen) {
-            List<Veiling_DTO> veilings = await _dbContext.Veilingen.Select(x => new Veiling_DTO {
+            var veilings = await _dbContext.Veilingen.Select(x => new Veiling_DTO {
                 Id = x.Id,
                 StartDatum = x.StartDatum,
                 EindDatum = x.EindDatum,

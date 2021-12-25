@@ -27,7 +27,7 @@ namespace Domain {
         }
 
         public void VoegBodToe(Klant klant, int prijs, DateTime datum) {
-            Bod bod = new Bod(klant, prijs, datum);
+            var bod = new Bod(klant, prijs, datum);
 
             if ((BodenOpVeiling.Count > 0) && (prijs <= HoogsteBod.BodPrijs))
                 throw new ArgumentException("De prijs van het bod ligt onder de prijs van het hoogste bod.");

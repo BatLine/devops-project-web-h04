@@ -8,33 +8,28 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace Project3H04.Client.Services
-{
-    public class VeilingService
-    {
+namespace Project3H04.Client.Services {
+    public class VeilingService {
         private readonly HttpClient authorisedClient;
         private readonly PublicClient publicClient; //Deze http PublicClient gebruiken voor Anonymous--> 
         private const string endpoint = "api/Veiling";
 
-        public VeilingService(HttpClient authorisedClient, PublicClient publicClient)
-        {
+        public VeilingService(HttpClient authorisedClient, PublicClient publicClient) {
             this.authorisedClient = authorisedClient;
             this.publicClient = publicClient;
         }
 
-        public async Task<Veiling_DTO> GetDetailAsync(int kunstwerkId)
-        {
+        public async Task<Veiling_DTO> GetDetailAsync(int kunstwerkId) {
             var response = await authorisedClient.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{kunstwerkId}");
+
             return response;
         }
 
-
-        public async Task<bool> AddBodToVeilingAsync(int veilingId, Bod_DTO bod)
-        {
+        public async Task<bool> AddBodToVeilingAsync(int veilingId, Bod_DTO bod) {
             var response = await authorisedClient.PutAsJsonAsync<Bod_DTO>($"api/Veiling/AddBodToVeiling/{veilingId}", bod);
             response.EnsureSuccessStatusCode();
+
             return await response.Content.ReadFromJsonAsync<bool>();
         }
-
     }
 }

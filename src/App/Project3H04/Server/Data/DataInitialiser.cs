@@ -15,6 +15,7 @@ namespace Project3H04.Server.Data {
         public void InitializeData() {
             _dbContext.Database.EnsureDeleted();
             if (!_dbContext.Database.EnsureCreated()) return;
+
             //seeding the database, see DBContext
             //Admintest
             Admin admintest = new Admin("admintest", Convert.ToDateTime("28/12/2001"),"admintest@gmail.com", "/images/artist3.PNG","ik ben admin,...");
@@ -42,7 +43,7 @@ namespace Project3H04.Server.Data {
             Kunstwerk kunstwerk2 = new Kunstwerk("Thrill of Harmony", DateTime.UtcNow, 300, "Thoughtful colorplay made by the genius Issac Ellis", 50, 150, 100, (decimal)3.0, new List<Foto> { new() { Naam = "A1AT2.png" } }, false, "painting", kunstenaar2);
             Kunstwerk kunstwerk3 = new Kunstwerk("Stunning Psychology", DateTime.UtcNow, 1500, "Delicate work, that touches the senses", 150, 150, 150, (decimal)3.5, new List<Foto> { new() { Naam = "A2AT1.png" } }, false, "painting", kunstenaar3);
             Kunstwerk kunstwerk4 = new Kunstwerk("Curtain of Desire", DateTime.UtcNow, 200, "Beautiful work that inspires", 150, 150, 150, (decimal)13.5, new List<Foto> { new() { Naam = "A3AT1.png" } }, false, "sculpture", kunstenaar4);
-            Kunstwerk kunstwerk5 = new Kunstwerk("Reality of Crime", DateTime.UtcNow, 200, "Beautiful work that inspires", 150, 150, 150, (decimal)3.5, new List<Foto> { new() { Naam = "A3AT2.png" } },false, "sculpture", kunstenaar4);
+            Kunstwerk kunstwerk5 = new Kunstwerk("Reality of Crime", DateTime.UtcNow, 200, "Beautiful work that inspires", 150, 150, 150, (decimal)3.5, new List<Foto> { new() { Naam = "A3AT2.png" } }, false, "sculpture", kunstenaar4);
             Kunstwerk kunstwerk6 = new Kunstwerk("Gone", DateTime.UtcNow, 200, "Beautiful work that inspires", 150, 100, 150, default, new List<Foto> { new() { Naam = "A4AT1.png" } }, false, "drawing", kunstenaar5);
             Kunstwerk kunstwerk7 = new Kunstwerk("Supermodel", DateTime.UtcNow, 200, "Beautiful work that inspires", 170, 150, 150, default, new List<Foto> { new() { Naam = "A4AT2.png" } }, false, "drawing", kunstenaar5);
             Kunstwerk kunstwerk8 = new Kunstwerk("We've found comfort here", DateTime.UtcNow, 200, "Beautiful work that inspires", 100, 100, 150, (decimal)5, new List<Foto> { new() { Naam = "inaraA2.png" }, new() { Naam = "inaraA2Bis.png" } }, false, "painting", kunstenaar1);
@@ -73,13 +74,14 @@ namespace Project3H04.Server.Data {
             kunstenaar1.AddKunstwerk(kunstwerk1);
             _dbContext.SaveChanges();
 
-            DateTime veilingStart = DateTime.UtcNow.AddDays(-2);
-            Veiling veiling1 = new Veiling(veilingStart, DateTime.UtcNow.AddDays(1), kunstwerk9.Prijs, kunstwerk9);
+            var veilingStart = DateTime.UtcNow.AddDays(-2);
+            var veiling1 = new Veiling(veilingStart, DateTime.UtcNow.AddDays(1), kunstwerk9.Prijs, kunstwerk9);
             kunstenaar1.Veilingen.Add(veiling1);
             veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 100, veilingStart.AddHours(11));
             veiling1.VoegBodToe(klant2, veiling1.MinPrijs + 110, veilingStart.AddHours(12).AddMinutes(10));
             veiling1.VoegBodToe(klant1, veiling1.MinPrijs + 120, veilingStart.AddHours(12).AddMinutes(20));
             veiling1.VoegBodToe(klant2, veiling1.MinPrijs + 130, veilingStart.AddHours(13).AddMinutes(30));
+
             _dbContext.Veilingen.Add(veiling1);
             _dbContext.SaveChanges();
         }

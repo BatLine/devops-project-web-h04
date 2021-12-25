@@ -16,26 +16,24 @@ namespace Project3H04.Server.Controllers {
     [ApiController]
     public class AbonnementController : ControllerBase {
         private readonly IAbonnementService AbonnementService;
-        private readonly IKunstenaarService KunstenaarService;
 
-        public AbonnementController(IAbonnementService abonnementService, IKunstenaarService kunstenaarService) {
+        public AbonnementController(IAbonnementService abonnementService) {
             AbonnementService = abonnementService;
-            KunstenaarService = kunstenaarService;
         }
 
-        [AllowAnonymous]//
+        [AllowAnonymous]
         [HttpGet, ActionName("")]
         public async Task<IList<Abonnement_DTO>> GetSubscriptions() {
             return await AbonnementService.GetAllAbonnementen();
         }
 
-        [AllowAnonymous]//
+        [AllowAnonymous]
         [HttpGet, ActionName("GetTypes")]
         public async Task<IList<AbonnementType_DTO>> GetSubscriptionTypes() {
             return await AbonnementService.GetAllAbonnementTypes();
         }
 
-        [AllowAnonymous]//
+        [AllowAnonymous]
         [HttpPut, ActionName("UpdateSubscription")]
         public async Task<Abonnement_DTO> UpdateSubscription(Abonnement_DTO abo) {
             return await AbonnementService.UpdateSubscription(abo);

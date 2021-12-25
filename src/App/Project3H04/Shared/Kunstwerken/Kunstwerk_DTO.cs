@@ -5,12 +5,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Project3H04.Shared.Kunstwerken
-{
-    public static class Kunstwerk_DTO
-    {
-        public class Index
-        {
+namespace Project3H04.Shared.Kunstwerken {
+    public static class Kunstwerk_DTO {
+        public class Index { 
             public int Id { get; set; }
             public string Naam { get; set; }
             public int Prijs { get; set; }
@@ -22,8 +19,7 @@ namespace Project3H04.Shared.Kunstwerken
             public bool IsVeilbaar { get; set; }
         }
 
-        public class Detail : Index
-        {
+        public class Detail : Index {
             public decimal Lengte { get; set; }
             public decimal Breedte { get; set; }
             public decimal Hoogte { get; set; }
@@ -33,15 +29,12 @@ namespace Project3H04.Shared.Kunstwerken
             //public bool TeKoop { get; set; }
             //public bool IsVeilbaar { get; set; }
 
-
-            public Detail()
-            {
+            public Detail() {
                 HoofdFoto = Fotos?.FirstOrDefault();
             }
         }
 
-        public class Filter
-        {
+        public class Filter {
             public string Naam { get; set; }
             public int MinimumPrijs { get; set; }
             public int MaximumPrijs { get; set; }
@@ -52,18 +45,12 @@ namespace Project3H04.Shared.Kunstwerken
 
             public int Page { get; set; }
             public string SortOpNaam { get; set; }
-
         }
 
-        public class Create
-        {
-            public Create()
-            {
-                Fotos = new();
-            }
+        public class Create {
             public string Naam { get; set; }
             public int Prijs { get; set; }
-            public List<Foto_DTO> Fotos { get; set; }
+            public List<Foto_DTO> Fotos { get; set; } = new List<Foto_DTO>();
 
             public string Materiaal { get; set; }
             public string Beschrijving { get; set; }
@@ -79,12 +66,10 @@ namespace Project3H04.Shared.Kunstwerken
             public List<Foto_DTO> NieuweFotos => Fotos.Where(f => f.Uploaded == false).ToList();
         }
 
-        public class Edit : Create
-        {
+        public class Edit : Create  {
             public Edit() : base() { }
 
-            public Edit(Detail kunstwerk)
-            {
+            public Edit(Detail kunstwerk) {
                 Id = kunstwerk.Id;
                 Naam = kunstwerk.Naam;
                 Prijs = kunstwerk.Prijs;
@@ -104,15 +89,12 @@ namespace Project3H04.Shared.Kunstwerken
             public int KunstenaarId { get; set; }
 
             public List<Foto_DTO> OudeFotos => Fotos.Where(f => f.Uploaded).ToList(); //reeds in blob
-
         }
 
         //bij aanmaken van kunstwerk dan validatie met validator
         //=>bij andere DTO's wnr nodig/moet aanmaken/create heeft, dan ook validatie doen !!!
-        public class Validator : AbstractValidator<Create>
-        {
-            public Validator()
-            {
+        public class Validator : AbstractValidator<Create> {
+            public Validator() {
                 RuleFor(artwork => artwork.Naam).NotEmpty().OverridePropertyName("Name");
                 RuleFor(artwork => artwork.Prijs).GreaterThanOrEqualTo(0).OverridePropertyName("Price");
                 RuleFor(artwork => artwork.Materiaal).NotEmpty().OverridePropertyName("Material");
@@ -122,10 +104,6 @@ namespace Project3H04.Shared.Kunstwerken
                 RuleFor(artwork => artwork.Breedte).NotEmpty().OverridePropertyName("Width");
                 RuleFor(artwork => artwork.Hoogte).NotEmpty().OverridePropertyName("Height");
                 RuleFor(artwork => artwork.Gewicht).NotEmpty().OverridePropertyName("Weight");
-
-
-
-
             }
         }
     }

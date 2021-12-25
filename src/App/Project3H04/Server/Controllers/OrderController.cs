@@ -15,89 +15,69 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-
-namespace Project3H04.Server.Controllers
-{
+namespace Project3H04.Server.Controllers {
     [Authorize]
     [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class OrderController : ControllerBase
-    {
+    public class OrderController : ControllerBase {
         private readonly IOrderService OrderService;
         private readonly IKlantService KlantService;
 
-        public OrderController(IOrderService orderservice, IKlantService klantservice)
-        {
+        public OrderController(IOrderService orderservice, IKlantService klantservice) {
             OrderService = orderservice;
             KlantService = klantservice;
         }
 
         [HttpGet("{id}"), ActionName("get")]
-        public async Task<Bestelling_DTO.Index> GetBestelling(int id)
-        {
+        public async Task<Bestelling_DTO.Index> GetBestelling(int id) {
             return await OrderService.GetBestelling(id);
         }
 
         [HttpGet("{Id}"), ActionName("exists")]
-        public bool CheckIfBestellingExists(int id)
-        {
+        public bool CheckIfBestellingExists(int id) {
             return OrderService.Bestellingexists(id);
         }
 
         [HttpGet("{userEmail}"), ActionName("myOrders")]
-        public async Task<IEnumerable<Bestelling_DTO.Index>> GetBestellingenByUser(string userEmail)
-        {
-            await Task.Delay(10);
-            //var authState = await AuthProvider.GetAuthenticationStateAsync();
+        public async Task<IEnumerable<Bestelling_DTO.Index>> GetBestellingenByUser(string userEmail) {
             OrderResponse.Detail response = await OrderService.GetUserOrders(userEmail);
             return response.Bestellingen;
         }
 
         // creates payment and order
-       
         [HttpPost, ActionName("Mollie")]
-        public async Task<IActionResult> CreateOrder(Bestelling_DTO.Create bestelling)
-        {
-            int i = await OrderService.PostOrderAsync(bestelling);
-            //int id = await OrderService.PostOrderAsync(bestelling);
+        public async Task<IActionResult> CreateOrder(Bestelling_DTO.Create bestelling) {
+            var bestellingId = await OrderService.PostOrderAsync(bestelling);
             IPaymentClient paymentClient = new PaymentClient("test_5hj5GaUDpQDyrhVK4yqRfhV4PnERfn");
-            PaymentRequest paymentRequest = new PaymentRequest()
-            {
+            var paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
                 Description = $"HoopGallery test payment",
-                WebhookUrl = "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus",    // uses ngrok      
-                RedirectUrl = $"https://hooopgallery-acceptatie.azurewebsites.net/ordersuccessful/{i}",
+                WebhookUrl = "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus", // uses ngrok      
+                RedirectUrl = $"https://hooopgallery-acceptatie.azurewebsites.net/ordersuccessful/{bestellingId}",
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,
                    PaymentMethod.CreditCard,
-                   PaymentMethod.DirectDebit }
+                   PaymentMethod.DirectDebit
+                }
             };
-            //int id =  OrderService.PostOrderAsync(bestelling);
-            PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
-            string paymentId = paymentResponse.Id;
-            await OrderService.PutOrderAsync(paymentId, i);
+
+            var paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
+            var paymentId = paymentResponse.Id;
+            await OrderService.PutOrderAsync(paymentId, bestellingId);
             Console.WriteLine(paymentRequest.RedirectUrl);
-            // await OrderService.PostOrderAsync(bestelling);
-            // paymentResponse.Links.Checkout;
+
             return Ok(paymentResponse);
-
-            //return Redirect(paymentResponse.Links.Checkout.ToString());
-
         }
 
         [AllowAnonymous]
         [HttpPost, ActionName("MollieAndroid")]
-        public async Task<IActionResult> CreateOrderAndroid(Bestelling_DTO.Create bestelling)
-        {
-            int i = await OrderService.PostOrderAsync(bestelling);
-            //int id = await OrderService.PostOrderAsync(bestelling);
+        public async Task<IActionResult> CreateOrderAndroid(Bestelling_DTO.Create bestelling) {
+            var bestellingId = await OrderService.PostOrderAsync(bestelling);
             IPaymentClient paymentClient = new PaymentClient("test_5hj5GaUDpQDyrhVK4yqRfhV4PnERfn");
-            PaymentRequest paymentRequest = new PaymentRequest()
-            {
+            var paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
                 Description = $"HoopGallery test payment",
-                WebhookUrl = "https://webshop.example.org/payments/webhook/",    // uses ngrok      
+                WebhookUrl = "https://webshop.example.org/payments/webhook/", // uses ngrok      
                 RedirectUrl = "com.hooop.android://payment-return",
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,
@@ -105,49 +85,27 @@ namespace Project3H04.Server.Controllers
                    PaymentMethod.DirectDebit 
                 }
             };
-            //int id =  OrderService.PostOrderAsync(bestelling);
-            PaymentResponse paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
-            string paymentId = paymentResponse.Id;
-            await OrderService.PutOrderAsync(paymentId, i);
+            var paymentResponse = await paymentClient.CreatePaymentAsync(paymentRequest);
+            var paymentId = paymentResponse.Id;
+            await OrderService.PutOrderAsync(paymentId, bestellingId);
             Console.WriteLine(paymentRequest.RedirectUrl);
-            // await OrderService.PostOrderAsync(bestelling);
-            // paymentResponse.Links.Checkout;
+
             return Ok(paymentResponse.Links.Checkout.Href);
-
-            //return Redirect(paymentResponse.Links.Checkout.ToString());
-
         }
 
-        // This method doesn't get used anymore, Create Order creates the payment and bestelling
-
-        // [HttpGet("{id}")]
-        /*        [HttpPost, ActionName("persistOrder")]  
-                public async Task<int> PostOrder(Bestelling_DTO.Create bestelling)
-                {
-                    // Klant_DTO k = KlantService.GetKlantById(1).Result;
-                    return await OrderService.PostOrderAsync(bestelling);
-                    //await Task.Delay(500);
-                }*/
-
-        //[HttpPost, ActionName("orderstatus")]
         [AllowAnonymous]
         [HttpPost, ActionName("orderstatus")]
-        //public async Task PostOrderStatus()
-        public async Task<IActionResult> GetOrderStatus([FromForm] string id)
-        {
-            // Klant_DTO k = KlantService.GetKlantById(1).Result;
-            //  await OrderService.PostOrderAsync(bestelling);
+        public async Task<IActionResult> GetOrderStatus([FromForm] string id) {
             IPaymentClient paymentClient = new PaymentClient("test_5hj5GaUDpQDyrhVK4yqRfhV4PnERfn");
-            PaymentResponse response =  await paymentClient.GetPaymentAsync(id);
+            var response =  await paymentClient.GetPaymentAsync(id);
             Console.WriteLine(response.Status);
-            if(response.Status == "paid")
-            {
+
+            if (response.Status == "paid") {
                // await OrderService.CreateBestelling();
-            }
-            if(response.Status != "paid")
-            {
+            } else if(response.Status != "paid") {
                 await OrderService.RemoveBestelling(id);
             }
+
             return Ok(response);
         }
     }
