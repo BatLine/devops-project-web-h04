@@ -39,12 +39,18 @@ namespace Project3H04.Server.Controllers {
         }
 
         [Authorize(Roles = "Administrator,Kunstenaar")]
+        [HttpPut, ActionName("Edit")]
+        public Task<bool> Edit(Veiling_DTO veiling) {
+            return _veilingService.EditVeiling(veiling);
+        }
+
+        [Authorize(Roles = "Klant,Administrator,Kunstenaar")]
         [HttpPut("{kunstwerkId}"), ActionName("AddBodToKunstwerk")]
         public Task<bool> AddBodToKunstwerk(int kunstwerkId, Bod_DTO bod) {
             return _veilingService.AddBodToKunstwerk(bod, kunstwerkId);
         }
 
-        [Authorize(Roles = "Administrator,Kunstenaar")]
+        [Authorize(Roles = "Klant,Administrator,Kunstenaar")]
         [HttpPost, ActionName("Create")]
         public Task<bool> Create(Veiling_DTO veiling) {
             return _veilingService.CreateVeiling(veiling);

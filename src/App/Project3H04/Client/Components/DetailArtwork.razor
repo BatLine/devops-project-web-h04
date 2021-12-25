@@ -27,6 +27,21 @@
                     {
                         <p style="font-size: 2rem; color: dimgray">€@Kunstwerk.Prijs</p>
                     }
+                    <AuthorizeView>
+                        @if (Kunstwerk.IsVeilbaar)
+                        {
+                            <!--Veiling component-->
+                            <DetailArtworkBieden KunstwerkId="@Kunstwerk.Id" />
+                        }
+                        else
+                        {
+                            <!--Order button-->
+                            if (Kunstwerk.TeKoop)
+                            {
+                                <button data-test-id="orderbutton" class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
+                            }
+                        }
+                    </AuthorizeView>
                     <!--Enkel als AUTH dit zien-->
                     <AuthorizeView Roles="Kunstenaar, Administrator">
                         <!--Dit mag enkel de kunstenaar eigenaar uiteraard-->
@@ -34,25 +49,6 @@
                         {
                             <a class="btn btn-secondary" href="artworks/edit/@Kunstwerk.Id">Edit</a>
                             <a class="btn btn-secondary" href="auction/@Kunstwerk.Id">Manage Auction</a>
-                        }
-                    </AuthorizeView>
-                    <AuthorizeView>
-                        @if (!user.IsInRole("Kunstenaar") && !user.IsInRole("Administrator"))
-                        {
-                            <!--Enkel zichtbaar als klant-->
-                            if (Kunstwerk.IsVeilbaar)
-                            {
-                                <!--Veiling component-->
-                                <DetailArtworkBieden KunstwerkId="@Kunstwerk.Id" />
-                            }
-                            else
-                            {
-                                <!--Order button-->
-                                if (Kunstwerk.TeKoop)
-                                {
-                                    <button data-test-id="orderbutton" class="btn btn-secondary ml-1" @onclick="AddToCart" disabled="@Check()">Order</button>
-                                }
-                            }
                         }
                     </AuthorizeView>
             </div>

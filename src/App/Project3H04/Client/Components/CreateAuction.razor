@@ -78,8 +78,6 @@ else
         loading = true;
 
         var response = await httpClient.PostAsJsonAsync($"api/Veiling/Create/", Model);
-        Console.WriteLine(response);
-        Console.WriteLine(response.StatusCode);
 
         isGelukt = true;
         NavigateBack();

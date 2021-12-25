@@ -47,6 +47,10 @@
         if (_kunstwerk.IsVeilbaar)
         {
             _veiling = await veilingService.GetDetailAsync(_kunstwerk.Id);
+            EditAuction();
+        }
+        else {
+            CreateAuction();
         }
     }
 

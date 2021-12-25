@@ -125,6 +125,18 @@ namespace Project3H04.Server.Services {
             return true;
         }
 
+        public async Task<bool> EditVeiling(Veiling_DTO veiling) {
+            var v = await _dbContext.Veilingen.SingleOrDefaultAsync(x => x.Id.Equals(veiling.Id));
+
+            v.EindDatum = veiling.EindDatum;
+            v.StartDatum = veiling.StartDatum;
+            v.MinPrijs = veiling.MinPrijs;
+
+            _dbContext.Veilingen.Update(v);
+
+            return true;
+        }
+
         public async Task<List<Veiling_DTO>> GetVeilingen(string term, int take, bool almostFinishedVeilingen) {
             var veilings = await _dbContext.Veilingen.Select(x => new Veiling_DTO {
                 Id = x.Id,

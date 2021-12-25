@@ -3,15 +3,30 @@
 @inject Services.VeilingService veilingService
 @inject HttpClient httpClient
 
-@if (Veiling != null)
-{
+@if (Veiling != null) {
     @if (!Veiling.BodenOpVeiling.Any())
     {
-        <h4>No bids yet.</h4>
+        @if (!user.IsInRole("Kunstenaar") && !user.IsInRole("Administrator")) {
+            <h4>No bids yet.</h4>
+            <label for="bidAmount">Bid amount:</label>
+            <input type="number" id="bidAmount" name="bidAmount" min="@MinPrice" max="@decimal.MaxValue" @bind-value="@NewBidValue" step="@IncrementValue" />
+            <br />
+            <button class="btn btn-secondary ml-1" @onclick="PlaceBid">Place bid</button>
+        }
     }
     else
     {
-        <p style="font-size: 1.5rem; color: dimgray"><span style="font-weight: bold; color: black">Highest bid: </span>€@Veiling.HoogsteBod.BodPrijs.ToString("0.##")</p>
+        <p style="font-size: 1.5rem; color: dimgray">
+            <span style="font-weight: bold; color: black">
+                Highest bid:
+            </span>
+            €@Veiling.HoogsteBod.BodPrijs.ToString("0.##")
+            @if (user.IsInRole("Kunstenaar") || user.IsInRole("Administrator"))
+            {
+                <br/>
+                <span>(by: @Veiling.HoogsteBod.Klant.Email)</span>
+            }
+        </p>
         @if (Veiling.BodenOpVeiling.Count() > 1)
         {
             <p style="font-weight: bold">Previous bids:</p>
@@ -52,16 +67,18 @@
                 }
             </p>
         }
-        @if (Veiling.HoogsteBod.Klant.GebruikerId != Klant.GebruikerId)
-        {
-            //Klant kan zichzelf niet outbieden
-            <label for="bidAmount">Bid amount:</label>
-            <input type="number" id="bidAmount" name="bidAmount" min="@MinPrice" max="@decimal.MaxValue" @bind-value="@NewBidValue" step="@IncrementValue" />
-            <br />
-            <button class="btn btn-secondary ml-1" @onclick="PlaceBid">Place bid</button>
-        } else
-        {
-            <span>You have the highest bid!</span>
+        @if (!user.IsInRole("Kunstenaar") && !user.IsInRole("Administrator")) {
+            @if (Veiling.HoogsteBod.Klant.GebruikerId != Klant.GebruikerId)
+            {
+                //Klant kan zichzelf niet outbieden
+                <label for="bidAmount">Bid amount:</label>
+                <input type="number" id="bidAmount" name="bidAmount" min="@MinPrice" max="@decimal.MaxValue" @bind-value="@NewBidValue" step="@IncrementValue" />
+                <br />
+                <button class="btn btn-secondary ml-1" @onclick="PlaceBid">Place bid</button>
+            } else
+            {
+                <span>You have the highest bid!</span>
+            }
         }
     }
 }
@@ -75,11 +92,12 @@ else
     private Veiling_DTO Veiling { get; set; }
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private ClaimsPrincipal user;
     private Klant_DTO Klant;
     private int NewBidValue { get; set; }
     private int IncrementValue { get; set; }
 
-    public int MinPrice => Veiling.HoogsteBod.BodPrijs + IncrementValue;
+    public int MinPrice => Veiling.HoogsteBod?.BodPrijs + IncrementValue ?? Veiling.MinPrijs + IncrementValue;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -89,7 +107,7 @@ else
     private async Task SetProperties()
     {
         Veiling = await veilingService.GetDetailAsync(KunstwerkId);
-        var user = (await authenticationStateTask).User;
+        user = (await authenticationStateTask).User;
         var klantResponse = await httpClient.GetFromJsonAsync<KlantResponse.Detail>($"api/Klant/byEmail/{user.Identity.Name}");
         Klant = klantResponse.Klant;
         IncrementValue = GetIncrement();
@@ -110,7 +128,8 @@ else
     private async void PlaceBid()
     {
         //Check if increment is correctly done
-        if (Veiling.BodenOpVeiling.Any()) {
+        if (Veiling.BodenOpVeiling.Any())
+        {
             if (NewBidValue < MinPrice)
             {
                 toastService.ShowToast(ToastLevel.Error, "Price is to low");
@@ -139,13 +158,11 @@ else
             //dit moet toch enkel als het bieden lukt?
             await SetProperties();
             StateHasChanged();
-            //also, kunnen we niet gewoon het bod locaal toevoegen, we weten toch wanneer het gelukt is? 
+            //also, kunnen we niet gewoon het bod locaal toevoegen, we weten toch wanneer het gelukt is?
         }
         else
         {
             toastService.ShowToast(ToastLevel.Error, "Bid was not placed");
         }
-
-
     }
 }
