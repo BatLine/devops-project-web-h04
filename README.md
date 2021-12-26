@@ -9,8 +9,8 @@
 Project runnen of via de online website(https://hooopgallery-acceptatie.azurewebsites.net/#) 
 
 ## Inlog gegevens
-Klant: test@gmail.com - test123
-Kunstenaar: inara.nguyen@gmail.com - test123
+Klant: test@gmail.com - test123 <br/>
+Kunstenaar: inara.nguyen@gmail.com - test123 <br/>
 Admin: admintest@gmail.com - test123
 
 ## Database connectie
