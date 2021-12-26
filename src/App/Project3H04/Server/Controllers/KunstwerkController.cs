@@ -27,6 +27,12 @@ namespace Project3H04.Server.Controllers {
         public Task<KunstwerkResponse.Index> GetKunstwerken([FromQuery] Kunstwerk_DTO.Filter request) {
             return kunstwerkService.GetKunstwerken(request);
         }
+        [AllowAnonymous]
+        [HttpGet("ZonderPaging")]
+        public Task<KunstwerkResponse.Index> GetKunstwerkenZonderPaging([FromQuery] Kunstwerk_DTO.Filter request)
+        {
+            return kunstwerkService.GetKunstwerkenZonderPaging(request);
+        }
 
         // GET api/<KunstwerkController>/5
         [AllowAnonymous]

@@ -91,6 +91,45 @@ namespace Project3H04.Server.Services {
             respons.Kunstwerken = kunstwerken;
             return respons;
         }
+        public async Task<KunstwerkResponse.Index> GetKunstwerkenZonderPaging(Kunstwerk_DTO.Filter request)
+        {
+            var respons = new KunstwerkResponse.Index();
+
+            var kunstwerken = await dbContext.Kunstwerken.Include(k => k.Fotos)
+                .Where(x => request.Materiaal == null || request.Materiaal.Contains(x.Materiaal))
+                .Where(x => request.Grootte == null || (request.Grootte.Contains("Large") && (x.Lengte >= 100 || x.Breedte >= 100 || x.Hoogte >= 100)) ||
+                            (request.Grootte.Contains("Medium") && (x.Lengte >= 50 && x.Lengte < 100 || x.Breedte >= 50 && x.Breedte < 100 || x.Hoogte >= 50 && x.Hoogte < 100))
+                            || (request.Grootte.Contains("Small") && (x.Lengte < 50 || x.Breedte < 50 || x.Hoogte < 50)))
+                .Where(x => request.BetaalOpties == null || (request.BetaalOpties.Contains("Buy") && x.TeKoop) || (request.BetaalOpties.Contains("Bid") && x.IsVeilbaar))
+                .Select(x => new Kunstwerk_DTO.Detail()
+                {
+                    Id = x.Id,
+                    Naam = x.Naam,
+                    HoofdFoto = new Foto_DTO(x.Fotos.FirstOrDefault().Naam, x.Fotos.FirstOrDefault().Locatie), //enkel eerste foto is nodig voor index
+                    Materiaal = x.Materiaal,
+                    Kunstenaar = new Kunstenaar_DTO
+                    {
+                        Gebruikersnaam = x.Kunstenaar.Gebruikersnaam,
+                        GebruikerId = x.Kunstenaar.GebruikerId,
+                    },
+                    Prijs = x.Prijs,
+                    Lengte = x.Lengte,
+                    Breedte = x.Breedte,
+                    Hoogte = x.Hoogte,
+                    Gewicht = x.Gewicht ?? default(decimal),
+                    Beschrijving = x.Beschrijving,
+                    Fotos = (List<Foto_DTO>)x.Fotos.Select(x => new Foto_DTO { Id = x.Id, Naam = x.Naam, Locatie = x.Locatie, Uploaded = true }),
+                    TeKoop = x.TeKoop, //voor tekoop icon
+                    IsVeilbaar = x.IsVeilbaar
+                })
+                .Where(x => string.IsNullOrEmpty(request.Naam) || x.Naam.Contains(request.Naam))
+                .Where(x => string.IsNullOrEmpty(request.Kunstenaar) || x.Kunstenaar.Gebruikersnaam.Contains(request.Kunstenaar))
+                .Where(x => request.MinimumPrijs.Equals(default(int)) || x.Prijs >= request.MinimumPrijs)
+                .Where(x => request.MaximumPrijs.Equals(default(int)) || x.Prijs <= request.MaximumPrijs).OrderBy(x => x.Naam).ToListAsync();
+
+            respons.Kunstwerken = kunstwerken;
+            return respons;
+        }
 
         public async Task<KunstwerkResponse.Create> CreateAsync(Kunstwerk_DTO.Create kunstwerk/*, int gebruikerId*/) {
             var kunstenaar = (Kunstenaar)dbContext.Gebruikers.Where(x => x is Kunstenaar).SingleOrDefault(g => g.Email == kunstwerk.KunstenaarEmail);
