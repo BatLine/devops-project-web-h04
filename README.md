@@ -3,7 +3,7 @@
 ## Used Technology
 - Database: Microsoft SQL Server
 - NuGet packages: Bogus, Fluent Validation, Append.Blazor.Sidepanel, Ardalis.GuardClauses, Azure.Storage.Blobs, Playwright, NUnit, 
-Mollie.Api: Betalingsscherm met Mollie is functioneel op local project, maar op de online website gaat de call naar Mollie mis
+Mollie.Api: Betalingsscherm met Mollie is functioneel op local versie, maar op de online website gaat de call naar Mollie mis
 
 ## How to run
 Project runnen of via de online website(https://hooopgallery-acceptatie.azurewebsites.net/#) 
