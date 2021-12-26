@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims
-@inject HttpClient httpClient
+@inject Services.VeilingService veilingService
 @inject NavigationManager NavManager
 @using Blazored.FluentValidation
 
@@ -69,7 +69,7 @@ else
     {
         loading = true;
 
-        var response = await httpClient.PutAsJsonAsync($"api/Veiling/Edit/", Veiling);
+        await veilingService.EditVeilingAsync(Veiling);
 
         isGelukt = true;
         NavigateBack();

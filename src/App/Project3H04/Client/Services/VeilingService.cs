@@ -21,7 +21,6 @@ namespace Project3H04.Client.Services {
 
         public async Task<Veiling_DTO> GetDetailAsync(int kunstwerkId) {
             var response = await authorisedClient.GetFromJsonAsync<Veiling_DTO>($"api/Veiling/GetByKunstwerkId/{kunstwerkId}");
-
             return response;
         }
 
@@ -30,6 +29,20 @@ namespace Project3H04.Client.Services {
             response.EnsureSuccessStatusCode();
 
             return await response.Content.ReadFromJsonAsync<bool>();
+        }
+
+        
+        public async Task CreateVeilingAsync(Veiling_DTO veiling)
+        {
+            var response = await authorisedClient.PostAsJsonAsync($"api/Veiling/Create/", veiling);
+            response.EnsureSuccessStatusCode();
+        }
+
+
+        public async Task EditVeilingAsync(Veiling_DTO veiling)
+        {
+            var response = await authorisedClient.PutAsJsonAsync($"api/Veiling/Edit/", veiling);
+            response.EnsureSuccessStatusCode();
         }
     }
 }
