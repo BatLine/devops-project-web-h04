@@ -1,7 +1,6 @@
 # Hooop Gallery
 
 ## Used Technology
-> Fill in this information e.g. SQL Server, SQL Lite, NuGet pacetc.
 - Database: Microsoft SQL Server
 - NuGet packages: Bogus, Fluent Validation, Append.Blazor.Sidepanel, Ardalis.GuardClauses, Azure.Storage.Blobs, Playwright, NUnit, Mollie.Api
 
