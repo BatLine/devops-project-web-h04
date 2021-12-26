@@ -72,7 +72,7 @@ namespace Project3H04.Server.Controllers {
             return Ok(paymentResponse);
         }
 
-        [AllowAnonymous]
+        
         [HttpPost, ActionName("MollieAndroid")]
         public async Task<IActionResult> CreateOrderAndroid(Bestelling_DTO.Create bestelling) {
             var bestellingId = await OrderService.PostOrderAsync(bestelling);
