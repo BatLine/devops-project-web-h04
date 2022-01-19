@@ -53,10 +53,10 @@ namespace Project3H04.Server.Controllers {
             var paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
                 Description = $"HoopGallery test payment",
-                WebhookUrl = "https://hooopgallery-acceptatie.azurewebsites.net/api/order/orderstatus",      
-                 RedirectUrl = $"https://hooopgallery-acceptatie.azurewebsites.net/ordersuccessful/{bestellingId}",
-                // WebhookUrl = "https://e72c-2a02-a03f-eaee-3d00-15af-2cd4-87d-3fd7.ngrok.io/api/order/orderstatus", // uses ngrok 
-                // RedirectUrl = "https://localhost:5001/ordersuccessful/{bestellingId}",
+                WebhookUrl = "https://hooopgallery-h04-productie.azurewebsites.net/api/order/orderstatus",      
+                 RedirectUrl = $"https://hooopgallery-h04-productie.azurewebsites.net/ordersuccessful/{bestellingId}",
+                 //WebhookUrl = "https://14d3-2a02-a03f-eaee-3d00-ed6d-8a8f-5a2b-7c8a.ngrok.io/api/order/orderstatus", // uses ngrok 
+                 //RedirectUrl = $"https://localhost:5001/ordersuccessful/{bestellingId}",
                 Methods = new List<string>() {
                    PaymentMethod.Ideal,
                    PaymentMethod.CreditCard,
@@ -80,7 +80,8 @@ namespace Project3H04.Server.Controllers {
             var paymentRequest = new PaymentRequest() {
                 Amount = new Amount(Currency.EUR, bestelling.TotalePrijs),
                 Description = $"HoopGallery test payment",
-                WebhookUrl = "https://webshop.example.org/payments/webhook/", // uses ngrok      
+               // WebhookUrl = "https://14d3-2a02-a03f-eaee-3d00-ed6d-8a8f-5a2b-7c8a.ngrok.io/api/order/orderstatus", // uses ngrok      
+                WebhookUrl = "https://hooopgallery-h04-productie.azurewebsites.net/api/order/orderstatus",
                 RedirectUrl = "com.hooop.android://payment-return",
                
                 Methods = new List<string>() {

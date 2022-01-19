@@ -26,7 +26,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Project3H04.Server {
     public class Startup {
-        private bool _useLocalDb = true;
+        private bool _useLocalDb = false;
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
