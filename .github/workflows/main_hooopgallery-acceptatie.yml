@@ -13,14 +13,7 @@ jobs:
   build:
     runs-on: windows-latest
 
-    steps:
-      - name: Remove old artifacts
-        uses: c-hive/gha-remove-artifacts@v1.2.0
-        with:
-          age: "2 hours"
-          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
-          skip-recent: 1
-          
+    steps:          
       - uses: actions/checkout@v2
 
       - name: Set up .NET Core
@@ -69,10 +62,3 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: .
-          
-      - name: Remove old artifacts after
-        uses: c-hive/gha-remove-artifacts@v1.2.0
-        with:
-          age: "2 hours"
-          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
-          skip-recent: 1
